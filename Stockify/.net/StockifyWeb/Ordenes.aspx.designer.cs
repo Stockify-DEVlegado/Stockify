@@ -69,15 +69,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtCodigoIngreso;
 
         /// <summary>
-        /// Control ddlProveedor.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
-
-        /// <summary>
         /// Control txtDescripcionCompra.
         /// </summary>
         /// <remarks>
@@ -87,13 +78,13 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtDescripcionCompra;
 
         /// <summary>
-        /// Control txtFechaOrdenCompra.
+        /// Control ddlProveedor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenCompra;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
 
         /// <summary>
         /// Control txtNumeroOrdenCompra.
@@ -105,6 +96,24 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtNumeroOrdenCompra;
 
         /// <summary>
+        /// Control txtFechaOrdenCompra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenCompra;
+
+        /// <summary>
+        /// Control btnViewCompra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnViewCompra;
+
+        /// <summary>
         /// Control btnAdjuntarOrdenCompra.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAdjuntarOrdenCompra;
+
+        /// <summary>
+        /// Control txtArchivoCompra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtArchivoCompra;
 
         /// <summary>
         /// Control txtResponsableCompra.
@@ -186,15 +204,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtCodigoSalida;
 
         /// <summary>
-        /// Control ddlCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
-
-        /// <summary>
         /// Control txtDescripcionVenta.
         /// </summary>
         /// <remarks>
@@ -204,13 +213,13 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtDescripcionVenta;
 
         /// <summary>
-        /// Control txtFechaOrdenVenta.
+        /// Control ddlCliente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenVenta;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
 
         /// <summary>
         /// Control txtNumeroOrdenVenta.
@@ -222,6 +231,24 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtNumeroOrdenVenta;
 
         /// <summary>
+        /// Control txtFechaOrdenVenta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenVenta;
+
+        /// <summary>
+        /// Control btnViewVenta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnViewVenta;
+
+        /// <summary>
         /// Control btnAdjuntarOrdenVenta.
         /// </summary>
         /// <remarks>
@@ -229,6 +256,15 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAdjuntarOrdenVenta;
+
+        /// <summary>
+        /// Control txtArchivoVenta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtArchivoVenta;
 
         /// <summary>
         /// Control txtResponsableVenta.
@@ -292,6 +328,15 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvProductos;
+
+        /// <summary>
+        /// Control lblTituloDetalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTituloDetalle;
 
         /// <summary>
         /// Control gvDetalleProducto.

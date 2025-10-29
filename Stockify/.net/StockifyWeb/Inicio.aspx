@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="StockifyWeb.Inicio" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="cph_Contenido" runat="server">
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,8 +20,8 @@
     .dbx .chart{height:320px; position:relative}
     .dbx .legend{position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center}
     .dbx .dot{width:8px; height:8px; border-radius:50%}
-    .dbx .dot.red{background:#ff4444} /* COMPRAS */
-    .dbx .dot.green{background:#b6ff00} /* VENTAS */
+    .dbx .dot.red{background:#ff4444}
+    .dbx .dot.green{background:#b6ff00}
     .dbx .two-col{display:grid; grid-template-columns:1fr 1fr; gap:8px}
     .dbx .mini{background:var(--card2); border:1px solid var(--stroke); border-radius:10px; padding:12px; text-align:center}
     .dbx .mini .big{font-weight:800; font-size:18px; color:#ffffff !important}
@@ -31,25 +32,9 @@
     .dbx .pill{padding:12px; background:var(--card); border:1px solid var(--stroke); border-radius:12px; text-align:center; min-height:60px; display:flex; flex-direction:column; justify-content:center}
     .dbx .pill .type{font-weight:700; color:#ffffff !important; margin-bottom:2px; font-size:14px}
     .dbx .pill .date{color:var(--muted); font-size:11px}
-    
-    .dbx .chart-container {
-      width: 100%;
-      height: 220px;
-      margin-top: 8px;
-      border-radius: 10px;
-      background: #171a20;
-      border: 1px solid var(--stroke);
-      padding: 8px;
-    }
-    
-    .dbx .mini > div:first-child { 
-      color: #ffffff !important; 
-      font-size: 13px;
-    }
-    .dbx .alerts .item > div:first-child > div:last-child { 
-      color: #e0e0e0 !important; 
-      font-size: 11px;
-    }
+    .dbx .chart-container {width: 100%; height: 220px; margin-top: 8px; border-radius: 10px; background: #171a20; border: 1px solid var(--stroke); padding: 8px;}
+    .dbx .mini > div:first-child { color: #ffffff !important; font-size: 13px;}
+    .dbx .alerts .item > div:first-child > div:last-child { color: #e0e0e0 !important; font-size: 11px;}
     
     @media (max-width:1200px){ 
       .dbx .kpis{grid-template-columns:repeat(3,minmax(130px,1fr))} 
@@ -67,81 +52,147 @@
  
     <div class="topbar">
       <div class="search" role="search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.4-3.4"/></svg>
-        <input type="text" placeholder="Search product, supplier, order" aria-label="Buscar" />
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M21 21l-3.4-3.4"/>
+        </svg>
+        <asp:TextBox ID="txtBuscar" runat="server" CssClass="search-input" 
+                     placeholder="Search product, supplier, order" 
+                     aria-label="Buscar" 
+                     Style="flex:1; background:transparent; border:0; outline:none; color:var(--text); font-size:14px">
+        </asp:TextBox>
       </div>
     </div>
 
+    <!-- KPIs Section -->
     <section class="kpis">
-      <article class="card kpi"><div class="title">Total Productos</div><div class="value">50</div><div class="hint">Registrados</div></article>
-      <article class="card kpi"><div class="title">En Stock</div><div class="value">50</div><div class="hint">Unidades</div></article>
-      <article class="card kpi"><div class="title">Por recibir</div><div class="value">14</div><div class="hint">Unidades</div></article>
-      <article class="card kpi"><div class="title">Entradas (7d)</div><div class="value">5</div><div class="hint">Movimientos de entrada</div></article>
-      <article class="card kpi"><div class="title">Salidas (7d)</div><div class="value">21</div><div class="hint">Movimientos de salida</div></article>
+      <article class="card kpi">
+        <div class="title">Total Productos</div>
+        <div class="value">
+          <asp:Label ID="lblTotalProductos" runat="server" Text="50"></asp:Label>
+        </div>
+        <div class="hint">Registrados</div>
+      </article>
+      
+      <article class="card kpi">
+        <div class="title">En Stock</div>
+        <div class="value">
+          <asp:Label ID="lblEnStock" runat="server" Text="50"></asp:Label>
+        </div>
+        <div class="hint">Unidades</div>
+      </article>
+      
+      <article class="card kpi">
+        <div class="title">Por recibir</div>
+        <div class="value">
+          <asp:Label ID="lblPorRecibir" runat="server" Text="14"></asp:Label>
+        </div>
+        <div class="hint">Unidades</div>
+      </article>
+      
+      <article class="card kpi">
+        <div class="title">Entradas (7d)</div>
+        <div class="value">
+          <asp:Label ID="lblEntradas" runat="server" Text="5"></asp:Label>
+        </div>
+        <div class="hint">Movimientos de entrada</div>
+      </article>
+      
+      <article class="card kpi">
+        <div class="title">Salidas (7d)</div>
+        <div class="value">
+          <asp:Label ID="lblSalidas" runat="server" Text="21"></asp:Label>
+        </div>
+        <div class="hint">Movimientos de salida</div>
+      </article>
     </section>
 
     <section class="content">
       <div>
+        <!-- Gráfico de movimientos -->
         <article class="card chart" aria-label="Resúmenes de movimientos">
           <h2>Resúmenes de movimientos</h2>
           <div class="chart-container">
             <canvas id="movementChart"></canvas>
           </div>
           <div class="legend">
-            <span class="dot red"></span><span style="color:#ffffff; font-size:13px">Compras</span>
-            <span class="dot green"></span><span style="color:#ffffff; font-size:13px">Ventas</span>
+            <span class="dot red"></span>
+            <asp:Label ID="lblLeyendaCompras" runat="server" Text="Compras" 
+                       Style="color:#ffffff; font-size:13px"></asp:Label>
+            <span class="dot green"></span>
+            <asp:Label ID="lblLeyendaVentas" runat="server" Text="Ventas" 
+                       Style="color:#ffffff; font-size:13px"></asp:Label>
           </div>
         </article>
 
-
+        <!-- Órdenes recientes -->
         <section style="margin-top:14px">
           <h2>Órdenes recientes</h2>
           <div class="orders">
-            <div class="pill">
-              <div class="type">Compra</div>
-              <div class="date">Fecha: 21/07/2025</div>
-            </div>
-            <div class="pill">
-              <div class="type">Venta</div>
-              <div class="date">Fecha: 30/07/2025</div>
-            </div>
-            <div class="pill">
-              <div class="type">Venta</div>
-              <div class="date">Fecha: 15/08/2025</div>
-            </div>
-            <div class="pill">
-              <div class="type">Compra</div>
-              <div class="date">Fecha: 15/08/2025</div>
-            </div>
+            <asp:Repeater ID="rptOrdenesRecientes" runat="server">
+              <ItemTemplate>
+                <div class="pill">
+                  <div class="type">
+                    <asp:Label ID="lblTipoOrden" runat="server" 
+                               Text='<%# Eval("Tipo") %>'></asp:Label>
+                  </div>
+                  <div class="date">
+                    Fecha: <asp:Label ID="lblFechaOrden" runat="server" 
+                                      Text='<%# Eval("Fecha", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                  </div>
+                </div>
+              </ItemTemplate>
+            </asp:Repeater>
           </div>
         </section>
       </div>
 
       <div>
+        <!-- Resumen productos -->
         <article class="card">
           <h2>Resumen productos</h2>
           <div class="two-col" style="margin-top:8px">
-            <div class="mini"><div style="opacity:1; color:#ffffff !important">Número de Proveedores</div><div class="big">31</div></div>
-            <div class="mini"><div style="opacity:1; color:#ffffff !important">Número de categorías</div><div class="big">21</div></div>
+            <div class="mini">
+              <div style="opacity:1; color:#ffffff !important">Número de Proveedores</div>
+              <div class="big">
+                <asp:Label ID="lblNumProveedores" runat="server" Text="31"></asp:Label>
+              </div>
+            </div>
+            <div class="mini">
+              <div style="opacity:1; color:#ffffff !important">Número de categorías</div>
+              <div class="big">
+                <asp:Label ID="lblNumCategorias" runat="server" Text="21"></asp:Label>
+              </div>
+            </div>
           </div>
         </article>
+        
+        <!-- Alertas de Stock -->
         <article class="card alerts" style="margin-top:14px; height:180px; display:flex; flex-direction:column; justify-content:space-between;">
           <h2>Alertas de Stock</h2>
           <div>
-            <div class="item">
-              <div>
-                <div class="name">Teclado en ruso</div>
-                <div style="color:#e0e0e0 !important;font-size:11px">Stock actual: 2 | Mínimo: 5</div>
-              </div>
-              <span class="badge">Low</span>
-            </div>
-            <div class="item">
-              <div>
-                <div class="name">Monitor ShangChun</div>
-                <div style="color:#e0e0e0 !important;font-size:11px">Stock actual: 2 | Mínimo: 5</div>
-              </div>
-              <span class="badge">Low</span>
-            </div>
+            <asp:Repeater ID="rptAlertasStock" runat="server">
+              <ItemTemplate>
+                <div class="item">
+                  <div>
+                    <div class="name">
+                      <asp:Label ID="lblNombreProducto" runat="server" 
+                                 Text='<%# Eval("NombreProducto") %>'></asp:Label>
+                    </div>
+                    <div style="color:#e0e0e0 !important;font-size:11px">
+                      Stock actual: <asp:Label ID="lblStockActual" runat="server" 
+                                               Text='<%# Eval("StockActual") %>'></asp:Label> | 
+                      Mínimo: <asp:Label ID="lblStockMinimo" runat="server" 
+                                         Text='<%# Eval("StockMinimo") %>'></asp:Label>
+                    </div>
+                  </div>
+                  <span class="badge">
+                    <asp:Label ID="lblEstadoAlerta" runat="server" 
+                               Text='<%# Eval("Estado") %>'></asp:Label>
+                  </span>
+                </div>
+              </ItemTemplate>
+            </asp:Repeater>
           </div>
         </article>
       </div>
@@ -164,7 +215,7 @@
                       {
                           label: 'Compras',
                           data: comprasData,
-                          borderColor: '#ff4444', // ROJO BRILLANTE
+                          borderColor: '#ff4444',
                           backgroundColor: 'transparent',
                           tension: 0.4,
                           borderWidth: 3,
@@ -176,7 +227,7 @@
                       {
                           label: 'Ventas',
                           data: ventasData,
-                          borderColor: '#b6ff00', // VERDE ESPECÍFICO
+                          borderColor: '#b6ff00',
                           backgroundColor: 'transparent',
                           tension: 0.4,
                           borderWidth: 3,

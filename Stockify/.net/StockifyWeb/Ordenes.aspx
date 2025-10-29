@@ -84,11 +84,11 @@
             margin-bottom: 1.5rem;
         }
 
-        .form-grid {
+        .form-grid-compact {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .form-group {
@@ -96,107 +96,114 @@
             flex-direction: column;
         }
 
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
         .form-group label {
             margin-bottom: 0.5rem;
             color: var(--txt-muted);
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .form-group input, 
         .form-group select,
         .form-group textarea {
-            padding: 0.75rem;
-            border-radius: 8px;
+            padding: 0.5rem;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
             background-color: var(--bg-table);
             color: var(--txt-main);
-        }
-
-        .section-divider {
-            margin: 1.5rem 0;
-            padding: 1rem 0;
-            border-top: 2px solid var(--border-color);
-            border-bottom: 2px solid var(--border-color);
+            font-size: 0.9rem;
         }
 
         .file-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
+            margin: 1rem 0;
         }
 
         .file-actions button {
             background-color: var(--accent-blue);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .file-actions input {
+            background-color: var(--bg-table);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.4rem;
+            color: var(--txt-main);
+            flex: 1;
         }
 
         .actions-bar {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             justify-content: flex-start;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .actions-bar button {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            min-width: 100px;
+            font-size: 0.9rem;
+            min-width: 80px;
         }
 
         .btn-agregar { background-color: var(--accent-green); color: white; }
+        .btn-anular { background-color: var(--accent-red); color: white; }
         .btn-eliminar { background-color: var(--accent-red); color: white; }
         .btn-editar { background-color: var(--accent-orange); color: white; }
         .btn-guardar { background-color: var(--accent-blue); color: white; }
+        .btn-view { background-color: var(--accent-blue); color: white; }
 
         .table-section {
             background-color: var(--bg-card);
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
         }
 
         .table-section h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: var(--txt-main);
             border-bottom: 2px solid var(--accent-blue);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            font-size: 1.1rem;
         }
 
         .table-responsive {
             overflow-x: auto;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
             background-color: var(--bg-table);
+            font-size: 0.85rem;
         }
 
         .data-table th,
         .data-table td {
-            padding: 1rem;
+            padding: 0.6rem;
             text-align: left;
-            border: 2px solid var(--border-color);
+            border: 1px solid var(--border-color);
         }
 
         .data-table th {
             background-color: var(--bg-card);
             color: var(--txt-main);
             font-weight: bold;
-            border-bottom: 3px solid var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
         }
 
         .data-table tbody tr:hover {
@@ -204,20 +211,21 @@
         }
 
         .checkbox-column {
-            width: 40px;
+            width: 30px;
             text-align: center;
         }
 
         .badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.875rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
             font-weight: bold;
         }
 
-        .badge-procesando { background-color: var(--accent-orange); color: black; }
+        .badge-procesado { background-color: var(--accent-orange); color: black; }
         .badge-cancelado { background-color: var(--accent-red); color: white; }
         .badge-aceptado { background-color: var(--accent-green); color: white; }
+        .badge-disponible { background-color: var(--accent-green); color: white; }
     </style>
 
     <div class="ordenes-container">
@@ -238,14 +246,18 @@
         <!-- ORDEN COMPRA -->
         <div id="ordenCompraContent" class="orden-content active" runat="server">
             <div class="form-card">
-                <div class="form-grid">
+                <div class="form-grid-compact">
                     <div class="form-group">
-                        <label>Fecha de Ingreso</label>
-                        <asp:TextBox ID="txtFechaIngreso" runat="server" TextMode="Date"></asp:TextBox>
+                        <label>Fecha de Entrada</label>
+                        <asp:TextBox ID="txtFechaIngreso" runat="server" Text="09-10-2025"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <label>Código de Ingreso</label>
+                        <label>Código de Entrada</label>
                         <asp:TextBox ID="txtCodigoIngreso" runat="server" ReadOnly="true" Text="INW-001"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <asp:TextBox ID="txtDescripcionCompra" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Proveedor</label>
@@ -254,25 +266,19 @@
                         </asp:DropDownList>
                     </div>
                     <div class="form-group">
-                        <label>Descripción</label>
-                        <asp:TextBox ID="txtDescripcionCompra" runat="server" TextMode="MultiLine" Rows="2"></asp:TextBox>
+                        <label>Número de Orden de Compra</label>
+                        <asp:TextBox ID="txtNumeroOrdenCompra" runat="server" placeholder="Número de orden"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Orden de Compra</label>
+                        <asp:TextBox ID="txtFechaOrdenCompra" runat="server" Text="08-10-2025"></asp:TextBox>
                     </div>
                 </div>
 
-                <div class="section-divider">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Fecha de Orden de Compra</label>
-                            <asp:TextBox ID="txtFechaOrdenCompra" runat="server" TextMode="Date"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>Número de Orden de Compra</label>
-                            <div class="file-actions">
-                                <asp:TextBox ID="txtNumeroOrdenCompra" runat="server" placeholder="Número de orden"></asp:TextBox>
-                                <asp:Button ID="btnAdjuntarOrdenCompra" runat="server" Text="Adjuntar Orden de Compra" OnClick="btnAdjuntarOrdenCompra_Click" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="file-actions">
+                    <asp:Button ID="btnViewCompra" runat="server" Text="View" CssClass="btn-view" />
+                    <asp:Button ID="btnAdjuntarOrdenCompra" runat="server" Text="Adjuntar Orden de Ingreso" CssClass="btn-guardar" />
+                    <asp:TextBox ID="txtArchivoCompra" runat="server" placeholder="Archivo.pdf" ReadOnly="true" Text="Archivo .pdf"></asp:TextBox>
                 </div>
 
                 <div class="form-group">
@@ -282,24 +288,28 @@
 
                 <div class="actions-bar">
                     <asp:Button ID="btnAgregarCompra" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarCompra_Click" />
-                    <asp:Button ID="btnAnularCompra" runat="server" Text="Anular" CssClass="btn-eliminar" OnClick="btnAnularCompra_Click" />
+                    <asp:Button ID="btnAnularCompra" runat="server" Text="Anular" CssClass="btn-anular" OnClick="btnAnularCompra_Click" />
                     <asp:Button ID="btnEditarCompra" runat="server" Text="Editar" CssClass="btn-editar" OnClick="btnEditarCompra_Click" />
                     <asp:Button ID="btnGuardarCompra" runat="server" Text="Guardar" CssClass="btn-guardar" OnClick="btnGuardarCompra_Click" />
                 </div>
             </div>
         </div>
 
-        <!-- ORDEN VENTA (ACTUALIZADA con mismo diseño que Compra) -->
+        <!-- ORDEN VENTA -->
         <div id="ordenVentaContent" class="orden-content" runat="server">
             <div class="form-card">
-                <div class="form-grid">
+                <div class="form-grid-compact">
                     <div class="form-group">
                         <label>Fecha de Salida</label>
-                        <asp:TextBox ID="txtFechaSalida" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="txtFechaSalida" runat="server" Text="08-10-2025"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Código de Salida</label>
-                        <asp:TextBox ID="txtCodigoSalida" runat="server" ReadOnly="true" Text="OUT-001"></asp:TextBox>
+                        <asp:TextBox ID="txtCodigoSalida" runat="server" ReadOnly="true" Text="INW-001"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <asp:TextBox ID="txtDescripcionVenta" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Cliente</label>
@@ -308,25 +318,19 @@
                         </asp:DropDownList>
                     </div>
                     <div class="form-group">
-                        <label>Descripción</label>
-                        <asp:TextBox ID="txtDescripcionVenta" runat="server" TextMode="MultiLine" Rows="2"></asp:TextBox>
+                        <label>Número de Orden de Venta</label>
+                        <asp:TextBox ID="txtNumeroOrdenVenta" runat="server" placeholder="Número de orden de venta"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Orden Venta</label>
+                        <asp:TextBox ID="txtFechaOrdenVenta" runat="server" Text="08-10-2025"></asp:TextBox>
                     </div>
                 </div>
 
-                <div class="section-divider">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Fecha de Orden/Venta</label>
-                            <asp:TextBox ID="txtFechaOrdenVenta" runat="server" TextMode="Date"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <label>Número de Orden de Venta</label>
-                            <div class="file-actions">
-                                <asp:TextBox ID="txtNumeroOrdenVenta" runat="server" placeholder="Número de orden de venta"></asp:TextBox>
-                                <asp:Button ID="btnAdjuntarOrdenVenta" runat="server" Text="Adjuntar Orden de Venta" OnClick="btnAdjuntarOrdenVenta_Click" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="file-actions">
+                    <asp:Button ID="btnViewVenta" runat="server" Text="View" CssClass="btn-view" />
+                    <asp:Button ID="btnAdjuntarOrdenVenta" runat="server" Text="Adjuntar Orden de Salida" CssClass="btn-guardar" />
+                    <asp:TextBox ID="txtArchivoVenta" runat="server" placeholder="Archivo.pdf" ReadOnly="true" Text="Archivo .pdf"></asp:TextBox>
                 </div>
 
                 <div class="form-group">
@@ -343,16 +347,19 @@
             </div>
         </div>
 
-        <!-- Tabla: Productos de Ingreso/Salida -->
+        <!-- Tabla: Ordenes de Ingreso/Salida -->
         <div class="table-section">
             <h3>
-                <asp:Label ID="lblTituloTabla" runat="server" Text="Productos de Ingreso"></asp:Label>
+                <asp:Label ID="lblTituloTabla" runat="server" Text="Ordenes de Ingreso"></asp:Label>
             </h3>
             <div class="table-responsive">
                 <asp:GridView ID="gvProductos" runat="server" CssClass="data-table" AutoGenerateColumns="false"
                     OnRowDataBound="gvProductos_RowDataBound" OnSelectedIndexChanged="gvProductos_SelectedIndexChanged">
                     <Columns>
                         <asp:TemplateField HeaderStyle-CssClass="checkbox-column" ItemStyle-CssClass="checkbox-column">
+                            <HeaderTemplate>
+                                <asp:CheckBox ID="chkSelectAll" runat="server" />
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:CheckBox ID="chkSeleccion" runat="server" />
                             </ItemTemplate>
@@ -373,22 +380,31 @@
             </div>
         </div>
 
-        <!-- Tabla: Detalle del Producto -->
+        <!-- Tabla: Líneas de Orden de Ingreso/Salida -->
         <div class="table-section">
-            <h3>Detalle del Producto</h3>
+            <h3>
+                <asp:Label ID="lblTituloDetalle" runat="server" Text="Líneas de Orden de Ingreso"></asp:Label>
+            </h3>
             <div class="table-responsive">
                 <asp:GridView ID="gvDetalleProducto" runat="server" CssClass="data-table" AutoGenerateColumns="false"
                     OnRowDataBound="gvDetalleProducto_RowDataBound">
                     <Columns>
+                        <asp:TemplateField HeaderStyle-CssClass="checkbox-column" ItemStyle-CssClass="checkbox-column">
+                            <HeaderTemplate>
+                                <asp:CheckBox ID="chkSelectAllDetalle" runat="server" />
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <asp:CheckBox ID="chkEliminar" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="Codigo" HeaderText="Código" />
                         <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
                         <asp:BoundField DataField="Marca" HeaderText="Marca" />
                         <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio Unitario" />
                         <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
-                        <asp:BoundField DataField="StockActual" HeaderText="Stock Actual" />
-                        <asp:BoundField DataField="StockMinimo" HeaderText="Stock Mínimo" />
-                        <asp:BoundField DataField="StockMaximo" HeaderText="Stock Máximo" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="SubTotal" HeaderText="subTotal" />
                         <asp:TemplateField HeaderText="Estado">
                             <ItemTemplate>
                                 <asp:Label ID="lblEstadoDetalle" runat="server" CssClass='<%# GetBadgeClass(Eval("Estado") != null ? Eval("Estado").ToString() : "") %>' 

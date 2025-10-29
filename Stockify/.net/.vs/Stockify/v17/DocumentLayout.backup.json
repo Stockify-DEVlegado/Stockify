@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|c:\\users\\lenovo\\documents\\2025-2\\prog3\\stockifypucp\\stockify\\.net\\stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|c:\\users\\lenovo\\documents\\2025-2\\prog3\\stockifypucp\\stockify\\.net\\stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|c:\\users\\lenovo\\documents\\2025-2\\prog3\\stockifypucp\\stockify\\.net\\stockifyweb\\stockify.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\stockify.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|c:\\users\\lenovo\\documents\\2025-2\\prog3\\stockifypucp\\stockify\\.net\\stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\reportes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\reportes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
@@ -29,14 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,67 +62,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "login.aspx",
-              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx",
-              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx",
-              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx",
-              "RelativeToolTip": "StockifyWeb\\login.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-10-28T20:34:55.451Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "login.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
-              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx.cs",
-              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
-              "RelativeToolTip": "StockifyWeb\\login.aspx.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Stockify.Master.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\Stockify.Master.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
+              "RelativeToolTip": "StockifyWeb\\Stockify.Master.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T20:34:54.086Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Proveedores.aspx",
-              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
-              "RelativeDocumentMoniker": "StockifyWeb\\Proveedores.aspx",
-              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
-              "RelativeToolTip": "StockifyWeb\\Proveedores.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-10-28T20:31:48.484Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Inventario.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
-              "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx.cs",
-              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
-              "RelativeToolTip": "StockifyWeb\\Inventario.aspx.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAcwF0AAACJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
-              "WhenOpened": "2025-10-28T20:31:48.527Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Inventario.aspx",
-              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
-              "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx",
-              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
-              "RelativeToolTip": "StockifyWeb\\Inventario.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-10-28T20:31:48.528Z"
+              "WhenOpened": "2025-10-29T01:12:43.644Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -123,7 +92,104 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
+              "Title": "Inicio.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\Inicio.aspx.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\Inicio.aspx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-29T01:12:29.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Reportes.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Reportes.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\Reportes.aspx.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Reportes.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\Reportes.aspx.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAADwv0kBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T21:07:29.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Reportes.aspx",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\Reportes.aspx",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
+              "RelativeToolTip": "StockifyWeb\\Reportes.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-10-28T21:06:07.01Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "login.aspx",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx",
+              "RelativeToolTip": "StockifyWeb\\login.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-10-28T20:34:55.451Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "login.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\login.aspx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:34:54.086Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Proveedores.aspx",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\Proveedores.aspx",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
+              "RelativeToolTip": "StockifyWeb\\Proveedores.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-10-28T20:31:48.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Inventario.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\Inventario.aspx.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAcwF0AAACJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2025-10-28T20:31:48.527Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Inventario.aspx",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
+              "RelativeToolTip": "StockifyWeb\\Inventario.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-10-28T20:31:48.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Proveedores.aspx.cs",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\Proveedores.aspx.cs",
@@ -135,18 +201,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "Ordenes.aspx",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Ordenes.aspx",
               "ToolTip": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
               "RelativeToolTip": "StockifyWeb\\Ordenes.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-10-28T20:31:48.529Z"
+              "WhenOpened": "2025-10-28T20:31:48.529Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "Inicio.aspx",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\2025-2\\PROG3\\StockifyPUCP\\Stockify\\.net\\StockifyWeb\\Inicio.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Inicio.aspx",
@@ -154,7 +222,8 @@
               "RelativeToolTip": "StockifyWeb\\Inicio.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-10-28T20:31:48.531Z"
+              "WhenOpened": "2025-10-28T20:31:48.531Z",
+              "EditorCaption": ""
             }
           ]
         }

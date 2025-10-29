@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace StockifyWeb
 {
@@ -18,7 +17,7 @@ namespace StockifyWeb
                 }
                 else
                 {
-                    // Mostrar el nombre del usuario en el dropdown
+                    // Mostrar el nombre del usuario
                     lblUsuario.Text = Session["Usuario"].ToString();
                 }
             }
