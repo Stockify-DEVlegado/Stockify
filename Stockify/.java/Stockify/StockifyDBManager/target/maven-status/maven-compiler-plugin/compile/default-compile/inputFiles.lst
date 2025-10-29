@@ -1,10 +1,10 @@
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBFactoryProvider.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBManager.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBManagerFactory.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MSSQLDBManager.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MSSQLDBManagerFactory.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MySQLDBManager.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MySQLDBManagerFactory.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\CadenaConexion.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\Crypto.java
-C:\Users\LENOVO\Documents\2025-2\PROG3\Stockify - DEVlegado\Servicios\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\TipoDB.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBFactoryProvider.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBManager.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\DBManagerFactory.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MSSQLDBManager.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MSSQLDBManagerFactory.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MySQLDBManager.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\MySQLDBManagerFactory.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\CadenaConexion.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\Crypto.java
+C:\Users\Alonso\Documents\GitHub\StockifyPUCP\StockifyPUCP\.java\Stockify\StockifyDBManager\src\main\java\pe\edu\pucp\inf30\stockify\db\utils\TipoDB.java
