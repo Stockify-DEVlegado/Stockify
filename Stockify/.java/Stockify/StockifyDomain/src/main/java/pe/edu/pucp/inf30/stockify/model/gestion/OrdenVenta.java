@@ -26,6 +26,8 @@ public class OrdenVenta {
     public OrdenVenta() {
         this.fecha = new Date();
         this.lineas = new ArrayList<>();
+        this.estado = EstadoDocumento.PENDIENTE;
+        this.cliente = null;
     }
 
     public OrdenVenta(int idOrdenVenta, double total, EstadoDocumento estado,

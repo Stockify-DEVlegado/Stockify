@@ -24,6 +24,9 @@ public class Movimiento {
 
     public Movimiento() {
         this.fecha = new Date();
+        this.lineaOrdenIngreso = null;
+        this.lineaOrdenSalida = null;
+        this.producto = null;
     }
 
     public Movimiento(int idMovimiento, TipoMovimiento tipoMovimiento, 

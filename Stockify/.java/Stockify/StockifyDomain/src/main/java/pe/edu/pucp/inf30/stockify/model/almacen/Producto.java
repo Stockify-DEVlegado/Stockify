@@ -19,7 +19,9 @@ public class Producto {
     private double precioUnitario;
     private Categoria categoria;
 
-    public Producto() {}
+    public Producto() {
+        this.categoria = null;
+    }
 
     public Producto(int idProducto, String nombre, String descripcion, 
             String marca, int stockMinimo, int stockMaximo,

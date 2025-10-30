@@ -25,6 +25,8 @@ public class OrdenCompra {
 
     public OrdenCompra() {
         this.fecha = new Date();
+        this.proveedor = null;
+        this.estado = EstadoDocumento.PENDIENTE;
         this.lineas = new ArrayList<>();
     }
 

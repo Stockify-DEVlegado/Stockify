@@ -19,7 +19,8 @@ public class LineaOrdenVenta {
     private OrdenVenta ordenVenta;
 
     public LineaOrdenVenta() {
-        
+        this.producto = null;
+        this.ordenVenta = null;
     }
 
     public LineaOrdenVenta(int idLineaOrdenVenta, Producto producto, 

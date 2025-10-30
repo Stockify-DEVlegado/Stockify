@@ -27,6 +27,9 @@ public class OrdenIngreso {
     public OrdenIngreso() {
         this.fecha = new Date();
         this.lineas = new ArrayList<>();
+        this.responsable = null;
+        this.ordenCompra = null;
+        this.estado = EstadoDocumento.PENDIENTE;
     }
 
     public OrdenIngreso(int idOrdenIngreso, double total, Usuario responsable) {

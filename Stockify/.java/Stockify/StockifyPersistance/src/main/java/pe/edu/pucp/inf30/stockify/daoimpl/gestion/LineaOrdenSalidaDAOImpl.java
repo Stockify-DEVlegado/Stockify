@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.inf30.stockify.dao.gestion.LineaOrdenSalidaDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.TransaccionalBaseDAO;
-import pe.edu.pucp.inf30.stockify.daoimpl.almacen.MovimientoDAOImpl;
 import pe.edu.pucp.inf30.stockify.model.gestion.LineaOrdenSalida;
 import pe.edu.pucp.inf30.stockify.daoimpl.almacen.ProductoDAOImpl;
 
@@ -30,17 +29,20 @@ public class LineaOrdenSalidaDAOImpl extends TransaccionalBaseDAO<LineaOrdenSali
     protected PreparedStatement comandoCrear(Connection conn, 
             LineaOrdenSalida modelo) throws SQLException {
         
-        String sql = "{call insertarLineaOrdenSalida(?, ?, ?, ?, ?, ?)}";
+        String sql = "{call insertarLineaOrdenSalida(?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
-        cmd.setInt("p_idOrdenSalida", modelo.getOrdenSalida().getIdOrdenSalida());
-        cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        if(modelo.getOrdenSalida()!=null) {
+            cmd.setInt("p_idOrdenSalida", modelo.getOrdenSalida().getIdOrdenSalida());
+        } else {
+            cmd.setNull("p_idOrdenSalida", Types.INTEGER);
+        }
+        if(modelo.getProducto()!=null) {
+            cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        } else {
+            cmd.setNull("p_idProducto", Types.INTEGER);
+        }
         cmd.setInt("p_cantidad", modelo.getCantidad());
         cmd.setDouble("p_subTotal", modelo.getSubtotal());
-        if (modelo.getMovimiento()!= null) {
-            cmd.setInt("p_idMovimiento", modelo.getMovimiento().getIdMovimiento());
-        } else {
-            cmd.setNull("p_idMovimiento", Types.INTEGER);
-        }
         cmd.registerOutParameter("p_id", Types.INTEGER);
         return cmd;
     }
@@ -49,17 +51,20 @@ public class LineaOrdenSalidaDAOImpl extends TransaccionalBaseDAO<LineaOrdenSali
     protected PreparedStatement comandoActualizar(Connection conn, 
             LineaOrdenSalida modelo) throws SQLException {
         
-        String sql = "{call modificarLineaOrdenSalida(?, ?, ?, ?, ?, ?)}";
+        String sql = "{call modificarLineaOrdenSalida(?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
-        cmd.setInt("p_idOrdenSalida", modelo.getOrdenSalida().getIdOrdenSalida());
-        cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        if(modelo.getOrdenSalida()!=null) {
+            cmd.setInt("p_idOrdenSalida", modelo.getOrdenSalida().getIdOrdenSalida());
+        } else {
+            cmd.setNull("p_idOrdenSalida", Types.INTEGER);
+        }
+        if(modelo.getProducto()!=null) {
+            cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        } else {
+            cmd.setNull("p_idProducto", Types.INTEGER);
+        }
         cmd.setInt("p_cantidad", modelo.getCantidad());
         cmd.setDouble("p_subTotal", modelo.getSubtotal());
-        if (modelo.getMovimiento()!= null) {    
-            cmd.setInt("p_idMovimiento", modelo.getMovimiento().getIdMovimiento());
-        } else {
-            cmd.setNull("p_idMovimiento", Types.INTEGER);
-        }
         cmd.setInt("p_id", modelo.getIdLineaOrdenSalida());
         
         return cmd;
@@ -98,16 +103,19 @@ public class LineaOrdenSalidaDAOImpl extends TransaccionalBaseDAO<LineaOrdenSali
     protected LineaOrdenSalida mapearModelo(ResultSet rs) throws SQLException {
         LineaOrdenSalida lineaOrdenSalida = new LineaOrdenSalida();
         lineaOrdenSalida.setIdLineaOrdenSalida(rs.getInt("idLineaOrdenSalida"));
-        lineaOrdenSalida.setOrdenSalida(
-                new OrdenSalidaDAOImpl().leer(rs.getInt("idOrdenSalida")));
-        lineaOrdenSalida.setProducto(
-                new ProductoDAOImpl().leer(rs.getInt("idProducto")));
+        
+        int idOrdenSalida = rs.getInt("idOrdenSalida");
+        if(!rs.wasNull()) {
+            lineaOrdenSalida.setOrdenSalida(new OrdenSalidaDAOImpl().leer(idOrdenSalida));
+        }
+        
+        int idProducto = rs.getInt("idProducto");
+        if(!rs.wasNull()) {
+            lineaOrdenSalida.setProducto(new ProductoDAOImpl().leer(idProducto));
+        }
+
         lineaOrdenSalida.setCantidad(rs.getInt("cantidad"));
         lineaOrdenSalida.setSubtotal(rs.getDouble("subTotal"));
-        int idMovimiento = rs.getInt("idMovimiento");
-        if (!rs.wasNull()) {
-            lineaOrdenSalida.setMovimiento(new MovimientoDAOImpl().leer(idMovimiento));
-        }
         return lineaOrdenSalida;
     }
 

@@ -29,7 +29,7 @@ public class MovimientoDAOImpl extends BaseDAO<Movimiento>
     protected PreparedStatement comandoCrear(Connection conn, Movimiento modelo) 
             throws SQLException {
         
-        String sql = "{call insertarMovimiento(?, ?, ?, ?, ?, ?, ?)}";
+        String sql = "{call insertarMovimiento(?, ?, ?, ?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
         cmd.setString("p_tipoMovimiento", String.valueOf(modelo.getTipoMovimiento()));
         cmd.setDate("p_fecha",new java.sql.Date(modelo.getFecha().getTime()));
@@ -49,6 +49,7 @@ public class MovimientoDAOImpl extends BaseDAO<Movimiento>
         } else  {
             cmd.setNull("p_idProducto", Types.INTEGER);
         }
+        cmd.setInt("p_cantidad", modelo.getCantidad());
         cmd.registerOutParameter("p_id", Types.INTEGER);
         return cmd;
     }
@@ -57,7 +58,7 @@ public class MovimientoDAOImpl extends BaseDAO<Movimiento>
     protected PreparedStatement comandoActualizar(Connection conn, 
             Movimiento modelo) throws SQLException {
         
-        String sql = "{call modificarMovimiento(?, ?, ?, ?, ?, ?, ?)}";
+        String sql = "{call modificarMovimiento(?, ?, ?, ?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
         cmd.setString("p_tipoMovimiento", String.valueOf(modelo.getTipoMovimiento()));
         cmd.setDate("p_fecha",new java.sql.Date(modelo.getFecha().getTime()));
@@ -77,6 +78,7 @@ public class MovimientoDAOImpl extends BaseDAO<Movimiento>
         } else  {
             cmd.setNull("p_idProducto", Types.INTEGER);
         }
+        cmd.setInt("p_cantidad",modelo.getCantidad());
         cmd.setInt("p_id", modelo.getIdMovimiento());
         return cmd;
     }
@@ -126,6 +128,7 @@ public class MovimientoDAOImpl extends BaseDAO<Movimiento>
         if(!rs.wasNull()) {
             movimiento.setProducto(new ProductoDAOImpl().leer(idProducto));
         }
+        movimiento.setCantidad(rs.getInt("cantidad"));
         return movimiento;
     }
 }

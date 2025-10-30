@@ -4,7 +4,6 @@
  */
 package pe.edu.pucp.inf30.stockify.model.gestion;
 
-import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
 import pe.edu.pucp.inf30.stockify.model.almacen.Producto;
 
 /**
@@ -17,10 +16,12 @@ public class LineaOrdenIngreso {
     private Producto producto;
     private int cantidad;
     private double subtotal;
-    private Movimiento movimiento;
     private OrdenIngreso ordenIngreso;
 
-    public LineaOrdenIngreso() {}
+    public LineaOrdenIngreso() {
+        this.producto = null;
+        this.ordenIngreso = null;
+    }
 
     public LineaOrdenIngreso(int idLineaOrdenIngreso, Producto producto, 
             int cantidad, double subtotal) {
@@ -36,14 +37,6 @@ public class LineaOrdenIngreso {
 
     public void setOrdenIngreso(OrdenIngreso ordenIngreso) {
         this.ordenIngreso = ordenIngreso;
-    }
-    
-    public Movimiento getMovimiento() {
-        return movimiento;
-    }
-
-    public void setMovimiento(Movimiento movimiento) {
-        this.movimiento = movimiento;
     }
 
     public int getIdLineaOrdenIngreso() { 

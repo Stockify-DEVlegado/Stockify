@@ -18,7 +18,10 @@ public class LineaOrdenCompra {
     private double subtotal;
     private OrdenCompra ordenCompra;
 
-    public LineaOrdenCompra() {}
+    public LineaOrdenCompra() {
+        this.producto = null;
+        this.ordenCompra = null;
+    }
 
     public LineaOrdenCompra(int idLineaOrdenCompra, Producto producto, 
             int cantidad, double subtotal) {
