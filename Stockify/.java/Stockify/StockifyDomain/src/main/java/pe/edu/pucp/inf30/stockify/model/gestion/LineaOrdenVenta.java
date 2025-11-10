@@ -19,15 +19,17 @@ public class LineaOrdenVenta {
     private OrdenVenta ordenVenta;
 
     public LineaOrdenVenta() {
-        
+        this.producto = new Producto();
+        this.ordenVenta = new OrdenVenta();
     }
 
     public LineaOrdenVenta(int idLineaOrdenVenta, Producto producto, 
-            int cantidad, double subtotal) {
+            int cantidad, double subtotal, OrdenVenta ordenVenta) {
         this.idLineaOrdenVenta = idLineaOrdenVenta;
         this.producto = producto;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
+        this.ordenVenta = ordenVenta;
     }
     
     public OrdenVenta getOrdenVenta() {

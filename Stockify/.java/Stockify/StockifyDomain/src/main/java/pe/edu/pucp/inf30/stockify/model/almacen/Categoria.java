@@ -12,14 +12,24 @@ public class Categoria {
     
     private int idCategoria;
     private String nombre;
+    private Categoria categoria;
     public Categoria(){
-        
+        this.categoria = null;
     }
-    public Categoria(int idCategoria, String nombre) {
+    public Categoria(int idCategoria, String nombre, Categoria categoria) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
+        this.categoria = categoria;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
     public int getIdCategoria() {
         return idCategoria;
     }

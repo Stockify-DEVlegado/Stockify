@@ -19,10 +19,12 @@ public class Producto {
     private double precioUnitario;
     private Categoria categoria;
 
-    public Producto() {}
+    public Producto() {
+        this.categoria = new Categoria();
+    }
 
     public Producto(int idProducto, String nombre, String descripcion, 
-            String marca, int stockMinimo, int stockMaximo,
+            String marca, int stockMinimo, int stockMaximo, double precioUnitario,
             Categoria categoria) {
         this.idProducto = idProducto;
         this.nombre = nombre;
@@ -30,6 +32,7 @@ public class Producto {
         this.marca = marca;
         this.stockMinimo = stockMinimo;
         this.stockMaximo = stockMaximo;
+        this.precioUnitario = precioUnitario;
         this.categoria = categoria;
     }
 

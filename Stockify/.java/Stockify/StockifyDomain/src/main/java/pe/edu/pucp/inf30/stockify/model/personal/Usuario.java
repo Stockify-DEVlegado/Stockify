@@ -19,7 +19,9 @@ public class Usuario {
     private CuentaUsuario cuenta;
     private TipoUsuario tipoUsuario;
 
-    public Usuario() {}
+    public Usuario() {
+        this.cuenta = new CuentaUsuario();
+    }
 
     public Usuario(int idUsuario, String nombres, String apellidos, String email, 
                    String telefono, boolean activo, CuentaUsuario cuenta, 

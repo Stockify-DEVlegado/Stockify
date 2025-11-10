@@ -23,16 +23,21 @@ public class Existencias {
     private Movimiento movimientoEgreso;
     
     public Existencias() {
-        this.fechaIngreso=new Date();
-        this.fechaEgreso=new Date();
+        this.fechaIngreso= new Date();
+        this.fechaEgreso= null;
+        this.estado = EstadoExistencias.DISPONIBLE;
+        this.producto = new Producto();
     }
 
-    public Existencias(int idExistencia, int idUnico, EstadoExistencias estado) {
+    public Existencias(int idExistencia, int idUnico, EstadoExistencias estado, 
+            Producto producto, Date fechaIngreso) {
         this.idExistencia = idExistencia;
         this.idUnico = idUnico;
-        this.fechaIngreso = new Date();
-        this.fechaEgreso = new Date();
+        this.producto = producto;
         this.estado = estado;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaEgreso = null;
+        
     }
 
     public int getIdExistencia() {
