@@ -18,7 +18,9 @@ public class Empresa {
     private boolean activo;
     private TipoEmpresa tipoEmpresa;
 
-    public Empresa() {}
+    public Empresa() {
+        
+    }
 
     public Empresa(int idEmpresa, TipoDocumento tipoDocumento, String razonSocial,
                    String telefono, String email, boolean activo, TipoEmpresa tipoEmpresa) {

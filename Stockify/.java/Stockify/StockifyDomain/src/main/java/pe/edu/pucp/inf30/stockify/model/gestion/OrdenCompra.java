@@ -25,14 +25,16 @@ public class OrdenCompra {
 
     public OrdenCompra() {
         this.fecha = new Date();
+        this.estado = EstadoDocumento.PENDIENTE;
+        this.proveedor = new Empresa();
         this.lineas = new ArrayList<>();
     }
 
     public OrdenCompra(int idOrdenCompra, double total, EstadoDocumento estado,
-                       Empresa proveedor) {
+                       Empresa proveedor, Date fecha) {
         this.idOrdenCompra = idOrdenCompra;
         this.total = total;
-        this.fecha = new Date();   
+        this.fecha = fecha;   
         this.estado = estado;
         this.proveedor = proveedor;
         this.lineas = new ArrayList<>();
