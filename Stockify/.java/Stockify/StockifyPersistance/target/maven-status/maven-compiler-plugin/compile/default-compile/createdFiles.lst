@@ -15,11 +15,9 @@ pe\edu\pucp\inf30\stockify\dao\gestion\OrdenVentaDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\almacen\CategoriaDAOImpl.class
 pe\edu\pucp\inf30\stockify\dao\gestion\LineaOrdenSalidaDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\BaseDAO.class
-pe\edu\pucp\inf30\stockify\dao\almacen\LineaGuiaRemisionDAO.class
 pe\edu\pucp\inf30\stockify\dao\gestion\LineaOrdenCompraDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\almacen\ExistenciasDAOImpl.class
 pe\edu\pucp\inf30\stockify\dao\almacen\CategoriaDAO.class
-pe\edu\pucp\inf30\stockify\dao\almacen\GuiaRemisionDAO.class
 pe\edu\pucp\inf30\stockify\dao\almacen\MovimientoDAO.class
 pe\edu\pucp\inf30\stockify\dao\Persistible.class
 pe\edu\pucp\inf30\stockify\dao\almacen\ExistenciasDAO.class
@@ -27,13 +25,11 @@ pe\edu\pucp\inf30\stockify\dao\gestion\OrdenCompraDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\ComandoDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\gestion\LineaOrdenSalidaDAOImpl.class
 pe\edu\pucp\inf30\stockify\daoimpl\gestion\OrdenIngresoDAOImpl.class
-pe\edu\pucp\inf30\stockify\daoimpl\almacen\LineaGuiaRemisionDAOImpl.class
 pe\edu\pucp\inf30\stockify\dao\gestion\LineaOrdenIngresoDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\gestion\LineaOrdenIngresoDAOImpl.class
 pe\edu\pucp\inf30\stockify\daoimpl\usuario\EmpresaDAOImpl.class
 pe\edu\pucp\inf30\stockify\dao\personal\CuentaUsuarioDAO.class
 pe\edu\pucp\inf30\stockify\daoimpl\gestion\LineaOrdenVentaDAOImpl.class
 pe\edu\pucp\inf30\stockify\daoimpl\personal\CuentaUsuarioDAOImpl.class
-pe\edu\pucp\inf30\stockify\daoimpl\almacen\GuiaRemisionDAOImpl.class
 pe\edu\pucp\inf30\stockify\dao\personal\UsuarioDAO.class
 pe\edu\pucp\inf30\stockify\dao\PersistibleTransaccional.class

@@ -1,7 +1,6 @@
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenSalida.class
 pe\edu\pucp\inf30\stockify\model\gestion\LineaOrdenSalida.class
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenIngreso.class
-pe\edu\pucp\inf30\stockify\model\almacen\LineaGuiaRemision.class
 pe\edu\pucp\inf30\stockify\model\almacen\TipoMovimiento.class
 pe\edu\pucp\inf30\stockify\model\gestion\LineaOrdenVenta.class
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenCompra.class
@@ -20,5 +19,4 @@ pe\edu\pucp\inf30\stockify\model\almacen\Existencias.class
 pe\edu\pucp\inf30\stockify\model\almacen\Movimiento.class
 pe\edu\pucp\inf30\stockify\model\personal\TipoUsuario.class
 pe\edu\pucp\inf30\stockify\model\personal\CuentaUsuario.class
-pe\edu\pucp\inf30\stockify\model\almacen\GuiaRemision.class
 pe\edu\pucp\inf30\stockify\model\usuario\TipoEmpresa.class
