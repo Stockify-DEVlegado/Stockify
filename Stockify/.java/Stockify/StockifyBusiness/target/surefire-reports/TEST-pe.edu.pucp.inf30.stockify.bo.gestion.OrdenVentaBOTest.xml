@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="42.99" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="44.939" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="PE"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129\surefirebooter-20251111151740063_12.jar C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129 2025-11-11T15-17-34_890-jvmRun1 surefire-20251111151740063_10tmp surefire_3-20251111151740063_11tmp"/>
+    <property name="sun.java.command" value="C:\Users\Alonso\AppData\Local\Temp\surefire3969326363057890141\surefirebooter-20251111171428712_12.jar C:\Users\Alonso\AppData\Local\Temp\surefire3969326363057890141 2025-11-11T17-14-25_055-jvmRun1 surefire-20251111171428712_10tmp surefire_3-20251111171428712_11tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyBusiness\target\test-classes;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyBusiness\target\classes;C:\Users\Alonso\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0\junit-jupiter-api-5.11.0.jar;C:\Users\Alonso\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Alonso\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0\junit-platform-commons-1.11.0.jar;C:\Users\Alonso\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Alonso\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0\junit-jupiter-params-5.11.0.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyPersistance\target\StockifyPersistance-1.0-SNAPSHOT.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyDBManager\target\StockifyDBManager-1.0-SNAPSHOT.jar;C:\Users\Alonso\.m2\repository\com\mysql\mysql-connector-j\9.4.0\mysql-connector-j-9.4.0.jar;C:\Users\Alonso\.m2\repository\com\google\protobuf\protobuf-java\4.31.1\protobuf-java-4.31.1.jar;C:\Users\Alonso\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\13.2.0.jre11\mssql-jdbc-13.2.0.jre11.jar;C:\Users\Alonso\.m2\repository\net\bytebuddy\byte-buddy\1.15.11\byte-buddy-1.15.11.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyDomain\target\StockifyDomain-1.0-SNAPSHOT.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129\surefirebooter-20251111151740063_12.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Alonso\AppData\Local\Temp\surefire3969326363057890141\surefirebooter-20251111171428712_12.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23.0.2+7-58"/>
@@ -59,22 +59,22 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="debeListar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="0.893"/>
-  <testcase name="debeGuardarNuevo" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="6.012"/>
-  <testcase name="debeObtenerSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="6.258"/>
+  <testcase name="debeListar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="1.805"/>
+  <testcase name="debeGuardarNuevo" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="7.027"/>
+  <testcase name="debeObtenerSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="6.577"/>
   <testcase name="noDebeObtenerSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="0.894">
     <system-err><![CDATA[No se encontro el registro con id: 99999
 ]]></system-err>
   </testcase>
-  <testcase name="debeGuardarModificado" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="14.017"/>
-  <testcase name="debeEliminarSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="6.29">
-    <system-err><![CDATA[No se encontro el registro con id: 5
+  <testcase name="debeGuardarModificado" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="13.947"/>
+  <testcase name="debeEliminarSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="6.018">
+    <system-err><![CDATA[No se encontro el registro con id: 2
 ]]></system-err>
   </testcase>
-  <testcase name="noDebeEliminarSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="1.251"/>
-  <testcase name="debeHacerRollbackSiErrorEnGuardar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="2.247">
+  <testcase name="noDebeEliminarSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="1.268"/>
+  <testcase name="debeHacerRollbackSiErrorEnGuardar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="2.25">
     <system-err><![CDATA[Error SQL: Cannot add or update a child row: a foreign key constraint fails (`Stockify`.`LineaOrdenVenta`, CONSTRAINT `LineaOrdenVenta_ibfk_1` FOREIGN KEY (`idProducto`) REFERENCES `Producto` (`idProducto`))
 ]]></system-err>
   </testcase>
-  <testcase name="debeHacerRollbackSiErrorEnEliminar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="1.26"/>
+  <testcase name="debeHacerRollbackSiErrorEnEliminar" classname="pe.edu.pucp.inf30.stockify.bo.gestion.OrdenVentaBOTest" time="1.266"/>
 </testsuite>

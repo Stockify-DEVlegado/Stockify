@@ -1,28 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.inf30.stockify.bo.gestion.OrdenSalidaBOTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.745 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.gestion.OrdenSalidaBOTest
-pe.edu.pucp.inf30.stockify.bo.gestion.OrdenSalidaBOTest -- Time elapsed: 4.745 s <<< ERROR!
-java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariosalida', 'password123', '2025-01-10', @`com_' at line 1
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
-	at pe.edu.pucp.inf30.stockify.bo.gestion.OrdenSalidaBOTest.inicializar(OrdenSalidaBOTest.java:100)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariosalida', 'password123', '2025-01-10', @`com_' at line 1
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:75)
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
-	... 4 more
-Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariosalida', 'password123', '2025-01-10', @`com_' at line 1
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448)
-	at com.mysql.cj.jdbc.CallableStatement.executeLargeUpdate(CallableStatement.java:2828)
-	at com.mysql.cj.jdbc.CallableStatement.executeUpdate(CallableStatement.java:978)
-	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:58)
-	... 6 more
-
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 78.58 s -- in pe.edu.pucp.inf30.stockify.bo.gestion.OrdenSalidaBOTest
