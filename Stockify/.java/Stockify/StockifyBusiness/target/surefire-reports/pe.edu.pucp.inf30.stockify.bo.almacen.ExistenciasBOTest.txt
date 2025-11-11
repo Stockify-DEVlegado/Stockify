@@ -1,0 +1,71 @@
+-------------------------------------------------------------------------------
+Test set: pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 2, Errors: 3, Skipped: 0, Time elapsed: 15.25 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest
+pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeObtenerSiIdExiste -- Time elapsed: 2.628 s <<< ERROR!
+java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.almacen.Existencias.getFechaEgreso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.almacen.ExistenciasBOImpl.guardar(ExistenciasBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.crearExistencia(ExistenciasBOTest.java:164)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeObtenerSiIdExiste(ExistenciasBOTest.java:82)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.almacen.Existencias.getFechaEgreso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.almacen.ExistenciasDAOImpl.comandoCrear(ExistenciasDAOImpl.java:40)
+	at pe.edu.pucp.inf30.stockify.daoimpl.almacen.ExistenciasDAOImpl.comandoCrear(ExistenciasDAOImpl.java:23)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:57)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 8 more
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeGuardarNuevo -- Time elapsed: 2.591 s <<< ERROR!
+java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.almacen.Existencias.getFechaEgreso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.almacen.ExistenciasBOImpl.guardar(ExistenciasBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.crearExistencia(ExistenciasBOTest.java:164)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeGuardarNuevo(ExistenciasBOTest.java:100)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.almacen.Existencias.getFechaEgreso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.almacen.ExistenciasDAOImpl.comandoCrear(ExistenciasDAOImpl.java:40)
+	at pe.edu.pucp.inf30.stockify.daoimpl.almacen.ExistenciasDAOImpl.comandoCrear(ExistenciasDAOImpl.java:23)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:57)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 8 more
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeGuardarModificado -- Time elapsed: 0.898 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "pe.edu.pucp.inf30.stockify.model.almacen.Existencias.setEstado(pe.edu.pucp.inf30.stockify.model.almacen.EstadoExistencias)" because "existencia" is null
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeGuardarModificado(ExistenciasBOTest.java:109)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.noDebeEliminarSiIdNoExiste -- Time elapsed: 0.903 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.noDebeEliminarSiIdNoExiste(ExistenciasBOTest.java:131)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeHacerRollbackSiErrorEnEliminar -- Time elapsed: 0.925 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBOTest.debeHacerRollbackSiErrorEnEliminar(ExistenciasBOTest.java:154)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
