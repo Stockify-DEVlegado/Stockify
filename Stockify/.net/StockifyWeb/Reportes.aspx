@@ -3,7 +3,6 @@
 <asp:Content ID="ContentHead" ContentPlaceHolderID="head" runat="server">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
     <style>
-        /* Estilos base */
         body {
             background-color: #121212 !important;
             color: #E0E0E0 !important;
@@ -16,7 +15,6 @@
             overflow-x: hidden;
         }
         
-        /* Barra superior de navegación */
         .reports-header {
             border-bottom: 1px solid #333333;
             padding: 1rem 0;
@@ -59,7 +57,6 @@
             border-color: white;
         }
 
-        /* Secciones de contenido */
         .content-section {
             display: none;
         }
@@ -68,7 +65,6 @@
             display: block;
         }
 
-        /* Sección de Reportes de Gestión de Inventario */
         .report-section {
             margin-bottom: 3rem;
             padding: 2rem;
@@ -98,10 +94,15 @@
             color: white;
             font-weight: 600;
             padding: 12px 32px;
-            border-radius: 25px;
+            border-radius: 8px;
             border: none;
             transition: background-color 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .btn-primary-custom:hover {
@@ -111,13 +112,21 @@
         .form-control-custom {
             background-color: #2A2A2A;
             border: 1px solid #333333;
-            border-radius: 25px;
-            padding: 12px 24px;
+            border-radius: 8px;
+            padding: 12px 16px;
             color: #E0E0E0;
-            flex: 1;
             font-size: 14px;
-            max-width: 100%;
+            width: 100%;
             box-sizing: border-box;
+            height: 48px;
+            min-width: 300px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='%23A0A0A0' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
         }
         
         .form-control-custom:focus {
@@ -126,18 +135,14 @@
             box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
         }
         
-        .form-control-custom::placeholder {
-            color: #A0A0A0;
-        }
-        
         .input-group {
             display: flex;
             align-items: center;
             gap: 1rem;
             max-width: 100%;
+            flex-wrap: nowrap;
         }
 
-        /* Sección de Kardex - Diseño compacto */
         .kardex-container {
             max-width: 100%;
             margin: 0 auto;
@@ -175,7 +180,6 @@
             }
         }
         
-        /* Panel de artículos compacto */
         .articles-panel {
             background-color: #1E1E1E;
             border-radius: 8px;
@@ -259,7 +263,6 @@
             color: #A0A0A0;
         }
         
-        /* Contenido principal del Kardex */
         .kardex-content {
             display: flex;
             flex-direction: column;
@@ -320,7 +323,6 @@
             min-width: 180px;
         }
         
-        /* Métricas compactas */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -381,7 +383,6 @@
             color: #EF4444;
         }
         
-        /* Filtros y acciones compactos */
         .filters-section {
             background-color: #1E1E1E;
             border-radius: 8px;
@@ -478,7 +479,6 @@
             background-color: #2563eb;
         }
         
-        /* Tabla compacta con scroll horizontal */
         .table-section {
             background-color: #1E1E1E;
             border-radius: 8px;
@@ -543,7 +543,6 @@
             border-top: 1px solid #333333;
         }
         
-        /* Estadísticas finales compactas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -575,7 +574,6 @@
             font-size: inherit;
         }
         
-        /* Utilidades */
         .flex {
             display: flex;
         }
@@ -599,11 +597,39 @@
         .space-y-12 > * + * {
             margin-top: 3rem;
         }
+
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn-primary-custom {
+                width: 100%;
+            }
+        }
+
+        /* Estilos para el dropdown nativo - SIMPLE Y OSCURO */
+        .form-control-custom option {
+            background-color: #2A2A2A;
+            color: #E0E0E0;
+            padding: 12px 16px;
+            border-bottom: 1px solid #333333;
+        }
+
+        .form-control-custom option:checked {
+            background-color: #007AFF;
+            color: white;
+        }
+
+        .form-control-custom option:hover {
+            background-color: #007AFF;
+            color: white;
+        }
     </style>
 </asp:Content>
 
 <asp:Content ID="ContentMain" ContentPlaceHolderID="cph_Contenido" runat="server">
-    <!-- Barra superior específica para Reportes -->
     <div class="reports-header">
         <div class="header-buttons">
             <button id="btnGestionInventario" class="header-btn active" type="button">
@@ -617,7 +643,6 @@
         </div>
     </div>
 
-    <!-- Sección de Reportes de Gestión de Inventario -->
     <div id="gestion-inventario" class="content-section active">
         <div style="max-width: 100%; padding: 0 1rem; box-sizing: border-box;">
             <div class="space-y-12">
@@ -627,7 +652,16 @@
                         Genera un reporte detallando los niveles actuales de stock de los productos en el inventario. Este reporte incluye nombres de productos, cantidades y ubicaciones de almacenamiento.
                     </p>
                     <div class="input-group">
-                        <asp:TextBox ID="txtFiltroProducto" runat="server" CssClass="form-control-custom" placeholder="Filtrar por producto" />
+                        <asp:DropDownList ID="ddlFiltroProducto" runat="server" CssClass="form-control-custom">
+                            <asp:ListItem Text="Selecciona un producto" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Producto A" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Producto B" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Producto C" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="Producto D" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Producto E" Value="5"></asp:ListItem>
+                            <asp:ListItem Text="Producto F" Value="6"></asp:ListItem>
+                            <asp:ListItem Text="Producto G" Value="7"></asp:ListItem>
+                        </asp:DropDownList>
                         <asp:Button ID="btnGenerarReporteProductos" runat="server" CssClass="btn-primary-custom" Text="Generar reporte" OnClick="btnGenerarReporteProductos_Click" />
                     </div>
                 </section>
@@ -638,7 +672,14 @@
                         Genera un reporte listando todos los proveedores, su información de contacto y los productos que suministran. Este reporte es útil para gestionar las relaciones con los proveedores y las adquisiciones.
                     </p>
                     <div class="input-group">
-                        <asp:TextBox ID="txtFiltroProveedor" runat="server" CssClass="form-control-custom" placeholder="Filtrar por proveedor" />
+                        <asp:DropDownList ID="ddlFiltroProveedor" runat="server" CssClass="form-control-custom">
+                            <asp:ListItem Text="Selecciona un proveedor" Value=""></asp:ListItem>
+                            <asp:ListItem Text="Proveedor X" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="Proveedor Y" Value="2"></asp:ListItem>
+                            <asp:ListItem Text="Proveedor Z" Value="3"></asp:ListItem>
+                            <asp:ListItem Text="Proveedor W" Value="4"></asp:ListItem>
+                            <asp:ListItem Text="Proveedor V" Value="5"></asp:ListItem>
+                        </asp:DropDownList>
                         <asp:Button ID="btnGenerarReporteProveedores" runat="server" CssClass="btn-primary-custom" Text="Generar reporte" OnClick="btnGenerarReporteProveedores_Click" />
                     </div>
                 </section>
@@ -658,7 +699,6 @@
         </div>
     </div>
 
-    <!-- Sección de Kardex -->
     <div id="kardex" class="content-section">
         <div class="kardex-container">
             <div class="kardex-header">
@@ -667,7 +707,6 @@
             </div>
 
             <div class="kardex-layout">
-                <!-- Panel lateral de Artículos -->
                 <div class="articles-panel">
                     <h3 class="articles-title">Artículos</h3>
                     <div class="search-box">
@@ -690,9 +729,7 @@
                     </ul>
                 </div>
 
-                <!-- Contenido principal del Kardex -->
                 <div class="kardex-content">
-                    <!-- Encabezado del producto -->
                     <div class="product-header">
                         <div class="product-info">
                             <h2><asp:Literal ID="litNombreProducto" runat="server" Text="Desktop Computer" /></h2>
@@ -707,7 +744,6 @@
                         </div>
                     </div>
 
-                    <!-- Métricas principales -->
                     <div class="metrics-grid">
                         <div class="metric-card">
                             <p class="metric-label">Saldo Actual</p>
@@ -737,7 +773,6 @@
                         </div>
                     </div>
 
-                    <!-- Filtros y acciones -->
                     <div class="filters-section">
                         <h4 class="filters-header">Filtrar por Rango de Fechas</h4>
                         <div class="filters-content">
@@ -758,7 +793,6 @@
                         </div>
                     </div>
 
-                    <!-- Tabla de movimientos -->
                     <div class="table-section">
                         <div class="table-container">
                             <table>
@@ -822,7 +856,6 @@
                 </div>
             </div>
 
-            <!-- Estadísticas Totales -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <p class="stat-label">Total Artículos</p>
@@ -841,27 +874,22 @@
     </div>
 
     <script type="text/javascript">
-        // Función para cambiar entre secciones
         function showSection(sectionId) {
-            // Ocultar todas las secciones
             var sections = document.getElementsByClassName('content-section');
             for (var i = 0; i < sections.length; i++) {
                 sections[i].classList.remove('active');
             }
 
-            // Mostrar la sección seleccionada
             var activeSection = document.getElementById(sectionId);
             if (activeSection) {
                 activeSection.classList.add('active');
             }
 
-            // Actualizar botones activos
             var buttons = document.getElementsByClassName('header-btn');
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].classList.remove('active');
             }
 
-            // Activar el botón correspondiente
             if (sectionId === 'gestion-inventario') {
                 document.getElementById('btnGestionInventario').classList.add('active');
             } else if (sectionId === 'kardex') {
@@ -869,9 +897,7 @@
             }
         }
 
-        // Asignar eventos a los botones cuando el documento esté listo
         document.addEventListener('DOMContentLoaded', function () {
-            // Asignar eventos click a los botones
             document.getElementById('btnGestionInventario').addEventListener('click', function () {
                 showSection('gestion-inventario');
             });
@@ -880,7 +906,6 @@
                 showSection('kardex');
             });
 
-            // Mostrar la sección de gestión de inventario por defecto
             showSection('gestion-inventario');
         });
     </script>

@@ -15,13 +15,13 @@ namespace StockifyWeb
     {
 
         /// <summary>
-        /// txtFiltroProducto control.
+        /// ddlFiltroProducto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroProducto;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroProducto;
 
         /// <summary>
         /// btnGenerarReporteProductos control.
@@ -33,13 +33,13 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.Button btnGenerarReporteProductos;
 
         /// <summary>
-        /// txtFiltroProveedor control.
+        /// ddlFiltroProveedor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFiltroProveedor;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroProveedor;
 
         /// <summary>
         /// btnGenerarReporteProveedores control.
