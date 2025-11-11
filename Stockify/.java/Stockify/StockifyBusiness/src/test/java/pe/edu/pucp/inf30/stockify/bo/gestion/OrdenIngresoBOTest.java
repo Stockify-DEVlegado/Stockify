@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pe.edu.pucp.inf30.stockify.bo.gestion;
 
 import java.util.ArrayList;
@@ -39,10 +35,6 @@ import pe.edu.pucp.inf30.stockify.model.usuario.Empresa;
 import pe.edu.pucp.inf30.stockify.model.usuario.TipoDocumento;
 import pe.edu.pucp.inf30.stockify.model.usuario.TipoEmpresa;
 
-/**
- *
- * @author DEVlegado
- */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OrdenIngresoBOTest implements GestionableProbable {
@@ -62,13 +54,11 @@ public class OrdenIngresoBOTest implements GestionableProbable {
     
     @BeforeAll
     public void inicializar() {
-        // Crear Categoria
         CategoriaDAOImpl categoriaDao = new CategoriaDAOImpl();
         Categoria categoria = new Categoria();
         categoria.setNombre("Categoria Test OrdenIngreso");
         this.testCategoriaId = categoriaDao.crear(categoria);
         
-        // Crear Producto
         ProductoDAOImpl productoDao = new ProductoDAOImpl();
         Producto producto = new Producto();
         producto.setNombre("Producto Test OrdenIngreso");
@@ -80,7 +70,6 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         producto.setCategoria(categoriaDao.leer(this.testCategoriaId));
         this.testProductoId = productoDao.crear(producto);
         
-        // Crear Empresa Proveedor
         EmpresaDAOImpl empresaDao = new EmpresaDAOImpl();
         Empresa empresa = new Empresa();
         empresa.setTipoDocumento(TipoDocumento.RUC);
@@ -91,7 +80,6 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         empresa.setTipoEmpresa(TipoEmpresa.PROVEEDOR);
         this.testEmpresaId = empresaDao.crear(empresa);
         
-        // Crear Cuenta Usuario
         CuentaUsuarioDAOImpl cuentaDao = new CuentaUsuarioDAOImpl();
         CuentaUsuario cuenta = new CuentaUsuario();
         cuenta.setUsername("usuarioingreso");
@@ -99,7 +87,6 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         cuenta.setUltimoAcceso(new GregorianCalendar(2025, Calendar.JANUARY, 10).getTime());
         this.testCuentaUsuarioId = cuentaDao.crear(cuenta);
         
-        // Crear Usuario
         UsuarioDAOImpl usuarioDao = new UsuarioDAOImpl();
         Usuario usuario = new Usuario();
         usuario.setNombres("Usuario");
@@ -111,7 +98,6 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         usuario.setCuenta(cuentaDao.leer(this.testCuentaUsuarioId));
         this.testUsuarioId = usuarioDao.crear(usuario);
         
-        // Crear Orden de Compra
         OrdenCompra ordenCompra = new OrdenCompra();
         ordenCompra.setProveedor(empresaDao.leer(this.testEmpresaId));
         ordenCompra.setFecha(new GregorianCalendar(2025, Calendar.JANUARY, 15).getTime());
@@ -119,7 +105,15 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         ordenCompra.setTotal(0.0);
         ordenCompra.setLineas(new ArrayList<>());
         ordenCompraBO.guardar(ordenCompra, Estado.NUEVO);
-        this.testOrdenCompraId = ordenCompra.getIdOrdenCompra();
+        
+        List<OrdenCompra> lista = ordenCompraBO.listar();
+        for (OrdenCompra o : lista) {
+            if (o.getProveedor() != null &&
+                o.getProveedor().getIdEmpresa() == this.testEmpresaId) {
+                this.testOrdenCompraId = o.getIdOrdenCompra();
+                break;
+            }
+        }
     }
     
     @AfterAll
@@ -127,11 +121,11 @@ public class OrdenIngresoBOTest implements GestionableProbable {
 //        if (this.testOrdenCompraId > 0) {
 //            ordenCompraBO.eliminar(this.testOrdenCompraId);
 //        }
-//        new UsuarioDAOImpl().eliminar(this.testUsuarioId);
-//        new CuentaUsuarioDAOImpl().eliminar(this.testCuentaUsuarioId);
-//        new ProductoDAOImpl().eliminar(this.testProductoId);
-//        new CategoriaDAOImpl().eliminar(this.testCategoriaId);
-//        new EmpresaDAOImpl().eliminar(this.testEmpresaId);
+//        if (this.testUsuarioId > 0) new UsuarioDAOImpl().eliminar(this.testUsuarioId);
+//        if (this.testCuentaUsuarioId > 0) new CuentaUsuarioDAOImpl().eliminar(this.testCuentaUsuarioId);
+//        if (this.testProductoId > 0) new ProductoDAOImpl().eliminar(this.testProductoId);
+//        if (this.testCategoriaId > 0) new CategoriaDAOImpl().eliminar(this.testCategoriaId);
+//        if (this.testEmpresaId > 0) new EmpresaDAOImpl().eliminar(this.testEmpresaId);
     }
     
     @Test
@@ -141,31 +135,30 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         List<OrdenIngreso> lista = ordenIngresoBO.listar();
         assertNotNull(lista);
     }
-    
+
     @Test
     @Order(2)
     @Override
-    public void debeObtenerSiIdExiste() {
+    public void debeGuardarNuevo() {
         crearOrdenIngreso();
+        assertTrue(this.testOrdenIngresoId > 0, "El ID de OrdenIngreso no se pudo recuperar.");
+    }
+    
+    @Test
+    @Order(3)
+    @Override
+    public void debeObtenerSiIdExiste() {
         OrdenIngreso orden = ordenIngresoBO.obtener(this.testOrdenIngresoId);
         assertNotNull(orden);
         assertEquals(this.testOrdenIngresoId, orden.getIdOrdenIngreso());
     }
     
     @Test
-    @Order(3)
+    @Order(4)
     @Override
     public void noDebeObtenerSiIdNoExiste() {
         OrdenIngreso orden = ordenIngresoBO.obtener(this.idIncorrecto);
         assertNull(orden);
-    }
-    
-    @Test
-    @Order(4)
-    @Override
-    public void debeGuardarNuevo() {
-        crearOrdenIngreso();
-        assertTrue(this.testOrdenIngresoId > 0);
     }
     
     @Test
@@ -186,7 +179,7 @@ public class OrdenIngresoBOTest implements GestionableProbable {
     @Order(6)
     @Override
     public void debeEliminarSiIdExiste() {
-        ordenIngresoBO.eliminar(this.testOrdenIngresoId);
+        assertDoesNotThrow(() -> ordenIngresoBO.eliminar(this.testOrdenIngresoId));
         OrdenIngreso orden = ordenIngresoBO.obtener(this.testOrdenIngresoId);
         assertNull(orden);
     }
@@ -208,7 +201,6 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         orden.setFecha(new GregorianCalendar(2025, Calendar.JANUARY, 1).getTime());
         orden.setLineas(new ArrayList<>());
 
-        // Forzamos un error: linea sin producto
         LineaOrdenIngreso linea = new LineaOrdenIngreso();
         linea.setCantidad(1);
         linea.setSubtotal(10.0);
@@ -242,6 +234,16 @@ public class OrdenIngresoBOTest implements GestionableProbable {
         orden.setTotal(1800.0);
 
         ordenIngresoBO.guardar(orden, Estado.NUEVO);
-        this.testOrdenIngresoId = orden.getIdOrdenIngreso();
+        
+        List<OrdenIngreso> lista = ordenIngresoBO.listar();
+        for (OrdenIngreso oi : lista) {
+            if (oi.getResponsable() != null &&
+                oi.getResponsable().getIdUsuario() == this.testUsuarioId &&
+                oi.getTotal() == 1800.0) {
+                
+                this.testOrdenIngresoId = oi.getIdOrdenIngreso();
+                break;
+            }
+        }
     }
 }

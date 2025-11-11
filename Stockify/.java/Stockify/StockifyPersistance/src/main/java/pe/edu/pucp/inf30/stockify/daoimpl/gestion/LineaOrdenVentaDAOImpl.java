@@ -112,7 +112,7 @@ public class LineaOrdenVentaDAOImpl extends TransaccionalBaseDAO<LineaOrdenVenta
             lineaOrdenVenta.setProducto(new ProductoDAOImpl().leer(idProducto));
         }
         lineaOrdenVenta.setCantidad(rs.getInt("cantidad"));
-        lineaOrdenVenta.setSubtotal(rs.getDouble("subTotal"));
+        lineaOrdenVenta.setSubtotal(rs.getDouble("subtotal"));
         return lineaOrdenVenta;
     }
     

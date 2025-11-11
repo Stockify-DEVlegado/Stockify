@@ -1,11 +1,8 @@
 pe\edu\pucp\inf30\stockify\bo\GestionableProbable.class
 pe\edu\pucp\inf30\stockify\bo\personal\UsuarioBOTest.class
 pe\edu\pucp\inf30\stockify\bo\gestion\OrdenVentaBOTest.class
-pe\edu\pucp\inf30\stockify\bo\gestion\OrdenSalidaBOTest.class
 pe\edu\pucp\inf30\stockify\bo\personal\CuentaUsuarioBOTest.class
 pe\edu\pucp\inf30\stockify\bo\gestion\OrdenIngresoBOTest.class
-pe\edu\pucp\inf30\stockify\bo\almacen\MovimientoBOTest.class
-pe\edu\pucp\inf30\stockify\bo\almacen\ExistenciasBOTest.class
 pe\edu\pucp\inf30\stockify\bo\almacen\ProductoBOTest.class
 pe\edu\pucp\inf30\stockify\bo\gestion\OrdenCompraBOTest.class
 pe\edu\pucp\inf30\stockify\bo\almacen\CategoriaBOTest.class

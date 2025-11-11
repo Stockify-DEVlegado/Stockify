@@ -59,7 +59,7 @@ public class OrdenIngresoDAOImpl extends TransaccionalBaseDAO<OrdenIngreso>
                 "{call modificarOrdenIngreso(?, ?, ?, ?, ?, ?)}";
         
         CallableStatement cmd = conn.prepareCall(sql);
-        cmd.setInt("p_idOrdenIngreso", modelo.getIdOrdenIngreso());
+        cmd.setInt("p_id", modelo.getIdOrdenIngreso());
         cmd.setDouble("p_total", modelo.getTotal());
         cmd.setDate("p_fecha", new Date(modelo.getFecha().getTime()));
         cmd.setString("p_estado", String.valueOf(modelo.getEstado()));
@@ -71,7 +71,7 @@ public class OrdenIngresoDAOImpl extends TransaccionalBaseDAO<OrdenIngreso>
         if (modelo.getOrdenCompra()!= null) {
             cmd.setInt("p_idOrdenCompra", modelo.getOrdenCompra().getIdOrdenCompra());
         } else {
-            cmd.setNull("p_id", Types.INTEGER);
+            cmd.setNull("p_idOrdenCompra", Types.INTEGER);
         }
         
         return cmd;

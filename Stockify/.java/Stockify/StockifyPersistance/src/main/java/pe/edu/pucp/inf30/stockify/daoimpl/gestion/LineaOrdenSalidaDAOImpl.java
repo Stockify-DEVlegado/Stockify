@@ -115,7 +115,7 @@ public class LineaOrdenSalidaDAOImpl extends TransaccionalBaseDAO<LineaOrdenSali
         }
 
         lineaOrdenSalida.setCantidad(rs.getInt("cantidad"));
-        lineaOrdenSalida.setSubtotal(rs.getDouble("subTotal"));
+        lineaOrdenSalida.setSubtotal(rs.getDouble("subtotal"));
         return lineaOrdenSalida;
     }
 

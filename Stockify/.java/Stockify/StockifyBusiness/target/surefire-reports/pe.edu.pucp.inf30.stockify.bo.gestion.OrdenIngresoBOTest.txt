@@ -1,21 +1,21 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.755 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest
-pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest -- Time elapsed: 4.755 s <<< ERROR!
-java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuarioingreso', 'password123', '2025-01-10', @`com' at line 1
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.768 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest
+pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest -- Time elapsed: 4.768 s <<< ERROR!
+java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'usuarioingreso' for key 'CuentaUsuario.username'
 	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
 	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
-	at pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest.inicializar(OrdenIngresoBOTest.java:100)
+	at pe.edu.pucp.inf30.stockify.bo.gestion.OrdenIngresoBOTest.inicializar(OrdenIngresoBOTest.java:88)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuarioingreso', 'password123', '2025-01-10', @`com' at line 1
+Caused by: java.lang.RuntimeException: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'usuarioingreso' for key 'CuentaUsuario.username'
 	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:75)
 	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
 	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
 	... 4 more
-Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuarioingreso', 'password123', '2025-01-10', @`com' at line 1
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112)
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'usuarioingreso' for key 'CuentaUsuario.username'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114)
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988)
 	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166)
