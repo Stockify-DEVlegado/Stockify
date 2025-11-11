@@ -1,0 +1,125 @@
+-------------------------------------------------------------------------------
+Test set: pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 2, Errors: 5, Skipped: 0, Time elapsed: 10.50 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeObtenerSiIdExiste -- Time elapsed: 0.889 s <<< ERROR!
+java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.personal.CuentaUsuarioBOImpl.guardar(CuentaUsuarioBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.crearCuentaUsuario(CuentaUsuarioBOTest.java:179)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeObtenerSiIdExiste(CuentaUsuarioBOTest.java:62)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:75)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 8 more
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448)
+	at com.mysql.cj.jdbc.CallableStatement.executeLargeUpdate(CallableStatement.java:2828)
+	at com.mysql.cj.jdbc.CallableStatement.executeUpdate(CallableStatement.java:978)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:58)
+	... 10 more
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeGuardarNuevo -- Time elapsed: 0.893 s <<< ERROR!
+java.lang.RuntimeException: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.personal.CuentaUsuarioBOImpl.guardar(CuentaUsuarioBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.crearCuentaUsuario(CuentaUsuarioBOTest.java:179)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeGuardarNuevo(CuentaUsuarioBOTest.java:80)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.RuntimeException: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:75)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 8 more
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '{call insertarCuentaUsuario('usuariotest', 'password123', '2025-01-10', @`com_my' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448)
+	at com.mysql.cj.jdbc.CallableStatement.executeLargeUpdate(CallableStatement.java:2828)
+	at com.mysql.cj.jdbc.CallableStatement.executeUpdate(CallableStatement.java:978)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:58)
+	... 10 more
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeGuardarModificado -- Time elapsed: 0.893 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario.setPassword(String)" because "cuenta" is null
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeGuardarModificado(CuentaUsuarioBOTest.java:89)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.noDebeEliminarSiIdNoExiste -- Time elapsed: 0.911 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.noDebeEliminarSiIdNoExiste(CuentaUsuarioBOTest.java:111)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeHacerRollbackSiErrorEnEliminar -- Time elapsed: 0.908 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeHacerRollbackSiErrorEnEliminar(CuentaUsuarioBOTest.java:131)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeCrearCuentaSinUltimoAcceso -- Time elapsed: 0.808 s <<< ERROR!
+java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario.getUltimoAcceso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.personal.CuentaUsuarioBOImpl.guardar(CuentaUsuarioBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeCrearCuentaSinUltimoAcceso(CuentaUsuarioBOTest.java:142)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario.getUltimoAcceso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.personal.CuentaUsuarioDAOImpl.comandoCrear(CuentaUsuarioDAOImpl.java:33)
+	at pe.edu.pucp.inf30.stockify.daoimpl.personal.CuentaUsuarioDAOImpl.comandoCrear(CuentaUsuarioDAOImpl.java:22)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:57)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 7 more
+
+pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeActualizarUltimoAcceso -- Time elapsed: 0.805 s <<< ERROR!
+java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario.getUltimoAcceso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:52)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.crear(BaseDAO.java:23)
+	at pe.edu.pucp.inf30.stockify.boimpl.personal.CuentaUsuarioBOImpl.guardar(CuentaUsuarioBOImpl.java:44)
+	at pe.edu.pucp.inf30.stockify.bo.personal.CuentaUsuarioBOTest.debeActualizarUltimoAcceso(CuentaUsuarioBOTest.java:159)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+Caused by: java.lang.NullPointerException: Cannot invoke "java.util.Date.getTime()" because the return value of "pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario.getUltimoAcceso()" is null
+	at pe.edu.pucp.inf30.stockify.daoimpl.personal.CuentaUsuarioDAOImpl.comandoCrear(CuentaUsuarioDAOImpl.java:33)
+	at pe.edu.pucp.inf30.stockify.daoimpl.personal.CuentaUsuarioDAOImpl.comandoCrear(CuentaUsuarioDAOImpl.java:22)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComandoCrear(BaseDAO.java:57)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.lambda$crear$0(BaseDAO.java:101)
+	at pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO.ejecutarComando(BaseDAO.java:44)
+	... 7 more
+

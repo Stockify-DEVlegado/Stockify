@@ -1,0 +1,59 @@
+-------------------------------------------------------------------------------
+Test set: pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 4, Errors: 1, Skipped: 0, Time elapsed: 14.68 s <<< FAILURE! -- in pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest
+pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeObtenerSiIdExiste -- Time elapsed: 2.775 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeObtenerSiIdExiste(ProductoBOTest.java:66)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarNuevo -- Time elapsed: 1.922 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarNuevo(ProductoBOTest.java:83)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarModificado -- Time elapsed: 0.896 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "pe.edu.pucp.inf30.stockify.model.almacen.Producto.setPrecioUnitario(double)" because "producto" is null
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarModificado(ProductoBOTest.java:91)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.noDebeEliminarSiIdNoExiste -- Time elapsed: 0.906 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.noDebeEliminarSiIdNoExiste(ProductoBOTest.java:113)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeHacerRollbackSiErrorEnEliminar -- Time elapsed: 0.895 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeHacerRollbackSiErrorEnEliminar(ProductoBOTest.java:139)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

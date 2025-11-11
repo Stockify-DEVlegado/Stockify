@@ -20,25 +20,24 @@ namespace StockifyWeb
 
         private void InicializarDatos()
         {
-            // Cargar categorías
             CargarCategorias();
-
-            // Cargar artículos para el Kardex
             CargarArticulos();
+            CargarMovimientosKardex(1);
 
-            // Cargar movimientos del primer artículo
-            CargarMovimientosKardex(1); // Producto por defecto
-
-            // Establecer fechas por defecto
             txtFechaDesde.Text = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
             txtFechaHasta.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
+            CargarDatosSelect2();
+        }
+
+        private void CargarDatosSelect2()
+        {
         }
 
         #region Gestión de Inventario - Reportes
 
         private void CargarCategorias()
         {
-            // TODO: Reemplazar con tu lógica de acceso a datos
             ddlCategoria.Items.Clear();
             ddlCategoria.Items.Add(new ListItem("Seleccionar categoría", ""));
             ddlCategoria.Items.Add(new ListItem("Electrónica", "1"));
@@ -51,12 +50,16 @@ namespace StockifyWeb
         {
             try
             {
-                string filtro = txtFiltroProducto.Text.Trim();
+                if (string.IsNullOrEmpty(ddlFiltroProducto.SelectedValue))
+                {
+                    MostrarMensaje("Por favor selecciona un producto");
+                    return;
+                }
 
-                // TODO: Implementar generación de reporte
-                // Ejemplo: GenerarReporteExistencias(filtro);
+                string productoId = ddlFiltroProducto.SelectedValue;
+                string productoNombre = ddlFiltroProducto.SelectedItem.Text;
 
-                MostrarMensaje("Generando reporte de existencias de productos...");
+                MostrarMensaje($"Generando reporte de existencias para: {productoNombre}");
             }
             catch (Exception ex)
             {
@@ -68,12 +71,16 @@ namespace StockifyWeb
         {
             try
             {
-                string filtro = txtFiltroProveedor.Text.Trim();
+                if (string.IsNullOrEmpty(ddlFiltroProveedor.SelectedValue))
+                {
+                    MostrarMensaje("Por favor selecciona un proveedor");
+                    return;
+                }
 
-                // TODO: Implementar generación de reporte
-                // Ejemplo: GenerarReporteProveedores(filtro);
+                string proveedorId = ddlFiltroProveedor.SelectedValue;
+                string proveedorNombre = ddlFiltroProveedor.SelectedItem.Text;
 
-                MostrarMensaje("Generando reporte de proveedores...");
+                MostrarMensaje($"Generando reporte de proveedores para: {proveedorNombre}");
             }
             catch (Exception ex)
             {
@@ -92,11 +99,9 @@ namespace StockifyWeb
                 }
 
                 string categoriaId = ddlCategoria.SelectedValue;
+                string categoriaNombre = ddlCategoria.SelectedItem.Text;
 
-                // TODO: Implementar generación de reporte
-                // Ejemplo: GenerarReportePorCategoria(categoriaId);
-
-                MostrarMensaje("Generando reporte de productos por categoría...");
+                MostrarMensaje($"Generando reporte de productos para la categoría: {categoriaNombre}");
             }
             catch (Exception ex)
             {
@@ -112,13 +117,11 @@ namespace StockifyWeb
         {
             try
             {
-                // TODO: Reemplazar con tu lógica de acceso a datos
                 DataTable dt = ObtenerArticulosMock(filtro);
 
                 rptArticulos.DataSource = dt;
                 rptArticulos.DataBind();
 
-                // Actualizar estadísticas totales
                 ActualizarEstadisticasTotales();
             }
             catch (Exception ex)
@@ -168,8 +171,6 @@ namespace StockifyWeb
         {
             try
             {
-                // TODO: Reemplazar con tu lógica de acceso a datos
-                // Datos de ejemplo
                 litNombreProducto.Text = "Desktop Computer";
                 litCodigoProducto.Text = "PROD-001";
                 litSaldoActual.Text = "8";
@@ -198,7 +199,6 @@ namespace StockifyWeb
                 DateTime? fechaHasta = !string.IsNullOrEmpty(txtFechaHasta.Text) ?
                     DateTime.Parse(txtFechaHasta.Text) : (DateTime?)null;
 
-                // TODO: Reemplazar con tu lógica de acceso a datos
                 DataTable dt = ObtenerMovimientosMock(productoId, metodo, fechaDesde, fechaHasta);
 
                 rptMovimientos.DataSource = dt;
@@ -228,7 +228,6 @@ namespace StockifyWeb
             dt.Columns.Add("SaldoPrecio", typeof(decimal));
             dt.Columns.Add("SaldoTotal", typeof(decimal));
 
-            // Saldo inicial
             dt.Rows.Add(
                 DateTime.Now.AddDays(-30),
                 "SALDO INICIAL",
@@ -238,7 +237,6 @@ namespace StockifyWeb
                 10, 850m, 8500m
             );
 
-            // Entrada
             dt.Rows.Add(
                 DateTime.Parse("2025-10-08"),
                 "Compra a proveedor",
@@ -248,7 +246,6 @@ namespace StockifyWeb
                 20, 800m, 16000m
             );
 
-            // Salida
             dt.Rows.Add(
                 DateTime.Parse("2025-10-10"),
                 "Venta",
@@ -263,8 +260,6 @@ namespace StockifyWeb
 
         protected void ddlMetodoValoracion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Recargar movimientos con el nuevo método
-            // TODO: Obtener el producto actualmente seleccionado
             CargarMovimientosKardex(1);
         }
 
@@ -272,8 +267,6 @@ namespace StockifyWeb
         {
             txtFechaDesde.Text = "";
             txtFechaHasta.Text = "";
-
-            // Recargar movimientos sin filtro
             CargarMovimientosKardex(1);
         }
 
@@ -281,7 +274,6 @@ namespace StockifyWeb
         {
             try
             {
-                // TODO: Implementar exportación a CSV
                 MostrarMensaje("Exportando a CSV...");
             }
             catch (Exception ex)
@@ -298,7 +290,6 @@ namespace StockifyWeb
         {
             try
             {
-                // TODO: Reemplazar con tu lógica de acceso a datos
                 litTotalArticulos.Text = "3";
                 litValorTotalInventario.Text = "8900.00";
                 litUnidadesTotales.Text = "33";
@@ -315,13 +306,11 @@ namespace StockifyWeb
 
         private void MostrarMensaje(string mensaje)
         {
-            // TODO: Implementar tu sistema de notificaciones
             ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('{mensaje}');", true);
         }
 
         private void MostrarError(string mensaje)
         {
-            // TODO: Implementar tu sistema de notificaciones de error
             ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('Error: {mensaje}');", true);
         }
 
