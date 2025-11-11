@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="14.677" tests="9" errors="1" skipped="0" failures="4">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.1" name="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="28.045" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="PE"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\Alonso\AppData\Local\Temp\surefire15540295858279733790\surefirebooter-20251111012334457_12.jar C:\Users\Alonso\AppData\Local\Temp\surefire15540295858279733790 2025-11-11T01-23-29_881-jvmRun1 surefire-20251111012334457_10tmp surefire_3-20251111012334457_11tmp"/>
+    <property name="sun.java.command" value="C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129\surefirebooter-20251111151740063_12.jar C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129 2025-11-11T15-17-34_890-jvmRun1 surefire-20251111151740063_10tmp surefire_3-20251111151740063_11tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyBusiness\target\test-classes;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyBusiness\target\classes;C:\Users\Alonso\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.0\junit-jupiter-api-5.11.0.jar;C:\Users\Alonso\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Alonso\.m2\repository\org\junit\platform\junit-platform-commons\1.11.0\junit-platform-commons-1.11.0.jar;C:\Users\Alonso\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Alonso\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.0\junit-jupiter-params-5.11.0.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyPersistance\target\StockifyPersistance-1.0-SNAPSHOT.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyDBManager\target\StockifyDBManager-1.0-SNAPSHOT.jar;C:\Users\Alonso\.m2\repository\com\mysql\mysql-connector-j\9.4.0\mysql-connector-j-9.4.0.jar;C:\Users\Alonso\.m2\repository\com\google\protobuf\protobuf-java\4.31.1\protobuf-java-4.31.1.jar;C:\Users\Alonso\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\13.2.0.jre11\mssql-jdbc-13.2.0.jre11.jar;C:\Users\Alonso\.m2\repository\net\bytebuddy\byte-buddy\1.15.11\byte-buddy-1.15.11.jar;C:\Users\Alonso\Documents\GitHub\Stockify\Stockify\.java\Stockify\StockifyDomain\target\StockifyDomain-1.0-SNAPSHOT.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Alonso\AppData\Local\Temp\surefire15540295858279733790\surefirebooter-20251111012334457_12.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Alonso\AppData\Local\Temp\surefire11090059557192183129\surefirebooter-20251111151740063_12.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23.0.2+7-58"/>
@@ -59,82 +59,23 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="debeListar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="2.691"/>
-  <testcase name="debeObtenerSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="2.775">
-    <failure message="expected: not &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: not <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
-	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
-	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeObtenerSiIdExiste(ProductoBOTest.java:66)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-]]></failure>
-    <system-err><![CDATA[No se encontro el registro con id: 0
-]]></system-err>
-  </testcase>
-  <testcase name="noDebeObtenerSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.892">
+  <testcase name="debeListar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="6.412"/>
+  <testcase name="debeGuardarNuevo" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="9.036"/>
+  <testcase name="debeObtenerSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="1.809"/>
+  <testcase name="noDebeObtenerSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.9">
     <system-err><![CDATA[No se encontro el registro con id: 99999
 ]]></system-err>
   </testcase>
-  <testcase name="debeGuardarNuevo" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="1.922">
-    <failure message="expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
-	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
-	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:183)
-	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarNuevo(ProductoBOTest.java:83)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-]]></failure>
-  </testcase>
-  <testcase name="debeGuardarModificado" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.896">
-    <error message="Cannot invoke &quot;pe.edu.pucp.inf30.stockify.model.almacen.Producto.setPrecioUnitario(double)&quot; because &quot;producto&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot invoke "pe.edu.pucp.inf30.stockify.model.almacen.Producto.setPrecioUnitario(double)" because "producto" is null
-	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeGuardarModificado(ProductoBOTest.java:91)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-]]></error>
-    <system-err><![CDATA[No se encontro el registro con id: 0
+  <testcase name="debeGuardarModificado" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="4.47"/>
+  <testcase name="debeEliminarSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="1.806">
+    <system-err><![CDATA[No se encontro el registro con id: 13
 ]]></system-err>
   </testcase>
-  <testcase name="debeEliminarSiIdExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="1.8">
-    <system-err><![CDATA[No se encontro el registro con id: 0
-]]></system-err>
-  </testcase>
-  <testcase name="noDebeEliminarSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.906">
-    <failure message="Expected java.lang.RuntimeException to be thrown, but nothing was thrown." type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
-	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.noDebeEliminarSiIdNoExiste(ProductoBOTest.java:113)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-]]></failure>
-  </testcase>
-  <testcase name="debeHacerRollbackSiErrorEnGuardar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.902">
+  <testcase name="noDebeEliminarSiIdNoExiste" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.913"/>
+  <testcase name="debeHacerRollbackSiErrorEnGuardar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.894">
     <system-err><![CDATA[Error SQL: Cannot add or update a child row: a foreign key constraint fails (`Stockify`.`Producto`, CONSTRAINT `Producto_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `Categoria` (`idCategoria`))
 Error inesperado: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`Stockify`.`Producto`, CONSTRAINT `Producto_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `Categoria` (`idCategoria`))
 ]]></system-err>
   </testcase>
-  <testcase name="debeHacerRollbackSiErrorEnEliminar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.895">
-    <failure message="Expected java.lang.RuntimeException to be thrown, but nothing was thrown." type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Expected java.lang.RuntimeException to be thrown, but nothing was thrown.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
-	at pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest.debeHacerRollbackSiErrorEnEliminar(ProductoBOTest.java:139)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-]]></failure>
-  </testcase>
+  <testcase name="debeHacerRollbackSiErrorEnEliminar" classname="pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest" time="0.896"/>
 </testsuite>

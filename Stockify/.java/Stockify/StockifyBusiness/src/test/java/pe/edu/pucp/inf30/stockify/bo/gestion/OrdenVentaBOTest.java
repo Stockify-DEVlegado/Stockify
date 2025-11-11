@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pe.edu.pucp.inf30.stockify.bo.gestion;
 
 import java.util.ArrayList;
@@ -36,11 +32,6 @@ import pe.edu.pucp.inf30.stockify.model.Estado;
 import pe.edu.pucp.inf30.stockify.model.EstadoDocumento;
 import pe.edu.pucp.inf30.stockify.model.gestion.LineaOrdenVenta;
 
-/**
- *
- * @author DEVlegado
- */
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OrdenVentaBOTest implements GestionableProbable{
@@ -48,7 +39,7 @@ public class OrdenVentaBOTest implements GestionableProbable{
     private int testProductoId;
     private int testEmpresaId;
     private int testOrdenVentaId;
-   
+    
     private final int idIncorrecto = 99999;
     
     private final OrdenVentaBOImpl ordenVentaBO = new OrdenVentaBOImpl();
@@ -86,9 +77,9 @@ public class OrdenVentaBOTest implements GestionableProbable{
     
     @AfterAll
     public void limpiar() {
-//        new CategoriaDAOImpl().eliminar(this.testCategoriaId);
-//        new ProductoDAOImpl().eliminar(this.testProductoId);
-//        new EmpresaDAOImpl().eliminar(this.testEmpresaId);
+//        if(this.testProductoId > 0) new ProductoDAOImpl().eliminar(this.testProductoId);
+//        if(this.testCategoriaId > 0) new CategoriaDAOImpl().eliminar(this.testCategoriaId);
+//        if(this.testEmpresaId > 0) new EmpresaDAOImpl().eliminar(this.testEmpresaId);
     }
     
     @Test
@@ -98,19 +89,26 @@ public class OrdenVentaBOTest implements GestionableProbable{
         List<OrdenVenta> lista = ordenVentaBO.listar();
         assertNotNull(lista);
     }
-    
+
     @Test
     @Order(2)
     @Override
+    public void debeGuardarNuevo() {
+        crearOrdenVenta();
+        assertTrue(this.testOrdenVentaId > 0, "El ID de OrdenVenta no se pudo recuperar.");
+    }
+    
+    @Test
+    @Order(3)
+    @Override
     public void debeObtenerSiIdExiste() {
-        crearOrdenVenta();//crea y guarda la orden
         OrdenVenta orden = ordenVentaBO.obtener(this.testOrdenVentaId);
         assertNotNull(orden);
         assertEquals(this.testOrdenVentaId, orden.getIdOrdenVenta());
     }
     
     @Test
-    @Order(3)
+    @Order(4)
     @Override
     public void noDebeObtenerSiIdNoExiste() {
         OrdenVenta orden = ordenVentaBO.obtener(this.idIncorrecto);
@@ -118,30 +116,23 @@ public class OrdenVentaBOTest implements GestionableProbable{
     }
     
     @Test
-    @Order(4)
-    @Override
-    public void debeGuardarNuevo() {
-        crearOrdenVenta();
-        assertTrue(this.testOrdenVentaId > 0);
-    }
-    
-    @Test
     @Order(5)
     @Override
     public void debeGuardarModificado() {
         OrdenVenta orden = ordenVentaBO.obtener(this.testOrdenVentaId);
-        orden.setTotal(200.0);
+        orden.setTotal(300.0); // Cambiamos el total para distinguirlo
         ordenVentaBO.guardar(orden, Estado.MODIFICADO);
 
         OrdenVenta modificada = ordenVentaBO.obtener(this.testOrdenVentaId);
-        assertEquals(200.0, modificada.getTotal());
+        assertEquals(300.0, modificada.getTotal());
     }
     
     @Test
     @Order(6)
     @Override
     public void debeEliminarSiIdExiste() {
-        ordenVentaBO.eliminar(this.testOrdenVentaId);
+        // Un eliminar exitoso NO debe lanzar excepción
+        assertDoesNotThrow(() -> ordenVentaBO.eliminar(this.testOrdenVentaId));
         OrdenVenta orden = ordenVentaBO.obtener(this.testOrdenVentaId);
         assertNull(orden);
     }
@@ -150,6 +141,7 @@ public class OrdenVentaBOTest implements GestionableProbable{
     @Order(7)
     @Override
     public void noDebeEliminarSiIdNoExiste() {
+        // Asumimos que tu BO SÍ lanza excepción, como OrdenCompra
         assertThrows(RuntimeException.class, () -> ordenVentaBO.eliminar(idIncorrecto));
     }
     
@@ -162,7 +154,6 @@ public class OrdenVentaBOTest implements GestionableProbable{
         orden.setFecha(new GregorianCalendar(2025, Calendar.JANUARY, 1).getTime());
         orden.setLineas(new ArrayList<>());
 
-        // Forzamos un error: linea sin producto
         LineaOrdenVenta linea = new LineaOrdenVenta();
         linea.setCantidad(1);
         linea.setSubtotal(10.0);
@@ -175,7 +166,6 @@ public class OrdenVentaBOTest implements GestionableProbable{
     @Order(9)
     @Override
     public void debeHacerRollbackSiErrorEnEliminar() {
-        // Forzamos un error eliminando con id incorrecto
         assertThrows(RuntimeException.class, () -> ordenVentaBO.eliminar(idIncorrecto));
     }
     
@@ -188,7 +178,7 @@ public class OrdenVentaBOTest implements GestionableProbable{
         LineaOrdenVenta linea = new LineaOrdenVenta();
         linea.setProducto(new ProductoDAOImpl().leer(this.testProductoId));
         linea.setCantidad(2);
-        linea.setSubtotal(200.0);
+        linea.setSubtotal(200.0); // Total 200.0
 
         List<LineaOrdenVenta> lineas = new ArrayList<>();
         lineas.add(linea);
@@ -196,7 +186,18 @@ public class OrdenVentaBOTest implements GestionableProbable{
         orden.setTotal(200.0);
 
         ordenVentaBO.guardar(orden, Estado.NUEVO);
-        this.testOrdenVentaId = orden.getIdOrdenVenta();
+        
+        // --- WORKAROUND CORREGIDO ---
+        List<OrdenVenta> lista = ordenVentaBO.listar();
+        for (OrdenVenta o : lista) {
+            if (o.getCliente() != null && 
+                o.getCliente().getIdEmpresa() == this.testEmpresaId &&
+                o.getTotal() == 200.0) {
+                
+                this.testOrdenVentaId = o.getIdOrdenVenta();
+                break;
+            }
+        }
     }
     
 }

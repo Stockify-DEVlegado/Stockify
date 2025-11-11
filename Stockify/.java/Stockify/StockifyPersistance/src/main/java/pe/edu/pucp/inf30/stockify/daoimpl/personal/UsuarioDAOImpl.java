@@ -26,7 +26,7 @@ public class UsuarioDAOImpl extends BaseDAO<Usuario> implements
     protected PreparedStatement comandoCrear(Connection conn, 
             Usuario modelo) throws SQLException {
         
-        String sql = "{call insertarUsuario(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "{call insertarUsuario(?, ?, ?, ?, ?, ?, ?, ?)}";
         
         CallableStatement cmd = conn.prepareCall(sql);
         if (modelo.getCuenta()!= null) {
@@ -49,7 +49,7 @@ public class UsuarioDAOImpl extends BaseDAO<Usuario> implements
     protected PreparedStatement comandoActualizar(Connection conn, 
             Usuario modelo) throws SQLException {
         
-        String sql = "{call modificarUsuario(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "{call modificarUsuario(?, ?, ?, ?, ?, ?, ?, ?)}";
         
         CallableStatement cmd = conn.prepareCall(sql);
         cmd.setInt("p_id", modelo.getIdUsuario());
@@ -114,8 +114,8 @@ public class UsuarioDAOImpl extends BaseDAO<Usuario> implements
         }
         
         usuario.setIdUsuario(rs.getInt("idUsuario"));
-        usuario.setNombres(rs.getString("userName"));
-        usuario.setApellidos(rs.getString("password"));
+        usuario.setNombres(rs.getString("nombres"));
+        usuario.setApellidos(rs.getString("apellidos"));
         usuario.setEmail(rs.getString("email"));
         usuario.setTelefono(rs.getString("telefono"));
         usuario.setActivo(rs.getBoolean("activo"));

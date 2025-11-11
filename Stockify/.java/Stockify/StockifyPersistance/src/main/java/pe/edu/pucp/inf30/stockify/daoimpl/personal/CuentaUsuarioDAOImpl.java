@@ -25,12 +25,17 @@ public class CuentaUsuarioDAOImpl extends BaseDAO<CuentaUsuario> implements
     protected PreparedStatement comandoCrear(Connection conn, 
             CuentaUsuario modelo) throws SQLException {
         
-        String sql = "{call insertarCuentaUsuario(?, ?, ?, ?)";
+        String sql = "{call insertarCuentaUsuario(?, ?, ?, ?)}";
         
         CallableStatement cmd = conn.prepareCall(sql);
         cmd.setString("p_username", modelo.getUsername());
         cmd.setString("p_password", modelo.getPassword());
-        cmd.setDate("p_ultimoAcceso", new java.sql.Date(modelo.getUltimoAcceso().getTime()));
+        if (modelo.getUltimoAcceso() != null) {
+        cmd.setTimestamp("p_ultimoAcceso", new java.sql.Timestamp(modelo.getUltimoAcceso().getTime()));
+        } else {
+            cmd.setNull("p_ultimoAcceso", java.sql.Types.TIMESTAMP);
+        }
+        //cmd.setDate("p_ultimoAcceso", new java.sql.Date(modelo.getUltimoAcceso().getTime()));
         cmd.registerOutParameter("p_id", Types.INTEGER);
         return cmd;
         
@@ -40,13 +45,18 @@ public class CuentaUsuarioDAOImpl extends BaseDAO<CuentaUsuario> implements
     protected PreparedStatement comandoActualizar(Connection conn, 
             CuentaUsuario modelo) throws SQLException {
         
-        String sql = "{call modificarCuentaUsuario(?, ?, ?, ?)";
+        String sql = "{call modificarCuentaUsuario(?, ?, ?, ?)}";
         
         CallableStatement cmd = conn.prepareCall(sql);
         cmd.setInt("p_id", modelo.getIdCuentaUsuario());
         cmd.setString("p_username", modelo.getUsername());
         cmd.setString("p_password", modelo.getPassword());
-        cmd.setDate("p_ultimoAcceso", new java.sql.Date(modelo.getUltimoAcceso().getTime()));
+        if (modelo.getUltimoAcceso() != null) {
+        cmd.setTimestamp("p_ultimoAcceso", new java.sql.Timestamp(modelo.getUltimoAcceso().getTime()));
+        } else {
+            cmd.setNull("p_ultimoAcceso", java.sql.Types.TIMESTAMP);
+        }
+        //cmd.setDate("p_ultimoAcceso", new java.sql.Date(modelo.getUltimoAcceso().getTime()));
         return cmd;
         
     }
