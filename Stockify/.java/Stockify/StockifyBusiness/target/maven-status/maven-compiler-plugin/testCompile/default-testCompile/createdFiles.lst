@@ -1,1 +1,3 @@
 pe\edu\pucp\inf30\stockify\bo\GestionableProbable.class
+pe\edu\pucp\inf30\stockify\bo\gestion\OrdenCompraBOTest.class
+pe\edu\pucp\inf30\stockify\bo\gestion\OrdenVentaBOTest.class
