@@ -2,11 +2,10 @@ pe\edu\pucp\inf30\stockify\ws\OrdenSalidaWS.class
 pe\edu\pucp\inf30\stockify\ws\OrdenVentaWS.class
 pe\edu\pucp\inf30\stockify\ws\CategoriaWS.class
 pe\edu\pucp\inf30\stockify\ws\ExistenciasWS.class
-pe\edu\pucp\inf30\stockify\ws\ProductoWS.class
-pe\edu\pucp\inf30\stockify\ws\GuiaRemisionWS.class
-pe\edu\pucp\inf30\stockify\ws\UsuarioWS.class
 pe\edu\pucp\inf30\stockify\ws\MovimientoWS.class
+pe\edu\pucp\inf30\stockify\ws\ProductoWS.class
 pe\edu\pucp\inf30\stockify\ws\OrdenIngresoWS.class
 pe\edu\pucp\inf30\stockify\ws\CuentaUsuarioWS.class
 pe\edu\pucp\inf30\stockify\ws\EmpresaWS.class
 pe\edu\pucp\inf30\stockify\ws\OrdenCompraWS.class
+pe\edu\pucp\inf30\stockify\ws\UsuarioWS.class

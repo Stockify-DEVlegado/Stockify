@@ -96,7 +96,7 @@ public class CategoriaDAOImpl extends BaseDAO<Categoria>
         categoria.setNombre(rs.getString("nombre"));
         
         // Mapear la categoría padre si existe
-        int fidCategoria = rs.getInt("fidCategoria");
+        int fidCategoria = rs.getInt("idCategoriaPadre");
         if (!rs.wasNull()) {  // Verificar si el campo no es NULL
             Categoria categoriaPadre = new Categoria();
             categoriaPadre.setIdCategoria(fidCategoria);
