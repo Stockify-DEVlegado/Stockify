@@ -47,4 +47,20 @@ public class ProductoBOImpl implements ProductoBO{
             this.productoDao.actualizar(modelo);
         }
     }
+    
+    @Override
+    public List<Producto> listarOrdenadoPorCodigo() {
+        return this.productoDao.leerTodosOrdenados("codigo");
+    }
+    
+    @Override
+    public List<Producto> listarOrdenadoPorNombre() {
+        return this.productoDao.leerTodosOrdenados("nombre");
+    }
+    
+    @Override
+    public List<Producto> listarProductosPorCategoria(int idCategoria) {
+        return this.productoDao.leerTodosPorCategoria(idCategoria);
+    }
+    
 }

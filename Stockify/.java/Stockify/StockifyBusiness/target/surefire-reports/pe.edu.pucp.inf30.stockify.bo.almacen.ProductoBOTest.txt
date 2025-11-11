@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.68 s -- in pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.69 s -- in pe.edu.pucp.inf30.stockify.bo.almacen.ProductoBOTest

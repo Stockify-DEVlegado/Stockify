@@ -4,6 +4,7 @@
  */
 package pe.edu.pucp.inf30.stockify.bo.almacen;
 
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.model.almacen.Producto;
 import pe.edu.pucp.inf30.stockify.bo.Gestionable;
 
@@ -13,5 +14,9 @@ import pe.edu.pucp.inf30.stockify.bo.Gestionable;
  */
 
 public interface ProductoBO extends Gestionable<Producto> {
+    
+    List<Producto> listarOrdenadoPorCodigo();
+    List<Producto> listarOrdenadoPorNombre();
+    List<Producto> listarProductosPorCategoria(int idCategoria);
     
 }
