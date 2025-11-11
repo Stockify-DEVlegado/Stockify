@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="1c40410c-d1bc-4e9e-a31a-7bf62afbbbf6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8080/StockifyWS/servicios.disco" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="servicios.disco" MetadataType="Disco" ID="c069bf47-ef89-4b7d-b1c7-422c1e871ab2" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/servicios.disco" />
+    <MetadataFile FileName="EmpresaWS.wsdl" MetadataType="Wsdl" ID="b877386c-3f79-4048-aa15-1c572b1b1f42" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/EmpresaWS?wsdl" />
+    <MetadataFile FileName="OrdenIngresoWS.xsd" MetadataType="Schema" ID="6d4e88f4-bc7b-4728-aded-eea0add4d422" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenIngresoWS?xsd=1" />
+    <MetadataFile FileName="ExistenciasWS.wsdl" MetadataType="Wsdl" ID="a15d3a51-55d3-4518-b5a1-9084e0ce5aa2" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/ExistenciasWS?wsdl" />
+    <MetadataFile FileName="OrdenCompraWS.xsd" MetadataType="Schema" ID="98865aa4-b532-4e1c-b54b-a8ece07f4b76" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenCompraWS?xsd=1" />
+    <MetadataFile FileName="OrdenVentaWS.wsdl" MetadataType="Wsdl" ID="23cfae49-9a95-49e2-9257-6a372497c8e0" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenVentaWS?wsdl" />
+    <MetadataFile FileName="UsuarioWS.xsd" MetadataType="Schema" ID="e4a57bff-628d-4239-989c-15a375805de7" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/UsuarioWS?xsd=1" />
+    <MetadataFile FileName="OrdenSalidaWS.xsd" MetadataType="Schema" ID="87ec99e6-cfa0-461b-a007-110bf0367cdd" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenSalidaWS?xsd=1" />
+    <MetadataFile FileName="CuentaUsuarioWS.xsd" MetadataType="Schema" ID="0be2322f-8f17-476a-96fd-eb0c0a4744b0" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/CuentaUsuarioWS?xsd=1" />
+    <MetadataFile FileName="CategoriaWS.xsd" MetadataType="Schema" ID="1e5f2886-32e2-4347-8984-8bc0ebe1b01d" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/CategoriaWS?xsd=1" />
+    <MetadataFile FileName="OrdenCompraWS.wsdl" MetadataType="Wsdl" ID="1f68fc68-6a5f-4e94-9a26-3935832ec29f" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenCompraWS?wsdl" />
+    <MetadataFile FileName="MovimientoWS.xsd" MetadataType="Schema" ID="4762d858-0f94-432d-9a89-1fe5506c8aae" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/MovimientoWS?xsd=1" />
+    <MetadataFile FileName="CuentaUsuarioWS.wsdl" MetadataType="Wsdl" ID="6ad79e1d-8a09-4f6c-9cf4-e0d971b961b4" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/CuentaUsuarioWS?wsdl" />
+    <MetadataFile FileName="ExistenciasWS.xsd" MetadataType="Schema" ID="c262b2c0-7efd-4ace-83c1-6573fa3c9c76" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/ExistenciasWS?xsd=1" />
+    <MetadataFile FileName="EmpresaWS.xsd" MetadataType="Schema" ID="9eb9d426-709f-42cf-8c7a-422515b84bda" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/EmpresaWS?xsd=1" />
+    <MetadataFile FileName="OrdenSalidaWS.wsdl" MetadataType="Wsdl" ID="b52fd787-8e76-4e92-8c1d-bf58a69fc8ab" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenSalidaWS?wsdl" />
+    <MetadataFile FileName="ProductoWS.xsd" MetadataType="Schema" ID="ad15b0ba-df93-4770-9282-98e20c8d0d41" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/ProductoWS?xsd=1" />
+    <MetadataFile FileName="OrdenVentaWS.xsd" MetadataType="Schema" ID="c2bc42b6-b18e-4183-874a-b91f5f0f725e" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenVentaWS?xsd=1" />
+    <MetadataFile FileName="CategoriaWS.wsdl" MetadataType="Wsdl" ID="c0b289b0-1fdf-47e2-8722-8fc093f4d15e" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/CategoriaWS?wsdl" />
+    <MetadataFile FileName="MovimientoWS.wsdl" MetadataType="Wsdl" ID="a81f87f2-dc38-498d-9837-97be8b1b4de3" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/MovimientoWS?wsdl" />
+    <MetadataFile FileName="UsuarioWS.wsdl" MetadataType="Wsdl" ID="098a60be-b5dd-48d1-8d84-4c323c865046" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/UsuarioWS?wsdl" />
+    <MetadataFile FileName="ProductoWS.wsdl" MetadataType="Wsdl" ID="ea1ed620-8a8b-4d32-86e6-7c432935941c" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/ProductoWS?wsdl" />
+    <MetadataFile FileName="OrdenIngresoWS.wsdl" MetadataType="Wsdl" ID="5bc983cf-08d7-4be2-87ac-36e7b06a3321" SourceId="1" SourceUrl="http://localhost:8080/StockifyWS/OrdenIngresoWS?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -46,6 +46,8 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,16 +69,249 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DetalleProducto.aspx" />
+    <None Include="Connected Services\StockifyWS\CategoriaWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\CategoriaWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\CuentaUsuarioWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\CuentaUsuarioWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\EmpresaWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\EmpresaWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\ExistenciasWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\ExistenciasWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\MovimientoWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\MovimientoWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\OrdenCompraWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\OrdenCompraWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\OrdenIngresoWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\OrdenIngresoWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\OrdenSalidaWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\OrdenSalidaWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\OrdenVentaWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\OrdenVentaWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\ProductoWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\ProductoWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StockifyWS\servicios.disco" />
+    <None Include="Connected Services\StockifyWS\configuration91.svcinfo" />
+    <None Include="Connected Services\StockifyWS\configuration.svcinfo" />
+    <None Include="Connected Services\StockifyWS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Inicio.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="Ordenes.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Reportes.aspx" />
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.categoria.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.cuentaUsuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarCuentaUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarEmpresaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarExistenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarMovimientoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarOrdenCompraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarOrdenVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarProductoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.eliminarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.empresa.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.existencias.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarEmpresaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarExistenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarMovimientoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarOrdenCompraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarOrdenIngresoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarOrdenSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarOrdenVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarProductoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.guardarUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarCategoriasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarCuentasUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarEmpresasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarExistenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarMovimientosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarOrdenesCompraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarOrdenesIngresoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarOrdenesSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarOrdenesVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarProductosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.listarUsuariosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.movimiento.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerCategoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerCuentaUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerEmpresaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerExistenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerMovimientoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerOrdenCompraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerOrdenIngresoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerOrdenSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerOrdenVentaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerProductoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerUsuarioResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.ordenCompra.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.ordenIngreso.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.ordenSalida.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.ordenVenta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.producto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />
+    <None Include="Connected Services\StockifyWS\UsuarioWS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="login.aspx" />
     <Content Include="Register.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\StockifyWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleProducto.aspx.cs">
+      <DependentUpon>DetalleProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleProducto.aspx.designer.cs">
+      <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -99,6 +334,11 @@
       <DependentUpon>Ordenes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Proveedores.aspx.cs">
       <DependentUpon>Proveedores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -144,6 +384,15 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\StockifyWS\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

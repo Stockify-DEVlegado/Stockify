@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="StockifyWeb.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="StockifyWeb_localhost_ExistenciasWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/ExistenciasWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_ProductoWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/ProductoWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_MovimientoWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/MovimientoWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_OrdenSalidaWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/OrdenSalidaWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_OrdenCompraWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/OrdenCompraWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_CuentaUsuarioWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/CuentaUsuarioWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_OrdenVentaWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/OrdenVentaWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_CategoriaWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/CategoriaWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_UsuarioWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/UsuarioWS</Value>
+    </Setting>
+    <Setting Name="StockifyWeb_localhost_OrdenIngresoWS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8080/StockifyWS/OrdenIngresoWS</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
