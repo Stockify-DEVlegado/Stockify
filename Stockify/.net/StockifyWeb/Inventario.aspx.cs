@@ -16,6 +16,7 @@ namespace StockifyWeb
             {
                 // Registrar tareas asíncronas para Page_Load
                 RegisterAsyncTask(new PageAsyncTask(CargarCategoriasAsync));
+                RegisterAsyncTask(new PageAsyncTask(CargarCategoriasParaFiltroAsync));
                 RegisterAsyncTask(new PageAsyncTask(CargarProductosAsync));
             }
         }
@@ -218,6 +219,203 @@ namespace StockifyWeb
             RegisterAsyncTask(new PageAsyncTask(() => CargarProductoParaEditarAsync(productoId)));
         }
 
+        protected void gvProductos_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            if (e.SortExpression == "Producto")
+            {
+                RegisterAsyncTask(new PageAsyncTask(CargarProductosOrdenadosPorNombreAsync));
+            }
+        }
+
+        private async Task CargarProductosOrdenadosPorNombreAsync()
+        {
+            ProductoWSClient productoClient = null;
+            ExistenciasWSClient existenciasClient = null;
+
+            try
+            {
+                productoClient = new ProductoWSClient();
+
+                // Llamar al método de ordenamiento del WS
+                var response = await productoClient.listarProductosOrdenadoPorNombreAsync();
+                var productos = response.@return;
+
+                var productosConExistencias = new List<ProductoViewModel>();
+
+                if (productos != null && productos.Length > 0)
+                {
+                    existenciasClient = new ExistenciasWSClient();
+
+                    var existenciasResponse = await existenciasClient.listarExistenciasAsync();
+                    var existencias = existenciasResponse.@return;
+
+                    foreach (var prod in productos)
+                    {
+                        int stockActual = 0;
+                        if (existencias != null)
+                        {
+                            stockActual = existencias
+                                .Count(e => e.producto != null &&
+                                            e.producto.idProducto == prod.idProducto &&
+                                            e.estado == estadoExistencias.DISPONIBLE);
+                        }
+
+                        productosConExistencias.Add(new ProductoViewModel
+                        {
+                            IdProducto = prod.idProducto,
+                            Producto = prod.nombre ?? "Sin nombre",
+                            Precio = prod.precioUnitario,
+                            Descripcion = prod.descripcion ?? "Sin descripción",
+                            Marca = prod.marca ?? "Sin marca",
+                            Categoria = prod.categoria?.nombre ?? "Sin categoría",
+                            StockActual = stockActual,
+                            StockMinimo = prod.stockMinimo,
+                            StockMaximo = prod.stockMaximo
+                        });
+                    }
+                }
+
+                gvProductos.DataSource = productosConExistencias;
+                gvProductos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar productos ordenados: {ex.Message}");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
+                    $"alert('Error al cargar productos: {ex.Message}');", true);
+            }
+            finally
+            {
+                if (existenciasClient != null && existenciasClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    existenciasClient.Close();
+                }
+                if (productoClient != null && productoClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    productoClient.Close();
+                }
+            }
+        }
+
+        private async Task CargarCategoriasParaFiltroAsync()
+        {
+            CategoriaWSClient categoriaClient = null;
+            try
+            {
+                categoriaClient = new CategoriaWSClient();
+
+                var response = await categoriaClient.listarCategoriasAsync();
+                var categorias = response.@return;
+
+                ddlFiltroCategoria.Items.Clear();
+                ddlFiltroCategoria.Items.Add(new ListItem("📋 Todas las categorías", "0"));
+
+                if (categorias != null)
+                {
+                    foreach (var cat in categorias)
+                    {
+                        ddlFiltroCategoria.Items.Add(new ListItem(cat.nombre, cat.idCategoria.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar categorías para filtro: {ex.Message}");
+            }
+            finally
+            {
+                if (categoriaClient != null && categoriaClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    categoriaClient.Close();
+                }
+            }
+        }
+
+        protected void ddlFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int categoriaId = int.Parse(ddlFiltroCategoria.SelectedValue);
+
+            if (categoriaId == 0)
+            {
+                // Mostrar todos los productos
+                RegisterAsyncTask(new PageAsyncTask(CargarProductosAsync));
+            }
+            else
+            {
+                // Filtrar por categoría
+                RegisterAsyncTask(new PageAsyncTask(() => CargarProductosPorCategoriaAsync(categoriaId)));
+            }
+        }
+
+        private async Task CargarProductosPorCategoriaAsync(int categoriaId)
+        {
+            ProductoWSClient productoClient = null;
+            ExistenciasWSClient existenciasClient = null;
+
+            try
+            {
+                productoClient = new ProductoWSClient();
+
+                // Llamar al método del WS que filtra por categoría
+                var response = await productoClient.listarProductosPorCategoriaAsync(categoriaId);
+                var productos = response.@return;
+
+                var productosConExistencias = new List<ProductoViewModel>();
+
+                if (productos != null && productos.Length > 0)
+                {
+                    existenciasClient = new ExistenciasWSClient();
+
+                    var existenciasResponse = await existenciasClient.listarExistenciasAsync();
+                    var existencias = existenciasResponse.@return;
+
+                    foreach (var prod in productos)
+                    {
+                        int stockActual = 0;
+                        if (existencias != null)
+                        {
+                            stockActual = existencias
+                                .Count(e => e.producto != null &&
+                                            e.producto.idProducto == prod.idProducto &&
+                                            e.estado == estadoExistencias.DISPONIBLE);
+                        }
+
+                        productosConExistencias.Add(new ProductoViewModel
+                        {
+                            IdProducto = prod.idProducto,
+                            Producto = prod.nombre ?? "Sin nombre",
+                            Precio = prod.precioUnitario,
+                            Descripcion = prod.descripcion ?? "Sin descripción",
+                            Marca = prod.marca ?? "Sin marca",
+                            Categoria = prod.categoria?.nombre ?? "Sin categoría",
+                            StockActual = stockActual,
+                            StockMinimo = prod.stockMinimo,
+                            StockMaximo = prod.stockMaximo
+                        });
+                    }
+                }
+
+                gvProductos.DataSource = productosConExistencias;
+                gvProductos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar productos por categoría: {ex.Message}");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
+                    $"alert('Error al cargar productos: {ex.Message}');", true);
+            }
+            finally
+            {
+                if (existenciasClient != null && existenciasClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    existenciasClient.Close();
+                }
+                if (productoClient != null && productoClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    productoClient.Close();
+                }
+            }
+        }
         private async Task CargarProductoParaEditarAsync(int productoId)
         {
             ProductoWSClient productoClient = null;
