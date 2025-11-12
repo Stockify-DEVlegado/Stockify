@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.stockify.pucp.edu.pe/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="OrdenCompraWS" targetNamespace="http://services.stockify.pucp.edu.pe/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/StockifyWS/OrdenCompraWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
+    </xsd:schema>
+  </types>
+  <message name="obtenerOrdenCompra">
+    <part name="parameters" element="tns:obtenerOrdenCompra" />
+  </message>
+  <message name="obtenerOrdenCompraResponse">
+    <part name="parameters" element="tns:obtenerOrdenCompraResponse" />
+  </message>
+  <message name="guardarOrdenCompra">
+    <part name="parameters" element="tns:guardarOrdenCompra" />
+  </message>
+  <message name="guardarOrdenCompraResponse">
+    <part name="parameters" element="tns:guardarOrdenCompraResponse" />
+  </message>
+  <message name="eliminarOrdenCompra">
+    <part name="parameters" element="tns:eliminarOrdenCompra" />
+  </message>
+  <message name="eliminarOrdenCompraResponse">
+    <part name="parameters" element="tns:eliminarOrdenCompraResponse" />
+  </message>
+  <message name="listarOrdenesCompra">
+    <part name="parameters" element="tns:listarOrdenesCompra" />
+  </message>
+  <message name="listarOrdenesCompraResponse">
+    <part name="parameters" element="tns:listarOrdenesCompraResponse" />
+  </message>
+  <portType name="OrdenCompraWS">
+    <operation name="obtenerOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest" message="tns:obtenerOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse" message="tns:obtenerOrdenCompraResponse" />
+    </operation>
+    <operation name="guardarOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
+    </operation>
+    <operation name="eliminarOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest" message="tns:eliminarOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse" message="tns:eliminarOrdenCompraResponse" />
+    </operation>
+    <operation name="listarOrdenesCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest" message="tns:listarOrdenesCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse" message="tns:listarOrdenesCompraResponse" />
+    </operation>
+  </portType>
+  <binding name="OrdenCompraWSPortBinding" type="tns:OrdenCompraWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="guardarOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarOrdenesCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="OrdenCompraWS">
+    <port name="OrdenCompraWSPort" binding="tns:OrdenCompraWSPortBinding">
+      <soap:address location="http://localhost:8080/StockifyWS/OrdenCompraWS" />
+    </port>
+  </service>
+</definitions>

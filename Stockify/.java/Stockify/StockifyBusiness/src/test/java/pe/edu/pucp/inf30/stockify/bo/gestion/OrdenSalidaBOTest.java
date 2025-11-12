@@ -1,7 +1,3 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-// */
 //package pe.edu.pucp.inf30.stockify.bo.gestion;
 //
 //import java.util.ArrayList;
@@ -39,10 +35,6 @@
 //import pe.edu.pucp.inf30.stockify.model.usuario.TipoDocumento;
 //import pe.edu.pucp.inf30.stockify.model.usuario.TipoEmpresa;
 //
-///**
-// *
-// * @author DEVlegado
-// */
 //@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 //public class OrdenSalidaBOTest implements GestionableProbable {
@@ -111,7 +103,7 @@
 //        usuario.setCuenta(cuentaDao.leer(this.testCuentaUsuarioId));
 //        this.testUsuarioId = usuarioDao.crear(usuario);
 //        
-//        // Crear Orden de Venta
+//        // Crear Orden de Venta (con workaround para el ID)
 //        OrdenVenta ordenVenta = new OrdenVenta();
 //        ordenVenta.setCliente(empresaDao.leer(this.testEmpresaId));
 //        ordenVenta.setFecha(new GregorianCalendar(2025, Calendar.JANUARY, 20).getTime());
@@ -119,7 +111,15 @@
 //        ordenVenta.setTotal(0.0);
 //        ordenVenta.setLineas(new ArrayList<>());
 //        ordenVentaBO.guardar(ordenVenta, Estado.NUEVO);
-//        this.testOrdenVentaId = ordenVenta.getIdOrdenVenta();
+//        
+//        List<OrdenVenta> lista = ordenVentaBO.listar();
+//        for (OrdenVenta ov : lista) {
+//            if (ov.getCliente() != null &&
+//                ov.getCliente().getIdEmpresa() == this.testEmpresaId) {
+//                this.testOrdenVentaId = ov.getIdOrdenVenta();
+//                break;
+//            }
+//        }
 //    }
 //    
 //    @AfterAll
@@ -127,11 +127,11 @@
 ////        if (this.testOrdenVentaId > 0) {
 ////            ordenVentaBO.eliminar(this.testOrdenVentaId);
 ////        }
-////        new UsuarioDAOImpl().eliminar(this.testUsuarioId);
-////        new CuentaUsuarioDAOImpl().eliminar(this.testCuentaUsuarioId);
-////        new ProductoDAOImpl().eliminar(this.testProductoId);
-////        new CategoriaDAOImpl().eliminar(this.testCategoriaId);
-////        new EmpresaDAOImpl().eliminar(this.testEmpresaId);
+////        if (this.testUsuarioId > 0) new UsuarioDAOImpl().eliminar(this.testUsuarioId);
+////        if (this.testCuentaUsuarioId > 0) new CuentaUsuarioDAOImpl().eliminar(this.testCuentaUsuarioId);
+////        if (this.testProductoId > 0) new ProductoDAOImpl().eliminar(this.testProductoId);
+////        if (this.testCategoriaId > 0) new CategoriaDAOImpl().eliminar(this.testCategoriaId);
+////        if (this.testEmpresaId > 0) new EmpresaDAOImpl().eliminar(this.testEmpresaId);
 //    }
 //    
 //    @Test
@@ -141,31 +141,30 @@
 //        List<OrdenSalida> lista = ordenSalidaBO.listar();
 //        assertNotNull(lista);
 //    }
-//    
+//
 //    @Test
 //    @Order(2)
 //    @Override
-//    public void debeObtenerSiIdExiste() {
+//    public void debeGuardarNuevo() {
 //        crearOrdenSalida();
+//        assertTrue(this.testOrdenSalidaId > 0, "El ID de OrdenSalida no se pudo recuperar.");
+//    }
+//    
+//    @Test
+//    @Order(3)
+//    @Override
+//    public void debeObtenerSiIdExiste() {
 //        OrdenSalida orden = ordenSalidaBO.obtener(this.testOrdenSalidaId);
 //        assertNotNull(orden);
 //        assertEquals(this.testOrdenSalidaId, orden.getIdOrdenSalida());
 //    }
 //    
 //    @Test
-//    @Order(3)
+//    @Order(4)
 //    @Override
 //    public void noDebeObtenerSiIdNoExiste() {
 //        OrdenSalida orden = ordenSalidaBO.obtener(this.idIncorrecto);
 //        assertNull(orden);
-//    }
-//    
-//    @Test
-//    @Order(4)
-//    @Override
-//    public void debeGuardarNuevo() {
-//        crearOrdenSalida();
-//        assertTrue(this.testOrdenSalidaId > 0);
 //    }
 //    
 //    @Test
@@ -186,7 +185,7 @@
 //    @Order(6)
 //    @Override
 //    public void debeEliminarSiIdExiste() {
-//        ordenSalidaBO.eliminar(this.testOrdenSalidaId);
+//        assertDoesNotThrow(() -> ordenSalidaBO.eliminar(this.testOrdenSalidaId));
 //        OrdenSalida orden = ordenSalidaBO.obtener(this.testOrdenSalidaId);
 //        assertNull(orden);
 //    }
@@ -208,7 +207,6 @@
 //        orden.setFecha(new GregorianCalendar(2025, Calendar.JANUARY, 1).getTime());
 //        orden.setLineas(new ArrayList<>());
 //
-//        // Forzamos un error: linea sin producto
 //        LineaOrdenSalida linea = new LineaOrdenSalida();
 //        linea.setCantidad(1);
 //        linea.setSubtotal(10.0);
@@ -234,7 +232,7 @@
 //        LineaOrdenSalida linea = new LineaOrdenSalida();
 //        linea.setProducto(new ProductoDAOImpl().leer(this.testProductoId));
 //        linea.setCantidad(4);
-//        linea.setSubtotal(1000.0);
+//        linea.setSubtotal(1000.0); // Total 1000.0
 //
 //        List<LineaOrdenSalida> lineas = new ArrayList<>();
 //        lineas.add(linea);
@@ -242,6 +240,16 @@
 //        orden.setTotal(1000.0);
 //
 //        ordenSalidaBO.guardar(orden, Estado.NUEVO);
-//        this.testOrdenSalidaId = orden.getIdOrdenSalida();
+//        
+//        List<OrdenSalida> lista = ordenSalidaBO.listar();
+//        for (OrdenSalida os : lista) {
+//            if (os.getResponsable() != null &&
+//                os.getResponsable().getIdUsuario() == this.testUsuarioId &&
+//                os.getTotal() == 1000.0) {
+//                
+//                this.testOrdenSalidaId = os.getIdOrdenSalida();
+//                break;
+//            }
+//        }
 //    }
 //}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.stockify.pucp.edu.pe/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MovimientoWS" targetNamespace="http://services.stockify.pucp.edu.pe/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/StockifyWS/MovimientoWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
+    </xsd:schema>
+  </types>
+  <message name="listarMovimientos">
+    <part name="parameters" element="tns:listarMovimientos" />
+  </message>
+  <message name="listarMovimientosResponse">
+    <part name="parameters" element="tns:listarMovimientosResponse" />
+  </message>
+  <message name="obtenerMovimiento">
+    <part name="parameters" element="tns:obtenerMovimiento" />
+  </message>
+  <message name="obtenerMovimientoResponse">
+    <part name="parameters" element="tns:obtenerMovimientoResponse" />
+  </message>
+  <message name="guardarMovimiento">
+    <part name="parameters" element="tns:guardarMovimiento" />
+  </message>
+  <message name="guardarMovimientoResponse">
+    <part name="parameters" element="tns:guardarMovimientoResponse" />
+  </message>
+  <message name="eliminarMovimiento">
+    <part name="parameters" element="tns:eliminarMovimiento" />
+  </message>
+  <message name="eliminarMovimientoResponse">
+    <part name="parameters" element="tns:eliminarMovimientoResponse" />
+  </message>
+  <portType name="MovimientoWS">
+    <operation name="listarMovimientos">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosRequest" message="tns:listarMovimientos" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosResponse" message="tns:listarMovimientosResponse" />
+    </operation>
+    <operation name="obtenerMovimiento">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoRequest" message="tns:obtenerMovimiento" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoResponse" message="tns:obtenerMovimientoResponse" />
+    </operation>
+    <operation name="guardarMovimiento">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoRequest" message="tns:guardarMovimiento" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoResponse" message="tns:guardarMovimientoResponse" />
+    </operation>
+    <operation name="eliminarMovimiento">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoRequest" message="tns:eliminarMovimiento" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoResponse" message="tns:eliminarMovimientoResponse" />
+    </operation>
+  </portType>
+  <binding name="MovimientoWSPortBinding" type="tns:MovimientoWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="listarMovimientos">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerMovimiento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="guardarMovimiento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarMovimiento">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="MovimientoWS">
+    <port name="MovimientoWSPort" binding="tns:MovimientoWSPortBinding">
+      <soap:address location="http://localhost:8080/StockifyWS/MovimientoWS" />
+    </port>
+  </service>
+</definitions>

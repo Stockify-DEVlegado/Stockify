@@ -48,4 +48,12 @@ public class CuentaUsuarioWS {
     ) {
         this.cuentaUsuarioBO.guardar(cuentaUsuario, estado);
     }
+    
+    @WebMethod(operationName = "login")
+    public boolean login(
+        @WebParam(name = "userName") String userName, 
+        @WebParam(name = "password") String password
+    ) {
+        return this.cuentaUsuarioBO.login(userName, password);
+    }
 }

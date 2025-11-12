@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services.stockify.pucp.edu.pe/" targetNamespace="http://services.stockify.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="eliminarCategoria" type="tns:eliminarCategoria" />
+  <xs:element name="eliminarCategoriaResponse" type="tns:eliminarCategoriaResponse" />
+  <xs:element name="guardarCategoria" type="tns:guardarCategoria" />
+  <xs:element name="guardarCategoriaResponse" type="tns:guardarCategoriaResponse" />
+  <xs:element name="listarCategorias" type="tns:listarCategorias" />
+  <xs:element name="listarCategoriasResponse" type="tns:listarCategoriasResponse" />
+  <xs:element name="obtenerCategoria" type="tns:obtenerCategoria" />
+  <xs:element name="obtenerCategoriaResponse" type="tns:obtenerCategoriaResponse" />
+  <xs:complexType name="guardarCategoria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categoria" type="tns:categoria" />
+      <xs:element minOccurs="0" name="estado" type="tns:estado" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="categoria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="categoria" type="tns:categoria" />
+      <xs:element name="idCategoria" type="xs:int" />
+      <xs:element minOccurs="0" name="nombre" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="guardarCategoriaResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarCategorias">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarCategoriasResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:categoria" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerCategoria">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerCategoriaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:categoria" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eliminarCategoria">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eliminarCategoriaResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:simpleType name="estado">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NUEVO" />
+      <xs:enumeration value="MODIFICADO" />
+      <xs:enumeration value="ELIMINADO" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

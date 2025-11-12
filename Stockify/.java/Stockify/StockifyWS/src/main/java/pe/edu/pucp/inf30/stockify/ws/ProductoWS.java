@@ -48,4 +48,22 @@ public class ProductoWS {
     ) {
         this.productoBO.guardar(producto, estado);
     }
+    
+    @WebMethod(operationName = "listarProductosOrdenadoPorCodigo")
+    public List<Producto> listarProductosOrdenadoPorCodigo() {
+        return this.productoBO.listarOrdenadoPorCodigo();
+    }
+    
+    @WebMethod(operationName = "listarProductosOrdenadoPorNombre")
+    public List<Producto> listarProductosOrdenadoPorNombre() {
+        return this.productoBO.listarOrdenadoPorNombre();
+    }
+    
+    @WebMethod(operationName = "listarProductosPorCategoria")
+    public List<Producto> listarProductosPorCategoria(
+        @WebParam(name = "idCategoria") int idCategoria
+    ) {
+        return this.productoBO.listarProductosPorCategoria(idCategoria);
+    }
+    
 }
