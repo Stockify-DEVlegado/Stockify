@@ -107,4 +107,34 @@ public class CuentaUsuarioDAOImpl extends BaseDAO<CuentaUsuario> implements
         
         return cuentaUsuario;
     }     
+    
+    protected PreparedStatement comandoLogin(Connection conn, 
+        String username, String password) throws SQLException {
+    
+    String sql = "{call loginUsuario(?, ?, ?)}";
+    CallableStatement cmd = conn.prepareCall(sql);
+    cmd.setString("p_username", username);
+    cmd.setString("p_password", password);
+    cmd.registerOutParameter("p_valido", Types.BOOLEAN);
+    return cmd;
+}
+    
+    @Override
+    public boolean login(String username, String password) {
+        return ejecutarComando(conn -> {
+            try (PreparedStatement cmd = this.comandoLogin(conn, username, password)) {
+                if (cmd instanceof CallableStatement callableCmd) {
+                    callableCmd.execute();
+                    boolean valido = callableCmd.getBoolean("p_valido");
+                    
+                    if (!valido) {
+                        System.err.println("No se encontro el registro con "
+                            + "username: " + username + ", password");
+                    }
+                    return valido;
+                }
+                return false;
+            }
+        });
+    }
 }
