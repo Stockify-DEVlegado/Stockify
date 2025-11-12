@@ -24,14 +24,16 @@ public class Movimiento {
 
     public Movimiento() {
         this.fecha = new Date();
+        this.producto = new Producto();
     }
 
     public Movimiento(int idMovimiento, TipoMovimiento tipoMovimiento, 
-             String descripcion, int cantidad) {
+             String descripcion, int cantidad, Date fecha, Producto producto) {
         this.idMovimiento = idMovimiento;
         this.tipoMovimiento = tipoMovimiento;
-        this.fecha = new Date();
+        this.fecha = fecha;
         this.descripcion = descripcion;
+        this.producto = producto;
         this.cantidad = cantidad;
     }
 

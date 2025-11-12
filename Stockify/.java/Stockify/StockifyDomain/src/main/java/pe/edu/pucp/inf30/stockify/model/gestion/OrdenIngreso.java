@@ -27,14 +27,20 @@ public class OrdenIngreso {
     public OrdenIngreso() {
         this.fecha = new Date();
         this.lineas = new ArrayList<>();
+        this.responsable = new Usuario();
+        this.ordenCompra = new OrdenCompra();
+        this.estado = EstadoDocumento.PENDIENTE;
     }
 
-    public OrdenIngreso(int idOrdenIngreso, double total, Usuario responsable) {
+    public OrdenIngreso(int idOrdenIngreso, double total, Usuario responsable,
+            Date fecha, EstadoDocumento estado, OrdenCompra ordenCompra) {
         this.idOrdenIngreso = idOrdenIngreso;
+        this.ordenCompra = ordenCompra;
         this.total = total;
-        this.fecha = new Date();   
+        this.fecha = fecha;   
         this.responsable = responsable;
         this.lineas = new ArrayList<>();
+        this.estado = estado;
     }
 
     public OrdenCompra getOrdenCompra() {

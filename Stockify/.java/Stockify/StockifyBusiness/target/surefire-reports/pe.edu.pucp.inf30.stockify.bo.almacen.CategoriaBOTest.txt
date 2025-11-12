@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: pe.edu.pucp.inf30.stockify.bo.almacen.CategoriaBOTest
+-------------------------------------------------------------------------------
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 32.50 s -- in pe.edu.pucp.inf30.stockify.bo.almacen.CategoriaBOTest

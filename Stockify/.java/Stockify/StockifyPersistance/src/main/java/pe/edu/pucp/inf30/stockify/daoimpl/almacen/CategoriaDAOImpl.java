@@ -26,25 +26,42 @@ public class CategoriaDAOImpl extends BaseDAO<Categoria>
     protected PreparedStatement comandoCrear(Connection conn, Categoria modelo) 
             throws SQLException {
         
-        String sql = "{call insertarCategoria(?, ?)}";
+        String sql = "{call insertarCategoria(?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
      
         cmd.setString("p_nombre", modelo.getNombre());
+        
+        // Manejar la categoría padre (puede ser null)
+        if (modelo.getCategoria() != null) {
+            cmd.setInt("p_fidCategoria", modelo.getCategoria().getIdCategoria());
+        } else {
+            cmd.setNull("p_fidCategoria", Types.INTEGER);
+        }
+        
         cmd.registerOutParameter("p_id", Types.INTEGER);
         return cmd;
     }
-
+    
     @Override
     protected PreparedStatement comandoActualizar(Connection conn, 
             Categoria modelo) throws SQLException {
         
-        String sql = "{call modificarCategoria(?, ?)}";
+        String sql = "{call modificarCategoria(?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
-          cmd.setString("p_nombre", modelo.getNombre());
+        
         cmd.setInt("p_id", modelo.getIdCategoria());
+        cmd.setString("p_nombre", modelo.getNombre());
+        
+        // Manejar la categoría padre (puede ser null)
+        if (modelo.getCategoria() != null) {
+            cmd.setInt("p_fidCategoria", modelo.getCategoria().getIdCategoria());
+        } else {
+            cmd.setNull("p_fidCategoria", Types.INTEGER);
+        }
+        
         return cmd;
     }
-
+    
     @Override
     protected PreparedStatement comandoEliminar(Connection conn, Integer id) 
             throws SQLException {
@@ -53,7 +70,7 @@ public class CategoriaDAOImpl extends BaseDAO<Categoria>
         cmd.setInt("p_id", id);
         return cmd;
     }
-
+    
     @Override
     protected PreparedStatement comandoLeer(Connection conn, Integer id)
             throws SQLException {
@@ -62,7 +79,7 @@ public class CategoriaDAOImpl extends BaseDAO<Categoria>
         cmd.setInt("p_id", id);
         return cmd;
     }
-
+    
     @Override
     protected PreparedStatement comandoLeerTodos(Connection conn) 
             throws SQLException {
@@ -70,13 +87,28 @@ public class CategoriaDAOImpl extends BaseDAO<Categoria>
         CallableStatement cmd = conn.prepareCall(sql);
         return cmd;
     }
-
+    
     @Override
     protected Categoria mapearModelo(ResultSet rs) throws SQLException {
         Categoria categoria = new Categoria();
       
         categoria.setIdCategoria(rs.getInt("idCategoria"));
         categoria.setNombre(rs.getString("nombre"));
+        
+        // Mapear la categoría padre si existe
+        int fidCategoria = rs.getInt("idCategoriaPadre");
+        if (!rs.wasNull()) {  // Verificar si el campo no es NULL
+            Categoria categoriaPadre = new Categoria();
+            categoriaPadre.setIdCategoria(fidCategoria);
+            
+            // Si el procedure devuelve el nombre del padre, asignarlo
+            String nombrePadre = rs.getString("nombreCategoriaPadre");
+            if (nombrePadre != null) {
+                categoriaPadre.setNombre(nombrePadre);
+            }
+            
+            categoria.setCategoria(categoriaPadre);
+        }
  
         return categoria;
     }

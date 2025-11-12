@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.stockify.pucp.edu.pe/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ExistenciasWS" targetNamespace="http://services.stockify.pucp.edu.pe/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/StockifyWS/ExistenciasWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
+    </xsd:schema>
+  </types>
+  <message name="obtenerExistencias">
+    <part name="parameters" element="tns:obtenerExistencias" />
+  </message>
+  <message name="obtenerExistenciasResponse">
+    <part name="parameters" element="tns:obtenerExistenciasResponse" />
+  </message>
+  <message name="guardarExistencias">
+    <part name="parameters" element="tns:guardarExistencias" />
+  </message>
+  <message name="guardarExistenciasResponse">
+    <part name="parameters" element="tns:guardarExistenciasResponse" />
+  </message>
+  <message name="listarExistencias">
+    <part name="parameters" element="tns:listarExistencias" />
+  </message>
+  <message name="listarExistenciasResponse">
+    <part name="parameters" element="tns:listarExistenciasResponse" />
+  </message>
+  <message name="eliminarExistencias">
+    <part name="parameters" element="tns:eliminarExistencias" />
+  </message>
+  <message name="eliminarExistenciasResponse">
+    <part name="parameters" element="tns:eliminarExistenciasResponse" />
+  </message>
+  <portType name="ExistenciasWS">
+    <operation name="obtenerExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerExistenciasRequest" message="tns:obtenerExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerExistenciasResponse" message="tns:obtenerExistenciasResponse" />
+    </operation>
+    <operation name="guardarExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasRequest" message="tns:guardarExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasResponse" message="tns:guardarExistenciasResponse" />
+    </operation>
+    <operation name="listarExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasRequest" message="tns:listarExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasResponse" message="tns:listarExistenciasResponse" />
+    </operation>
+    <operation name="eliminarExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest" message="tns:eliminarExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse" message="tns:eliminarExistenciasResponse" />
+    </operation>
+  </portType>
+  <binding name="ExistenciasWSPortBinding" type="tns:ExistenciasWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="guardarExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ExistenciasWS">
+    <port name="ExistenciasWSPort" binding="tns:ExistenciasWSPortBinding">
+      <soap:address location="http://localhost:8080/StockifyWS/ExistenciasWS" />
+    </port>
+  </service>
+</definitions>

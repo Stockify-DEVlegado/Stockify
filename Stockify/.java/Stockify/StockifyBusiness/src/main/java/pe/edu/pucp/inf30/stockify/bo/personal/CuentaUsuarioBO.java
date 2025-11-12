@@ -13,5 +13,5 @@ import pe.edu.pucp.inf30.stockify.bo.Gestionable;
  */
 
 public interface CuentaUsuarioBO extends Gestionable<CuentaUsuario> {
-    
+    boolean login(String userName, String password);
 }

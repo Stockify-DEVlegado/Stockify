@@ -32,8 +32,16 @@ public class LineaOrdenCompraDAOImpl extends TransaccionalBaseDAO<LineaOrdenComp
         String sql = "{call insertarLineaOrdenCompra(?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
         
-        cmd.setInt("p_idOrdenCompra", modelo.getOrdenCompra().getIdOrdenCompra());
-        cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        if(modelo.getOrdenCompra()!=null) {
+            cmd.setInt("p_idOrdenCompra", modelo.getOrdenCompra().getIdOrdenCompra());
+        } else {
+            cmd.setNull("p_idOrdenCompra", Types.INTEGER);
+        }
+        if(modelo.getProducto()!=null) {
+            cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        } else {
+            cmd.setNull("p_idProducto", Types.INTEGER);
+        }
         cmd.setInt("p_cantidad", modelo.getCantidad());
         cmd.setDouble("p_subTotal", modelo.getSubtotal());
         cmd.registerOutParameter("p_id", Types.INTEGER);
@@ -46,8 +54,16 @@ public class LineaOrdenCompraDAOImpl extends TransaccionalBaseDAO<LineaOrdenComp
         
         String sql = "{call modificarLineaOrdenCompra(?, ?, ?, ?, ?)}";
         CallableStatement cmd = conn.prepareCall(sql);
-        cmd.setInt("p_idOrdenCompra", modelo.getOrdenCompra().getIdOrdenCompra());
-        cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        if(modelo.getOrdenCompra()!=null) {
+            cmd.setInt("p_idOrdenCompra", modelo.getOrdenCompra().getIdOrdenCompra());
+        } else {
+            cmd.setNull("p_idOrdenCompra", Types.INTEGER);
+        }
+        if(modelo.getProducto()!=null) {
+            cmd.setInt("p_idProducto", modelo.getProducto().getIdProducto());
+        } else {
+            cmd.setNull("p_idProducto", Types.INTEGER);
+        }
         cmd.setInt("p_cantidad", modelo.getCantidad());
         cmd.setDouble("p_subTotal", modelo.getSubtotal());
         cmd.setInt("p_id", modelo.getIdLineaOrdenCompra());
@@ -87,12 +103,16 @@ public class LineaOrdenCompraDAOImpl extends TransaccionalBaseDAO<LineaOrdenComp
     protected LineaOrdenCompra mapearModelo(ResultSet rs) throws SQLException {
         LineaOrdenCompra lineaOrdenCompra = new LineaOrdenCompra();
         lineaOrdenCompra.setIdLineaOrdenCompra(rs.getInt("idLineaOrdenCompra"));
-        lineaOrdenCompra.setOrdenCompra(
-                new OrdenCompraDAOImpl().leer(rs.getInt("idOrdenCompra")));
-        lineaOrdenCompra.setProducto(
-                new ProductoDAOImpl().leer(rs.getInt("idProducto")));
+        int idOrdenCompra = rs.getInt("idOrdenCompra");
+        if(!rs.wasNull()) {
+            lineaOrdenCompra.setOrdenCompra(new OrdenCompraDAOImpl().leer(idOrdenCompra));
+        }
+        int idProducto = rs.getInt("idProducto");
+        if(!rs.wasNull()) {
+            lineaOrdenCompra.setProducto(new ProductoDAOImpl().leer(idProducto));
+        }
         lineaOrdenCompra.setCantidad(rs.getInt("cantidad"));
-        lineaOrdenCompra.setSubtotal(rs.getDouble("subTotal"));
+        lineaOrdenCompra.setSubtotal(rs.getDouble("subtotal"));
         return lineaOrdenCompra;
     }
     
@@ -129,4 +149,3 @@ public class LineaOrdenCompraDAOImpl extends TransaccionalBaseDAO<LineaOrdenComp
     }
     
 }
-

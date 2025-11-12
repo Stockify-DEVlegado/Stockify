@@ -14,6 +14,8 @@ import java.sql.Types;
 import pe.edu.pucp.inf30.stockify.dao.usuario.EmpresaDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO;
 import pe.edu.pucp.inf30.stockify.model.usuario.Empresa;
+import pe.edu.pucp.inf30.stockify.model.usuario.TipoDocumento;
+import pe.edu.pucp.inf30.stockify.model.usuario.TipoEmpresa;
 
 /**
  *
@@ -84,6 +86,8 @@ public class EmpresaDAOImpl extends BaseDAO<Empresa> implements EmpresaDAO {
         empresa.setTelefono(rs.getString("telefono"));
         empresa.setEmail(rs.getString("email"));
         empresa.setActivo(rs.getBoolean("activo"));
+        empresa.setTipoDocumento(TipoDocumento.valueOf(rs.getString("tipoDocumento")));
+        empresa.setTipoEmpresa(TipoEmpresa.valueOf(rs.getString("tipoEmpresa")));
         return empresa;
     }
 }

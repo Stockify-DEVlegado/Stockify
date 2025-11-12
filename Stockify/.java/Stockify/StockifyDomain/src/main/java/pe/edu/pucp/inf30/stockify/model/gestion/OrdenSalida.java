@@ -27,13 +27,19 @@ public class OrdenSalida {
     
     public OrdenSalida() {
         this.fecha = new Date();
+        this.responsable = new Usuario();
+        this.estado = EstadoDocumento.PENDIENTE;
+        this.ordenVenta = new OrdenVenta();
         this.lineas = new ArrayList<>();
     }
     
-    public OrdenSalida(int idOrdenSalida, double total, Usuario responsable) {
+    public OrdenSalida(int idOrdenSalida, double total, Usuario responsable,
+            EstadoDocumento estado, Date fecha, OrdenVenta ordenVenta) {
         this.idOrdenSalida = idOrdenSalida;
         this.total = total;
-        this.fecha = new Date();
+        this.fecha = fecha;
+        this.estado = estado;
+        this.ordenVenta = ordenVenta;
         this.responsable = responsable;
         this.lineas = new ArrayList<>();
     }

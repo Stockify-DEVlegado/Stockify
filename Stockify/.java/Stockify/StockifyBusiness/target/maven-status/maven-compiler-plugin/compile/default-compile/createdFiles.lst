@@ -16,15 +16,12 @@ pe\edu\pucp\inf30\stockify\boimpl\gestion\OrdenIngresoBOImpl.class
 pe\edu\pucp\inf30\stockify\bo\almacen\CategoriaBO.class
 pe\edu\pucp\inf30\stockify\boimpl\personal\UsuarioBOImpl.class
 pe\edu\pucp\inf30\stockify\boimpl\gestion\OrdenVentaBOImpl.class
-pe\edu\pucp\inf30\stockify\boimpl\almacen\GuiaRemisionBOImpl.class
 pe\edu\pucp\inf30\stockify\bo\gestion\OrdenIngresoBO.class
-pe\edu\pucp\inf30\stockify\bo\almacen\GuiaRemisionBO.class
 pe\edu\pucp\inf30\stockify\boimpl\gestion\OrdenVentaBOImpl$1.class
 pe\edu\pucp\inf30\stockify\bo\gestion\OrdenCompraBO.class
 pe\edu\pucp\inf30\stockify\bo\Gestionable.class
 pe\edu\pucp\inf30\stockify\boimpl\gestion\OrdenSalidaBOImpl$1.class
 pe\edu\pucp\inf30\stockify\bo\personal\CuentaUsuarioBO.class
 pe\edu\pucp\inf30\stockify\boimpl\almacen\ExistenciasBOImpl.class
-pe\edu\pucp\inf30\stockify\boimpl\almacen\GuiaRemisionBOImpl$1.class
 pe\edu\pucp\inf30\stockify\boimpl\almacen\MovimientoBOImpl.class
 pe\edu\pucp\inf30\stockify\bo\almacen\MovimientoBO.class

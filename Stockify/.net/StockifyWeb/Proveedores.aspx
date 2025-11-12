@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" 
+CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -11,6 +12,7 @@
             --muted: #a9b3c7;
             --accent: #8aa2ff;
             --accent2: #f0b75d;
+            --danger: #ff5757;
             --radius: 16px;
             --shadow: 0 10px 24px rgba(0,0,0,.35);
         }
@@ -94,7 +96,6 @@
             color: var(--bg);
         }
         
-        /* ESTILOS ORIGINALES DE LA TABLA */
         .suppliers-table {
             width: 100%;
             border-collapse: collapse;
@@ -123,7 +124,6 @@
             background: var(--card2);
         }
         
-        /* ESTILOS PARA ESTADO ACTIVO/INACTIVO */
         .status-active { 
             color: #68d391; 
             font-weight: bold; 
@@ -131,6 +131,67 @@
         .status-inactive { 
             color: #fc8181; 
             font-weight: bold; 
+        }
+        
+        .badge-empresa {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-proveedor {
+            background: rgba(138, 162, 255, 0.2);
+            color: #8aa2ff;
+            border: 1px solid rgba(138, 162, 255, 0.3);
+        }
+        
+        .badge-cliente {
+            background: rgba(240, 183, 93, 0.2);
+            color: #f0b75d;
+            border: 1px solid rgba(240, 183, 93, 0.3);
+        }
+        
+        .action-buttons-cell {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-edit {
+            background: rgba(138, 162, 255, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(138, 162, 255, 0.3);
+        }
+        
+        .btn-edit:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        
+        .btn-delete {
+            background: rgba(255, 87, 87, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(255, 87, 87, 0.3);
+        }
+        
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
         }
         
         .pagination {
@@ -182,7 +243,6 @@
             font-weight: 600;
         }
         
-        /* Estilos para el modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -339,32 +399,39 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="cph_Contenido" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
+    
     <div class="suppliers-container">
-        <!-- Header con buscador y botones -->
         <div class="header-actions">
             <div class="search-box">
-                <input type="text" placeholder="Buscar proveedores..." id="txtBuscar">
+                <input type="text" placeholder="Buscar empresas..." id="txtBuscar">
                 <i class="fas fa-search"></i>
             </div>
             <div class="action-buttons">
                 <button class="btn-filter" type="button">
                     <i class="fas fa-filter"></i> Filtros
                 </button>
-                <asp:Button ID="btnOpenModal" runat="server" Text="Agregar Proveedor" 
-                    CssClass="btn-add" OnClientClick="abrirModal(); return false;" />
+                <asp:Button ID="btnOpenModal" runat="server" Text="Agregar Empresa" 
+                    CssClass="btn-add" OnClientClick="abrirModalAgregar(); return false;" />
             </div>
         </div>
 
-        <h1>Proveedores</h1>
+        <h1>Empresas</h1>
         
         <asp:GridView ID="gvProveedores" runat="server" AutoGenerateColumns="false" CssClass="suppliers-table"
-            Width="100%" BorderStyle="None" GridLines="None" ShowHeader="true">
+            Width="100%" BorderStyle="None" GridLines="None" ShowHeader="true" OnRowCommand="gvProveedores_RowCommand">
             <Columns>
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-                <asp:BoundField DataField="Producto" HeaderText="Producto (Cat.)" />
+                <asp:BoundField DataField="Nombre" HeaderText="Razón Social" />
                 <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
                 <asp:BoundField DataField="Email" HeaderText="Email" />
-                <asp:BoundField DataField="TipoEmpresa" HeaderText="Tipo Empresa" />
+                <asp:TemplateField HeaderText="Tipo Empresa">
+                    <ItemTemplate>
+                        <span class='<%# "badge-empresa badge-" + Eval("TipoEmpresa").ToString().ToLower() %>'>
+                            <%# Eval("TipoEmpresa") %>
+                        </span>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="TipoDocumento" HeaderText="Tipo Doc." />
                 <asp:TemplateField HeaderText="Activo">
                     <ItemTemplate>
                         <span class='<%# Eval("Activo").ToString() == "Si" ? "status-active" : "status-inactive" %>'>
@@ -372,59 +439,81 @@
                         </span>
                     </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField HeaderText="Acciones">
+                    <ItemTemplate>
+                        <div class="action-buttons-cell">
+                            <button type="button" class="btn-edit" 
+                                onclick='editarEmpresa(<%# Eval("IdEmpresa") %>, "<%# System.Web.HttpUtility.JavaScriptStringEncode(Eval("Nombre").ToString()) %>", "<%# Eval("TipoDocumento") %>", "<%# Eval("Telefono") %>", "<%# Eval("Email") %>", "<%# Eval("TipoEmpresa") %>", "<%# Eval("Activo") %>")'>
+                                Editar
+                            </button>
+                            <asp:Button ID="btnDelete" runat="server" Text="Eliminar" 
+                                CssClass="btn-delete" 
+                                CommandName="EliminarEmpresa" 
+                                CommandArgument='<%# Eval("IdEmpresa") %>'
+                                data-nombre='<%# Eval("Nombre") %>'
+                                OnClientClick="return confirmarEliminacion(this);" />
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
         
-        <!-- Paginación CORREGIDA -->
         <div class="pagination">
             <div class="pagination-left">
                 <button class="btn-pagination button-disabled">Anterior</button>
             </div>
             <div class="pagination-center">
-                <span>Página 1 de 10</span> <!-- CORREGIDO: Cambiado de 10 a 1 -->
+                <span>Página 1 de 1</span>
             </div>
             <div class="pagination-right">
-                <button class="btn-pagination">Siguiente</button>
+                <button class="btn-pagination button-disabled">Siguiente</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal para Agregar Proveedor -->
-    <div class="modal-overlay" id="addSupplierModal">
+    <!-- Modal Agregar/Editar -->
+    <div class="modal-overlay" id="supplierModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Agregar Proveedor</h2>
+                <h2 class="modal-title" id="modalTitle">Agregar Empresa</h2>
                 <button class="close-modal" type="button" onclick="cerrarModal()">&times;</button>
             </div>
             
+            <asp:HiddenField ID="hfIdEmpresa" runat="server" Value="0" />
+            <asp:HiddenField ID="hfModoEdicion" runat="server" Value="false" />
+            
             <div class="form-group">
-                <label for="<%= txtSupplierName.ClientID %>">Nombre del proveedor</label>
-                <asp:TextBox ID="txtSupplierName" runat="server" CssClass="form-control" placeholder="Ingrese nombre del proveedor"></asp:TextBox>
+                <label for="<%= txtSupplierName.ClientID %>">Razón Social *</label>
+                <asp:TextBox ID="txtSupplierName" runat="server" CssClass="form-control" placeholder="Ingrese razón social"></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label for="<%= txtProduct.ClientID %>">Producto/Categoría</label>
-                <asp:TextBox ID="txtProduct" runat="server" CssClass="form-control" placeholder="Ingrese producto o categoría"></asp:TextBox>
+                <label for="<%= ddlTipoDocumento.ClientID %>">Tipo de Documento *</label>
+                <asp:DropDownList ID="ddlTipoDocumento" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="">Seleccione tipo de documento</asp:ListItem>
+                    <asp:ListItem Value="DNI">DNI</asp:ListItem>
+                    <asp:ListItem Value="RUC">RUC</asp:ListItem>
+                    <asp:ListItem Value="CE">Carnet de Extranjería</asp:ListItem>
+                    <asp:ListItem Value="PASAPORTE">Pasaporte</asp:ListItem>
+                </asp:DropDownList>
             </div>
             
             <div class="form-group">
-                <label for="<%= txtTelefono.ClientID %>">Teléfono</label>
+                <label for="<%= txtTelefono.ClientID %>">Teléfono *</label>
                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" placeholder="Ingrese número de teléfono"></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label for="<%= txtEmail.ClientID %>">Email</label>
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ingrese email del proveedor" TextMode="Email"></asp:TextBox>
+                <label for="<%= txtEmail.ClientID %>">Email *</label>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ingrese email" TextMode="Email"></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label for="<%= ddlTipoEmpresa.ClientID %>">Tipo de empresa</label>
+                <label for="<%= ddlTipoEmpresa.ClientID %>">Tipo de Empresa *</label>
                 <asp:DropDownList ID="ddlTipoEmpresa" runat="server" CssClass="form-control">
                     <asp:ListItem Value="">Seleccione tipo de empresa</asp:ListItem>
-                    <asp:ListItem Value="sociedad">Sociedad Anónima</asp:ListItem>
-                    <asp:ListItem Value="limitada">Sociedad de Responsabilidad Limitada</asp:ListItem>
-                    <asp:ListItem Value="individual">Empresa Individual</asp:ListItem>
-                    <asp:ListItem Value="cooperativa">Cooperativa</asp:ListItem>
+                    <asp:ListItem Value="PROVEEDOR">Proveedor</asp:ListItem>
+                    <asp:ListItem Value="CLIENTE">Cliente</asp:ListItem>
                 </asp:DropDownList>
             </div>
             
@@ -438,14 +527,13 @@
             
             <div class="modal-actions">
                 <button type="button" class="btn-discard" onclick="cerrarModal()">Descartar</button>
-                <asp:Button ID="btnAddSupplier" runat="server" Text="Agregar Proveedor" 
-                    CssClass="btn-submit" OnClick="btnAddSupplier_Click" />
+                <asp:Button ID="btnAddSupplier" runat="server" Text="Agregar Empresa" 
+                    CssClass="btn-submit" OnClick="btnAddSupplier_Click" UseSubmitBehavior="true" />
             </div>
         </div>
     </div>
 
     <script>
-        // Funcionalidad básica de búsqueda
         document.getElementById('txtBuscar').addEventListener('keyup', function () {
             var filter = this.value.toLowerCase();
             var rows = document.querySelectorAll('.suppliers-table tbody tr');
@@ -460,44 +548,58 @@
             });
         });
 
-        // Funcionalidad del modal
-        function abrirModal() {
-            document.getElementById('addSupplierModal').style.display = 'flex';
+        function abrirModalAgregar() {
+            document.getElementById('modalTitle').innerText = 'Agregar Empresa';
+            document.getElementById('<%= hfModoEdicion.ClientID %>').value = 'false';
+            document.getElementById('<%= hfIdEmpresa.ClientID %>').value = '0';
+            document.getElementById('<%= btnAddSupplier.ClientID %>').value = 'Agregar Empresa';
+            limpiarFormulario();
+            document.getElementById('supplierModal').style.display = 'flex';
+        }
+
+        function editarEmpresa(id, nombre, tipoDoc, telefono, email, tipoEmp, activo) {
+            document.getElementById('modalTitle').innerText = 'Editar Empresa';
+            document.getElementById('<%= hfModoEdicion.ClientID %>').value = 'true';
+            document.getElementById('<%= hfIdEmpresa.ClientID %>').value = id;
+            document.getElementById('<%= btnAddSupplier.ClientID %>').value = 'Guardar Cambios';
+            
+            document.getElementById('<%= txtSupplierName.ClientID %>').value = nombre;
+            document.getElementById('<%= ddlTipoDocumento.ClientID %>').value = tipoDoc;
+            document.getElementById('<%= txtTelefono.ClientID %>').value = telefono;
+            document.getElementById('<%= txtEmail.ClientID %>').value = email;
+            document.getElementById('<%= ddlTipoEmpresa.ClientID %>').value = tipoEmp;
+            document.getElementById('<%= ddlActivo.ClientID %>').value = activo.toLowerCase() === 'si' ? 'si' : 'no';
+            
+            document.getElementById('supplierModal').style.display = 'flex';
         }
 
         function cerrarModal() {
-            document.getElementById('addSupplierModal').style.display = 'none';
+            document.getElementById('supplierModal').style.display = 'none';
+            limpiarFormulario();
         }
 
-        // Cerrar modal al hacer click fuera
-        document.getElementById('addSupplierModal').addEventListener('click', function (e) {
+        function limpiarFormulario() {
+            document.getElementById('<%= txtSupplierName.ClientID %>').value = '';
+            document.getElementById('<%= txtTelefono.ClientID %>').value = '';
+            document.getElementById('<%= txtEmail.ClientID %>').value = '';
+            document.getElementById('<%= ddlTipoDocumento.ClientID %>').selectedIndex = 0;
+            document.getElementById('<%= ddlTipoEmpresa.ClientID %>').selectedIndex = 0;
+            document.getElementById('<%= ddlActivo.ClientID %>').selectedIndex = 0;
+        }
+
+        function confirmarEliminacion(btn) {
+            var nombre = btn.getAttribute('data-nombre');
+            return confirm('¿Está seguro que desea eliminar la empresa "' + nombre + '"?\n\nEsta acción no se puede deshacer.');
+        }
+
+        document.getElementById('supplierModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 cerrarModal();
             }
         });
 
-        // Funcionalidad del botón siguiente
-        document.querySelector('.pagination-right .btn-pagination').addEventListener('click', function () {
-            alert('Navegando a la siguiente página...');
-        });
-
-        // Funcionalidad de filtros
         document.querySelector('.btn-filter').addEventListener('click', function () {
             alert('Funcionalidad de filtros próximamente...');
         });
-
-        // Función para validar formulario antes de enviar
-        function validarFormulario() {
-            var nombre = document.getElementById('<%= txtSupplierName.ClientID %>').value;
-            var producto = document.getElementById('<%= txtProduct.ClientID %>').value;
-            var telefono = document.getElementById('<%= txtTelefono.ClientID %>').value;
-            
-            if (nombre.trim() === '' || producto.trim() === '' || telefono.trim() === '') {
-                alert('Por favor complete todos los campos obligatorios');
-                return false;
-            }
-            
-            return true;
-        }
     </script>
 </asp:Content>
