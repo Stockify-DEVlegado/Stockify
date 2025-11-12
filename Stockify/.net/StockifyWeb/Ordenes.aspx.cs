@@ -1,5 +1,7 @@
-﻿using System;
+﻿using StockifyWeb.StockifyWS;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -7,8 +9,16 @@ namespace StockifyWeb
 {
     public partial class Ordenes : System.Web.UI.Page
     {
+        private OrdenCompraWSClient ordenCompraService;
+        private OrdenVentaWSClient ordenVentaService;
+        private EmpresaWSClient empresaService;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            ordenCompraService = new OrdenCompraWSClient();
+            ordenVentaService = new OrdenVentaWSClient();
+            empresaService = new EmpresaWSClient();
+
             if (!IsPostBack)
             {
                 MostrarCompra();
@@ -18,131 +28,918 @@ namespace StockifyWeb
 
         private void CargarDatosIniciales()
         {
+            CargarProveedores();
             CargarOrdenesCompra();
             CargarOrdenesVenta();
             CargarRegistrosIngreso();
             CargarRegistrosSalida();
             CargarDetalleOrdenVacia();
 
-            // Establecer fechas por defecto
-            txtFechaOrdenCompra.Text = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-            txtFechaOrdenVenta.Text = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-
-            // Establecer fechas por defecto para ingreso y salida
+            txtFechaOrdenCompra.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            txtFechaOrdenVenta.Text = DateTime.Now.ToString("yyyy-MM-dd");
             txtFechaIngreso.Text = DateTime.Now.ToString("yyyy-MM-dd");
             txtFechaSalida.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
+            txtFechaOrdenCompra.Attributes.Add("readonly", "readonly");
+            txtFechaOrdenVenta.Attributes.Add("readonly", "readonly");
+            txtFechaIngreso.Attributes.Add("readonly", "readonly");
+            txtFechaSalida.Attributes.Add("readonly", "readonly");
+        }
+
+        #region ORDEN DE COMPRA - CONECTADO CON BACKEND
+
+        private void CargarProveedores()
+        {
+            try
+            {
+                ddlProveedor.Items.Clear();
+                ddlCliente.Items.Clear();
+
+                ddlProveedor.Items.Add(new ListItem("-- Seleccione un proveedor --", ""));
+                ddlCliente.Items.Add(new ListItem("-- Seleccione un cliente --", ""));
+
+                var empresasArray = empresaService.listarEmpresas();
+
+                if (empresasArray != null && empresasArray.Length > 0)
+                {
+                    foreach (var empresa in empresasArray)
+                    {
+                        if (empresa.idEmpresa > 0 && !string.IsNullOrEmpty(empresa.razonSocial))
+                        {
+                            string texto = $"{empresa.idEmpresa} - {empresa.razonSocial}";
+                            ddlProveedor.Items.Add(new ListItem(texto, empresa.idEmpresa.ToString()));
+                            ddlCliente.Items.Add(new ListItem(texto, empresa.idEmpresa.ToString()));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarProveedores",
+                    $"alert('Error al cargar empresas: {ex.Message}');", true);
+            }
         }
 
         private void CargarOrdenesCompra()
         {
-            var ordenes = new List<object>
+            try
             {
-                new {
-                    Codigo = "PO-2025-001",
-                    FechaRegistrada = "2025-01-01",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Diego Alvarez Castillo",
-                    Total = "7500 $",
-                    Estado = "Procesando"
-                },
-                new {
-                    Codigo = "PO-2025-002",
-                    FechaRegistrada = "2025-01-02",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Patrick Cruz Apolaya",
-                    Total = "4500 $",
-                    Estado = "Cancelado"
-                },
-                new {
-                    Codigo = "PO-2025-003",
-                    FechaRegistrada = "2025-01-03",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Alonso Chipana Cuellar",
-                    Total = "10000 $",
-                    Estado = "Aceptado"
-                }
-            };
+                var ordenesArray = ordenCompraService.listarOrdenesCompra();
 
-            gvOrdenesCompra.DataSource = ordenes;
-            gvOrdenesCompra.DataBind();
+                if (ordenesArray == null || ordenesArray.Length == 0)
+                {
+                    gvOrdenesCompra.DataSource = new List<object>();
+                    gvOrdenesCompra.DataBind();
+                    return;
+                }
+
+                var ordenes = new List<object>();
+
+                foreach (var o in ordenesArray)
+                {
+                    try
+                    {
+                        // Manejo robusto del estado - prevenir errores de NULL
+                        string estadoMostrar = "PENDIENTE";
+                        string nombreProveedor = "Sin Proveedor";
+                        double total = 0;
+                        DateTime fecha = DateTime.Now;
+
+                        try
+                        {
+                            // Intentar acceder al estado de forma segura
+                            if (o.estado != null)
+                            {
+                                estadoMostrar = o.estado.ToString();
+                            }
+                        }
+                        catch (Exception estadoEx)
+                        {
+                            estadoMostrar = "PENDIENTE";
+                            System.Diagnostics.Debug.WriteLine($"Error en estado orden {o.idOrdenCompra}: {estadoEx.Message}");
+                        }
+
+                        try
+                        {
+                            // Intentar acceder al proveedor de forma segura
+                            if (o.proveedor != null && !string.IsNullOrEmpty(o.proveedor.razonSocial))
+                            {
+                                nombreProveedor = o.proveedor.razonSocial;
+                            }
+                        }
+                        catch
+                        {
+                            nombreProveedor = "Sin Proveedor";
+                        }
+
+                        try
+                        {
+                            // Intentar acceder al total de forma segura
+                            total = o.total;
+                        }
+                        catch
+                        {
+                            total = 0;
+                        }
+
+                        try
+                        {
+                            // Intentar acceder a la fecha de forma segura
+                            fecha = o.fecha;
+                        }
+                        catch
+                        {
+                            fecha = DateTime.Now;
+                        }
+
+                        var orden = new
+                        {
+                            Codigo = "PO-" + o.idOrdenCompra.ToString("D6"),
+                            IdOrdenCompra = o.idOrdenCompra,
+                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
+                            Nombre = nombreProveedor,
+                            Responsable = "Sistema",
+                            Total = total.ToString("C2"),
+                            Estado = estadoMostrar
+                        };
+
+                        ordenes.Add(orden);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Si hay error con una orden específica, la omitimos pero continuamos con las demás
+                        System.Diagnostics.Debug.WriteLine($"Error procesando orden {o.idOrdenCompra}: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvOrdenesCompra.DataSource = ordenes;
+                gvOrdenesCompra.DataBind();
+            }
+            catch (Exception ex)
+            {
+                // Manejo específico del error de estados NULL
+                string errorMessage = ex.Message;
+                if (errorMessage.Contains("EstadoDocumento.null") || errorMessage.Contains("estado nulo"))
+                {
+                    errorMessage = "Hay órdenes con estado no definido. Se mostrarán como PENDIENTE.";
+                    // En lugar de mostrar error, cargar lista vacía y mensaje informativo
+                    gvOrdenesCompra.DataSource = new List<object>();
+                    gvOrdenesCompra.DataBind();
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "infoEstados",
+                        $"alert('{errorMessage}');", true);
+                    return;
+                }
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarOrdenes",
+                    $"alert('Error al cargar órdenes de compra: {errorMessage}');", true);
+
+                gvOrdenesCompra.DataSource = new List<object>();
+                gvOrdenesCompra.DataBind();
+            }
         }
+
+        private void CargarDetalleOrdenCompra(int idOrdenCompra)
+        {
+            try
+            {
+                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenCompra);
+
+                if (orden == null || orden.lineas == null || orden.lineas.Length == 0)
+                {
+                    gvDetalleOrdenCompra.DataSource = new List<object>();
+                    gvDetalleOrdenCompra.DataBind();
+                    return;
+                }
+
+                var lineas = new List<object>();
+
+                foreach (var l in orden.lineas)
+                {
+                    try
+                    {
+                        string codigo = "N/A";
+                        string nombre = "N/A";
+                        string descripcion = "N/A";
+                        string marca = "N/A";
+                        string categoria = "N/A";
+                        double precioUnitario = 0;
+                        int cantidad = 0;
+                        double subtotal = 0;
+
+                        // Acceso seguro a las propiedades del producto
+                        if (l.producto != null)
+                        {
+                            try { codigo = l.producto.idProducto.ToString(); } catch { }
+                            try { nombre = l.producto.nombre ?? "N/A"; } catch { }
+                            try { descripcion = l.producto.descripcion ?? "N/A"; } catch { }
+                            try { marca = l.producto.marca ?? "N/A"; } catch { }
+                            try { categoria = l.producto.categoria?.nombre ?? "N/A"; } catch { }
+                        }
+
+                        try { cantidad = l.cantidad; } catch { }
+                        try { subtotal = l.subtotal; } catch { }
+
+                        if (cantidad > 0)
+                        {
+                            precioUnitario = subtotal / cantidad;
+                        }
+
+                        var linea = new
+                        {
+                            Codigo = codigo,
+                            Nombre = nombre,
+                            Descripcion = descripcion,
+                            Marca = marca,
+                            PrecioUnitario = precioUnitario.ToString("C2"),
+                            Categoria = categoria,
+                            Cantidad = cantidad.ToString(),
+                            SubTotal = subtotal.ToString("C2"),
+                            Estado = "Disponible"
+                        };
+
+                        lineas.Add(linea);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error procesando línea de orden: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvDetalleOrdenCompra.DataSource = lineas;
+                gvDetalleOrdenCompra.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarDetalle",
+                    $"alert('Error al cargar detalle de orden: {ex.Message}');", true);
+
+                gvDetalleOrdenCompra.DataSource = new List<object>();
+                gvDetalleOrdenCompra.DataBind();
+            }
+        }
+
+        protected void chkSeleccionCompra_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chkSeleccion = (CheckBox)sender;
+            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
+
+            if (chkSeleccion.Checked)
+            {
+                int idOrdenCompra = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
+                CargarDetalleOrdenCompra(idOrdenCompra);
+
+                foreach (GridViewRow otherRow in gvOrdenesCompra.Rows)
+                {
+                    if (otherRow.RowIndex != row.RowIndex)
+                    {
+                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionCompra");
+                        if (otherChk != null)
+                        {
+                            otherChk.Checked = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                CargarDetalleOrdenVacia();
+            }
+        }
+
+        protected void btnEditarCompraFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idOrdenCompra = Convert.ToInt32(btn.CommandArgument);
+
+            foreach (GridViewRow row in gvOrdenesCompra.Rows)
+            {
+                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionCompra");
+                int idFila = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
+
+                if (idFila == idOrdenCompra)
+                {
+                    chkSeleccion.Checked = true;
+                    CargarDetalleOrdenCompra(idOrdenCompra);
+                }
+                else
+                {
+                    chkSeleccion.Checked = false;
+                }
+            }
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarCompraFila",
+                $"alert('Editando orden de compra ID: {idOrdenCompra}');", true);
+        }
+
+        protected void btnAgregarCompra_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtFechaOrdenCompra.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una fecha');", true);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(ddlProveedor.SelectedValue))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar un proveedor');", true);
+                    return;
+                }
+
+                // Crear la nueva orden con estado explícito PROCESANDO
+                var nuevaOrden = new ordenCompra
+                {
+                    fecha = DateTime.Parse(txtFechaOrdenCompra.Text),
+                    fechaSpecified = true, // IMPORTANTE: Especificar que la fecha tiene valor
+                    total = 0,
+
+                    estado = estadoDocumento.PENDIENTE,
+                    estadoSpecified = true, // CRÍTICO: Esto indica que el estado tiene un valor válido
+                    proveedor = new empresa
+                    {
+                        idEmpresa = Convert.ToInt32(ddlProveedor.SelectedValue),
+
+                    },
+                    lineas = new lineaOrdenCompra[0]
+                };
+
+                // Guardar con estado NUEVO
+                ordenCompraService.guardarOrdenCompra(nuevaOrden, estado.NUEVO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Orden de compra agregada exitosamente');", true);
+
+                CargarOrdenesCompra();
+                LimpiarFormularioCompra();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregar",
+                    $"alert('Error al agregar orden de compra: {ex.Message}\\n\\nDetalle: {ex.StackTrace}');", true);
+            }
+        }
+
+        protected void btnAnularCompra_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idOrdenSeleccionada = -1;
+                foreach (GridViewRow row in gvOrdenesCompra.Rows)
+                {
+                    CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionCompra");
+                    if (chkSeleccion != null && chkSeleccion.Checked)
+                    {
+                        idOrdenSeleccionada = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
+                        break;
+                    }
+                }
+
+                if (idOrdenSeleccionada == -1)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una orden de compra para anular');", true);
+                    return;
+                }
+
+                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenSeleccionada);
+
+                if (orden == null)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "error",
+                        "alert('No se encontró la orden seleccionada');", true);
+                    return;
+                }
+
+                // Usar el método seguro para establecer el estado
+                orden.estado = GetEstadoDocumento("CANCELADO");
+                ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Orden de compra anulada exitosamente');", true);
+
+                CargarOrdenesCompra();
+                CargarDetalleOrdenVacia();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnular",
+                    $"alert('Error al anular orden de compra: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnViewCompra_Click(object sender, EventArgs e)
+        {
+            if (fileDocumentoCompra.HasFile)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewCompra",
+                    $"alert('Archivo seleccionado: {fileDocumentoCompra.FileName}');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewCompra",
+                    "alert('No hay documento adjunto para visualizar');", true);
+            }
+        }
+
+        private void LimpiarFormularioCompra()
+        {
+            txtFechaOrdenCompra.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            ddlProveedor.SelectedIndex = 0;
+        }
+
+        #endregion
+
+        #region ORDEN DE VENTA - CONECTADO CON BACKEND (COMPLETAMENTE FUNCIONAL)
 
         private void CargarOrdenesVenta()
         {
-            var ordenes = new List<object>
+            try
             {
-                new {
-                    Codigo = "SO-2025-001",
-                    FechaRegistrada = "2025-01-01",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Diego Alvarez Castillo",
-                    Total = "7500 $",
-                    Estado = "Procesando"
-                },
-                new {
-                    Codigo = "SO-2025-002",
-                    FechaRegistrada = "2025-01-02",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Patrick Cruz Apolaya",
-                    Total = "4500 $",
-                    Estado = "Cancelado"
-                },
-                new {
-                    Codigo = "SO-2025-003",
-                    FechaRegistrada = "2025-01-03",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Alonso Chipana Cuellar",
-                    Total = "10000 $",
-                    Estado = "Aceptado"
-                }
-            };
+                var ordenesArray = ordenVentaService.listarOrdenesVenta();
 
-            gvOrdenesVenta.DataSource = ordenes;
-            gvOrdenesVenta.DataBind();
+                if (ordenesArray == null || ordenesArray.Length == 0)
+                {
+                    gvOrdenesVenta.DataSource = new List<object>();
+                    gvOrdenesVenta.DataBind();
+                    return;
+                }
+
+                var ordenes = new List<object>();
+
+                foreach (var o in ordenesArray)
+                {
+                    try
+                    {
+                        // Manejo robusto del estado - prevenir errores de NULL
+                        string estadoMostrar = "PENDIENTE";
+                        string nombreCliente = "Sin Cliente";
+                        double total = 0;
+                        DateTime fecha = DateTime.Now;
+
+                        try
+                        {
+                            // Intentar acceder al estado de forma segura
+                            if (o.estado != null)
+                            {
+                                estadoMostrar = o.estado.ToString();
+                            }
+                        }
+                        catch (Exception estadoEx)
+                        {
+                            estadoMostrar = "PENDIENTE";
+                            System.Diagnostics.Debug.WriteLine($"Error en estado orden venta {o.idOrdenVenta}: {estadoEx.Message}");
+                        }
+
+                        try
+                        {
+                            // Intentar acceder al cliente de forma segura
+                            if (o.cliente != null && !string.IsNullOrEmpty(o.cliente.razonSocial))
+                            {
+                                nombreCliente = o.cliente.razonSocial;
+                            }
+                        }
+                        catch
+                        {
+                            nombreCliente = "Sin Cliente";
+                        }
+
+                        try
+                        {
+                            // Intentar acceder al total de forma segura
+                            total = o.total;
+                        }
+                        catch
+                        {
+                            total = 0;
+                        }
+
+                        try
+                        {
+                            // Intentar acceder a la fecha de forma segura
+                            fecha = o.fecha;
+                        }
+                        catch
+                        {
+                            fecha = DateTime.Now;
+                        }
+
+                        var orden = new
+                        {
+                            Codigo = "SO-" + o.idOrdenVenta.ToString("D6"),
+                            IdOrdenVenta = o.idOrdenVenta,
+                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
+                            Nombre = nombreCliente,
+                            Responsable = "Sistema",
+                            Total = total.ToString("C2"),
+                            Estado = estadoMostrar
+                        };
+
+                        ordenes.Add(orden);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Si hay error con una orden específica, la omitimos pero continuamos con las demás
+                        System.Diagnostics.Debug.WriteLine($"Error procesando orden venta {o.idOrdenVenta}: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvOrdenesVenta.DataSource = ordenes;
+                gvOrdenesVenta.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarVentas",
+                    $"alert('Error al cargar órdenes de venta: {ex.Message}');", true);
+
+                gvOrdenesVenta.DataSource = new List<object>();
+                gvOrdenesVenta.DataBind();
+            }
+        }
+
+        private void CargarDetalleOrdenVenta(int idOrdenVenta)
+        {
+            try
+            {
+                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenVenta);
+
+                if (orden == null || orden.lineas == null || orden.lineas.Length == 0)
+                {
+                    gvDetalleOrdenVenta.DataSource = new List<object>();
+                    gvDetalleOrdenVenta.DataBind();
+                    return;
+                }
+
+                var lineas = new List<object>();
+
+                foreach (var l in orden.lineas)
+                {
+                    try
+                    {
+                        string codigo = "N/A";
+                        string nombre = "N/A";
+                        string descripcion = "N/A";
+                        string marca = "N/A";
+                        string categoria = "N/A";
+                        double precioUnitario = 0;
+                        int cantidad = 0;
+                        double subtotal = 0;
+
+                        // Acceso seguro a las propiedades del producto
+                        if (l.producto != null)
+                        {
+                            try { codigo = l.producto.idProducto.ToString(); } catch { }
+                            try { nombre = l.producto.nombre ?? "N/A"; } catch { }
+                            try { descripcion = l.producto.descripcion ?? "N/A"; } catch { }
+                            try { marca = l.producto.marca ?? "N/A"; } catch { }
+                            try { categoria = l.producto.categoria?.nombre ?? "N/A"; } catch { }
+                        }
+
+                        try { cantidad = l.cantidad; } catch { }
+                        try { subtotal = l.subtotal; } catch { }
+
+                        if (cantidad > 0)
+                        {
+                            precioUnitario = subtotal / cantidad;
+                        }
+
+                        var linea = new
+                        {
+                            Codigo = codigo,
+                            Nombre = nombre,
+                            Descripcion = descripcion,
+                            Marca = marca,
+                            PrecioUnitario = precioUnitario.ToString("C2"),
+                            Categoria = categoria,
+                            Cantidad = cantidad.ToString(),
+                            SubTotal = subtotal.ToString("C2"),
+                            Estado = "Disponible"
+                        };
+
+                        lineas.Add(linea);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error procesando línea de orden venta: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvDetalleOrdenVenta.DataSource = lineas;
+                gvDetalleOrdenVenta.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarDetalleVenta",
+                    $"alert('Error al cargar detalle de orden de venta: {ex.Message}');", true);
+
+                gvDetalleOrdenVenta.DataSource = new List<object>();
+                gvDetalleOrdenVenta.DataBind();
+            }
+        }
+
+        protected void chkSeleccionVenta_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chkSeleccion = (CheckBox)sender;
+            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
+
+            if (chkSeleccion.Checked)
+            {
+                int idOrdenVenta = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
+                CargarDetalleOrdenVenta(idOrdenVenta);
+
+                foreach (GridViewRow otherRow in gvOrdenesVenta.Rows)
+                {
+                    if (otherRow.RowIndex != row.RowIndex)
+                    {
+                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionVenta");
+                        if (otherChk != null)
+                        {
+                            otherChk.Checked = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                CargarDetalleOrdenVacia();
+            }
+        }
+
+        protected void btnEditarVentaFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idOrdenVenta = Convert.ToInt32(btn.CommandArgument);
+
+            foreach (GridViewRow row in gvOrdenesVenta.Rows)
+            {
+                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionVenta");
+                int idFila = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
+
+                if (idFila == idOrdenVenta)
+                {
+                    chkSeleccion.Checked = true;
+                    CargarDetalleOrdenVenta(idOrdenVenta);
+                }
+                else
+                {
+                    chkSeleccion.Checked = false;
+                }
+            }
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarVentaFila",
+                $"alert('Editando orden de venta ID: {idOrdenVenta}');", true);
+        }
+
+        protected void btnAgregarVenta_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtFechaOrdenVenta.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una fecha');", true);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(ddlCliente.SelectedValue))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar un cliente');", true);
+                    return;
+                }
+
+                // Crear la nueva orden de venta con estado explícito PENDIENTE
+                var nuevaOrden = new ordenVenta
+                {
+                    fecha = DateTime.Parse(txtFechaOrdenVenta.Text),
+                    fechaSpecified = true, // IMPORTANTE: Especificar que la fecha tiene valor
+                    total = 0,
+
+                    estado = estadoDocumento.PENDIENTE,
+                    estadoSpecified = true, // CRÍTICO: Esto indica que el estado tiene un valor válido
+                    cliente = new empresa
+                    {
+                        idEmpresa = Convert.ToInt32(ddlCliente.SelectedValue),
+
+                    },
+                    lineas = new lineaOrdenVenta[0]
+                };
+
+                // Guardar con estado NUEVO
+                ordenVentaService.guardarOrdenVenta(nuevaOrden, estado.NUEVO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Orden de venta agregada exitosamente');", true);
+
+                CargarOrdenesVenta();
+                LimpiarFormularioVenta();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarVenta",
+                    $"alert('Error al agregar orden de venta: {ex.Message}\\n\\nDetalle: {ex.StackTrace}');", true);
+            }
+        }
+
+        protected void btnAnularVenta_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idOrdenSeleccionada = -1;
+
+                foreach (GridViewRow row in gvOrdenesVenta.Rows)
+                {
+                    CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionVenta");
+                    if (chkSeleccion != null && chkSeleccion.Checked)
+                    {
+                        idOrdenSeleccionada = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
+                        break;
+                    }
+                }
+
+                if (idOrdenSeleccionada == -1)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una orden de venta para anular');", true);
+                    return;
+                }
+
+                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenSeleccionada);
+
+                if (orden == null)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "error",
+                        "alert('No se encontró la orden seleccionada');", true);
+                    return;
+                }
+
+                orden.estado = GetEstadoDocumento("CANCELADO");
+
+                ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Orden de venta anulada exitosamente');", true);
+
+                CargarOrdenesVenta();
+                CargarDetalleOrdenVacia();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularVenta",
+                    $"alert('Error al anular orden de venta: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnViewVenta_Click(object sender, EventArgs e)
+        {
+            if (fileDocumentoVenta.HasFile)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewVenta",
+                    $"alert('Archivo seleccionado: {fileDocumentoVenta.FileName}');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewVenta",
+                    "alert('No hay documento adjunto para visualizar');", true);
+            }
+        }
+
+        private void LimpiarFormularioVenta()
+        {
+            txtFechaOrdenVenta.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            ddlCliente.SelectedIndex = 0;
+        }
+
+        #endregion
+
+        #region MÉTODOS AUXILIARES
+
+        private estadoDocumento GetEstadoDocumentoSeguro()
+        {
+            try
+            {
+                // Intentar con PENDIENTE primero
+                if (Enum.IsDefined(typeof(estadoDocumento), "PENDIENTE"))
+                {
+                    return (estadoDocumento)Enum.Parse(typeof(estadoDocumento), "PENDIENTE");
+                }
+
+                // Si no existe PENDIENTE, intentar con PROCESADO
+                if (Enum.IsDefined(typeof(estadoDocumento), "PROCESADO"))
+                {
+                    return estadoDocumento.PROCESADO;
+                }
+
+                // Último recurso: usar reflection para obtener el primer valor del enum
+                var valores = Enum.GetValues(typeof(estadoDocumento));
+                if (valores.Length > 0)
+                {
+                    return (estadoDocumento)valores.GetValue(0);
+                }
+
+                // Si todo falla, lanzar excepción
+                throw new InvalidOperationException("No se pudo determinar un estado válido");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener estado del documento: {ex.Message}");
+            }
+        }
+
+        private estadoDocumento GetEstadoDocumento(string estado)
+        {
+            try
+            {
+                // Intentar parsear el estado
+                if (Enum.TryParse<estadoDocumento>(estado, true, out estadoDocumento resultado))
+                {
+                    return resultado;
+                }
+
+                // Si falla, intentar con los valores comunes
+                if (Enum.IsDefined(typeof(estadoDocumento), estadoDocumento.PENDIENTE))
+                {
+                    return estadoDocumento.PENDIENTE;
+                }
+                else if (Enum.IsDefined(typeof(estadoDocumento), estadoDocumento.PROCESADO))
+                {
+                    return estadoDocumento.PROCESADO;
+                }
+                else
+                {
+                    // Último recurso: usar el primer valor del enum
+                    var valores = Enum.GetValues(typeof(estadoDocumento));
+                    return (estadoDocumento)valores.GetValue(0);
+                }
+            }
+            catch
+            {
+                // Fallback seguro
+                return estadoDocumento.PROCESADO;
+            }
         }
 
         private void CargarRegistrosIngreso()
         {
-            var registros = new List<object>
+            try
             {
-                new {
-                    Codigo = "ING-2025-001",
-                    FechaRegistrada = "2025-01-01",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Diego Alvarez Castillo",
-                    Total = "7500 $",
-                    Estado = "Procesando"
-                },
-                new {
-                    Codigo = "ING-2025-002",
-                    FechaRegistrada = "2025-01-02",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Patrick Cruz Apolaya",
-                    Total = "4500 $",
-                    Estado = "Cancelado"
-                }
-            };
+                var registros = new List<object>
+                {
+                    new {
+                        Codigo = "ING-2025-001",
+                        FechaRegistrada = "2025-01-01",
+                        Nombre = "BHAVANI SALES CORPORATION",
+                        Responsable = "Diego Alvarez Castillo",
+                        Total = "7500 $",
+                        Estado = "Procesando"
+                    }
+                };
 
-            gvRegistrosIngreso.DataSource = registros;
-            gvRegistrosIngreso.DataBind();
+                gvRegistrosIngreso.DataSource = registros;
+                gvRegistrosIngreso.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarIngresos",
+                    $"alert('Error al cargar registros de ingreso: {ex.Message}');", true);
+                gvRegistrosIngreso.DataSource = new List<object>();
+                gvRegistrosIngreso.DataBind();
+            }
         }
 
         private void CargarRegistrosSalida()
         {
-            var registros = new List<object>
+            try
             {
-                new {
-                    Codigo = "SAL-2025-001",
-                    FechaRegistrada = "2025-01-03",
-                    Nombre = "BHAVANI SALES CORPORATION",
-                    Responsable = "Alonso Chipana Cuellar",
-                    Total = "10000 $",
-                    Estado = "Aceptado"
-                }
-            };
+                var registros = new List<object>
+                {
+                    new {
+                        Codigo = "SAL-2025-001",
+                        FechaRegistrada = "2025-01-03",
+                        Nombre = "BHAVANI SALES CORPORATION",
+                        Responsable = "Alonso Chipana Cuellar",
+                        Total = "10000 $",
+                        Estado = "Aceptado"
+                    }
+                };
 
-            gvRegistrosSalida.DataSource = registros;
-            gvRegistrosSalida.DataBind();
+                gvRegistrosSalida.DataSource = registros;
+                gvRegistrosSalida.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarSalidas",
+                    $"alert('Error al cargar registros de salida: {ex.Message}');", true);
+                gvRegistrosSalida.DataSource = new List<object>();
+                gvRegistrosSalida.DataBind();
+            }
         }
 
         private void CargarDetalleOrdenVacia()
@@ -157,35 +954,6 @@ namespace StockifyWeb
             gvDetalleOrdenVentaSalida.DataBind();
         }
 
-        private void CargarDetalleOrdenCompra(string codigoOrden)
-        {
-            var detalle = ObtenerDetalleOrdenCompra(codigoOrden);
-            gvDetalleOrdenCompra.DataSource = detalle;
-            gvDetalleOrdenCompra.DataBind();
-        }
-
-        private void CargarDetalleOrdenVenta(string codigoOrden)
-        {
-            var detalle = ObtenerDetalleOrdenVenta(codigoOrden);
-            gvDetalleOrdenVenta.DataSource = detalle;
-            gvDetalleOrdenVenta.DataBind();
-        }
-
-        private void CargarDetalleOrdenCompraIngreso(string codigoOrden)
-        {
-            var detalle = ObtenerDetalleOrdenCompra(codigoOrden);
-            gvDetalleOrdenCompraIngreso.DataSource = detalle;
-            gvDetalleOrdenCompraIngreso.DataBind();
-        }
-
-        private void CargarDetalleOrdenVentaSalida(string codigoOrden)
-        {
-            var detalle = ObtenerDetalleOrdenVenta(codigoOrden);
-            gvDetalleOrdenVentaSalida.DataSource = detalle;
-            gvDetalleOrdenVentaSalida.DataBind();
-        }
-
-        // MÉTODO GETBADGECLASS - REQUERIDO PARA LOS BADGES
         public string GetBadgeClass(string estado)
         {
             if (string.IsNullOrEmpty(estado))
@@ -193,188 +961,27 @@ namespace StockifyWeb
 
             switch (estado.ToLower())
             {
+                case "pendiente":
+                    return "badge badge-pendiente";
                 case "procesando":
+                case "procesado":
                     return "badge badge-procesando";
                 case "cancelado":
                     return "badge badge-cancelado";
                 case "aceptado":
+                case "completado":
                     return "badge badge-aceptado";
                 case "disponible":
                     return "badge badge-aceptado";
-                case "entregado":
-                    return "badge badge-aceptado";
-                case "en camino":
-                    return "badge badge-procesando";
                 default:
                     return "badge";
             }
         }
 
-        // NUEVOS MÉTODOS PARA MANEJAR LOS DROPDOWN DE INGRESO/SALIDA
-        protected void ddlOrdenCompraIngreso_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string codigoOrden = ddlOrdenCompraIngreso.SelectedValue;
-            if (!string.IsNullOrEmpty(codigoOrden))
-            {
-                CargarDetalleOrdenCompraIngreso(codigoOrden);
-            }
-            else
-            {
-                gvDetalleOrdenCompraIngreso.DataSource = new List<object>();
-                gvDetalleOrdenCompraIngreso.DataBind();
-            }
-        }
+        #endregion
 
-        protected void ddlOrdenVentaSalida_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string codigoOrden = ddlOrdenVentaSalida.SelectedValue;
-            if (!string.IsNullOrEmpty(codigoOrden))
-            {
-                CargarDetalleOrdenVentaSalida(codigoOrden);
-            }
-            else
-            {
-                gvDetalleOrdenVentaSalida.DataSource = new List<object>();
-                gvDetalleOrdenVentaSalida.DataBind();
-            }
-        }
+        #region EVENTOS DE NAVEGACIÓN
 
-        // MÉTODOS AUXILIARES PARA OBTENER DETALLES
-        private List<object> ObtenerDetalleOrdenCompra(string codigoOrden)
-        {
-            var detalle = new List<object>();
-
-            switch (codigoOrden)
-            {
-                case "PO-2025-001":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-001",
-                        Nombre = "Laptop HP EliteBook",
-                        Descripcion = "Laptop empresarial i7, 16GB RAM, 512GB SSD",
-                        Marca = "HP",
-                        PrecioUnitario = "1500 $",
-                        Categoria = "Tecnología",
-                        Cantidad = "5",
-                        SubTotal = "7500 $",
-                        Estado = "Disponible"
-                    });
-                    break;
-                case "PO-2025-002":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-002",
-                        Nombre = "Monitor Dell 24\"",
-                        Descripcion = "Monitor Full HD 24 pulgadas",
-                        Marca = "Dell",
-                        PrecioUnitario = "300 $",
-                        Categoria = "Tecnología",
-                        Cantidad = "15",
-                        SubTotal = "4500 $",
-                        Estado = "Cancelado"
-                    });
-                    break;
-                case "PO-2025-003":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-003",
-                        Nombre = "Silla Ergonómica",
-                        Descripcion = "Silla de oficina ergonómica ejecutiva",
-                        Marca = "ErgoPlus",
-                        PrecioUnitario = "250 $",
-                        Categoria = "Mobiliario",
-                        Cantidad = "40",
-                        SubTotal = "10000 $",
-                        Estado = "Aceptado"
-                    });
-                    break;
-                default:
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-000",
-                        Nombre = "Producto Genérico",
-                        Descripcion = "Descripción del producto",
-                        Marca = "Marca",
-                        PrecioUnitario = "100 $",
-                        Categoria = "Categoría",
-                        Cantidad = "1",
-                        SubTotal = "100 $",
-                        Estado = "Disponible"
-                    });
-                    break;
-            }
-
-            return detalle;
-        }
-
-        private List<object> ObtenerDetalleOrdenVenta(string codigoOrden)
-        {
-            var detalle = new List<object>();
-
-            switch (codigoOrden)
-            {
-                case "SO-2025-001":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-001",
-                        Nombre = "Laptop HP EliteBook",
-                        Descripcion = "Laptop empresarial i7, 16GB RAM, 512GB SSD",
-                        Marca = "HP",
-                        PrecioUnitario = "1500 $",
-                        Categoria = "Tecnología",
-                        Cantidad = "5",
-                        SubTotal = "7500 $",
-                        Estado = "Disponible"
-                    });
-                    break;
-                case "SO-2025-002":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-002",
-                        Nombre = "Monitor Dell 24\"",
-                        Descripcion = "Monitor Full HD 24 pulgadas",
-                        Marca = "Dell",
-                        PrecioUnitario = "300 $",
-                        Categoria = "Tecnología",
-                        Cantidad = "15",
-                        SubTotal = "4500 $",
-                        Estado = "Cancelado"
-                    });
-                    break;
-                case "SO-2025-003":
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-003",
-                        Nombre = "Silla Ergonómica",
-                        Descripcion = "Silla de oficina ergonómica ejecutiva",
-                        Marca = "ErgoPlus",
-                        PrecioUnitario = "250 $",
-                        Categoria = "Mobiliario",
-                        Cantidad = "40",
-                        SubTotal = "10000 $",
-                        Estado = "Aceptado"
-                    });
-                    break;
-                default:
-                    detalle.Add(new
-                    {
-                        Codigo = "PROD-000",
-                        Nombre = "Producto Genérico",
-                        Descripcion = "Descripción del producto",
-                        Marca = "Marca",
-                        PrecioUnitario = "100 $",
-                        Categoria = "Categoría",
-                        Cantidad = "1",
-                        SubTotal = "100 $",
-                        Estado = "Disponible"
-                    });
-                    break;
-            }
-
-            return detalle;
-        }
-
-        // EVENTOS DE BOTONES PRINCIPALES
         protected void btnCompra_Click(object sender, EventArgs e)
         {
             MostrarCompra();
@@ -443,304 +1050,25 @@ namespace StockifyWeb
             btnIngreso.CssClass = "mode-btn";
         }
 
-        // EVENTOS DE CHECKBOX INDIVIDUAL - COMPRA
-        protected void chkSeleccionCompra_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chkSeleccion = (CheckBox)sender;
-            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
+        #endregion
 
-            if (chkSeleccion.Checked)
-            {
-                string codigoSeleccionado = gvOrdenesCompra.DataKeys[row.RowIndex].Value.ToString();
-                CargarDetalleOrdenCompra(codigoSeleccionado);
+        #region EVENTOS PENDIENTES
 
-                // Desmarcar otros checkboxes
-                foreach (GridViewRow otherRow in gvOrdenesCompra.Rows)
-                {
-                    if (otherRow.RowIndex != row.RowIndex)
-                    {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionCompra");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                CargarDetalleOrdenVacia();
-            }
-        }
+        protected void chkSeleccionIngreso_CheckedChanged(object sender, EventArgs e) { }
+        protected void chkSeleccionSalida_CheckedChanged(object sender, EventArgs e) { }
+        protected void btnEditarIngresoFila_Click(object sender, EventArgs e) { }
+        protected void btnEditarSalidaFila_Click(object sender, EventArgs e) { }
+        protected void gvOrdenesCompra_RowDataBound(object sender, GridViewRowEventArgs e) { }
+        protected void gvOrdenesVenta_RowDataBound(object sender, GridViewRowEventArgs e) { }
+        protected void gvRegistrosIngreso_RowDataBound(object sender, GridViewRowEventArgs e) { }
+        protected void gvRegistrosSalida_RowDataBound(object sender, GridViewRowEventArgs e) { }
+        protected void btnAgregarIngreso_Click(object sender, EventArgs e) { }
+        protected void btnAnularIngreso_Click(object sender, EventArgs e) { }
+        protected void btnAgregarSalida_Click(object sender, EventArgs e) { }
+        protected void btnAnularSalida_Click(object sender, EventArgs e) { }
+        protected void ddlOrdenCompraIngreso_SelectedIndexChanged(object sender, EventArgs e) { }
+        protected void ddlOrdenVentaSalida_SelectedIndexChanged(object sender, EventArgs e) { }
 
-        // EVENTOS DE CHECKBOX INDIVIDUAL - VENTA
-        protected void chkSeleccionVenta_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chkSeleccion = (CheckBox)sender;
-            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
-
-            if (chkSeleccion.Checked)
-            {
-                string codigoSeleccionado = gvOrdenesVenta.DataKeys[row.RowIndex].Value.ToString();
-                CargarDetalleOrdenVenta(codigoSeleccionado);
-
-                // Desmarcar otros checkboxes
-                foreach (GridViewRow otherRow in gvOrdenesVenta.Rows)
-                {
-                    if (otherRow.RowIndex != row.RowIndex)
-                    {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionVenta");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                CargarDetalleOrdenVacia();
-            }
-        }
-
-        // NUEVOS EVENTOS DE CHECKBOX PARA INGRESO Y SALIDA
-        protected void chkSeleccionIngreso_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chkSeleccion = (CheckBox)sender;
-            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
-
-            if (chkSeleccion.Checked)
-            {
-                string codigoSeleccionado = gvRegistrosIngreso.DataKeys[row.RowIndex].Value.ToString();
-                // Aquí puedes cargar detalles específicos de ingreso si es necesario
-
-                // Desmarcar otros checkboxes
-                foreach (GridViewRow otherRow in gvRegistrosIngreso.Rows)
-                {
-                    if (otherRow.RowIndex != row.RowIndex)
-                    {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionIngreso");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        protected void chkSeleccionSalida_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chkSeleccion = (CheckBox)sender;
-            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
-
-            if (chkSeleccion.Checked)
-            {
-                string codigoSeleccionado = gvRegistrosSalida.DataKeys[row.RowIndex].Value.ToString();
-                // Aquí puedes cargar detalles específicos de salida si es necesario
-
-                // Desmarcar otros checkboxes
-                foreach (GridViewRow otherRow in gvRegistrosSalida.Rows)
-                {
-                    if (otherRow.RowIndex != row.RowIndex)
-                    {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionSalida");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        // NUEVOS EVENTOS PARA BOTONES EDITAR EN CADA FILA
-        protected void btnEditarCompraFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoOrden = btn.CommandArgument;
-
-            // Seleccionar automáticamente el checkbox correspondiente
-            foreach (GridViewRow row in gvOrdenesCompra.Rows)
-            {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionCompra");
-                string codigoFila = gvOrdenesCompra.DataKeys[row.RowIndex].Value.ToString();
-
-                if (codigoFila == codigoOrden)
-                {
-                    chkSeleccion.Checked = true;
-                    CargarDetalleOrdenCompra(codigoOrden);
-                }
-                else
-                {
-                    chkSeleccion.Checked = false;
-                }
-            }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarCompraFila",
-                $"alert('Editando orden de compra: {codigoOrden}');", true);
-        }
-
-        protected void btnEditarVentaFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoOrden = btn.CommandArgument;
-
-            // Seleccionar automáticamente el checkbox correspondiente
-            foreach (GridViewRow row in gvOrdenesVenta.Rows)
-            {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionVenta");
-                string codigoFila = gvOrdenesVenta.DataKeys[row.RowIndex].Value.ToString();
-
-                if (codigoFila == codigoOrden)
-                {
-                    chkSeleccion.Checked = true;
-                    CargarDetalleOrdenVenta(codigoOrden);
-                }
-                else
-                {
-                    chkSeleccion.Checked = false;
-                }
-            }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarVentaFila",
-                $"alert('Editando orden de venta: {codigoOrden}');", true);
-        }
-
-        protected void btnEditarIngresoFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoIngreso = btn.CommandArgument;
-
-            // Seleccionar automáticamente el checkbox correspondiente
-            foreach (GridViewRow row in gvRegistrosIngreso.Rows)
-            {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionIngreso");
-                string codigoFila = gvRegistrosIngreso.DataKeys[row.RowIndex].Value.ToString();
-
-                if (codigoFila == codigoIngreso)
-                {
-                    chkSeleccion.Checked = true;
-                }
-                else
-                {
-                    chkSeleccion.Checked = false;
-                }
-            }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarIngresoFila",
-                $"alert('Editando registro de ingreso: {codigoIngreso}');", true);
-        }
-
-        protected void btnEditarSalidaFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoSalida = btn.CommandArgument;
-
-            // Seleccionar automáticamente el checkbox correspondiente
-            foreach (GridViewRow row in gvRegistrosSalida.Rows)
-            {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionSalida");
-                string codigoFila = gvRegistrosSalida.DataKeys[row.RowIndex].Value.ToString();
-
-                if (codigoFila == codigoSalida)
-                {
-                    chkSeleccion.Checked = true;
-                }
-                else
-                {
-                    chkSeleccion.Checked = false;
-                }
-            }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarSalidaFila",
-                $"alert('Editando registro de salida: {codigoSalida}');", true);
-        }
-
-        // EVENTOS DE GRILLAS
-        protected void gvOrdenesCompra_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            // Lógica específica para la grilla de compras si es necesario
-        }
-
-        protected void gvOrdenesVenta_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            // Lógica específica para la grilla de ventas si es necesario
-        }
-
-        protected void gvRegistrosIngreso_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            // Lógica específica para la grilla de ingresos si es necesario
-        }
-
-        protected void gvRegistrosSalida_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            // Lógica específica para la grilla de salidas si es necesario
-        }
-
-        // EVENTOS DE BOTONES - COMPRA
-        protected void btnAgregarCompra_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "agregarCompra",
-                "alert('Función Agregar Orden Compra - Por implementar');", true);
-        }
-
-        protected void btnAnularCompra_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "anularCompra",
-                "alert('Función Anular Orden Compra - Por implementar');", true);
-        }
-
-        // EVENTOS DE BOTONES - VENTA
-        protected void btnAgregarVenta_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "agregarVenta",
-                "alert('Función Agregar Orden Venta - Por implementar');", true);
-        }
-
-        protected void btnAnularVenta_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "anularVenta",
-                "alert('Función Anular Orden Venta - Por implementar');", true);
-        }
-
-        // EVENTOS DE BOTONES - INGRESO
-        protected void btnAgregarIngreso_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "agregarIngreso",
-                "alert('Función Agregar Ingreso - Por implementar');", true);
-        }
-
-        protected void btnAnularIngreso_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "anularIngreso",
-                "alert('Función Anular Ingreso - Por implementar');", true);
-        }
-
-        // EVENTOS DE BOTONES - SALIDA
-        protected void btnAgregarSalida_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "agregarSalida",
-                "alert('Función Agregar Salida - Por implementar');", true);
-        }
-
-        protected void btnAnularSalida_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "anularSalida",
-                "alert('Función Anular Salida - Por implementar');", true);
-        }
-
-        // EVENTOS PARA VIEW DOCUMENTOS
-        protected void btnViewCompra_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "viewCompra",
-                "alert('Función View Documento Compra - Por implementar');", true);
-        }
-
-        protected void btnViewVenta_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "viewVenta",
-                "alert('Función View Documento Venta - Por implementar');", true);
-        }
+        #endregion
     }
 }

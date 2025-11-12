@@ -358,7 +358,7 @@
                 </div>
                 <div class="table-responsive">
                     <asp:GridView ID="gvOrdenesCompra" runat="server" CssClass="data-table" AutoGenerateColumns="false"
-                        OnRowDataBound="gvOrdenesCompra_RowDataBound" DataKeyNames="Codigo">
+                        OnRowDataBound="gvOrdenesCompra_RowDataBound" DataKeyNames="IdOrdenCompra">
                         <Columns>
                             <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
                                 <ItemTemplate>
@@ -378,10 +378,17 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditarCompraFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarCompraFila_Click" />
+                                    <asp:Button ID="btnEditarCompraFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnEditarCompraFila_Click" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <EmptyDataTemplate>
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
+                                    No hay datos para mostrar
+                                </td>
+                            </tr>
+                        </EmptyDataTemplate>
                     </asp:GridView>
                 </div>
             </div>
@@ -468,40 +475,48 @@
                 </div>
             </div>
 
-            <!-- Tabla: Ordenes de Venta -->
-            <div class="table-section">
-                <div class="table-header">
-                    <h3>Órdenes de Venta</h3>
-                </div>
-                <div class="table-responsive">
-                    <asp:GridView ID="gvOrdenesVenta" runat="server" CssClass="data-table" AutoGenerateColumns="false"
-                        OnRowDataBound="gvOrdenesVenta_RowDataBound" DataKeyNames="Codigo">
-                        <Columns>
-                            <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
-                                <ItemTemplate>
-                                    <asp:CheckBox ID="chkSeleccionVenta" runat="server" AutoPostBack="true" OnCheckedChanged="chkSeleccionVenta_CheckedChanged" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                            <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
-                            <asp:BoundField DataField="Nombre" HeaderText="Nombre Cliente" />
-                            <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
-                            <asp:BoundField DataField="Total" HeaderText="Total" />
-                            <asp:TemplateField HeaderText="Estado">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblEstadoVenta" runat="server" CssClass='<%# GetBadgeClass(Eval("Estado").ToString()) %>' 
-                                        Text='<%# Eval("Estado") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEditarVentaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarVentaFila_Click" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </div>
+          <!-- Tabla: Ordenes de Venta -->
+<div class="table-section">
+    <div class="table-header">
+        <h3>Órdenes de Venta</h3>
+    </div>
+    <div class="table-responsive">
+        <asp:GridView ID="gvOrdenesVenta" runat="server" CssClass="data-table" AutoGenerateColumns="false"
+            OnRowDataBound="gvOrdenesVenta_RowDataBound" DataKeyNames="IdOrdenVenta">
+            <Columns>
+                <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
+                    <ItemTemplate>
+                        <asp:CheckBox ID="chkSeleccionVenta" runat="server" AutoPostBack="true" OnCheckedChanged="chkSeleccionVenta_CheckedChanged" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="Codigo" HeaderText="Código" />
+                <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre Cliente" />
+                <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
+                <asp:BoundField DataField="Total" HeaderText="Total" />
+                <asp:TemplateField HeaderText="Estado">
+                    <ItemTemplate>
+                        <asp:Label ID="lblEstadoVenta" runat="server" CssClass='<%# GetBadgeClass(Eval("Estado").ToString()) %>' 
+                            Text='<%# Eval("Estado") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
+                    <ItemTemplate>
+                        <asp:Button ID="btnEditarVentaFila" runat="server" Text="Editar" CssClass="btn-editar" 
+                            CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnEditarVentaFila_Click" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+            <EmptyDataTemplate>
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
+                        No hay datos para mostrar
+                    </td>
+                </tr>
+            </EmptyDataTemplate>
+        </asp:GridView>
+    </div>
+</div>
 
             <!-- Tabla: Líneas de Orden de Venta -->
             <div class="table-section">
@@ -775,23 +790,23 @@
 
     <script>
         // Agregar iconos a los botones principales usando JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Agregar iconos a los botones principales
             const btnCompra = document.getElementById('<%= btnCompra.ClientID %>');
             if (btnCompra) {
                 btnCompra.innerHTML = '<i class="fas fa-shopping-cart"></i> ' + btnCompra.textContent;
             }
-            
+
             const btnVenta = document.getElementById('<%= btnVenta.ClientID %>');
             if (btnVenta) {
                 btnVenta.innerHTML = '<i class="fas fa-cash-register"></i> ' + btnVenta.textContent;
             }
-            
+
             const btnIngreso = document.getElementById('<%= btnIngreso.ClientID %>');
             if (btnIngreso) {
                 btnIngreso.innerHTML = '<i class="fas fa-sign-in-alt"></i> ' + btnIngreso.textContent;
             }
-            
+
             const btnSalida = document.getElementById('<%= btnSalida.ClientID %>');
             if (btnSalida) {
                 btnSalida.innerHTML = '<i class="fas fa-sign-out-alt"></i> ' + btnSalida.textContent;
