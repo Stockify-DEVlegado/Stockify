@@ -75,12 +75,19 @@
             gap: 8px;
         }
 
+        .btn-edit:disabled {
+            background: var(--card2);
+            color: var(--muted);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
         .btn-back:hover {
             background: var(--stroke);
             transform: translateX(-2px);
         }
 
-        .btn-edit:hover {
+        .btn-edit:hover:not(:disabled) {
             background: #9ab1ff;
             transform: translateY(-1px);
         }
@@ -179,7 +186,7 @@
         
         /* Estilos para el modal */
         .modal-overlay {
-            display: none; /* <-- Esto lo oculta por defecto */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -197,7 +204,7 @@
             border-radius: var(--radius);
             padding: 24px;
             width: 90%;
-            max-width: 500px; /* Puedes ajustar este ancho */
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow);
@@ -257,7 +264,7 @@
             border-radius: 8px;
             color: var(--text);
             font-size: 14px;
-            box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+            box-sizing: border-box;
         }
         
         .form-control:focus {
@@ -336,6 +343,9 @@
                 <a href="Inventario.aspx" class="btn-back">
                     <i class="fas fa-arrow-left"></i> Volver
                 </a>
+                <button type="button" class="btn-edit" id="btnEditar" onclick="abrirModalEditar()" disabled>
+                    <i class="fas fa-edit"></i> Editar
+                </button>
             </div>
         </div>
 
@@ -409,6 +419,7 @@
         </div>
     </div>
     
+    <!-- Modal Editar Producto -->
     <div class="modal-overlay" id="editarProductoModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -423,7 +434,8 @@
         
             <div class="form-group">
                 <label for="ddlCategoriaEditar">Categoría</label>
-                <asp:DropDownList ID="ddlCategoriaEditar" runat="server" CssClass="form-control" DataTextField="nombre" DataValueField="idCategoria" ClientIDMode="Static">
+                <asp:DropDownList ID="ddlCategoriaEditar" runat="server" CssClass="form-control" 
+                    DataTextField="nombre" DataValueField="idCategoria" ClientIDMode="Static">
                 </asp:DropDownList>
             </div>
             
@@ -434,106 +446,117 @@
 
             <div class="form-group">
                 <label for="txtPrecioEditar">Precio Unitario (S/)</label>
-                <asp:TextBox ID="txtPrecioEditar" runat="server" CssClass="form-control" TextMode="Number" step="0.01" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtPrecioEditar" runat="server" CssClass="form-control" 
+                    TextMode="Number" step="0.01" ClientIDMode="Static"></asp:TextBox>
             </div>
         
             <div class="form-group">
                 <label for="txtStockMinEditar">Stock Mínimo</label>
-                <asp:TextBox ID="txtStockMinEditar" runat="server" CssClass="form-control" TextMode="Number" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtStockMinEditar" runat="server" CssClass="form-control" 
+                    TextMode="Number" ClientIDMode="Static"></asp:TextBox>
             </div>
 
             <div class="form-group">
                 <label for="txtStockMaxEditar">Stock Máximo</label>
-                <asp:TextBox ID="txtStockMaxEditar" runat="server" CssClass="form-control" TextMode="Number" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtStockMaxEditar" runat="server" CssClass="form-control" 
+                    TextMode="Number" ClientIDMode="Static"></asp:TextBox>
             </div>
 
             <div class="form-group">
                 <label for="txtDescripcionEditar">Descripción</label>
-                <asp:TextBox ID="txtDescripcionEditar" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtDescripcionEditar" runat="server" CssClass="form-control" 
+                    TextMode="MultiLine" Rows="3" ClientIDMode="Static"></asp:TextBox>
             </div>
         
             <div class="modal-actions">
                 <button type="button" class="btn-discard" onclick="cerrarModalEditar()">Cancelar</button>
                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar Cambios" 
-                CssClass="btn-submit" OnClick="btnGuardarCambios_Click" />
+                    CssClass="btn-submit" OnClick="BtnGuardarCambios_Click" />
             </div>
         </div>
     </div>
     
-<script>
-    // 🌟 NUEVA FUNCIÓN: Habilita el botón una vez que C# confirma la carga de datos.
-    function habilitarBotonEditar() {
-        var btn = document.getElementById('btnEditar');
-        if (btn) {
-            btn.disabled = false;
-        }
-    }
-
-    function getElementText(id) {
-        var element = document.getElementById(id);
-        if (element) {
-            return element.innerText.trim();
-        }
-        return ''; 
-    }
-
-    function abrirModalEditar() {
-        try {
-            var nombre = getElementText('litNombre');
-            var categoria = getElementText('litCategoria');
-            var marca = getElementText('litMarca');
-            var descripcion = getElementText('litDescripcion');
-            var stockMax = getElementText('litStockMax');
-            var stockMin = getElementText('litStockMin');
-            
-            var precioTexto = getElementText('litPrecio');
-            var precio = precioTexto.replace('S/ ', '').replace(/,/g, '').trim(); 
-            
-            // Validación de carga: Si el nombre aún es el valor inicial '---', no procede.
-            if (nombre === '---' || nombre === '') {
-                console.warn("La carga del detalle del producto aún no ha finalizado o ha fallado. No se puede abrir el modal con datos.");
-                alert("Los datos del producto no están listos para la edición. Por favor, espere un momento o recargue la página si el problema persiste.");
-                return; 
+    <script>
+        // Habilita el botón de editar una vez que los datos estén cargados
+        function habilitarBotonEditar() {
+            var btn = document.getElementById('btnEditar');
+            if (btn) {
+                btn.disabled = false;
             }
+        }
 
-            // 2. Asignar valores a los campos del formulario (modal)
-            document.getElementById('txtNombreEditar').value = nombre;
-            document.getElementById('txtMarcaEditar').value = marca;
-            document.getElementById('txtPrecioEditar').value = precio; 
-            document.getElementById('txtDescripcionEditar').value = descripcion;
-            document.getElementById('txtStockMaxEditar').value = stockMax;
-            document.getElementById('txtStockMinEditar').value = stockMin;
-        
-            // 3. Seleccionar la categoría en el DropDownList
-            var ddlCategoria = document.getElementById('ddlCategoriaEditar');
-            if(ddlCategoria) {
-                for (var i = 0; i < ddlCategoria.options.length; i++) {
-                    if (ddlCategoria.options[i].text === categoria) {
-                        ddlCategoria.selectedIndex = i;
-                        break;
+        function getElementText(id) {
+            var element = document.getElementById(id);
+            if (element) {
+                return element.innerText.trim();
+            }
+            return '';
+        }
+
+        function abrirModalEditar() {
+            try {
+                var nombre = getElementText('litNombre');
+                var categoria = getElementText('litCategoria');
+                var marca = getElementText('litMarca');
+                var descripcion = getElementText('litDescripcion');
+                var stockMax = getElementText('litStockMax');
+                var stockMin = getElementText('litStockMin');
+
+                var precioTexto = getElementText('litPrecio');
+                var precio = precioTexto.replace('S/ ', '').replace(/,/g, '').trim();
+
+                // Validación: Si el nombre aún es el valor inicial '---', no procede
+                if (nombre === '---' || nombre === '') {
+                    console.warn("Los datos del producto aún no han sido cargados.");
+                    alert("Los datos del producto no están listos para la edición. Por favor, espere un momento.");
+                    return;
+                }
+
+                // Asignar valores a los campos del formulario
+                document.getElementById('txtNombreEditar').value = nombre;
+                document.getElementById('txtMarcaEditar').value = marca;
+                document.getElementById('txtPrecioEditar').value = precio;
+                document.getElementById('txtDescripcionEditar').value = descripcion;
+                document.getElementById('txtStockMaxEditar').value = stockMax;
+                document.getElementById('txtStockMinEditar').value = stockMin;
+
+                // Seleccionar la categoría en el DropDownList
+                var ddlCategoria = document.getElementById('ddlCategoriaEditar');
+                if (ddlCategoria) {
+                    for (var i = 0; i < ddlCategoria.options.length; i++) {
+                        if (ddlCategoria.options[i].text === categoria) {
+                            ddlCategoria.selectedIndex = i;
+                            break;
+                        }
                     }
                 }
+
+                // Mostrar el modal
+                document.getElementById('editarProductoModal').style.display = 'flex';
             }
-            
-            // 4. Mostrar el modal
-            document.getElementById('editarProductoModal').style.display = 'flex';
+            catch (e) {
+                console.error("Error al abrir el modal de edición:", e);
+                alert("Error al intentar abrir el formulario de edición.");
+            }
         }
-        catch (e) {
-            console.error("Error catastrófico al abrir el modal de edición:", e);
-            alert("Error al intentar abrir el formulario de edición. Revise la consola del navegador.");
-        }
-    }
 
-    function cerrarModalEditar() {
-        document.getElementById('editarProductoModal').style.display = 'none';
-    }
-
-    // Cerrar modal al hacer click fuera
-    document.getElementById('editarProductoModal').addEventListener('click', function (e) {
-        if (e.target === this) {
-            cerrarModalEditar();
+        function cerrarModalEditar() {
+            document.getElementById('editarProductoModal').style.display = 'none';
         }
-    });
-</script>
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('editarProductoModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                cerrarModalEditar();
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                cerrarModalEditar();
+            }
+        });
+    </script>
     
 </asp:Content>

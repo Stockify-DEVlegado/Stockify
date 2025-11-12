@@ -71,17 +71,106 @@
         .action-buttons {
             display: flex;
             gap: 10px;
+            align-items: center;
+        }
+
+        /* ========================================
+           DROPDOWN DE CATEGORÍAS MEJORADO
+        ======================================== */
+        
+        .filter-group {
+            position: relative;
+        }
+
+        .btn-filter-dropdown {
+            padding: 10px 40px 10px 15px;
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            min-width: 220px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-filter-dropdown:hover {
+            background: var(--card2);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(138, 162, 255, 0.2);
+        }
+
+        .btn-filter-dropdown:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(138, 162, 255, 0.15);
+        }
+
+        /* Icono personalizado del dropdown */
+        .filter-group::after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            pointer-events: none;
+            font-size: 12px;
+        }
+
+        /* Estilos para las opciones del dropdown */
+        .btn-filter-dropdown option {
+            background: var(--card);
+            color: var(--text);
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .btn-filter-dropdown option:hover {
+            background: var(--card2);
+        }
+
+        .btn-filter-dropdown option:first-child {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Estilo alternativo con badge */
+        .filter-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .filter-label {
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            background: var(--bg);
+            color: var(--muted);
+            padding: 0 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
         }
 
         .btn-filter, .btn-add {
             padding: 10px 20px;
-            border-radius: var(--radius);
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
+            gap: 8px;
+            transition: all 0.3s ease;
             border: none;
+            font-weight: 500;
+            font-size: 14px;
         }
 
         .btn-filter {
@@ -91,18 +180,21 @@
         }
 
         .btn-add {
-            background: var(--card);
-            color: var(--accent);
-            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            box-shadow: 0 4px 12px rgba(138, 162, 255, 0.3);
         }
 
         .btn-filter:hover {
             background: var(--stroke);
+            transform: translateY(-1px);
         }
 
         .btn-add:hover {
-            background: var(--accent);
-            color: var(--bg);
+            background: #9ab1ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(138, 162, 255, 0.4);
         }
 
         .products-table {
@@ -126,6 +218,20 @@
         .products-table th {
             background: var(--card2);
             font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .products-table th a {
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            padding: 0;
+        }
+
+        .products-table th a:hover {
+            color: var(--accent);
         }
 
         .products-table tbody tr:hover {
@@ -157,14 +263,21 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: #000000;
-            border: 1px solid #323844;
+            background: var(--card);
+            border: 1px solid var(--stroke);
             border-radius: var(--radius);
             padding: 28px;
             width: 90%;
@@ -172,10 +285,18 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,.6);
+            animation: slideUp 0.3s ease;
         }
 
-        .modal-detalle {
-            max-width: 750px;
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-header {
@@ -188,16 +309,10 @@
         }
 
         .modal-title {
-            color: #ffffff;
+            color: var(--text);
             font-size: 22px;
             font-weight: 700;
             margin: 0;
-        }
-
-        .detalle-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
         }
 
         .close-modal {
@@ -209,45 +324,59 @@
             padding: 0;
             width: 30px;
             height: 30px;
+            transition: all 0.2s;
         }
 
         .close-modal:hover {
             color: var(--text);
+            transform: rotate(90deg);
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
             color: var(--muted);
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 14px;
             background: var(--bg);
             border: 1px solid var(--stroke);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text);
             font-size: 14px;
             box-sizing: border-box;
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(138, 162, 255, 0.15);
+            background: var(--card);
+        }
+
+        /* Dropdown dentro del modal también mejorado */
+        .form-control option {
+            background: var(--bg);
+            color: var(--text);
+            padding: 10px;
         }
 
         .modal-actions {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 24px;
             border-top: 1px solid var(--stroke);
             padding-top: 20px;
         }
@@ -256,138 +385,55 @@
             background: var(--accent);
             color: var(--bg);
             border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(138, 162, 255, 0.3);
         }
 
         .btn-discard {
             background: var(--card2);
             color: var(--text);
             border: 1px solid var(--stroke);
-        }
-
-        .btn-edit {
-            background: #2a2f39;
-            color: #ffffff;
-            border: 1px solid #3d4454;
-            padding: 9px 18px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
             font-size: 14px;
-        }
-
-        .btn-delete {
-            background: transparent;
-            color: #ff6b6b;
-            border: 1px solid #ff6b6b;
-            padding: 9px 18px;
-            font-size: 14px;
+            transition: all 0.3s ease;
         }
 
         .btn-submit:hover {
             background: #9ab1ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(138, 162, 255, 0.4);
         }
 
-        .btn-discard:hover, .btn-edit:hover {
+        .btn-discard:hover {
             background: var(--stroke);
-        }
-
-        .btn-delete:hover {
-            background: var(--danger);
-            color: var(--bg);
-        }
-
-        .section-title {
-            color: #ffffff;
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 18px;
-            margin-top: 10px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #323844;
-        }
-
-        .detalle-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .detalle-field {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .detalle-field.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .detalle-label {
-            color: #8a95aa;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .detalle-value {
-            color: #ffffff;
-            font-size: 15px;
-            padding: 12px 15px;
-            background: #16181d;
-            border-radius: 8px;
-            border: 1px solid #2a2f39;
-            min-height: 20px;
-        }
-
-        .stock-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .stock-card {
-            background: #16181d;
-            padding: 20px 15px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #2a2f39;
-        }
-
-        .stock-label {
-            color: #8a95aa;
-            font-size: 12px;
-            margin-bottom: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stock-value {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .product-image-section {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .product-image {
-            max-width: 200px;
-            max-height: 200px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 0 auto;
+            transform: translateY(-1px);
         }
 
         @media (max-width: 768px) {
             .header-actions {
                 flex-direction: column;
             }
-            .detalle-grid, .stock-section {
-                grid-template-columns: 1fr;
+
+            .btn-filter-dropdown {
+                min-width: 100%;
+            }
+
+            .action-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-add {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -403,21 +449,24 @@
                 <i class="fas fa-search"></i>
             </div>
             <div class="action-buttons">
-                <button class="btn-filter" type="button">
-                    <i class="fas fa-filter"></i> Filtros
-                </button>
-                <asp:Button ID="btnOpenModal" runat="server" Text="Agregar Producto" 
+                <div class="filter-group">
+                    <asp:DropDownList ID="ddlFiltroCategoria" runat="server" CssClass="btn-filter-dropdown" 
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroCategoria_SelectedIndexChanged">
+                    </asp:DropDownList>
+                </div>
+                <asp:Button ID="btnOpenModal" runat="server" Text="➕ Agregar Producto" 
                     CssClass="btn-add" OnClick="btnOpenModal_Click" />
             </div>
         </div>
 
-        <h1>Productos</h1>
+        <h1>📦 Productos</h1>
         
         <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" 
-            CssClass="products-table" OnRowCommand="gvProductos_RowCommand">
+            CssClass="products-table" OnRowCommand="gvProductos_RowCommand" 
+            AllowSorting="true" OnSorting="gvProductos_Sorting">
             <Columns>
-                <asp:BoundField DataField="Producto" HeaderText="Producto" />
-                <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="₹{0:N2}" />
+                <asp:BoundField DataField="Producto" HeaderText="Producto" SortExpression="Producto" />
+                <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="S/ {0:N2}" />
                 <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
                 <asp:BoundField DataField="Marca" HeaderText="Marca" />
                 <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
@@ -437,135 +486,49 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">
-                    <asp:Literal ID="litModalTitle" runat="server" Text="Agregar Producto" />
+                    <asp:Literal ID="litModalTitle" runat="server" Text="✨ Agregar Producto" />
                 </h2>
                 <button class="close-modal" type="button" onclick="cerrarModal()">&times;</button>
             </div>
             
             <div class="form-group">
-                <label>Nombre del producto</label>
+                <label>📝 Nombre del producto</label>
                 <asp:TextBox ID="txtProductName" runat="server" CssClass="form-control" 
-                    placeholder="Ingrese nombre"></asp:TextBox>
+                    placeholder="Ingrese nombre del producto"></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label>Categoría</label>
+                <label>📂 Categoría</label>
                 <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control" />
             </div>
             
             <div class="form-group">
-                <label>Precio unitario</label>
+                <label>💰 Precio unitario (S/)</label>
                 <asp:TextBox ID="txtPrecioUnitario" runat="server" CssClass="form-control" 
-                    placeholder="0.00"></asp:TextBox>
+                    placeholder="0.00" TextMode="Number" step="0.01"></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label>Descripción</label>
+                <label>📄 Descripción</label>
                 <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" 
-                    TextMode="MultiLine" Rows="3"></asp:TextBox>
+                    TextMode="MultiLine" Rows="3" placeholder="Describe el producto..."></asp:TextBox>
             </div>
             
             <div class="form-group">
-                <label>Marca</label>
-                <asp:TextBox ID="txtMarca" runat="server" CssClass="form-control"></asp:TextBox>
+                <label>🏷️ Marca</label>
+                <asp:TextBox ID="txtMarca" runat="server" CssClass="form-control" 
+                    placeholder="Marca del producto"></asp:TextBox>
             </div>
             
             <div class="modal-actions">
                 <button type="button" class="btn-discard" onclick="cerrarModal()">Cancelar</button>
-                <asp:Button ID="btnSaveProduct" runat="server" 
+                <asp:Button ID="btnSaveProduct" runat="server" Text="💾 Guardar Producto"
                     CssClass="btn-submit" OnClick="btnSaveProduct_Click" />
             </div>
         </div>
     </div>
 
-    <!-- Modal Ver Detalle -->
-    <div class="modal-overlay" id="detalleProductoModal">
-        <div class="modal-content modal-detalle">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <asp:Literal ID="litDetalleNombre" runat="server" Text="Detalle del Producto" />
-                </h2>
-                <div class="detalle-actions">
-                    <asp:Button ID="btnEditDetalle" runat="server" Text="✏️ Editar" 
-                        CssClass="btn-edit" OnClick="btnEditDetalle_Click" />
-                    <button class="close-modal" type="button" onclick="cerrarDetalleModal()" title="Cerrar">&times;</button>
-                </div>
-            </div>
-            
-            <h3 class="section-title">📋 Información del Producto</h3>
-            
-            <div class="detalle-grid">
-                <div class="detalle-field">
-                    <span class="detalle-label">Nombre del producto</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litNombre" runat="server" Text="---" />
-                    </div>
-                </div>
-                
-                <div class="detalle-field">
-                    <span class="detalle-label">ID Producto</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litIdProducto" runat="server" Text="---" />
-                    </div>
-                </div>
-                
-                <div class="detalle-field">
-                    <span class="detalle-label">Categoría</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litCategoria" runat="server" Text="---" />
-                    </div>
-                </div>
-                
-                <div class="detalle-field">
-                    <span class="detalle-label">Marca</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litMarca" runat="server" Text="---" />
-                    </div>
-                </div>
-                
-                <div class="detalle-field">
-                    <span class="detalle-label">Precio Unitario</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litPrecio" runat="server" Text="---" />
-                    </div>
-                </div>
-                
-                <div class="detalle-field full-width">
-                    <span class="detalle-label">Descripción</span>
-                    <div class="detalle-value">
-                        <asp:Literal ID="litDescripcion" runat="server" Text="---" />
-                    </div>
-                </div>
-            </div>
-            
-            <h3 class="section-title">📦 Información de Stock</h3>
-            
-            <div class="stock-section">
-                <div class="stock-card">
-                    <div class="stock-label">Stock Máximo</div>
-                    <div class="stock-value">
-                        <asp:Literal ID="litStockMax" runat="server" Text="0" />
-                    </div>
-                </div>
-                <div class="stock-card">
-                    <div class="stock-label">Stock Actual</div>
-                    <div class="stock-value">
-                        <asp:Literal ID="litStockActual" runat="server" Text="0" />
-                    </div>
-                </div>
-                <div class="stock-card">
-                    <div class="stock-label">Stock Mínimo</div>
-                    <div class="stock-value">
-                        <asp:Literal ID="litStockMin" runat="server" Text="0" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <asp:HiddenField ID="hdnProductoId" runat="server" />
-    
-    
+    <asp:HiddenField ID="hdnProductoId" runat="server" Value="0" />
     
     <script>
         // Búsqueda en tiempo real
@@ -593,21 +556,17 @@
             }
         });
 
-        // Modales
+        // Modales con animaciones
         function abrirModal() {
-            document.getElementById('addProductModal').style.display = 'flex';
+            const modal = document.getElementById('addProductModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
         }
 
         function cerrarModal() {
-            document.getElementById('addProductModal').style.display = 'none';
-        }
-
-        function abrirDetalleModal() {
-            document.getElementById('detalleProductoModal').style.display = 'flex';
-        }
-
-        function cerrarDetalleModal() {
-            document.getElementById('detalleProductoModal').style.display = 'none';
+            const modal = document.getElementById('addProductModal');
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
         }
 
         // Cerrar al hacer clic fuera
@@ -615,15 +574,10 @@
             if (e.target === this) cerrarModal();
         });
 
-        document.getElementById('detalleProductoModal').addEventListener('click', function (e) {
-            if (e.target === this) cerrarDetalleModal();
-        });
-
         // Cerrar con tecla ESC
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 cerrarModal();
-                cerrarDetalleModal();
             }
         });
     </script>
