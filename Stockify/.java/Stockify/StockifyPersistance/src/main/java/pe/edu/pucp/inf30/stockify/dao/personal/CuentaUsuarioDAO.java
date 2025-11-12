@@ -13,5 +13,5 @@ import pe.edu.pucp.inf30.stockify.model.personal.CuentaUsuario;
  */
 
 public interface CuentaUsuarioDAO extends Persistible<CuentaUsuario, Integer> {
-    
+    boolean login(String username, String password);
 }

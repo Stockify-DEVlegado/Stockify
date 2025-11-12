@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.dao.almacen.ProductoDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO;
 import pe.edu.pucp.inf30.stockify.model.almacen.Producto;
@@ -106,4 +108,69 @@ public class ProductoDAOImpl extends BaseDAO<Producto>
         }
         return producto;
     }
+    
+    protected PreparedStatement comandoLeerTodosOrdenados(Connection conn, 
+            String criterio) throws SQLException {
+        
+        String sql = "{call listarProductosOrdenados(?)}";
+        CallableStatement cmd = conn.prepareCall(sql);
+        cmd.setString("p_criterioOrden", criterio);
+        return cmd;
+    }
+    
+    @Override
+    public List<Producto> leerTodosOrdenados(String criterio) {
+        return ejecutarComando(conn -> leerTodosOrdenados(criterio, conn));
+    }
+    
+    @Override
+    public List<Producto> leerTodosOrdenados(String criterio, Connection conn) {
+        try (PreparedStatement cmd = this.comandoLeerTodosOrdenados(conn, criterio)) {
+            ResultSet rs = cmd.executeQuery();
+
+            List<Producto> modelos = new ArrayList<>();
+            while (rs.next()) {
+                modelos.add(this.mapearModelo(rs));
+            }
+
+            return modelos;
+        }
+        catch (SQLException e) {
+            System.err.println("Error SQL: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    protected PreparedStatement comandoLeerTodosPorCategoria(Connection conn, 
+            int idCategoria) throws SQLException {
+        
+        String sql = "{call listarProductosPorCategoria(?)}";
+        CallableStatement cmd = conn.prepareCall(sql);
+        cmd.setInt("p_idCategoria", idCategoria);
+        return cmd;
+    }
+    
+    @Override
+    public List<Producto> leerTodosPorCategoria(int idCategoria) {
+        return ejecutarComando(conn -> leerTodosPorCategoria(idCategoria, conn));
+    }
+    
+    @Override
+    public List<Producto> leerTodosPorCategoria(int idCategoria, Connection conn) {
+        try (PreparedStatement cmd = this.comandoLeerTodosPorCategoria(conn, idCategoria)) {
+            ResultSet rs = cmd.executeQuery();
+
+            List<Producto> modelos = new ArrayList<>();
+            while (rs.next()) {
+                modelos.add(this.mapearModelo(rs));
+            }
+
+            return modelos;
+        }
+        catch (SQLException e) {
+            System.err.println("Error SQL: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
