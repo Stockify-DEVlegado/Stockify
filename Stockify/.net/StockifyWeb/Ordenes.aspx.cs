@@ -12,12 +12,16 @@ namespace StockifyWeb
         private OrdenCompraWSClient ordenCompraService;
         private OrdenVentaWSClient ordenVentaService;
         private EmpresaWSClient empresaService;
+        private OrdenIngresoWSClient ingresoService;
+        private OrdenSalidaWSClient salidaService;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             ordenCompraService = new OrdenCompraWSClient();
             ordenVentaService = new OrdenVentaWSClient();
             empresaService = new EmpresaWSClient();
+            ingresoService = new OrdenIngresoWSClient();
+            salidaService = new OrdenSalidaWSClient();
 
             if (!IsPostBack)
             {
@@ -99,7 +103,6 @@ namespace StockifyWeb
                 {
                     try
                     {
-                        // Manejo robusto del estado - prevenir errores de NULL
                         string estadoMostrar = "PENDIENTE";
                         string nombreProveedor = "Sin Proveedor";
                         double total = 0;
@@ -107,7 +110,6 @@ namespace StockifyWeb
 
                         try
                         {
-                            // Intentar acceder al estado de forma segura
                             if (o.estado != null)
                             {
                                 estadoMostrar = o.estado.ToString();
@@ -121,7 +123,6 @@ namespace StockifyWeb
 
                         try
                         {
-                            // Intentar acceder al proveedor de forma segura
                             if (o.proveedor != null && !string.IsNullOrEmpty(o.proveedor.razonSocial))
                             {
                                 nombreProveedor = o.proveedor.razonSocial;
@@ -132,25 +133,8 @@ namespace StockifyWeb
                             nombreProveedor = "Sin Proveedor";
                         }
 
-                        try
-                        {
-                            // Intentar acceder al total de forma segura
-                            total = o.total;
-                        }
-                        catch
-                        {
-                            total = 0;
-                        }
-
-                        try
-                        {
-                            // Intentar acceder a la fecha de forma segura
-                            fecha = o.fecha;
-                        }
-                        catch
-                        {
-                            fecha = DateTime.Now;
-                        }
+                        try { total = o.total; } catch { total = 0; }
+                        try { fecha = o.fecha; } catch { fecha = DateTime.Now; }
 
                         var orden = new
                         {
@@ -167,7 +151,6 @@ namespace StockifyWeb
                     }
                     catch (Exception ex)
                     {
-                        // Si hay error con una orden específica, la omitimos pero continuamos con las demás
                         System.Diagnostics.Debug.WriteLine($"Error procesando orden {o.idOrdenCompra}: {ex.Message}");
                         continue;
                     }
@@ -178,12 +161,10 @@ namespace StockifyWeb
             }
             catch (Exception ex)
             {
-                // Manejo específico del error de estados NULL
                 string errorMessage = ex.Message;
                 if (errorMessage.Contains("EstadoDocumento.null") || errorMessage.Contains("estado nulo"))
                 {
                     errorMessage = "Hay órdenes con estado no definido. Se mostrarán como PENDIENTE.";
-                    // En lugar de mostrar error, cargar lista vacía y mensaje informativo
                     gvOrdenesCompra.DataSource = new List<object>();
                     gvOrdenesCompra.DataBind();
 
@@ -228,7 +209,6 @@ namespace StockifyWeb
                         int cantidad = 0;
                         double subtotal = 0;
 
-                        // Acceso seguro a las propiedades del producto
                         if (l.producto != null)
                         {
                             try { codigo = l.producto.idProducto.ToString(); } catch { }
@@ -334,6 +314,33 @@ namespace StockifyWeb
                 $"alert('Editando orden de compra ID: {idOrdenCompra}');", true);
         }
 
+        protected void btnAnularCompraFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idOrdenCompra = Convert.ToInt32(btn.CommandArgument);
+
+            try
+            {
+                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenCompra);
+                if (orden != null)
+                {
+                    orden.estado = GetEstadoDocumento("CANCELADO");
+                    ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularFila",
+                        $"alert('Orden de compra anulada exitosamente');", true);
+
+                    CargarOrdenesCompra();
+                    CargarDetalleOrdenVacia();
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularFila",
+                    $"alert('Error al anular orden de compra: {ex.Message}');", true);
+            }
+        }
+
         protected void btnAgregarCompra_Click(object sender, EventArgs e)
         {
             try
@@ -352,24 +359,20 @@ namespace StockifyWeb
                     return;
                 }
 
-                // Crear la nueva orden con estado explícito PROCESANDO
                 var nuevaOrden = new ordenCompra
                 {
                     fecha = DateTime.Parse(txtFechaOrdenCompra.Text),
-                    fechaSpecified = true, // IMPORTANTE: Especificar que la fecha tiene valor
+                    fechaSpecified = true,
                     total = 0,
-
                     estado = estadoDocumento.PENDIENTE,
-                    estadoSpecified = true, // CRÍTICO: Esto indica que el estado tiene un valor válido
+                    estadoSpecified = true,
                     proveedor = new empresa
                     {
                         idEmpresa = Convert.ToInt32(ddlProveedor.SelectedValue),
-
                     },
                     lineas = new lineaOrdenCompra[0]
                 };
 
-                // Guardar con estado NUEVO
                 ordenCompraService.guardarOrdenCompra(nuevaOrden, estado.NUEVO);
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
@@ -381,69 +384,7 @@ namespace StockifyWeb
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregar",
-                    $"alert('Error al agregar orden de compra: {ex.Message}\\n\\nDetalle: {ex.StackTrace}');", true);
-            }
-        }
-
-        protected void btnAnularCompra_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idOrdenSeleccionada = -1;
-                foreach (GridViewRow row in gvOrdenesCompra.Rows)
-                {
-                    CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionCompra");
-                    if (chkSeleccion != null && chkSeleccion.Checked)
-                    {
-                        idOrdenSeleccionada = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
-                        break;
-                    }
-                }
-
-                if (idOrdenSeleccionada == -1)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una orden de compra para anular');", true);
-                    return;
-                }
-
-                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenSeleccionada);
-
-                if (orden == null)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "error",
-                        "alert('No se encontró la orden seleccionada');", true);
-                    return;
-                }
-
-                // Usar el método seguro para establecer el estado
-                orden.estado = GetEstadoDocumento("CANCELADO");
-                ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Orden de compra anulada exitosamente');", true);
-
-                CargarOrdenesCompra();
-                CargarDetalleOrdenVacia();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnular",
-                    $"alert('Error al anular orden de compra: {ex.Message}');", true);
-            }
-        }
-
-        protected void btnViewCompra_Click(object sender, EventArgs e)
-        {
-            if (fileDocumentoCompra.HasFile)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewCompra",
-                    $"alert('Archivo seleccionado: {fileDocumentoCompra.FileName}');", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewCompra",
-                    "alert('No hay documento adjunto para visualizar');", true);
+                    $"alert('Error al agregar orden de compra: {ex.Message}');", true);
             }
         }
 
@@ -455,7 +396,7 @@ namespace StockifyWeb
 
         #endregion
 
-        #region ORDEN DE VENTA - CONECTADO CON BACKEND (COMPLETAMENTE FUNCIONAL)
+        #region ORDEN DE VENTA - CONECTADO CON BACKEND
 
         private void CargarOrdenesVenta()
         {
@@ -476,7 +417,6 @@ namespace StockifyWeb
                 {
                     try
                     {
-                        // Manejo robusto del estado - prevenir errores de NULL
                         string estadoMostrar = "PENDIENTE";
                         string nombreCliente = "Sin Cliente";
                         double total = 0;
@@ -484,7 +424,6 @@ namespace StockifyWeb
 
                         try
                         {
-                            // Intentar acceder al estado de forma segura
                             if (o.estado != null)
                             {
                                 estadoMostrar = o.estado.ToString();
@@ -498,7 +437,6 @@ namespace StockifyWeb
 
                         try
                         {
-                            // Intentar acceder al cliente de forma segura
                             if (o.cliente != null && !string.IsNullOrEmpty(o.cliente.razonSocial))
                             {
                                 nombreCliente = o.cliente.razonSocial;
@@ -509,25 +447,8 @@ namespace StockifyWeb
                             nombreCliente = "Sin Cliente";
                         }
 
-                        try
-                        {
-                            // Intentar acceder al total de forma segura
-                            total = o.total;
-                        }
-                        catch
-                        {
-                            total = 0;
-                        }
-
-                        try
-                        {
-                            // Intentar acceder a la fecha de forma segura
-                            fecha = o.fecha;
-                        }
-                        catch
-                        {
-                            fecha = DateTime.Now;
-                        }
+                        try { total = o.total; } catch { total = 0; }
+                        try { fecha = o.fecha; } catch { fecha = DateTime.Now; }
 
                         var orden = new
                         {
@@ -544,7 +465,6 @@ namespace StockifyWeb
                     }
                     catch (Exception ex)
                     {
-                        // Si hay error con una orden específica, la omitimos pero continuamos con las demás
                         System.Diagnostics.Debug.WriteLine($"Error procesando orden venta {o.idOrdenVenta}: {ex.Message}");
                         continue;
                     }
@@ -591,7 +511,6 @@ namespace StockifyWeb
                         int cantidad = 0;
                         double subtotal = 0;
 
-                        // Acceso seguro a las propiedades del producto
                         if (l.producto != null)
                         {
                             try { codigo = l.producto.idProducto.ToString(); } catch { }
@@ -697,6 +616,34 @@ namespace StockifyWeb
                 $"alert('Editando orden de venta ID: {idOrdenVenta}');", true);
         }
 
+        protected void btnAnularVentaFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idOrdenVenta = Convert.ToInt32(btn.CommandArgument);
+
+            try
+            {
+                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenVenta);
+                if (orden != null)
+                {
+                    orden.estado = GetEstadoDocumento("CANCELADO");
+                    orden.estadoSpecified = true;
+                    ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularVentaFila",
+                        $"alert('Orden de venta anulada exitosamente');", true);
+
+                    CargarOrdenesVenta();
+                    CargarDetalleOrdenVacia();
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularVentaFila",
+                    $"alert('Error al anular orden de venta: {ex.Message}');", true);
+            }
+        }
+
         protected void btnAgregarVenta_Click(object sender, EventArgs e)
         {
             try
@@ -715,24 +662,20 @@ namespace StockifyWeb
                     return;
                 }
 
-                // Crear la nueva orden de venta con estado explícito PENDIENTE
                 var nuevaOrden = new ordenVenta
                 {
                     fecha = DateTime.Parse(txtFechaOrdenVenta.Text),
-                    fechaSpecified = true, // IMPORTANTE: Especificar que la fecha tiene valor
+                    fechaSpecified = true,
                     total = 0,
-
                     estado = estadoDocumento.PENDIENTE,
-                    estadoSpecified = true, // CRÍTICO: Esto indica que el estado tiene un valor válido
+                    estadoSpecified = true,
                     cliente = new empresa
                     {
                         idEmpresa = Convert.ToInt32(ddlCliente.SelectedValue),
-
                     },
                     lineas = new lineaOrdenVenta[0]
                 };
 
-                // Guardar con estado NUEVO
                 ordenVentaService.guardarOrdenVenta(nuevaOrden, estado.NUEVO);
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
@@ -744,70 +687,7 @@ namespace StockifyWeb
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarVenta",
-                    $"alert('Error al agregar orden de venta: {ex.Message}\\n\\nDetalle: {ex.StackTrace}');", true);
-            }
-        }
-
-        protected void btnAnularVenta_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idOrdenSeleccionada = -1;
-
-                foreach (GridViewRow row in gvOrdenesVenta.Rows)
-                {
-                    CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionVenta");
-                    if (chkSeleccion != null && chkSeleccion.Checked)
-                    {
-                        idOrdenSeleccionada = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
-                        break;
-                    }
-                }
-
-                if (idOrdenSeleccionada == -1)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una orden de venta para anular');", true);
-                    return;
-                }
-
-                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenSeleccionada);
-
-                if (orden == null)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "error",
-                        "alert('No se encontró la orden seleccionada');", true);
-                    return;
-                }
-
-                orden.estado = GetEstadoDocumento("CANCELADO");
-
-                ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Orden de venta anulada exitosamente');", true);
-
-                CargarOrdenesVenta();
-                CargarDetalleOrdenVacia();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularVenta",
-                    $"alert('Error al anular orden de venta: {ex.Message}');", true);
-            }
-        }
-
-        protected void btnViewVenta_Click(object sender, EventArgs e)
-        {
-            if (fileDocumentoVenta.HasFile)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewVenta",
-                    $"alert('Archivo seleccionado: {fileDocumentoVenta.FileName}');", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "viewVenta",
-                    "alert('No hay documento adjunto para visualizar');", true);
+                    $"alert('Error al agregar orden de venta: {ex.Message}');", true);
             }
         }
 
@@ -819,32 +699,326 @@ namespace StockifyWeb
 
         #endregion
 
+        #region INGRESO - IMPLEMENTACIÓN COMPLETA
+
+        private void CargarRegistrosIngreso()
+        {
+            try
+            {
+                var ingresosArray = ingresoService.listarOrdenesIngreso();
+
+                if (ingresosArray == null || ingresosArray.Length == 0)
+                {
+                    gvRegistrosIngreso.DataSource = new List<object>();
+                    gvRegistrosIngreso.DataBind();
+                    return;
+                }
+
+                var ingresos = new List<object>();
+
+                foreach (var i in ingresosArray)
+                {
+                    try
+                    {
+                        string estadoMostrar = "PENDIENTE";
+                        string nombreProveedor = "Sin Proveedor";
+                        double total = 0;
+                        DateTime fecha = DateTime.Now;
+
+                        try { estadoMostrar = i.estado.ToString() ?? "PENDIENTE"; } catch { }
+                        try { nombreProveedor = i.ordenCompra?.proveedor?.razonSocial ?? "Sin Proveedor"; } catch { }
+                        try { total = i.total; } catch { }
+                        try { fecha = i.fecha; } catch { }
+
+                        var ingreso = new
+                        {
+                            Codigo = "ING-" + i.idOrdenIngreso.ToString("D6"),
+                            IdIngreso = i.idOrdenIngreso,
+                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
+                            Nombre = nombreProveedor,
+                            Responsable = "Sistema",
+                            Total = total.ToString("C2"),
+                            Estado = estadoMostrar
+                        };
+
+                        ingresos.Add(ingreso);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error procesando ingreso: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvRegistrosIngreso.DataSource = ingresos;
+                gvRegistrosIngreso.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarIngresos",
+                    $"alert('Error al cargar registros de ingreso: {ex.Message}');", true);
+                gvRegistrosIngreso.DataSource = new List<object>();
+                gvRegistrosIngreso.DataBind();
+            }
+        }
+
+        protected void btnAgregarIngreso_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtFechaIngreso.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una fecha');", true);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(ddlOrdenCompraIngreso.SelectedValue))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una orden de compra');", true);
+                    return;
+                }
+
+                var nuevoIngreso = new ordenIngreso
+                {
+                    fecha = DateTime.Parse(txtFechaIngreso.Text),
+                    fechaSpecified = true,
+                    total = 0,
+                    estado = estadoDocumento.PENDIENTE,
+                    estadoSpecified = true,
+                    ordenCompra = new ordenCompra
+                    {
+                        idOrdenCompra = Convert.ToInt32(ddlOrdenCompraIngreso.SelectedValue)
+                    },
+                    lineas = new lineaOrdenIngreso[0]
+                };
+
+                ingresoService.guardarOrdenIngreso(nuevoIngreso, estado.NUEVO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Ingreso agregado exitosamente');", true);
+
+                CargarRegistrosIngreso();
+                LimpiarFormularioIngreso();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarIngreso",
+                    $"alert('Error al agregar ingreso: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnAnularIngresoFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string codigoIngreso = btn.CommandArgument.ToString();
+
+            try
+            {
+                // Extraer el ID numérico del código ING-000001
+                int idIngreso = Convert.ToInt32(codigoIngreso.Replace("ING-", ""));
+                var ingreso = ingresoService.obtenerOrdenIngreso(idIngreso);
+
+                if (ingreso != null)
+                {
+                    ingreso.estado = GetEstadoDocumento("CANCELADO");
+                    ingreso.estadoSpecified = true;
+                    ingresoService.guardarOrdenIngreso(ingreso, estado.MODIFICADO);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularIngresoFila",
+                        $"alert('Ingreso anulado exitosamente');", true);
+
+                    CargarRegistrosIngreso();
+                    CargarDetalleOrdenVacia();
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularIngresoFila",
+                    $"alert('Error al anular ingreso: {ex.Message}');", true);
+            }
+        }
+
+        private void LimpiarFormularioIngreso()
+        {
+            txtFechaIngreso.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            ddlOrdenCompraIngreso.SelectedIndex = 0;
+        }
+
+        #endregion
+
+        #region SALIDA - IMPLEMENTACIÓN COMPLETA
+
+        private void CargarRegistrosSalida()
+        {
+            try
+            {
+                var salidasArray = salidaService.listarOrdenesSalida();
+
+                if (salidasArray == null || salidasArray.Length == 0)
+                {
+                    gvRegistrosSalida.DataSource = new List<object>();
+                    gvRegistrosSalida.DataBind();
+                    return;
+                }
+
+                var salidas = new List<object>();
+
+                foreach (var s in salidasArray)
+                {
+                    try
+                    {
+                        string estadoMostrar = "PENDIENTE";
+                        string nombreCliente = "Sin Cliente";
+                        double total = 0;
+                        DateTime fecha = DateTime.Now;
+
+                        try { estadoMostrar = s.estado.ToString() ?? "PENDIENTE"; } catch { }
+                        try { nombreCliente = s.ordenVenta?.cliente?.razonSocial ?? "Sin Cliente"; } catch { }
+                        try { total = s.total; } catch { }
+                        try { fecha = s.fecha; } catch { }
+
+                        var salida = new
+                        {
+                            Codigo = "SAL-" + s.idOrdenSalida.ToString("D6"),
+                            IdSalida = s.idOrdenSalida,
+                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
+                            Nombre = nombreCliente,
+                            Responsable = "Sistema",
+                            Total = total.ToString("C2"),
+                            Estado = estadoMostrar
+                        };
+
+                        salidas.Add(salida);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error procesando salida: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                gvRegistrosSalida.DataSource = salidas;
+                gvRegistrosSalida.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarSalidas",
+                    $"alert('Error al cargar registros de salida: {ex.Message}');", true);
+                gvRegistrosSalida.DataSource = new List<object>();
+                gvRegistrosSalida.DataBind();
+            }
+        }
+
+        protected void btnAgregarSalida_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(txtFechaSalida.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una fecha');", true);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(ddlOrdenVentaSalida.SelectedValue))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
+                        "alert('Debe seleccionar una orden de venta');", true);
+                    return;
+                }
+
+                var nuevaSalida = new ordenSalida
+                {
+                    fecha = DateTime.Parse(txtFechaSalida.Text),
+                    fechaSpecified = true,
+                    total = 0,
+                    estado = estadoDocumento.PENDIENTE,
+                    estadoSpecified = true,
+                    ordenVenta = new ordenVenta
+                    {
+                        idOrdenVenta = Convert.ToInt32(ddlOrdenVentaSalida.SelectedValue)
+                    },
+                    lineas = new lineaOrdenSalida[0]
+                };
+
+                salidaService.guardarOrdenSalida(nuevaSalida, estado.NUEVO);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
+                    "alert('Salida agregada exitosamente');", true);
+
+                CargarRegistrosSalida();
+                LimpiarFormularioSalida();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarSalida",
+                    $"alert('Error al agregar salida: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnAnularSalidaFila_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string codigoSalida = btn.CommandArgument.ToString();
+
+            try
+            {
+                // Extraer el ID numérico del código SAL-000001
+                int idSalida = Convert.ToInt32(codigoSalida.Replace("SAL-", ""));
+                var salida = salidaService.obtenerOrdenSalida(idSalida);
+
+                if (salida != null)
+                {
+                    salida.estado = GetEstadoDocumento("CANCELADO");
+                    salida.estadoSpecified = true;
+                    salidaService.guardarOrdenSalida(salida, estado.MODIFICADO);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularSalidaFila",
+                        $"alert('Salida anulada exitosamente');", true);
+
+                    CargarRegistrosSalida();
+                    CargarDetalleOrdenVacia();
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularSalidaFila",
+                    $"alert('Error al anular salida: {ex.Message}');", true);
+            }
+        }
+
+        private void LimpiarFormularioSalida()
+        {
+            txtFechaSalida.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            ddlOrdenVentaSalida.SelectedIndex = 0;
+        }
+
+        #endregion
+
         #region MÉTODOS AUXILIARES
 
         private estadoDocumento GetEstadoDocumentoSeguro()
         {
             try
             {
-                // Intentar con PENDIENTE primero
                 if (Enum.IsDefined(typeof(estadoDocumento), "PENDIENTE"))
                 {
                     return (estadoDocumento)Enum.Parse(typeof(estadoDocumento), "PENDIENTE");
                 }
 
-                // Si no existe PENDIENTE, intentar con PROCESADO
                 if (Enum.IsDefined(typeof(estadoDocumento), "PROCESADO"))
                 {
                     return estadoDocumento.PROCESADO;
                 }
 
-                // Último recurso: usar reflection para obtener el primer valor del enum
                 var valores = Enum.GetValues(typeof(estadoDocumento));
                 if (valores.Length > 0)
                 {
                     return (estadoDocumento)valores.GetValue(0);
                 }
 
-                // Si todo falla, lanzar excepción
                 throw new InvalidOperationException("No se pudo determinar un estado válido");
             }
             catch (Exception ex)
@@ -857,13 +1031,11 @@ namespace StockifyWeb
         {
             try
             {
-                // Intentar parsear el estado
                 if (Enum.TryParse<estadoDocumento>(estado, true, out estadoDocumento resultado))
                 {
                     return resultado;
                 }
 
-                // Si falla, intentar con los valores comunes
                 if (Enum.IsDefined(typeof(estadoDocumento), estadoDocumento.PENDIENTE))
                 {
                     return estadoDocumento.PENDIENTE;
@@ -874,71 +1046,13 @@ namespace StockifyWeb
                 }
                 else
                 {
-                    // Último recurso: usar el primer valor del enum
                     var valores = Enum.GetValues(typeof(estadoDocumento));
                     return (estadoDocumento)valores.GetValue(0);
                 }
             }
             catch
             {
-                // Fallback seguro
                 return estadoDocumento.PROCESADO;
-            }
-        }
-
-        private void CargarRegistrosIngreso()
-        {
-            try
-            {
-                var registros = new List<object>
-                {
-                    new {
-                        Codigo = "ING-2025-001",
-                        FechaRegistrada = "2025-01-01",
-                        Nombre = "BHAVANI SALES CORPORATION",
-                        Responsable = "Diego Alvarez Castillo",
-                        Total = "7500 $",
-                        Estado = "Procesando"
-                    }
-                };
-
-                gvRegistrosIngreso.DataSource = registros;
-                gvRegistrosIngreso.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarIngresos",
-                    $"alert('Error al cargar registros de ingreso: {ex.Message}');", true);
-                gvRegistrosIngreso.DataSource = new List<object>();
-                gvRegistrosIngreso.DataBind();
-            }
-        }
-
-        private void CargarRegistrosSalida()
-        {
-            try
-            {
-                var registros = new List<object>
-                {
-                    new {
-                        Codigo = "SAL-2025-001",
-                        FechaRegistrada = "2025-01-03",
-                        Nombre = "BHAVANI SALES CORPORATION",
-                        Responsable = "Alonso Chipana Cuellar",
-                        Total = "10000 $",
-                        Estado = "Aceptado"
-                    }
-                };
-
-                gvRegistrosSalida.DataSource = registros;
-                gvRegistrosSalida.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarSalidas",
-                    $"alert('Error al cargar registros de salida: {ex.Message}');", true);
-                gvRegistrosSalida.DataSource = new List<object>();
-                gvRegistrosSalida.DataBind();
             }
         }
 
@@ -1062,10 +1176,6 @@ namespace StockifyWeb
         protected void gvOrdenesVenta_RowDataBound(object sender, GridViewRowEventArgs e) { }
         protected void gvRegistrosIngreso_RowDataBound(object sender, GridViewRowEventArgs e) { }
         protected void gvRegistrosSalida_RowDataBound(object sender, GridViewRowEventArgs e) { }
-        protected void btnAgregarIngreso_Click(object sender, EventArgs e) { }
-        protected void btnAnularIngreso_Click(object sender, EventArgs e) { }
-        protected void btnAgregarSalida_Click(object sender, EventArgs e) { }
-        protected void btnAnularSalida_Click(object sender, EventArgs e) { }
         protected void ddlOrdenCompraIngreso_SelectedIndexChanged(object sender, EventArgs e) { }
         protected void ddlOrdenVentaSalida_SelectedIndexChanged(object sender, EventArgs e) { }
 
