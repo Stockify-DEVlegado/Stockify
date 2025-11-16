@@ -3,11 +3,21 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.UI;
+using Amazon;
+using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace StockifyWeb
 {
     public partial class Login : Page
     {
+        private const string UserPoolId = "us-east-1_LIZsvOxNv";
+        private const string ClientId = "5f0hvfclu5ichnmd8r1vjs3rpl";
+        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k";
+        private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -70,7 +80,21 @@ namespace StockifyWeb
 
                 System.Diagnostics.Debug.WriteLine("✅ Validaciones básicas pasadas");
 
-                // Crear cliente del Web Service de CuentaUsuario
+                // 1) AUTENTICACIÓN CON COGNITO
+                System.Diagnostics.Debug.WriteLine("🔐 Autenticando contra Cognito...");
+                bool loginExitoso = await AutenticarConCognito(username, password);
+
+                if (!loginExitoso)
+                {
+                    System.Diagnostics.Debug.WriteLine("❌ Cognito: usuario o contraseña incorrectos");
+                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
+                    MostrarMensaje("Usuario o contraseña incorrectos");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine("✅ Credenciales válidas en Cognito");
+
+                // 2) OBTENER CUENTA DE USUARIO EN TU BD (como antes)
                 System.Diagnostics.Debug.WriteLine("📡 Conectando con CuentaUsuarioWS...");
                 try
                 {
@@ -86,7 +110,7 @@ namespace StockifyWeb
                     return;
                 }
 
-                // Primero, obtener la cuenta de usuario por username
+                // Obtener todas las cuentas
                 System.Diagnostics.Debug.WriteLine("🔍 Buscando cuenta de usuario...");
                 System.Diagnostics.Debug.WriteLine("   Llamando a listarCuentasUsuarioAsync()...");
 
@@ -99,8 +123,6 @@ namespace StockifyWeb
                 if (cuentas == null || cuentas.Length == 0)
                 {
                     System.Diagnostics.Debug.WriteLine("⚠️ No se encontraron cuentas en la BD");
-                    System.Diagnostics.Debug.WriteLine($"   cuentas == null: {cuentas == null}");
-                    System.Diagnostics.Debug.WriteLine($"   cuentas.Length: {(cuentas != null ? cuentas.Length.ToString() : "N/A")}");
                     MostrarMensaje("Error al conectar con el sistema. No hay cuentas registradas.");
                     return;
                 }
@@ -125,120 +147,18 @@ namespace StockifyWeb
                     {
                         cuentaEncontrada = c;
                         System.Diagnostics.Debug.WriteLine($"✅ Cuenta encontrada - ID: {c.idCuentaUsuario}");
-                        System.Diagnostics.Debug.WriteLine($"   Username: '{c.username}'");
-                        string fullPwd = string.IsNullOrEmpty(c.password) ? "VACÍO" : c.password;
-                        System.Diagnostics.Debug.WriteLine($"   Password (completo): {fullPwd}");
-                        System.Diagnostics.Debug.WriteLine($"   Longitud password: {(string.IsNullOrEmpty(c.password) ? 0 : c.password.Length)}");
                         break;
                     }
                 }
 
                 if (cuentaEncontrada == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Cuenta no encontrada");
-                    System.Diagnostics.Debug.WriteLine($"   Se buscó: '{username}'");
-                    System.Diagnostics.Debug.WriteLine("   Cuentas disponibles:");
-                    foreach (var c in cuentas)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"      - {c.username}");
-                    }
+                    System.Diagnostics.Debug.WriteLine("❌ Cuenta no encontrada en la BD");
                     MostrarMensaje("Usuario o contraseña incorrectos");
                     return;
                 }
 
-                // Verificar si la contraseña en BD está hasheada o en texto plano
-                bool passwordEsHash = !string.IsNullOrEmpty(cuentaEncontrada.password) &&
-                                     cuentaEncontrada.password.Length == 64;
-
-                System.Diagnostics.Debug.WriteLine($"🔍 Tipo de password en BD: {(passwordEsHash ? "HASH SHA256" : "TEXTO PLANO")}");
-
-                string hashedPassword = HashPassword(password);
-                System.Diagnostics.Debug.WriteLine($"🔑 Password ingresado (texto): {password}");
-                System.Diagnostics.Debug.WriteLine($"🔑 Password hasheado (calc): {hashedPassword}");
-                System.Diagnostics.Debug.WriteLine($"🔑 Password en BD:           {cuentaEncontrada.password}");
-
-                bool loginExitoso = false;
-
-                if (passwordEsHash)
-                {
-                    // La contraseña en BD está hasheada - comparar con hash
-                    System.Diagnostics.Debug.WriteLine("🔐 Modo: Comparación con HASH");
-                    if (hashedPassword.Equals(cuentaEncontrada.password, StringComparison.OrdinalIgnoreCase))
-                    {
-                        System.Diagnostics.Debug.WriteLine("✅ Validación LOCAL exitosa - hashes coinciden");
-                        loginExitoso = true;
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("⚠️ Validación LOCAL falló - probando con WS...");
-                        try
-                        {
-                            var loginResponse = await clienteCuenta.loginAsync(username, hashedPassword);
-                            loginExitoso = loginResponse.@return;
-                            System.Diagnostics.Debug.WriteLine($"📊 Resultado del WS.login(): {loginExitoso}");
-                        }
-                        catch (Exception wsEx)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"⚠️ Error al llamar WS.login(): {wsEx.Message}");
-                        }
-                    }
-                }
-                else
-                {
-                    // La contraseña en BD está en texto plano - comparar directamente
-                    System.Diagnostics.Debug.WriteLine("🔓 Modo: Comparación TEXTO PLANO (INSEGURO - Solo para desarrollo)");
-                    System.Diagnostics.Debug.WriteLine($"   Comparando: '{password}' == '{cuentaEncontrada.password}'");
-
-                    if (password.Equals(cuentaEncontrada.password, StringComparison.Ordinal))
-                    {
-                        System.Diagnostics.Debug.WriteLine("✅ Validación LOCAL exitosa - passwords en texto plano coinciden");
-                        loginExitoso = true;
-                    }
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("⚠️ Validación LOCAL falló - probando con WS...");
-                        try
-                        {
-                            // Intentar con texto plano
-                            var loginResponse = await clienteCuenta.loginAsync(username, password);
-                            if (loginResponse.@return)
-                            {
-                                loginExitoso = true;
-                                System.Diagnostics.Debug.WriteLine($"📊 WS.login() con texto plano: exitoso");
-                            }
-                            else
-                            {
-                                // Intentar con hash
-                                loginResponse = await clienteCuenta.loginAsync(username, hashedPassword);
-                                loginExitoso = loginResponse.@return;
-                                System.Diagnostics.Debug.WriteLine($"📊 WS.login() con hash: {loginExitoso}");
-                            }
-                        }
-                        catch (Exception wsEx)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"⚠️ Error al llamar WS.login(): {wsEx.Message}");
-                        }
-                    }
-                }
-
-                if (!loginExitoso)
-                {
-                    System.Diagnostics.Debug.WriteLine("❌ Login fallido - Credenciales incorrectas");
-                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                    System.Diagnostics.Debug.WriteLine("DIAGNÓSTICO:");
-                    System.Diagnostics.Debug.WriteLine($"  Username buscado: '{username}'");
-                    System.Diagnostics.Debug.WriteLine($"  Password ingresado: '{password}'");
-                    System.Diagnostics.Debug.WriteLine($"  Password en BD: '{cuentaEncontrada.password}'");
-                    System.Diagnostics.Debug.WriteLine($"  Tipo en BD: {(passwordEsHash ? "HASH" : "TEXTO PLANO")}");
-                    System.Diagnostics.Debug.WriteLine($"  Hash calculado: {hashedPassword}");
-                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                    MostrarMensaje("Usuario o contraseña incorrectos");
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine("✅ Credenciales válidas");
-
-                // Si el login es exitoso, obtener los datos completos del usuario
+                // 3) OBTENER DATOS COMPLETOS DEL USUARIO (UsuarioWS) COMO ANTES
                 System.Diagnostics.Debug.WriteLine("📡 Conectando con UsuarioWS para obtener datos completos...");
                 clienteUsuario = new UsuarioWSClient();
 
@@ -288,7 +208,7 @@ namespace StockifyWeb
 
                 System.Diagnostics.Debug.WriteLine("✅ Usuario activo");
 
-                // Login exitoso - Guardar información en sesión
+                // 4) LOGIN EXITOSO: GUARDAR EN SESIÓN (igual que antes)
                 System.Diagnostics.Debug.WriteLine("💾 Guardando información en sesión...");
 
                 Session["IdUsuario"] = usuarioValido.idUsuario;
@@ -320,7 +240,7 @@ namespace StockifyWeb
                 System.Diagnostics.Debug.WriteLine($"   Tipo Usuario: {Session["TipoUsuario"]}");
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
 
-                // Verificar si el usuario marcó "Remember me"
+                // Remember me
                 if (chkRemember.Checked)
                 {
                     Response.Cookies["StockifyUser"].Value = username;
@@ -336,7 +256,7 @@ namespace StockifyWeb
                     }
                 }
 
-                // Actualizar último acceso (opcional - no crítico si falla)
+                // Actualizar último acceso (opcional)
                 try
                 {
                     System.Diagnostics.Debug.WriteLine("📅 Actualizando último acceso...");
@@ -348,7 +268,6 @@ namespace StockifyWeb
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"⚠️ No se pudo actualizar último acceso: {ex.Message}");
-                    // No detener el login por esto
                 }
 
                 // Redirigir a la página principal
@@ -414,26 +333,14 @@ namespace StockifyWeb
                 // Cerrar clientes si están abiertos
                 if (clienteCuenta != null && clienteCuenta.State == System.ServiceModel.CommunicationState.Opened)
                 {
-                    try
-                    {
-                        clienteCuenta.Close();
-                    }
-                    catch
-                    {
-                        clienteCuenta.Abort();
-                    }
+                    try { clienteCuenta.Close(); }
+                    catch { clienteCuenta.Abort(); }
                 }
 
                 if (clienteUsuario != null && clienteUsuario.State == System.ServiceModel.CommunicationState.Opened)
                 {
-                    try
-                    {
-                        clienteUsuario.Close();
-                    }
-                    catch
-                    {
-                        clienteUsuario.Abort();
-                    }
+                    try { clienteUsuario.Close(); }
+                    catch { clienteUsuario.Abort(); }
                 }
             }
         }
@@ -458,5 +365,67 @@ namespace StockifyWeb
                 return builder.ToString();
             }
         }
+
+        private async Task<bool> AutenticarConCognito(string username, string password)
+        {
+            try
+            {
+                using (var provider = new AmazonCognitoIdentityProviderClient(CognitoRegion))
+                {
+                    var request = new InitiateAuthRequest
+                    {
+                        ClientId = ClientId,
+                        AuthFlow = AuthFlowType.USER_PASSWORD_AUTH,
+                        AuthParameters = new Dictionary<string, string>()
+                    };
+
+                    request.AuthParameters["USERNAME"] = username;
+                    request.AuthParameters["PASSWORD"] = password;
+
+                    // 🔐 Como el cliente tiene secreto, hay que enviar SECRET_HASH
+                    var secretHash = CalcularSecretHash(username);
+                    request.AuthParameters["SECRET_HASH"] = secretHash;
+
+                    var response = await provider.InitiateAuthAsync(request);
+
+                    System.Diagnostics.Debug.WriteLine("Cognito ChallengeName: " + response.ChallengeName);
+
+                    return response.AuthenticationResult != null;
+                }
+            }
+            catch (NotAuthorizedException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Cognito NotAuthorizedException: " + ex.Message);
+                // Usuario/contraseña incorrectos o hash inválido
+                return false;
+            }
+            catch (UserNotConfirmedException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Cognito UserNotConfirmedException: " + ex.Message);
+                MostrarMensaje("Su cuenta no está confirmada en Cognito.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("⚠️ Error Cognito: " + ex.Message);
+                MostrarMensaje("Error al conectar con el servicio de autenticación. Intente nuevamente.");
+                return false;
+            }
+        }
+
+        private static string CalcularSecretHash(string username)
+        {
+            var key = Encoding.UTF8.GetBytes(ClientSecret);
+            var message = Encoding.UTF8.GetBytes(username + ClientId);
+
+            using (var hmac = new HMACSHA256(key))
+            {
+                var hash = hmac.ComputeHash(message);
+                return Convert.ToBase64String(hash);
+            }
+        }
+
+
+
     }
 }

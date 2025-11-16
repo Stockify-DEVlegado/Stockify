@@ -239,8 +239,23 @@
         }
 
         .accion-column {
-            width: 80px;
+            width: 140px;
             text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.3rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .accion-column .btn-editar,
+        .accion-column .btn-anular {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            min-width: 55px;
+            white-space: nowrap;
         }
 
         .badge {
@@ -309,6 +324,7 @@
                     <div class="form-group">
                         <label>Nombre Proveedor</label>
                         <asp:DropDownList ID="ddlProveedor" runat="server">
+                            <asp:ListItem Text="-- Seleccione un proveedor --" Value=""></asp:ListItem>
                             <asp:ListItem Text="194 - BHAVANI SALES CORPORATION" Value="194"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
@@ -331,13 +347,8 @@
                     <label>Adjuntar Documento de Compra</label>
                     <div class="file-upload-section">
                         <asp:FileUpload ID="fileDocumentoCompra" runat="server" CssClass="file-upload" />
-                        <asp:Button ID="btnViewCompra" runat="server" Text="View" CssClass="btn-view" OnClick="btnViewCompra_Click" />
+                        <asp:Button ID="btnAgregarCompra" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarCompra_Click" />
                     </div>
-                </div>
-
-                <div class="actions-bar">
-                    <asp:Button ID="btnAgregarCompra" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarCompra_Click" />
-                    <asp:Button ID="btnAnularCompra" runat="server" Text="Anular" CssClass="btn-anular" OnClick="btnAnularCompra_Click" />
                 </div>
             </div>
 
@@ -378,7 +389,10 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditarCompraFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnEditarCompraFila_Click" />
+                                    <div class="button-group">
+                                        <asp:Button ID="btnEditarCompraFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnEditarCompraFila_Click" />
+                                        <asp:Button ID="btnAnularCompraFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnAnularCompraFila_Click" />
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -433,6 +447,7 @@
                     <div class="form-group">
                         <label>Nombre Cliente</label>
                         <asp:DropDownList ID="ddlCliente" runat="server">
+                            <asp:ListItem Text="-- Seleccione un cliente --" Value=""></asp:ListItem>
                             <asp:ListItem Text="194 - BHAVANI SALES CORPORATION" Value="194"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
@@ -455,13 +470,8 @@
                     <label>Adjuntar Documento de Venta</label>
                     <div class="file-upload-section">
                         <asp:FileUpload ID="fileDocumentoVenta" runat="server" CssClass="file-upload" />
-                        <asp:Button ID="btnViewVenta" runat="server" Text="View" CssClass="btn-view" OnClick="btnViewVenta_Click" />
+                        <asp:Button ID="btnAgregarVenta" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarVenta_Click" />
                     </div>
-                </div>
-
-                <div class="actions-bar">
-                    <asp:Button ID="btnAgregarVenta" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarVenta_Click" />
-                    <asp:Button ID="btnAnularVenta" runat="server" Text="Anular" CssClass="btn-anular" OnClick="btnAnularVenta_Click" />
                 </div>
             </div>
 
@@ -475,48 +485,50 @@
                 </div>
             </div>
 
-          <!-- Tabla: Ordenes de Venta -->
-<div class="table-section">
-    <div class="table-header">
-        <h3>Órdenes de Venta</h3>
-    </div>
-    <div class="table-responsive">
-        <asp:GridView ID="gvOrdenesVenta" runat="server" CssClass="data-table" AutoGenerateColumns="false"
-            OnRowDataBound="gvOrdenesVenta_RowDataBound" DataKeyNames="IdOrdenVenta">
-            <Columns>
-                <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
-                    <ItemTemplate>
-                        <asp:CheckBox ID="chkSeleccionVenta" runat="server" AutoPostBack="true" OnCheckedChanged="chkSeleccionVenta_CheckedChanged" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:BoundField DataField="Codigo" HeaderText="Código" />
-                <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre Cliente" />
-                <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
-                <asp:BoundField DataField="Total" HeaderText="Total" />
-                <asp:TemplateField HeaderText="Estado">
-                    <ItemTemplate>
-                        <asp:Label ID="lblEstadoVenta" runat="server" CssClass='<%# GetBadgeClass(Eval("Estado").ToString()) %>' 
-                            Text='<%# Eval("Estado") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
-                    <ItemTemplate>
-                        <asp:Button ID="btnEditarVentaFila" runat="server" Text="Editar" CssClass="btn-editar" 
-                            CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnEditarVentaFila_Click" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-            <EmptyDataTemplate>
-                <tr>
-                    <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
-                        No hay datos para mostrar
-                    </td>
-                </tr>
-            </EmptyDataTemplate>
-        </asp:GridView>
-    </div>
-</div>
+            <!-- Tabla: Ordenes de Venta -->
+            <div class="table-section">
+                <div class="table-header">
+                    <h3>Órdenes de Venta</h3>
+                </div>
+                <div class="table-responsive">
+                    <asp:GridView ID="gvOrdenesVenta" runat="server" CssClass="data-table" AutoGenerateColumns="false"
+                        OnRowDataBound="gvOrdenesVenta_RowDataBound" DataKeyNames="IdOrdenVenta">
+                        <Columns>
+                            <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="chkSeleccionVenta" runat="server" AutoPostBack="true" OnCheckedChanged="chkSeleccionVenta_CheckedChanged" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="Codigo" HeaderText="Código" />
+                            <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
+                            <asp:BoundField DataField="Nombre" HeaderText="Nombre Cliente" />
+                            <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
+                            <asp:BoundField DataField="Total" HeaderText="Total" />
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblEstadoVenta" runat="server" CssClass='<%# GetBadgeClass(Eval("Estado").ToString()) %>' 
+                                        Text='<%# Eval("Estado") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
+                                <ItemTemplate>
+                                    <div class="button-group">
+                                        <asp:Button ID="btnEditarVentaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnEditarVentaFila_Click" />
+                                        <asp:Button ID="btnAnularVentaFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnAnularVentaFila_Click" />
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                        <EmptyDataTemplate>
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
+                                    No hay datos para mostrar
+                                </td>
+                            </tr>
+                        </EmptyDataTemplate>
+                    </asp:GridView>
+                </div>
+            </div>
 
             <!-- Tabla: Líneas de Orden de Venta -->
             <div class="table-section">
@@ -580,7 +592,6 @@
 
                 <div class="actions-bar">
                     <asp:Button ID="btnAgregarIngreso" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarIngreso_Click" />
-                    <asp:Button ID="btnAnularIngreso" runat="server" Text="Anular" CssClass="btn-anular" OnClick="btnAnularIngreso_Click" />
                 </div>
             </div>
 
@@ -621,7 +632,10 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditarIngresoFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarIngresoFila_Click" />
+                                    <div class="button-group">
+                                        <asp:Button ID="btnEditarIngresoFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarIngresoFila_Click" />
+                                        <asp:Button ID="btnAnularIngresoFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnAnularIngresoFila_Click" />
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -698,7 +712,6 @@
 
                 <div class="actions-bar">
                     <asp:Button ID="btnAgregarSalida" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarSalida_Click" />
-                    <asp:Button ID="btnAnularSalida" runat="server" Text="Anular" CssClass="btn-anular" OnClick="btnAnularSalida_Click" />
                 </div>
             </div>
 
@@ -739,7 +752,10 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEditarSalidaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarSalidaFila_Click" />
+                                    <div class="button-group">
+                                        <asp:Button ID="btnEditarSalidaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarSalidaFila_Click" />
+                                        <asp:Button ID="btnAnularSalidaFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnAnularSalidaFila_Click" />
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
