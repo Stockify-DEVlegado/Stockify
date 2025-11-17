@@ -279,6 +279,103 @@ namespace StockifyWeb
             }
         }
 
+        protected async void btnImportarCSV_Click(object sender, EventArgs e)
+        {
+            ProductoWSClient productoClient = null;
+
+            try
+            {
+                // Validar que se haya seleccionado un archivo
+                if (!fuCSV.HasFile)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
+                        "abrirModalImportar(); alert('⚠️ Por favor selecciona un archivo CSV.');", true);
+                    return;
+                }
+
+                // Validar extensión
+                string extension = System.IO.Path.GetExtension(fuCSV.FileName).ToLower();
+                if (extension != ".csv")
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
+                        "abrirModalImportar(); alert('⚠️ Solo se permiten archivos CSV.');", true);
+                    return;
+                }
+
+                // Validar tamaño (10MB)
+                if (fuCSV.PostedFile.ContentLength > 10485760)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
+                        "abrirModalImportar(); alert('⚠️ El archivo es demasiado grande. Máximo 10MB.');", true);
+                    return;
+                }
+
+                // Crear el cliente del Web Service
+                productoClient = new ProductoWSClient();
+
+                // Obtener el Stream del archivo
+                System.IO.Stream fileStream = fuCSV.PostedFile.InputStream;
+
+                // Leer el contenido del archivo como bytes
+                byte[] fileBytes;
+                using (var memoryStream = new System.IO.MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    fileBytes = memoryStream.ToArray();
+                }
+
+                // Llamar al Web Service con el archivo como byte[]
+                var response = await productoClient.importarProductosDesdeCSVAsync(fileBytes);
+
+                // *** CORRECCIÓN: Acceder a la propiedad @return del response ***
+                int productosImportados = response.@return;
+
+                // Recargar la lista de productos
+                await CargarProductosAsync();
+
+                // Mostrar mensaje de éxito
+                ScriptManager.RegisterStartupScript(this, GetType(), "successImport",
+                    $"cerrarModalImportar(); alert('✅ Importación exitosa!\\n\\nSe importaron {productosImportados} productos correctamente.');",
+                    true);
+            }
+            catch (System.ServiceModel.FaultException<System.ServiceModel.ExceptionDetail> faultEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error SOAP Fault: {faultEx.Detail.Message}");
+
+                string mensajeError = faultEx.Detail.Message;
+                if (mensajeError.Contains("Error en la inserción masiva"))
+                {
+                    mensajeError = "Error en la base de datos. Verifica que todos los datos del CSV sean válidos.\\n\\n" +
+                                  "Ningún producto fue insertado (transacción revertida).";
+                }
+                else if (mensajeError.Contains("Error al parsear"))
+                {
+                    mensajeError = "Error al leer el archivo CSV. Verifica el formato:\\n" +
+                                  "- Primera fila debe ser el encabezado\\n" +
+                                  "- 7 columnas: nombre,descripcion,marca,stockMinimo,stockMaximo,precioUnitario,idCategoria\\n" +
+                                  "- Valores numéricos válidos";
+                }
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
+                    $"abrirModalImportar(); alert('❌ Error al importar productos:\\n\\n{mensajeError}');",
+                    true);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al importar CSV: {ex.Message}");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
+                    "abrirModalImportar(); alert('❌ Error inesperado al importar productos. Por favor, intenta nuevamente.');",
+                    true);
+            }
+            finally
+            {
+                if (productoClient != null && productoClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    productoClient.Close();
+                }
+            }
+        }
+
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "VerDetalle")

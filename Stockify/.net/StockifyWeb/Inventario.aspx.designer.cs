@@ -33,6 +33,15 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlFiltroCategoria;
 
         /// <summary>
+        /// Control btnOpenImportModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOpenImportModal;
+
+        /// <summary>
         /// Control btnOpenModal.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,24 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnConfirmDelete;
+
+        /// <summary>
+        /// Control fuCSV.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuCSV;
+
+        /// <summary>
+        /// Control btnImportarCSV.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarCSV;
 
         /// <summary>
         /// Control hdnProductoId.

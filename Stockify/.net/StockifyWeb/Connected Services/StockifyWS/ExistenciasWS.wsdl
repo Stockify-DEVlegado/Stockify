@@ -5,6 +5,12 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/ExistenciasWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="listarExistencias">
+    <part name="parameters" element="tns:listarExistencias" />
+  </message>
+  <message name="listarExistenciasResponse">
+    <part name="parameters" element="tns:listarExistenciasResponse" />
+  </message>
   <message name="obtenerExistencias">
     <part name="parameters" element="tns:obtenerExistencias" />
   </message>
@@ -17,12 +23,6 @@
   <message name="guardarExistenciasResponse">
     <part name="parameters" element="tns:guardarExistenciasResponse" />
   </message>
-  <message name="listarExistencias">
-    <part name="parameters" element="tns:listarExistencias" />
-  </message>
-  <message name="listarExistenciasResponse">
-    <part name="parameters" element="tns:listarExistenciasResponse" />
-  </message>
   <message name="eliminarExistencias">
     <part name="parameters" element="tns:eliminarExistencias" />
   </message>
@@ -30,6 +30,10 @@
     <part name="parameters" element="tns:eliminarExistenciasResponse" />
   </message>
   <portType name="ExistenciasWS">
+    <operation name="listarExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasRequest" message="tns:listarExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasResponse" message="tns:listarExistenciasResponse" />
+    </operation>
     <operation name="obtenerExistencias">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerExistenciasRequest" message="tns:obtenerExistencias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerExistenciasResponse" message="tns:obtenerExistenciasResponse" />
@@ -38,10 +42,6 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasRequest" message="tns:guardarExistencias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasResponse" message="tns:guardarExistenciasResponse" />
     </operation>
-    <operation name="listarExistencias">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasRequest" message="tns:listarExistencias" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasResponse" message="tns:listarExistenciasResponse" />
-    </operation>
     <operation name="eliminarExistencias">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest" message="tns:eliminarExistencias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse" message="tns:eliminarExistenciasResponse" />
@@ -49,6 +49,15 @@
   </portType>
   <binding name="ExistenciasWSPortBinding" type="tns:ExistenciasWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="listarExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="obtenerExistencias">
       <soap:operation soapAction="" />
       <input>
@@ -59,15 +68,6 @@
       </output>
     </operation>
     <operation name="guardarExistencias">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarExistencias">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

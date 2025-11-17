@@ -66,4 +66,34 @@ public class ProductoWS {
         return this.productoBO.listarProductosPorCategoria(idCategoria);
     }
     
+    /**
+     * Importa productos desde un archivo CSV enviado como byte[]
+     * @param archivoCSV El archivo CSV con los datos de los productos como byte[]
+     * @return Número de productos importados exitosamente
+     */
+    @WebMethod(operationName = "importarProductosDesdeCSV")
+    public int importarProductosDesdeCSV(
+        @WebParam(name = "archivoCSV") byte[] archivoCSV
+    ) {
+        try {
+            // Convertir byte[] a InputStream
+            java.io.ByteArrayInputStream inputStream = new java.io.ByteArrayInputStream(archivoCSV);
+            
+            // Llamar al método del BO que procesa el InputStream
+            int productosImportados = this.productoBO.importarDesdeInputStream(
+                inputStream, 
+                "productos_importados.csv"
+            );
+            
+            inputStream.close();
+            
+            System.out.println("✓ Web Service: Se importaron " + productosImportados + " productos.");
+            return productosImportados;
+            
+        } catch (Exception e) {
+            System.err.println("✗ Error en Web Service al importar productos: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error al importar productos: " + e.getMessage());
+        }
+    }
 }

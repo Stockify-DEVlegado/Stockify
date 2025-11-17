@@ -4,6 +4,8 @@
   <xs:element name="eliminarProductoResponse" type="tns:eliminarProductoResponse" />
   <xs:element name="guardarProducto" type="tns:guardarProducto" />
   <xs:element name="guardarProductoResponse" type="tns:guardarProductoResponse" />
+  <xs:element name="importarProductosDesdeCSV" type="tns:importarProductosDesdeCSV" />
+  <xs:element name="importarProductosDesdeCSVResponse" type="tns:importarProductosDesdeCSVResponse" />
   <xs:element name="listarProductos" type="tns:listarProductos" />
   <xs:element name="listarProductosOrdenadoPorCodigo" type="tns:listarProductosOrdenadoPorCodigo" />
   <xs:element name="listarProductosOrdenadoPorCodigoResponse" type="tns:listarProductosOrdenadoPorCodigoResponse" />
@@ -14,12 +16,10 @@
   <xs:element name="listarProductosResponse" type="tns:listarProductosResponse" />
   <xs:element name="obtenerProducto" type="tns:obtenerProducto" />
   <xs:element name="obtenerProductoResponse" type="tns:obtenerProductoResponse" />
-  <xs:complexType name="listarProductosOrdenadoPorCodigo">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:complexType name="listarProductosOrdenadoPorCodigoResponse">
+  <xs:complexType name="guardarProducto">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:producto" />
+      <xs:element minOccurs="0" name="producto" type="tns:producto" />
+      <xs:element minOccurs="0" name="estado" type="tns:estado" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="producto">
@@ -41,14 +41,16 @@
       <xs:element minOccurs="0" name="nombre" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="guardarProducto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="producto" type="tns:producto" />
-      <xs:element minOccurs="0" name="estado" type="tns:estado" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="guardarProductoResponse">
     <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarProductosOrdenadoPorCodigo">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarProductosOrdenadoPorCodigoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:producto" />
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="obtenerProducto">
     <xs:sequence>
@@ -76,14 +78,14 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:producto" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarProductosPorCategoria">
+  <xs:complexType name="importarProductosDesdeCSV">
     <xs:sequence>
-      <xs:element name="idCategoria" type="xs:int" />
+      <xs:element minOccurs="0" name="archivoCSV" nillable="true" type="xs:base64Binary" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="listarProductosPorCategoriaResponse">
+  <xs:complexType name="importarProductosDesdeCSVResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:producto" />
+      <xs:element name="return" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="eliminarProducto">
@@ -93,6 +95,16 @@
   </xs:complexType>
   <xs:complexType name="eliminarProductoResponse">
     <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listarProductosPorCategoria">
+    <xs:sequence>
+      <xs:element name="idCategoria" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listarProductosPorCategoriaResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:producto" />
+    </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="estado">
     <xs:restriction base="xs:string">
