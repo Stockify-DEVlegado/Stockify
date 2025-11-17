@@ -101,28 +101,33 @@
                 <hr>
                 <ul class="mynav nav nav-pills flex-column mb-auto">
                     <li class="nav-item mb-1">
-                        <a href="Inicio.aspx" class="nav-link text-white">
+                        <a id="lnkInicio" runat="server" href="Inicio.aspx" class="nav-link text-white">
                             <i class="fa-solid fa-home pe-2"></i> Inicio
                         </a>
                     </li>
                     <li class="nav-item mb-1">
-                        <a href="Inventario.aspx" class="nav-link text-white">
+                        <a id="lnkInventario" runat="server" href="Inventario.aspx" class="nav-link text-white">
                             <i class="fa-solid fa-boxes pe-2"></i> Inventario
                         </a>
                     </li>
                     <li class="nav-item mb-1">
-                        <a href="Reportes.aspx" class="nav-link text-white">
+                        <a id="lnkReportes" runat="server" href="Reportes.aspx" class="nav-link text-white">
                             <i class="fa-solid fa-chart-bar pe-2"></i> Reportes
                         </a>
                     </li>
                     <li class="nav-item mb-1">
-                        <a href="Proveedores.aspx" class="nav-link text-white">
+                        <a id="lnkProveedores" runat="server" href="Proveedores.aspx" class="nav-link text-white">
                             <i class="fa-solid fa-truck pe-2"></i> Proveedores
                         </a>
                     </li>
                     <li class="nav-item mb-1">
-                        <a href="Ordenes.aspx" class="nav-link text-white">
+                        <a id="lnkOrdenes" runat="server" href="Ordenes.aspx" class="nav-link text-white">
                             <i class="fa-solid fa-file-invoice pe-2"></i> Órdenes
+                        </a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a id="lnkGestionCuentas" runat="server" href="GestionCuentas.aspx" class="nav-link text-white">
+                            <i class="fa-solid fa-file-invoice pe-2"></i> Gestión de cuentas
                         </a>
                     </li>
                 </ul>

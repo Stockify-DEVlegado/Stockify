@@ -105,15 +105,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.FileUpload fileDocumentoCompra;
 
         /// <summary>
-        /// btnViewCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnViewCompra;
-
-        /// <summary>
         /// btnAgregarCompra control.
         /// </summary>
         /// <remarks>
@@ -121,15 +112,6 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarCompra;
-
-        /// <summary>
-        /// btnAnularCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnularCompra;
 
         /// <summary>
         /// txtBuscarCompra control.
@@ -213,15 +195,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.FileUpload fileDocumentoVenta;
 
         /// <summary>
-        /// btnViewVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnViewVenta;
-
-        /// <summary>
         /// btnAgregarVenta control.
         /// </summary>
         /// <remarks>
@@ -229,15 +202,6 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarVenta;
-
-        /// <summary>
-        /// btnAnularVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnularVenta;
 
         /// <summary>
         /// txtBuscarVenta control.
@@ -321,15 +285,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.Button btnAgregarIngreso;
 
         /// <summary>
-        /// btnAnularIngreso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnularIngreso;
-
-        /// <summary>
         /// txtBuscarIngreso control.
         /// </summary>
         /// <remarks>
@@ -409,15 +364,6 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarSalida;
-
-        /// <summary>
-        /// btnAnularSalida control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnularSalida;
 
         /// <summary>
         /// txtBuscarSalida control.
