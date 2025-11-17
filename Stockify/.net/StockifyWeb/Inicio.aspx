@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="StockifyWeb.Inicio" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="StockifyWeb.Inicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cph_Contenido" runat="server">
   
