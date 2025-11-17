@@ -14,10 +14,12 @@ namespace StockifyWeb
 {
     public partial class Login : Page
     {
+        // === CONFIGURACIÓN COGNITO ===
         private const string UserPoolId = "us-east-1_LIZsvOxNv";
         private const string ClientId = "5f0hvfclu5ichnmd8r1vjs3rpl";
-        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k";
+        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k"; 
         private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -55,23 +57,25 @@ namespace StockifyWeb
 
             try
             {
-                string username = txtUsername.Text.Trim();
-                string password = txtPassword.Text.Trim();
+                clienteCuenta = new CuentaUsuarioWSClient();
+
+                string usernameInput = txtUsername.Text.Trim();
+                string passwordInput = txtPassword.Text.Trim();
 
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
                 System.Diagnostics.Debug.WriteLine($"🔐 INICIANDO PROCESO DE LOGIN");
-                System.Diagnostics.Debug.WriteLine($"   Usuario: {username}");
+                System.Diagnostics.Debug.WriteLine($"   Usuario (input): {usernameInput}");
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
 
                 // Validación básica
-                if (string.IsNullOrEmpty(username))
+                if (string.IsNullOrEmpty(usernameInput))
                 {
                     System.Diagnostics.Debug.WriteLine("❌ Username vacío");
                     MostrarMensaje("Por favor ingrese su nombre de usuario");
                     return;
                 }
 
-                if (string.IsNullOrEmpty(password))
+                if (string.IsNullOrEmpty(passwordInput))
                 {
                     System.Diagnostics.Debug.WriteLine("❌ Password vacío");
                     MostrarMensaje("Por favor ingrese su contraseña");
@@ -80,25 +84,88 @@ namespace StockifyWeb
 
                 System.Diagnostics.Debug.WriteLine("✅ Validaciones básicas pasadas");
 
-                // 1) AUTENTICACIÓN CON COGNITO
-                System.Diagnostics.Debug.WriteLine("🔐 Autenticando contra Cognito...");
-                bool loginExitoso = await AutenticarConCognito(username, password);
+                // ¿Estamos en segunda fase (cambio de contraseña requerido)?
+                bool requiereCambioPassword =
+                    Session["CognitoRequireNewPassword"] != null &&
+                    (bool)Session["CognitoRequireNewPassword"] == true;
 
-                if (!loginExitoso)
+                string cognitoSession = Session["CognitoSession"] as string;
+                string cognitoUsername = Session["CognitoChallengeUsername"] as string;
+
+                AuthenticationResultType authResult = null;
+
+                if (requiereCambioPassword && !string.IsNullOrEmpty(cognitoSession) && !string.IsNullOrEmpty(cognitoUsername))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Cognito: usuario o contraseña incorrectos");
-                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                    MostrarMensaje("Usuario o contraseña incorrectos");
-                    return;
+                    // === SEGUNDO PASO: usuario ya pasó por NEW_PASSWORD_REQUIRED y ahora
+                    // el passwordInput es su NUEVA contraseña definitiva ===
+                    System.Diagnostics.Debug.WriteLine("🔄 Flujo NEW_PASSWORD_REQUIRED: aplicando nueva contraseña en Cognito...");
+
+                    authResult = await CompletarNuevoPasswordCognitoAsync(cognitoUsername, passwordInput, cognitoSession);
+
+                    if (authResult == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("❌ Falló el cambio de contraseña en Cognito");
+                        MostrarMensaje("No se pudo actualizar la contraseña. Intente nuevamente.");
+                        return;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("✅ Contraseña actualizada en Cognito correctamente");
+
+                    // Limpiamos las variables de challenge
+                    Session["CognitoRequireNewPassword"] = null;
+                    Session["CognitoSession"] = null;
+                    Session["CognitoChallengeUsername"] = null;
+                }
+                else
+                {
+                    // === PRIMER PASO: login normal (puede devolver challenge NEW_PASSWORD_REQUIRED) ===
+                    System.Diagnostics.Debug.WriteLine("🔐 Autenticando contra Cognito (primer intento)...");
+                    var authResponse = await IniciarAutenticacionCognitoAsync(usernameInput, passwordInput);
+
+                    if (authResponse == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("❌ Cognito: respuesta nula");
+                        MostrarMensaje("Error al autenticar. Intente nuevamente.");
+                        return;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("👉 Cognito ChallengeName: " + authResponse.ChallengeName);
+
+                    if (authResponse.ChallengeName == ChallengeNameType.NEW_PASSWORD_REQUIRED)
+                    {
+                        // Guardamos info para el segundo paso
+                        Session["CognitoRequireNewPassword"] = true;
+                        Session["CognitoSession"] = authResponse.Session;
+                        Session["CognitoChallengeUsername"] = usernameInput;
+
+                        System.Diagnostics.Debug.WriteLine("⚠️ Cognito requiere cambio de contraseña (NEW_PASSWORD_REQUIRED)");
+
+                        // Avisamos al usuario que ahora debe ingresar la nueva contraseña
+                        MostrarMensaje("Esta es una contraseña temporal. Por favor ingrese la NUEVA contraseña que desea usar y presione Login nuevamente.");
+                        return;
+                    }
+
+                    // Si no hay challenge y tenemos AuthenticationResult, login OK
+                    if (authResponse.AuthenticationResult == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("❌ Cognito: AuthenticationResult nulo sin challenge");
+                        MostrarMensaje("Usuario o contraseña incorrectos.");
+                        return;
+                    }
+
+                    authResult = authResponse.AuthenticationResult;
+                    System.Diagnostics.Debug.WriteLine("✅ Credenciales válidas en Cognito (sin cambio de contraseña)");
                 }
 
-                System.Diagnostics.Debug.WriteLine("✅ Credenciales válidas en Cognito");
+                // Si hemos llegado aquí, ya sea:
+                // - Login normal OK (sin challenge)
+                // - O cambio de contraseña completado y login aceptado.
+                // authResult contiene los tokens (IdToken, AccessToken, etc.) si los necesitas.
 
                 // 2) OBTENER CUENTA DE USUARIO EN TU BD (como antes)
                 System.Diagnostics.Debug.WriteLine("📡 Conectando con CuentaUsuarioWS...");
                 try
                 {
-                    clienteCuenta = new CuentaUsuarioWSClient();
                     System.Diagnostics.Debug.WriteLine($"   Estado del cliente: {clienteCuenta.State}");
                     System.Diagnostics.Debug.WriteLine($"   Endpoint Address: {clienteCuenta.Endpoint.Address.Uri}");
                     System.Diagnostics.Debug.WriteLine($"   Binding: {clienteCuenta.Endpoint.Binding.Name}");
@@ -112,12 +179,12 @@ namespace StockifyWeb
 
                 // Obtener todas las cuentas
                 System.Diagnostics.Debug.WriteLine("🔍 Buscando cuenta de usuario...");
-                System.Diagnostics.Debug.WriteLine("   Llamando a listarCuentasUsuarioAsync()...");
+                System.Diagnostics.Debug.WriteLine("   Llamando a listarCuentasUsuario()...");
 
-                var cuentasResponse = await clienteCuenta.listarCuentasUsuarioAsync();
+                var cuentasResponse = clienteCuenta.listarCuentasUsuario();
                 System.Diagnostics.Debug.WriteLine("   Respuesta recibida del WS");
 
-                var cuentas = cuentasResponse.@return;
+                var cuentas = cuentasResponse;
                 System.Diagnostics.Debug.WriteLine($"   Cuentas es null: {cuentas == null}");
 
                 if (cuentas == null || cuentas.Length == 0)
@@ -136,14 +203,14 @@ namespace StockifyWeb
                     System.Diagnostics.Debug.WriteLine($"   - ID: {c.idCuentaUsuario}, Username: '{c.username}', Pwd: {pwdPreview}");
                 }
 
-                // Buscar la cuenta por username
+                // Buscar la cuenta por username (según lo que el usuario escribió)
                 cuentaUsuario cuentaEncontrada = null;
-                System.Diagnostics.Debug.WriteLine($"🔍 Buscando cuenta con username: '{username}'");
+                System.Diagnostics.Debug.WriteLine($"🔍 Buscando cuenta con username: '{usernameInput}'");
 
                 foreach (var c in cuentas)
                 {
                     if (!string.IsNullOrEmpty(c.username) &&
-                        c.username.Equals(username, StringComparison.OrdinalIgnoreCase))
+                        c.username.Equals(usernameInput, StringComparison.OrdinalIgnoreCase))
                     {
                         cuentaEncontrada = c;
                         System.Diagnostics.Debug.WriteLine($"✅ Cuenta encontrada - ID: {c.idCuentaUsuario}");
@@ -153,8 +220,8 @@ namespace StockifyWeb
 
                 if (cuentaEncontrada == null)
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Cuenta no encontrada en la BD");
-                    MostrarMensaje("Usuario o contraseña incorrectos");
+                    System.Diagnostics.Debug.WriteLine("❌ Cuenta no encontrada en la BD para ese username");
+                    MostrarMensaje("Error al obtener la cuenta del usuario en el sistema.");
                     return;
                 }
 
@@ -163,8 +230,8 @@ namespace StockifyWeb
                 clienteUsuario = new UsuarioWSClient();
 
                 System.Diagnostics.Debug.WriteLine("📥 Obteniendo lista de usuarios...");
-                var usuariosResponse = await clienteUsuario.listarUsuariosAsync();
-                var usuarios = usuariosResponse.@return;
+                var usuariosResponse = clienteUsuario.listarUsuarios();
+                var usuarios = usuariosResponse;
 
                 if (usuarios == null || usuarios.Length == 0)
                 {
@@ -183,6 +250,7 @@ namespace StockifyWeb
                         u.cuenta.idCuentaUsuario == cuentaEncontrada.idCuentaUsuario)
                     {
                         usuarioValido = u;
+                        Session["TipoUsuario"] = usuarioValido.tipoUsuario;
                         System.Diagnostics.Debug.WriteLine($"✅ Usuario encontrado - ID: {u.idUsuario}");
                         break;
                     }
@@ -200,7 +268,7 @@ namespace StockifyWeb
 
                 if (!usuarioValido.activo)
                 {
-                    System.Diagnostics.Debug.WriteLine($"⚠️ Usuario inactivo: {username}");
+                    System.Diagnostics.Debug.WriteLine($"⚠️ Usuario inactivo: {usernameInput}");
                     System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
                     MostrarMensaje("Su cuenta ha sido desactivada. Contacte al administrador.");
                     return;
@@ -243,7 +311,7 @@ namespace StockifyWeb
                 // Remember me
                 if (chkRemember.Checked)
                 {
-                    Response.Cookies["StockifyUser"].Value = username;
+                    Response.Cookies["StockifyUser"].Value = usernameInput;
                     Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(30);
                     System.Diagnostics.Debug.WriteLine("🍪 Cookie 'Remember me' creada (30 días)");
                 }
@@ -256,29 +324,29 @@ namespace StockifyWeb
                     }
                 }
 
-                // Actualizar último acceso (opcional)
+                // Actualizar último acceso 
                 try
                 {
-                    System.Diagnostics.Debug.WriteLine("📅 Actualizando último acceso...");
+                    System.Diagnostics.Debug.WriteLine("Actualizando último acceso...");
                     cuentaEncontrada.ultimoAcceso = DateTime.Now;
                     cuentaEncontrada.ultimoAccesoSpecified = true;
                     await clienteCuenta.guardarCuentaUsuarioAsync(cuentaEncontrada, estado.MODIFICADO);
-                    System.Diagnostics.Debug.WriteLine("✅ Último acceso actualizado");
+                    System.Diagnostics.Debug.WriteLine("Último acceso actualizado");
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"⚠️ No se pudo actualizar último acceso: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($" No se pudo actualizar último acceso: {ex.Message}");
                 }
 
                 // Redirigir a la página principal
-                System.Diagnostics.Debug.WriteLine("🔄 Redirigiendo a Inicio.aspx...");
+                System.Diagnostics.Debug.WriteLine(" Redirigiendo a Inicio.aspx...");
                 Response.Redirect("Inicio.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (System.ServiceModel.EndpointNotFoundException ex)
             {
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine("❌ ERROR: No se pudo conectar con el Web Service");
+                System.Diagnostics.Debug.WriteLine(" ERROR: No se pudo conectar con el Web Service");
                 System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
 
                 if (clienteCuenta != null)
@@ -298,7 +366,7 @@ namespace StockifyWeb
             catch (System.ServiceModel.CommunicationException ex)
             {
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine("❌ ERROR DE COMUNICACIÓN");
+                System.Diagnostics.Debug.WriteLine(" ERROR DE COMUNICACIÓN");
                 System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"   Tipo: {ex.GetType().Name}");
 
@@ -314,7 +382,7 @@ namespace StockifyWeb
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine("❌ ERROR INESPERADO");
+                System.Diagnostics.Debug.WriteLine(" ERROR INESPERADO");
                 System.Diagnostics.Debug.WriteLine($"   Tipo: {ex.GetType().Name}");
                 System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"   Stack Trace: {ex.StackTrace}");
@@ -366,7 +434,26 @@ namespace StockifyWeb
             }
         }
 
-        private async Task<bool> AutenticarConCognito(string username, string password)
+        // === HELPERS COGNITO ===
+
+        private static string CalcularSecretHash(string username)
+        {
+            var key = Encoding.UTF8.GetBytes(ClientSecret);
+            var message = Encoding.UTF8.GetBytes(username + ClientId);
+
+            using (var hmac = new HMACSHA256(key))
+            {
+                var hash = hmac.ComputeHash(message);
+                return Convert.ToBase64String(hash);
+            }
+        }
+
+        /// <summary>
+        /// Primer paso: intenta autenticarse. Puede devolver:
+        /// - AuthenticationResult (login OK)
+        /// - Challenge NEW_PASSWORD_REQUIRED (requiere cambiar contraseña)
+        /// </summary>
+        private async Task<InitiateAuthResponse> IniciarAutenticacionCognitoAsync(string username, string password)
         {
             try
             {
@@ -382,50 +469,81 @@ namespace StockifyWeb
                     request.AuthParameters["USERNAME"] = username;
                     request.AuthParameters["PASSWORD"] = password;
 
-                    // 🔐 Como el cliente tiene secreto, hay que enviar SECRET_HASH
                     var secretHash = CalcularSecretHash(username);
                     request.AuthParameters["SECRET_HASH"] = secretHash;
 
                     var response = await provider.InitiateAuthAsync(request);
-
-                    System.Diagnostics.Debug.WriteLine("Cognito ChallengeName: " + response.ChallengeName);
-
-                    return response.AuthenticationResult != null;
+                    return response;
                 }
             }
             catch (NotAuthorizedException ex)
             {
-                System.Diagnostics.Debug.WriteLine("Cognito NotAuthorizedException: " + ex.Message);
-                // Usuario/contraseña incorrectos o hash inválido
-                return false;
+                System.Diagnostics.Debug.WriteLine("Cognito NotAuthorizedException (InitiateAuth): " + ex.Message);
+                return null;
             }
             catch (UserNotConfirmedException ex)
             {
-                System.Diagnostics.Debug.WriteLine("Cognito UserNotConfirmedException: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Cognito UserNotConfirmedException (InitiateAuth): " + ex.Message);
                 MostrarMensaje("Su cuenta no está confirmada en Cognito.");
-                return false;
+                return null;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("⚠️ Error Cognito: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error Cognito (InitiateAuth): " + ex.Message);
                 MostrarMensaje("Error al conectar con el servicio de autenticación. Intente nuevamente.");
-                return false;
+                return null;
             }
         }
 
-        private static string CalcularSecretHash(string username)
+        /// <summary>
+        /// Segundo paso para usuarios en estado FORCE_CHANGE_PASSWORD / NEW_PASSWORD_REQUIRED:
+        /// Envía la nueva contraseña definitiva con RespondToAuthChallenge.
+        /// </summary>
+        private async Task<AuthenticationResultType> CompletarNuevoPasswordCognitoAsync(string username, string newPassword, string session)
         {
-            var key = Encoding.UTF8.GetBytes(ClientSecret);
-            var message = Encoding.UTF8.GetBytes(username + ClientId);
-
-            using (var hmac = new HMACSHA256(key))
+            try
             {
-                var hash = hmac.ComputeHash(message);
-                return Convert.ToBase64String(hash);
+                using (var provider = new AmazonCognitoIdentityProviderClient(CognitoRegion))
+                {
+                    var secretHash = CalcularSecretHash(username);
+
+                    var request = new RespondToAuthChallengeRequest
+                    {
+                        ClientId = ClientId,
+                        ChallengeName = ChallengeNameType.NEW_PASSWORD_REQUIRED,
+                        Session = session,
+                        ChallengeResponses = new Dictionary<string, string>
+                {
+                    { "USERNAME", username },
+                    { "NEW_PASSWORD", newPassword },
+                    { "SECRET_HASH", secretHash }
+                }
+                    };
+
+                    var response = await provider.RespondToAuthChallengeAsync(request);
+                    return response.AuthenticationResult;
+                }
+            }
+            catch (InvalidPasswordException ex)
+            {
+                // Contraseña no cumple la política del User Pool
+                System.Diagnostics.Debug.WriteLine("Cognito InvalidPasswordException: " + ex.Message);
+                MostrarMensaje("La nueva contraseña no cumple la política de seguridad del sistema. Detalle: " + ex.Message);
+                return null;
+            }
+            catch (NotAuthorizedException ex)
+            {
+                // Por ejemplo, contraseña nueva igual a la temporal
+                System.Diagnostics.Debug.WriteLine("Cognito NotAuthorizedException (RespondToAuthChallenge): " + ex.Message);
+                MostrarMensaje("No se pudo cambiar la contraseña. Detalle: " + ex.Message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("⚠️ Error Cognito (RespondToAuthChallenge): " + ex.Message);
+                MostrarMensaje("Error al actualizar la contraseña en Cognito: " + ex.Message);
+                return null;
             }
         }
-
-
-
     }
 }
