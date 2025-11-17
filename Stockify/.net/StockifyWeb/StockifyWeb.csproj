@@ -151,6 +151,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="GestionCuentas.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Inventario.aspx" />
     <Content Include="Ordenes.aspx" />
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionCuentas.aspx.cs">
+      <DependentUpon>GestionCuentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionCuentas.aspx.designer.cs">
+      <DependentUpon>GestionCuentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>

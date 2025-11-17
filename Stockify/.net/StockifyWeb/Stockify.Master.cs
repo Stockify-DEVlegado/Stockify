@@ -57,7 +57,7 @@ namespace StockifyWeb
                     lnkReportes.Visible = true;
                     lnkProveedores.Visible = true;
                     lnkOrdenes.Visible = true;
-                    //lnkAgregarUsuario.Visible = true;
+                    lnkGestionCuentas.Visible = true;
                     break;
 
                 case "operario":

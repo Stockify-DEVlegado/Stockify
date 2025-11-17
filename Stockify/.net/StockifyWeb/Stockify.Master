@@ -125,6 +125,11 @@
                             <i class="fa-solid fa-file-invoice pe-2"></i> Órdenes
                         </a>
                     </li>
+                    <li class="nav-item mb-1">
+                        <a id="lnkGestionCuentas" runat="server" href="GestionCuentas.aspx" class="nav-link text-white">
+                            <i class="fa-solid fa-file-invoice pe-2"></i> Gestión de cuentas
+                        </a>
+                    </li>
                 </ul>
                 
                 <div class="user-menu-sidebar">
