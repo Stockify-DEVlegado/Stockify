@@ -40,7 +40,7 @@ namespace StockifyWeb
             lnkReportes.Visible = false;
             lnkProveedores.Visible = false;
             lnkOrdenes.Visible = false;
-            //lnkAgregarUsuario.Visible = false;
+            lnkGestionCuentas.Visible = false;
 
             if (string.IsNullOrEmpty(rol))
             {
