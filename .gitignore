@@ -1,0 +1,15 @@
+.DS_Store
+*.exe
+*.class
+*.jar
+*.dll
+target
+bin
+.vs
+obj
+.vsidx
+*.cache*.dbcache.json
+*.suo
+*.user
+packages
+*/packages/*

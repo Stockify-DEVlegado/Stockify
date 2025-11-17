@@ -74,10 +74,6 @@
             align-items: center;
         }
 
-        /* ========================================
-           DROPDOWN DE CATEGORÍAS MEJORADO
-        ======================================== */
-        
         .filter-group {
             position: relative;
         }
@@ -111,7 +107,6 @@
             box-shadow: 0 0 0 3px rgba(138, 162, 255, 0.15);
         }
 
-        /* Icono personalizado del dropdown */
         .filter-group::after {
             content: '▼';
             position: absolute;
@@ -123,7 +118,6 @@
             font-size: 12px;
         }
 
-        /* Estilos para las opciones del dropdown */
         .btn-filter-dropdown option {
             background: var(--card);
             color: var(--text);
@@ -140,7 +134,6 @@
             font-weight: 600;
         }
 
-        /* Estilo alternativo con badge */
         .filter-wrapper {
             position: relative;
             display: inline-block;
@@ -238,6 +231,13 @@
             background: var(--card2);
         }
 
+        /* Botones de acción en la tabla */
+        .action-buttons-cell {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
         .btn-detalle {
             background: var(--accent);
             color: var(--bg);
@@ -253,6 +253,24 @@
         .btn-detalle:hover {
             background: #9ab1ff;
             transform: translateY(-1px);
+        }
+
+        .btn-eliminar {
+            background: var(--danger);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-eliminar:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
         }
 
         .modal-overlay {
@@ -281,11 +299,35 @@
             border-radius: var(--radius);
             padding: 28px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,.6);
             animation: slideUp 0.3s ease;
+        }
+
+        /* Modal de confirmación de eliminación */
+        .modal-content.confirm-delete {
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .modal-content.confirm-delete .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: rgba(255, 107, 107, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         @keyframes slideUp {
@@ -313,6 +355,24 @@
             font-size: 22px;
             font-weight: 700;
             margin: 0;
+        }
+
+        .modal-subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            margin: 10px 0 20px;
+            line-height: 1.6;
+        }
+
+        .product-name-highlight {
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 18px;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--danger);
         }
 
         .close-modal {
@@ -365,19 +425,23 @@
             background: var(--card);
         }
 
-        /* Dropdown dentro del modal también mejorado */
         .form-control option {
             background: var(--bg);
             color: var(--text);
             padding: 10px;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
         .modal-actions {
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
             margin-top: 24px;
-            border-top: 1px solid var(--stroke);
             padding-top: 20px;
         }
 
@@ -406,6 +470,19 @@
             transition: all 0.3s ease;
         }
 
+        .btn-delete-confirm {
+            background: var(--danger);
+            color: #ffffff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
         .btn-submit:hover {
             background: #9ab1ff;
             transform: translateY(-2px);
@@ -415,6 +492,12 @@
         .btn-discard:hover {
             background: var(--stroke);
             transform: translateY(-1px);
+        }
+
+        .btn-delete-confirm:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -434,6 +517,18 @@
             .btn-add {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .action-buttons-cell {
+                flex-direction: column;
+            }
+
+            .modal-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn-delete-confirm, .btn-discard {
+                width: 100%;
             }
         }
     </style>
@@ -472,9 +567,15 @@
                 <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
                 <asp:TemplateField HeaderText="Acciones">
                     <ItemTemplate>
-                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" 
-                            CssClass="btn-detalle" CommandName="VerDetalle" 
-                            CommandArgument='<%# Eval("IdProducto") %>' />
+                        <div class="action-buttons-cell">
+                            <asp:Button ID="btnVerDetalle" runat="server" Text="👁️ Ver" 
+                                CssClass="btn-detalle" CommandName="VerDetalle" 
+                                CommandArgument='<%# Eval("IdProducto") %>' />
+                            <button type="button" class="btn-eliminar" 
+                                onclick='abrirModalEliminar(<%# Eval("IdProducto") %>, "<%# Eval("Producto") %>")'>
+                                🗑️ Eliminar
+                            </button>
+                        </div>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -508,6 +609,20 @@
                     placeholder="0.00" TextMode="Number" step="0.01"></asp:TextBox>
             </div>
             
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📉 Stock mínimo</label>
+                    <asp:TextBox ID="txtStockMinimo" runat="server" CssClass="form-control" 
+                        placeholder="0" TextMode="Number" min="0"></asp:TextBox>
+                </div>
+                
+                <div class="form-group">
+                    <label>📈 Stock máximo</label>
+                    <asp:TextBox ID="txtStockMaximo" runat="server" CssClass="form-control" 
+                        placeholder="0" TextMode="Number" min="0"></asp:TextBox>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label>📄 Descripción</label>
                 <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" 
@@ -528,9 +643,41 @@
         </div>
     </div>
 
+    <!-- Modal Confirmar Eliminación -->
+    <div class="modal-overlay" id="confirmDeleteModal">
+        <div class="modal-content confirm-delete">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-title">¿Eliminar Producto?</h2>
+            <p class="modal-subtitle">
+                Esta acción es permanente y no se puede deshacer. El producto será eliminado completamente de la base de datos.
+            </p>
+            <div class="product-name-highlight" id="productNameToDelete"></div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn-discard" onclick="cerrarModalEliminar()">
+                    ✖️ Cancelar
+                </button>
+                <asp:Button ID="btnConfirmDelete" runat="server" Text="🗑️ Sí, Eliminar" 
+                    CssClass="btn-delete-confirm" OnClick="btnConfirmDelete_Click" />
+            </div>
+        </div>
+    </div>
+
     <asp:HiddenField ID="hdnProductoId" runat="server" Value="0" />
+    <asp:HiddenField ID="hdnProductoIdEliminar" runat="server" Value="0" ClientIDMode="Static" />
     
     <script>
+        // Función para abrir modal de confirmación de eliminación
+        function abrirModalEliminar(productoId, nombreProducto) {
+            document.getElementById('hdnProductoIdEliminar').value = productoId;
+            document.getElementById('productNameToDelete').textContent = nombreProducto;
+            document.getElementById('confirmDeleteModal').style.display = 'flex';
+        }
+
+        function cerrarModalEliminar() {
+            document.getElementById('confirmDeleteModal').style.display = 'none';
+        }
+
         // Búsqueda en tiempo real
         document.addEventListener('DOMContentLoaded', function () {
             const txtBuscar = document.getElementById('txtBuscar');
@@ -574,10 +721,15 @@
             if (e.target === this) cerrarModal();
         });
 
+        document.getElementById('confirmDeleteModal').addEventListener('click', function (e) {
+            if (e.target === this) cerrarModalEliminar();
+        });
+
         // Cerrar con tecla ESC
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 cerrarModal();
+                cerrarModalEliminar();
             }
         });
     </script>

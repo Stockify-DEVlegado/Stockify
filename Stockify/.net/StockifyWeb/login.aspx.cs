@@ -1,151 +1,389 @@
-﻿using System;
+﻿using StockifyWeb.StockifyWS;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.UI;
+using Amazon;
+using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
 
 namespace StockifyWeb
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class Login : Page
     {
-        private const string ApiUrl = "https://my-json-server.typicode.com/OscarGAV/stockify-json-server";
+        private const string UserPoolId = "us-east-1_LIZsvOxNv";
+        private const string ClientId = "5f0hvfclu5ichnmd8r1vjs3rpl";
+        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k";
+        private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
+
+        private CuentaUsuarioWSClient clienteCuenta;
+        private UsuarioWSClient clienteUsuario;
+
+        public Login()
+        {
+            this.clienteCuenta = new CuentaUsuarioWSClient();
+            this.clienteUsuario = new UsuarioWSClient();
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Limpiar cualquier sesión anterior
-                Session.Clear();
-
-                // Verificar si hay una cookie de "Remember me"
-                if (Request.Cookies["StockifyUser"] != null)
+                if (Session["IdUsuario"] != null)
                 {
-                    txtUsername.Text = Request.Cookies["StockifyUser"].Value;
-                    chkRemember.Checked = true;
+                    Response.Redirect("Inicio.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
                 }
+
+                Session.Clear();
+                CargarCookieRememberMe();
             }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            var username = txtUsername.Text.Trim();
-            var password = txtPassword.Text.Trim();
+            RegisterAsyncTask(new PageAsyncTask(ValidarLoginAsync));
+        }
 
-            // Validación básica
+        private async Task ValidarLoginAsync()
+        {
+            try
+            {
+                string username = txtUsername.Text.Trim();
+                string password = txtPassword.Text.Trim();
+
+                if (!ValidarCampos(username, password))
+                    return;
+
+                AuthenticationResultType authResult = await AutenticarUsuarioAsync(username, password);
+
+                if (authResult == null)
+                    return;
+
+                cuentaUsuario cuenta = ObtenerCuentaUsuario(username);
+
+                if (cuenta == null)
+                {
+                    MostrarMensaje("Error al obtener la cuenta del usuario.");
+                    return;
+                }
+
+                usuario usuarioValido = ObtenerUsuarioPorCuenta(cuenta.idCuentaUsuario);
+
+                if (usuarioValido == null)
+                {
+                    MostrarMensaje("Error al obtener información del usuario.");
+                    return;
+                }
+
+                if (!usuarioValido.activo)
+                {
+                    MostrarMensaje("Su cuenta ha sido desactivada. Contacte al administrador.");
+                    return;
+                }
+
+                IniciarSesion(usuarioValido, cuenta, username);
+                ActualizarUltimoAcceso(cuenta);
+
+                Response.Redirect("Inicio.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (System.ServiceModel.EndpointNotFoundException)
+            {
+                MostrarMensaje("No se pudo conectar con el servidor. Verifique que el Web Service esté corriendo.");
+            }
+            catch (System.ServiceModel.CommunicationException)
+            {
+                MostrarMensaje("Error de comunicación con el servidor. Intente nuevamente.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error en login: {ex.Message}");
+                MostrarMensaje("Error al iniciar sesión. Por favor intente nuevamente.");
+            }
+            finally
+            {
+                CerrarClientes();
+            }
+        }
+
+        private bool ValidarCampos(string username, string password)
+        {
             if (string.IsNullOrEmpty(username))
             {
-                MostrarMensaje("Por favor ingrese su nombre de usuario");
-                return;
+                MostrarMensaje("Por favor ingrese su nombre de usuario.");
+                return false;
             }
 
             if (string.IsNullOrEmpty(password))
             {
-                MostrarMensaje("Por favor ingrese su contraseña");
-                return;
+                MostrarMensaje("Por favor ingrese su contraseña.");
+                return false;
             }
 
-            // Encriptar la contraseña para compararla
-            var hashedPassword = HashPassword(password);
-
-            // Script completo con función y ejecución
-            string scriptCompleto = $@"
-                (function() {{
-                    const API_URL = '{ApiUrl}';
-                    
-                    async function validarUsuarioAPI(username, passwordHash) {{
-                        try {{
-                            // Obtener usuarios de la API
-                            const response = await fetch(API_URL + '/users');
-                            const usuariosAPI = await response.json();
-                            
-                            // Obtener usuarios locales
-                            const usuariosLocales = JSON.parse(localStorage.getItem('stockify_users_local') || '[]');
-                            
-                            // Combinar ambas fuentes
-                            const todosUsuarios = [...usuariosAPI, ...usuariosLocales];
-                            
-                            // Buscar el usuario
-                            const usuario = todosUsuarios.find(user => 
-                                user.username.toLowerCase() === username.toLowerCase() && 
-                                user.password === passwordHash
-                            );
-                            
-                            return usuario;
-                        }} catch (e) {{
-                            console.error('Error al validar usuario:', e);
-                            return null;
-                        }}
-                    }}
-                    
-                    // Ejecutar validación inmediatamente
-                    (async function() {{
-                        const usuario = await validarUsuarioAPI('{username.ToLower()}', '{hashedPassword}');
-                        
-                        if (usuario) {{
-                            // Usuario válido - guardar en campos ocultos para postback
-                            document.getElementById('{hfLoginExitoso.ClientID}').value = 'true';
-                            document.getElementById('{hfUsername.ClientID}').value = usuario.username;
-                            document.getElementById('{hfEmail.ClientID}').value = usuario.email || '';
-                            
-                            // Hacer postback
-                            {Page.ClientScript.GetPostBackEventReference(this, "LoginValidado")}
-                        }} else {{
-                            alert('Usuario o contraseña incorrectos');
-                        }}
-                    }})();
-                }})();
-            ";
-
-            ClientScript.RegisterStartupScript(GetType(), "ValidarLogin", scriptCompleto, true);
+            return true;
         }
 
-        protected void Page_LoadComplete(object sender, EventArgs e)
+        private async Task<AuthenticationResultType> AutenticarUsuarioAsync(string username, string password)
         {
-            // Verificar si el login fue exitoso
-            if (Request.Form[hfLoginExitoso.UniqueID] != "true") return;
+            bool requiereCambioPassword = Session["CognitoRequireNewPassword"] != null &&
+                                         (bool)Session["CognitoRequireNewPassword"];
+            string cognitoSession = Session["CognitoSession"] as string;
+            string cognitoUsername = Session["CognitoChallengeUsername"] as string;
 
-            string username = Request.Form[hfUsername.UniqueID];
-            string email = Request.Form[hfEmail.UniqueID];
-
-            // Guardar información en sesión
-            Session["Usuario"] = username;
-            Session["Email"] = email;
-            Session["FechaLogin"] = DateTime.Now;
-
-            // Verificar si el usuario marcó "Remember me"
-            if (chkRemember.Checked)
+            if (requiereCambioPassword && !string.IsNullOrEmpty(cognitoSession))
             {
-                // Crear cookie que dure 30 días
-                Response.Cookies["StockifyUser"].Value = username;
-                Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(30);
+                return await CompletarCambioPasswordAsync(cognitoUsername, password, cognitoSession);
             }
-            else
+
+            var authResponse = await IniciarAutenticacionCognitoAsync(username, password);
+
+            if (authResponse == null)
             {
-                // Limpiar cookie si existe
-                if (Request.Cookies["StockifyUser"] != null)
+                MostrarMensaje("Usuario o contraseña incorrectos.");
+                return null;
+            }
+
+            if (authResponse.ChallengeName == ChallengeNameType.NEW_PASSWORD_REQUIRED)
+            {
+                ConfigurarCambioPassword(authResponse, username);
+                MostrarMensaje("Esta es una contraseña temporal. Por favor ingrese la NUEVA contraseña que desea usar y presione Login nuevamente.");
+                return null;
+            }
+
+            if (authResponse.AuthenticationResult == null)
+            {
+                MostrarMensaje("Usuario o contraseña incorrectos.");
+                return null;
+            }
+
+            return authResponse.AuthenticationResult;
+        }
+
+        private async Task<AuthenticationResultType> CompletarCambioPasswordAsync(string username, string newPassword, string session)
+        {
+            try
+            {
+                using (var provider = new AmazonCognitoIdentityProviderClient(CognitoRegion))
                 {
-                    Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(-1);
+                    var request = new RespondToAuthChallengeRequest
+                    {
+                        ClientId = ClientId,
+                        ChallengeName = ChallengeNameType.NEW_PASSWORD_REQUIRED,
+                        Session = session,
+                        ChallengeResponses = new Dictionary<string, string>
+                        {
+                            { "USERNAME", username },
+                            { "NEW_PASSWORD", newPassword },
+                            { "SECRET_HASH", CalcularSecretHash(username) }
+                        }
+                    };
+
+                    var response = await provider.RespondToAuthChallengeAsync(request);
+                    LimpiarSesionCambioPassword();
+                    return response.AuthenticationResult;
+                }
+            }
+            catch (InvalidPasswordException ex)
+            {
+                MostrarMensaje($"La nueva contraseña no cumple la política de seguridad. {ex.Message}");
+                return null;
+            }
+            catch (NotAuthorizedException ex)
+            {
+                MostrarMensaje($"No se pudo cambiar la contraseña. {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cambiar contraseña: {ex.Message}");
+                MostrarMensaje("Error al actualizar la contraseña.");
+                return null;
+            }
+        }
+
+        private async Task<InitiateAuthResponse> IniciarAutenticacionCognitoAsync(string username, string password)
+        {
+            try
+            {
+                using (var provider = new AmazonCognitoIdentityProviderClient(CognitoRegion))
+                {
+                    var request = new InitiateAuthRequest
+                    {
+                        ClientId = ClientId,
+                        AuthFlow = AuthFlowType.USER_PASSWORD_AUTH,
+                        AuthParameters = new Dictionary<string, string>
+                        {
+                            { "USERNAME", username },
+                            { "PASSWORD", password },
+                            { "SECRET_HASH", CalcularSecretHash(username) }
+                        }
+                    };
+
+                    return await provider.InitiateAuthAsync(request);
+                }
+            }
+            catch (NotAuthorizedException)
+            {
+                return null;
+            }
+            catch (UserNotConfirmedException)
+            {
+                MostrarMensaje("Su cuenta no está confirmada.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error Cognito: {ex.Message}");
+                MostrarMensaje("Error al conectar con el servicio de autenticación.");
+                return null;
+            }
+        }
+
+        private cuentaUsuario ObtenerCuentaUsuario(string username)
+        {
+            var cuentas = clienteCuenta.listarCuentasUsuario();
+
+            if (cuentas == null || cuentas.Length == 0)
+                return null;
+
+            foreach (var cuenta in cuentas)
+            {
+                if (!string.IsNullOrEmpty(cuenta.username) &&
+                    cuenta.username.Equals(username, StringComparison.OrdinalIgnoreCase))
+                {
+                    return cuenta;
                 }
             }
 
-            // Redirigir a la página principal
-            Response.Redirect("Inicio.aspx");
+            return null;
+        }
+
+        private usuario ObtenerUsuarioPorCuenta(int idCuentaUsuario)
+        {
+            var usuarios = clienteUsuario.listarUsuarios();
+
+            if (usuarios == null || usuarios.Length == 0)
+                return null;
+
+            foreach (var usuario in usuarios)
+            {
+                if (usuario.cuenta != null && usuario.cuenta.idCuentaUsuario == idCuentaUsuario)
+                {
+                    return usuario;
+                }
+            }
+
+            return null;
+        }
+
+        private void IniciarSesion(usuario usuarioValido, cuentaUsuario cuenta, string username)
+        {
+            Session["IdUsuario"] = usuarioValido.idUsuario;
+            Session["IdCuentaUsuario"] = cuenta.idCuentaUsuario;
+            Session["Usuario"] = cuenta.username;
+            Session["Email"] = usuarioValido.email ?? "";
+            Session["Nombres"] = usuarioValido.nombres ?? "";
+            Session["Apellidos"] = usuarioValido.apellidos ?? "";
+            Session["NombreCompleto"] = ObtenerNombreCompleto(usuarioValido, cuenta);
+            Session["TipoUsuario"] = usuarioValido.tipoUsuarioSpecified
+                ? usuarioValido.tipoUsuario.ToString()
+                : "OPERARIO";
+            Session["FechaLogin"] = DateTime.Now;
+
+            GestionarCookieRememberMe(username);
+        }
+
+        private string ObtenerNombreCompleto(usuario usuarioValido, cuentaUsuario cuenta)
+        {
+            string nombreCompleto = $"{usuarioValido.nombres ?? ""} {usuarioValido.apellidos ?? ""}".Trim();
+            return string.IsNullOrEmpty(nombreCompleto) ? cuenta.username : nombreCompleto;
+        }
+
+        private void ConfigurarCambioPassword(InitiateAuthResponse authResponse, string username)
+        {
+            Session["CognitoRequireNewPassword"] = true;
+            Session["CognitoSession"] = authResponse.Session;
+            Session["CognitoChallengeUsername"] = username;
+        }
+
+        private void LimpiarSesionCambioPassword()
+        {
+            Session["CognitoRequireNewPassword"] = null;
+            Session["CognitoSession"] = null;
+            Session["CognitoChallengeUsername"] = null;
+        }
+
+        private void CargarCookieRememberMe()
+        {
+            if (Request.Cookies["StockifyUser"] != null)
+            {
+                txtUsername.Text = Request.Cookies["StockifyUser"].Value;
+                chkRemember.Checked = true;
+            }
+        }
+
+        private void GestionarCookieRememberMe(string username)
+        {
+            if (chkRemember.Checked)
+            {
+                Response.Cookies["StockifyUser"].Value = username;
+                Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(30);
+            }
+            else if (Request.Cookies["StockifyUser"] != null)
+            {
+                Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(-1);
+            }
+        }
+
+        private async Task ActualizarUltimoAcceso(cuentaUsuario cuenta)
+        {
+            try
+            {
+                cuenta.ultimoAcceso = DateTime.Now;
+                cuenta.ultimoAccesoSpecified = true;
+                await clienteCuenta.guardarCuentaUsuarioAsync(cuenta, estado.MODIFICADO);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al actualizar último acceso: {ex.Message}");
+            }
+        }
+
+        private void CerrarClientes()
+        {
+            if (clienteCuenta != null && clienteCuenta.State == System.ServiceModel.CommunicationState.Opened)
+            {
+                try { clienteCuenta.Close(); }
+                catch { clienteCuenta.Abort(); }
+            }
+
+            if (clienteUsuario != null && clienteUsuario.State == System.ServiceModel.CommunicationState.Opened)
+            {
+                try { clienteUsuario.Close(); }
+                catch { clienteUsuario.Abort(); }
+            }
         }
 
         private void MostrarMensaje(string mensaje)
         {
-            var script = $"alert('{mensaje}');";
-            ClientScript.RegisterStartupScript(GetType(), "MensajeError", script, true);
+            mensaje = mensaje.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+            string script = $"alert('{mensaje}');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "MensajeError", script, true);
         }
 
-        private static string HashPassword(string password)
+        private static string CalcularSecretHash(string username)
         {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            var key = Encoding.UTF8.GetBytes(ClientSecret);
+            var message = Encoding.UTF8.GetBytes(username + ClientId);
+
+            using (var hmac = new HMACSHA256(key))
             {
-                var bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                var builder = new System.Text.StringBuilder();
-                foreach (var b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
+                var hash = hmac.ComputeHash(message);
+                return Convert.ToBase64String(hash);
             }
         }
     }

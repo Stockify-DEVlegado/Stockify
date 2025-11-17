@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="StockifyWeb.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="StockifyWeb.Login" Async="true" %>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -294,7 +294,7 @@
         function togglePassword() {
             const passwordInput = document.getElementById('<%= txtPassword.ClientID %>');
             const eyeIcon = document.getElementById('eyeIcon');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 eyeIcon.className = 'fas fa-eye';
