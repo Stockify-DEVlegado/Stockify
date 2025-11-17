@@ -417,6 +417,9 @@
     <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.usuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />
     <None Include="Connected Services\StockifyWS\UsuarioWS.xsd">
       <SubType>Designer</SubType>

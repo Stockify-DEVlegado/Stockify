@@ -12,6 +12,7 @@
             --muted: #a9b3c7;
             --accent: #8aa2ff;
             --danger: #ff6b6b;
+            --success: #10b981;
             --radius: 16px;
             --shadow: 0 10px 24px rgba(0,0,0,.35);
         }
@@ -179,6 +180,13 @@
             box-shadow: 0 4px 12px rgba(138, 162, 255, 0.3);
         }
 
+        .btn-import {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
         .btn-filter:hover {
             background: var(--stroke);
             transform: translateY(-1px);
@@ -188,6 +196,12 @@
             background: #9ab1ff;
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(138, 162, 255, 0.4);
+        }
+
+        .btn-import:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
         }
 
         .products-table {
@@ -231,7 +245,6 @@
             background: var(--card2);
         }
 
-        /* Botones de acción en la tabla */
         .action-buttons-cell {
             display: flex;
             gap: 8px;
@@ -306,7 +319,6 @@
             animation: slideUp 0.3s ease;
         }
 
-        /* Modal de confirmación de eliminación */
         .modal-content.confirm-delete {
             max-width: 450px;
             text-align: center;
@@ -500,6 +512,86 @@
             box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
         }
 
+        .upload-area-csv {
+            border: 3px dashed var(--success);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(16, 185, 129, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .upload-area-csv:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #059669;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: var(--success);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .upload-subtext {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+
+        .file-info {
+            background: var(--card2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .file-info.visible {
+            display: block;
+        }
+
+        .file-name {
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .file-size {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
         @media (max-width: 768px) {
             .header-actions {
                 flex-direction: column;
@@ -514,7 +606,7 @@
                 flex-direction: column;
             }
 
-            .btn-add {
+            .btn-add, .btn-import {
                 width: 100%;
                 justify-content: center;
             }
@@ -549,6 +641,8 @@
                         AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroCategoria_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
+                <asp:Button ID="btnOpenImportModal" runat="server" Text="📥 Importar CSV" 
+                    CssClass="btn-add btn-import" OnClientClick="abrirModalImportar(); return false;" />
                 <asp:Button ID="btnOpenModal" runat="server" Text="➕ Agregar Producto" 
                     CssClass="btn-add" OnClick="btnOpenModal_Click" />
             </div>
@@ -663,11 +757,94 @@
         </div>
     </div>
 
+    <!-- Modal Importar CSV -->
+    <div class="modal-overlay" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📥 Importar Productos desde CSV</h2>
+                <button class="close-modal" type="button" onclick="cerrarModalImportar()">&times;</button>
+            </div>
+            
+            <div class="info-box">
+                <strong>⚠️ Formato del archivo CSV:</strong>
+                <ul>
+                    <li><strong>Columnas:</strong> nombre, descripcion, marca, stockMinimo, stockMaximo, precioUnitario, idCategoria</li>
+                    <li><strong>Primera fila:</strong> Debe ser el encabezado</li>
+                    <li><strong>Separador:</strong> Coma (,)</li>
+                    <li><strong>Codificación:</strong> UTF-8</li>
+                    <li><strong>idCategoria:</strong> Puede estar vacío si no tiene categoría</li>
+                </ul>
+            </div>
+
+            <div class="upload-area-csv" id="uploadAreaCSV" onclick="document.getElementById('<%= fuCSV.ClientID %>').click();">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Haz clic para seleccionar tu archivo CSV</div>
+                <div class="upload-subtext">Solo archivos .csv (máx. 10MB)</div>
+            </div>
+
+            <asp:FileUpload ID="fuCSV" runat="server" accept=".csv" style="display: none;" 
+                onchange="mostrarArchivoSeleccionado(this);" />
+
+            <div class="file-info" id="fileInfoCSV">
+                <div class="file-name" id="fileNameCSV"></div>
+                <div class="file-size" id="fileSizeCSV"></div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-discard" onclick="cerrarModalImportar()">Cancelar</button>
+                <asp:Button ID="btnImportarCSV" runat="server" Text="📤 Importar Productos"
+                    CssClass="btn-submit" OnClick="btnImportarCSV_Click" 
+                    style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" />
+            </div>
+        </div>
+    </div>
+
     <asp:HiddenField ID="hdnProductoId" runat="server" Value="0" />
     <asp:HiddenField ID="hdnProductoIdEliminar" runat="server" Value="0" ClientIDMode="Static" />
     
     <script>
-        // Función para abrir modal de confirmación de eliminación
+        // Modal Importar CSV
+        function abrirModalImportar() {
+            document.getElementById('importModal').style.display = 'flex';
+        }
+
+        function cerrarModalImportar() {
+            document.getElementById('importModal').style.display = 'none';
+            document.getElementById('<%= fuCSV.ClientID %>').value = '';
+            document.getElementById('fileInfoCSV').style.display = 'none';
+        }
+
+        function mostrarArchivoSeleccionado(input) {
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+
+                if (!file.name.toLowerCase().endsWith('.csv')) {
+                    alert('Por favor selecciona un archivo CSV');
+                    input.value = '';
+                    return;
+                }
+
+                if (file.size > 10485760) {
+                    alert('El archivo es demasiado grande. Máximo 10MB');
+                    input.value = '';
+                    return;
+                }
+
+                document.getElementById('fileNameCSV').textContent = '📄 ' + file.name;
+                document.getElementById('fileSizeCSV').textContent = 'Tamaño: ' + formatearBytes(file.size);
+                document.getElementById('fileInfoCSV').style.display = 'block';
+            }
+        }
+
+        function formatearBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Modal Eliminar
         function abrirModalEliminar(productoId, nombreProducto) {
             document.getElementById('hdnProductoIdEliminar').value = productoId;
             document.getElementById('productNameToDelete').textContent = nombreProducto;
@@ -725,11 +902,16 @@
             if (e.target === this) cerrarModalEliminar();
         });
 
+        document.getElementById('importModal').addEventListener('click', function (e) {
+            if (e.target === this) cerrarModalImportar();
+        });
+
         // Cerrar con tecla ESC
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 cerrarModal();
                 cerrarModalEliminar();
+                cerrarModalImportar();
             }
         });
     </script>

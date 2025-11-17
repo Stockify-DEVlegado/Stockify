@@ -15,14 +15,14 @@ import java.util.List;
 import pe.edu.pucp.inf30.stockify.dao.almacen.ProductoDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO;
 import pe.edu.pucp.inf30.stockify.model.almacen.Producto;
+import pe.edu.pucp.inf30.stockify.db.DBFactoryProvider;
+import pe.edu.pucp.inf30.stockify.db.DBManager;
 
 /**
  *
  * @author DEVlegado
  */
-
-public class ProductoDAOImpl extends BaseDAO<Producto> 
-        implements ProductoDAO {
+public class ProductoDAOImpl extends BaseDAO<Producto> implements ProductoDAO {
     
     @Override
     protected PreparedStatement comandoCrear(Connection conn, Producto modelo) 
@@ -171,6 +171,57 @@ public class ProductoDAOImpl extends BaseDAO<Producto>
             System.err.println("Error SQL: " + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    
+    @Override
+    public int insertarBloque(List<Producto> productos) {
+        Connection conn = null;
+        int insertados = 0;
+        
+        try {
+            // Obtener el DBManager configurado
+            DBManager dbManager = DBFactoryProvider.getManager();
+            conn = dbManager.getConnection();
+            conn.setAutoCommit(false); // Iniciar transacción
+            
+            for (Producto producto : productos) {
+                try (CallableStatement cmd = (CallableStatement) comandoCrear(conn, producto)) {
+                    cmd.execute();
+                    
+                    // Obtener el ID generado
+                    int idGenerado = cmd.getInt("p_id");
+                    producto.setIdProducto(idGenerado);
+                    insertados++;
+                }
+            }
+            
+            conn.commit(); // Si todo salió bien, confirmar transacción
+            System.out.println("✓ Se insertaron " + insertados + " productos exitosamente.");
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("✗ Error al insertar bloque de productos: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Revertir todos los cambios
+                    System.err.println("✗ Transacción revertida. No se insertó ningún producto.");
+                } catch (SQLException ex) {
+                    System.err.println("✗ Error al hacer rollback: " + ex.getMessage());
+                }
+            }
+            insertados = 0; // Ninguno fue insertado
+            throw new RuntimeException("Error en la inserción masiva", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // Restaurar el modo auto-commit
+                    conn.close();
+                } catch (SQLException e) {
+                    System.err.println("✗ Error al cerrar conexión: " + e.getMessage());
+                }
+            }
+        }
+        
+        return insertados;
     }
     
 }
