@@ -22,4 +22,5 @@ public interface ProductoDAO extends Persistible<Producto, Integer> {
     List<Producto> leerTodosPorCategoria(int idCategoria, Connection conn);
     
     int insertarBloque(List<Producto> productos);
+    int contarTotal();
 }

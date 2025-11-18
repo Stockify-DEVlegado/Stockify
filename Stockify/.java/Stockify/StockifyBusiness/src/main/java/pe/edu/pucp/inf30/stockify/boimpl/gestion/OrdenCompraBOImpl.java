@@ -7,7 +7,7 @@ package pe.edu.pucp.inf30.stockify.boimpl.gestion;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import pe.edu.pucp.inf30.stockify.bo.Gestionable;
+import pe.edu.pucp.inf30.stockify.bo.gestion.OrdenCompraBO;
 import pe.edu.pucp.inf30.stockify.dao.gestion.OrdenCompraDAO;
 import pe.edu.pucp.inf30.stockify.dao.gestion.LineaOrdenCompraDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.gestion.LineaOrdenCompraDAOImpl;
@@ -22,7 +22,7 @@ import pe.edu.pucp.inf30.stockify.model.Estado;
  *
  * @author DEVlegado
  */
-public class OrdenCompraBOImpl implements Gestionable<OrdenCompra>{
+public class OrdenCompraBOImpl implements OrdenCompraBO{
     private final OrdenCompraDAO ordenCompraDao;
     private final LineaOrdenCompraDAO lineaOrdenCompraDao;
     
@@ -118,4 +118,10 @@ public class OrdenCompraBOImpl implements Gestionable<OrdenCompra>{
         }
     
     }
+    
+    @Override
+    public int obtenerProductosPorRecibir() {
+        return this.ordenCompraDao.obtenerProductosPorRecibir();
+    }
+
 }

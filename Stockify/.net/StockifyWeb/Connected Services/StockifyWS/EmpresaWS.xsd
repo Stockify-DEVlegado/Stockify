@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://services.stockify.pucp.edu.pe/" targetNamespace="http://services.stockify.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="contarProveedores" type="tns:contarProveedores" />
+  <xs:element name="contarProveedoresResponse" type="tns:contarProveedoresResponse" />
   <xs:element name="eliminarEmpresa" type="tns:eliminarEmpresa" />
   <xs:element name="eliminarEmpresaResponse" type="tns:eliminarEmpresaResponse" />
   <xs:element name="guardarEmpresa" type="tns:guardarEmpresa" />
@@ -44,6 +46,14 @@
   </xs:complexType>
   <xs:complexType name="eliminarEmpresaResponse">
     <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="contarProveedores">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="contarProveedoresResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="guardarEmpresa">
     <xs:sequence>

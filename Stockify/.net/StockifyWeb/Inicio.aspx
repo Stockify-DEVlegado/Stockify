@@ -28,6 +28,7 @@
     .dbx .alerts .item{display:flex; align-items:center; justify-content:space-between; background:var(--card2); border:1px solid var(--stroke); border-radius:10px; padding:10px 12px; margin-top:8px}
     .dbx .alerts .name{font-weight:600; color:#ffffff !important; font-size:14px}
     .dbx .badge{background:#331b1b; border:1px solid #5a2a2a; color:#ffb0b0; padding:3px 8px; border-radius:999px; font-size:11px}
+    .dbx .badge.critico{background:#4a1515; border-color:#8a2a2a; color:#ff6b6b}
     .dbx .orders{display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:8px}
     .dbx .pill{padding:12px; background:var(--card); border:1px solid var(--stroke); border-radius:12px; text-align:center; min-height:60px; display:flex; flex-direction:column; justify-content:center}
     .dbx .pill .type{font-weight:700; color:#ffffff !important; margin-bottom:2px; font-size:14px}
@@ -35,6 +36,7 @@
     .dbx .chart-container {width: 100%; height: 220px; margin-top: 8px; border-radius: 10px; background: #171a20; border: 1px solid var(--stroke); padding: 8px;}
     .dbx .mini > div:first-child { color: #ffffff !important; font-size: 13px;}
     .dbx .alerts .item > div:first-child > div:last-child { color: #e0e0e0 !important; font-size: 11px;}
+    .dbx .no-data{text-align:center; padding:20px; color:var(--muted); font-size:13px}
     
     @media (max-width:1200px){ 
       .dbx .kpis{grid-template-columns:repeat(3,minmax(130px,1fr))} 
@@ -69,7 +71,7 @@
       <article class="card kpi">
         <div class="title">Total Productos</div>
         <div class="value">
-          <asp:Label ID="lblTotalProductos" runat="server" Text="50"></asp:Label>
+          <asp:Label ID="lblTotalProductos" runat="server" Text="0"></asp:Label>
         </div>
         <div class="hint">Registrados</div>
       </article>
@@ -77,7 +79,7 @@
       <article class="card kpi">
         <div class="title">En Stock</div>
         <div class="value">
-          <asp:Label ID="lblEnStock" runat="server" Text="50"></asp:Label>
+          <asp:Label ID="lblEnStock" runat="server" Text="0"></asp:Label>
         </div>
         <div class="hint">Unidades</div>
       </article>
@@ -85,7 +87,7 @@
       <article class="card kpi">
         <div class="title">Por recibir</div>
         <div class="value">
-          <asp:Label ID="lblPorRecibir" runat="server" Text="14"></asp:Label>
+          <asp:Label ID="lblPorRecibir" runat="server" Text="0"></asp:Label>
         </div>
         <div class="hint">Unidades</div>
       </article>
@@ -93,7 +95,7 @@
       <article class="card kpi">
         <div class="title">Entradas (7d)</div>
         <div class="value">
-          <asp:Label ID="lblEntradas" runat="server" Text="5"></asp:Label>
+          <asp:Label ID="lblEntradas" runat="server" Text="0"></asp:Label>
         </div>
         <div class="hint">Movimientos de entrada</div>
       </article>
@@ -101,7 +103,7 @@
       <article class="card kpi">
         <div class="title">Salidas (7d)</div>
         <div class="value">
-          <asp:Label ID="lblSalidas" runat="server" Text="21"></asp:Label>
+          <asp:Label ID="lblSalidas" runat="server" Text="0"></asp:Label>
         </div>
         <div class="hint">Movimientos de salida</div>
       </article>
@@ -117,10 +119,10 @@
           </div>
           <div class="legend">
             <span class="dot red"></span>
-            <asp:Label ID="lblLeyendaCompras" runat="server" Text="Compras" 
+            <asp:Label ID="lblLeyendaEntradas" runat="server" Text="Entradas" 
                        Style="color:#ffffff; font-size:13px"></asp:Label>
             <span class="dot green"></span>
-            <asp:Label ID="lblLeyendaVentas" runat="server" Text="Ventas" 
+            <asp:Label ID="lblLeyendaSalidas" runat="server" Text="Salidas" 
                        Style="color:#ffffff; font-size:13px"></asp:Label>
           </div>
         </article>
@@ -133,17 +135,18 @@
               <ItemTemplate>
                 <div class="pill">
                   <div class="type">
-                    <asp:Label ID="lblTipoOrden" runat="server" 
-                               Text='<%# Eval("Tipo") %>'></asp:Label>
+                    <%# Eval("Tipo") %>
                   </div>
                   <div class="date">
-                    Fecha: <asp:Label ID="lblFechaOrden" runat="server" 
-                                      Text='<%# Eval("Fecha", "{0:dd/MM/yyyy}") %>'></asp:Label>
+                    <%# "Fecha: " + ((DateTime)Eval("Fecha")).ToString("dd/MM/yyyy") %>
                   </div>
                 </div>
               </ItemTemplate>
             </asp:Repeater>
           </div>
+          <asp:Panel ID="pnlNoOrdenes" runat="server" Visible="false" CssClass="no-data">
+            No hay órdenes recientes
+          </asp:Panel>
         </section>
       </div>
 
@@ -155,44 +158,43 @@
             <div class="mini">
               <div style="opacity:1; color:#ffffff !important">Número de Proveedores</div>
               <div class="big">
-                <asp:Label ID="lblNumProveedores" runat="server" Text="31"></asp:Label>
+                <asp:Label ID="lblNumProveedores" runat="server" Text="0"></asp:Label>
               </div>
             </div>
             <div class="mini">
               <div style="opacity:1; color:#ffffff !important">Número de categorías</div>
               <div class="big">
-                <asp:Label ID="lblNumCategorias" runat="server" Text="21"></asp:Label>
+                <asp:Label ID="lblNumCategorias" runat="server" Text="0"></asp:Label>
               </div>
             </div>
           </div>
         </article>
         
         <!-- Alertas de Stock -->
-        <article class="card alerts" style="margin-top:14px; height:180px; display:flex; flex-direction:column; justify-content:space-between;">
+        <article class="card alerts" style="margin-top:14px; min-height:180px; display:flex; flex-direction:column;">
           <h2>Alertas de Stock</h2>
-          <div>
+          <div style="flex:1; overflow-y:auto; max-height:280px">
             <asp:Repeater ID="rptAlertasStock" runat="server">
               <ItemTemplate>
                 <div class="item">
                   <div>
                     <div class="name">
-                      <asp:Label ID="lblNombreProducto" runat="server" 
-                                 Text='<%# Eval("NombreProducto") %>'></asp:Label>
+                      <%# Eval("NombreProducto") %>
                     </div>
                     <div style="color:#e0e0e0 !important;font-size:11px">
-                      Stock actual: <asp:Label ID="lblStockActual" runat="server" 
-                                               Text='<%# Eval("StockActual") %>'></asp:Label> | 
-                      Mínimo: <asp:Label ID="lblStockMinimo" runat="server" 
-                                         Text='<%# Eval("StockMinimo") %>'></asp:Label>
+                      Stock actual: <%# Eval("StockActual") %> | 
+                      Mínimo: <%# Eval("StockMinimo") %>
                     </div>
                   </div>
-                  <span class="badge">
-                    <asp:Label ID="lblEstadoAlerta" runat="server" 
-                               Text='<%# Eval("Estado") %>'></asp:Label>
+                  <span class='<%# "badge " + (Eval("Estado").ToString() == "CRÍTICO" ? "critico" : "") %>'>
+                    <%# Eval("Estado") %>
                   </span>
                 </div>
               </ItemTemplate>
             </asp:Repeater>
+            <asp:Panel ID="pnlNoAlertas" runat="server" Visible="false" CssClass="no-data">
+              No hay alertas de stock
+            </asp:Panel>
           </div>
         </article>
       </div>
@@ -201,20 +203,28 @@
 
   <script>
       document.addEventListener('DOMContentLoaded', function () {
-          const ctx = document.getElementById('movementChart').getContext('2d');
+          const ctx = document.getElementById('movementChart');
 
-          const labels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
-          const comprasData = [65, 59, 80, 81, 56, 55, 40];
-          const ventasData = [28, 48, 40, 19, 86, 27, 90];
+          if (!ctx) {
+              console.error('No se encontró el canvas del gráfico');
+              return;
+          }
 
-          const movementChart = new Chart(ctx, {
+          // Obtener datos desde C# (inyectados en window.dashboardData)
+          const labels = window.dashboardData ? window.dashboardData.meses : ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
+          const entradasData = window.dashboardData ? window.dashboardData.entradas : [0, 0, 0, 0, 0, 0, 0];
+          const salidasData = window.dashboardData ? window.dashboardData.salidas : [0, 0, 0, 0, 0, 0, 0];
+
+          console.log('Datos del gráfico:', { labels, entradasData, salidasData });
+
+          const movementChart = new Chart(ctx.getContext('2d'), {
               type: 'line',
               data: {
                   labels: labels,
                   datasets: [
                       {
-                          label: 'Compras',
-                          data: comprasData,
+                          label: 'Entradas',
+                          data: entradasData,
                           borderColor: '#ff4444',
                           backgroundColor: 'transparent',
                           tension: 0.4,
@@ -225,8 +235,8 @@
                           pointRadius: 3,
                       },
                       {
-                          label: 'Ventas',
-                          data: ventasData,
+                          label: 'Salidas',
+                          data: salidasData,
                           borderColor: '#b6ff00',
                           backgroundColor: 'transparent',
                           tension: 0.4,
@@ -267,6 +277,7 @@
                           }
                       },
                       y: {
+                          beginAtZero: true,
                           grid: {
                               color: '#2b3140',
                               drawBorder: false

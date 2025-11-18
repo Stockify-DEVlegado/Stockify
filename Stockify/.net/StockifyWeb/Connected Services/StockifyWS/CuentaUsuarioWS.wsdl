@@ -11,17 +11,17 @@
   <message name="loginResponse">
     <part name="parameters" element="tns:loginResponse" />
   </message>
+  <message name="listarCuentasUsuario">
+    <part name="parameters" element="tns:listarCuentasUsuario" />
+  </message>
+  <message name="listarCuentasUsuarioResponse">
+    <part name="parameters" element="tns:listarCuentasUsuarioResponse" />
+  </message>
   <message name="eliminarCuentaUsuario">
     <part name="parameters" element="tns:eliminarCuentaUsuario" />
   </message>
   <message name="eliminarCuentaUsuarioResponse">
     <part name="parameters" element="tns:eliminarCuentaUsuarioResponse" />
-  </message>
-  <message name="guardarCuentaUsuario">
-    <part name="parameters" element="tns:guardarCuentaUsuario" />
-  </message>
-  <message name="guardarCuentaUsuarioResponse">
-    <part name="parameters" element="tns:guardarCuentaUsuarioResponse" />
   </message>
   <message name="obtenerCuentaUsuario">
     <part name="parameters" element="tns:obtenerCuentaUsuario" />
@@ -29,32 +29,32 @@
   <message name="obtenerCuentaUsuarioResponse">
     <part name="parameters" element="tns:obtenerCuentaUsuarioResponse" />
   </message>
-  <message name="listarCuentasUsuario">
-    <part name="parameters" element="tns:listarCuentasUsuario" />
+  <message name="guardarCuentaUsuario">
+    <part name="parameters" element="tns:guardarCuentaUsuario" />
   </message>
-  <message name="listarCuentasUsuarioResponse">
-    <part name="parameters" element="tns:listarCuentasUsuarioResponse" />
+  <message name="guardarCuentaUsuarioResponse">
+    <part name="parameters" element="tns:guardarCuentaUsuarioResponse" />
   </message>
   <portType name="CuentaUsuarioWS">
     <operation name="login">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/loginRequest" message="tns:login" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/loginResponse" message="tns:loginResponse" />
     </operation>
+    <operation name="listarCuentasUsuario">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest" message="tns:listarCuentasUsuario" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" message="tns:listarCuentasUsuarioResponse" />
+    </operation>
     <operation name="eliminarCuentaUsuario">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/eliminarCuentaUsuarioRequest" message="tns:eliminarCuentaUsuario" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/eliminarCuentaUsuarioResponse" message="tns:eliminarCuentaUsuarioResponse" />
-    </operation>
-    <operation name="guardarCuentaUsuario">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest" message="tns:guardarCuentaUsuario" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" message="tns:guardarCuentaUsuarioResponse" />
     </operation>
     <operation name="obtenerCuentaUsuario">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/obtenerCuentaUsuarioRequest" message="tns:obtenerCuentaUsuario" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/obtenerCuentaUsuarioResponse" message="tns:obtenerCuentaUsuarioResponse" />
     </operation>
-    <operation name="listarCuentasUsuario">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest" message="tns:listarCuentasUsuario" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" message="tns:listarCuentasUsuarioResponse" />
+    <operation name="guardarCuentaUsuario">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest" message="tns:guardarCuentaUsuario" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" message="tns:guardarCuentaUsuarioResponse" />
     </operation>
   </portType>
   <binding name="CuentaUsuarioWSPortBinding" type="tns:CuentaUsuarioWS">
@@ -68,7 +68,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="eliminarCuentaUsuario">
+    <operation name="listarCuentasUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -77,7 +77,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarCuentaUsuario">
+    <operation name="eliminarCuentaUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -95,7 +95,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarCuentasUsuario">
+    <operation name="guardarCuentaUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

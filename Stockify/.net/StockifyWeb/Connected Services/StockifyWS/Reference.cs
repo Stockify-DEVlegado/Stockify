@@ -16,15 +16,6 @@ namespace StockifyWeb.StockifyWS {
     public interface EmpresaWS {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.obtenerEmpresaResponse obtenerEmpresa(StockifyWeb.StockifyWS.obtenerEmpresaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerEmpresaResponse> obtenerEmpresaAsync(StockifyWeb.StockifyWS.obtenerEmpresaRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -32,6 +23,24 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarEmpresasResponse> listarEmpresasAsync(StockifyWeb.StockifyWS.listarEmpresasRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.contarProveedoresResponse contarProveedores(StockifyWeb.StockifyWS.contarProveedoresRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProveedoresResponse> contarProveedoresAsync(StockifyWeb.StockifyWS.contarProveedoresRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerEmpresaResponse obtenerEmpresa(StockifyWeb.StockifyWS.obtenerEmpresaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerEmpresaResponse> obtenerEmpresaAsync(StockifyWeb.StockifyWS.obtenerEmpresaRequest request);
         
         // CODEGEN: El parámetro 'empresa' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/EmpresaWS/guardarEmpresaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/EmpresaWS/guardarEmpresaResponse")]
@@ -224,6 +233,80 @@ namespace StockifyWeb.StockifyWS {
         
         /// <remarks/>
         PROVEEDOR,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.stockify.pucp.edu.pe/")]
+    public partial class movimientoMesDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int entradasField;
+        
+        private string mesField;
+        
+        private int numeroMesField;
+        
+        private int salidasField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public int entradas {
+            get {
+                return this.entradasField;
+            }
+            set {
+                this.entradasField = value;
+                this.RaisePropertyChanged("entradas");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string mes {
+            get {
+                return this.mesField;
+            }
+            set {
+                this.mesField = value;
+                this.RaisePropertyChanged("mes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public int numeroMes {
+            get {
+                return this.numeroMesField;
+            }
+            set {
+                this.numeroMesField = value;
+                this.RaisePropertyChanged("numeroMes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public int salidas {
+            get {
+                return this.salidasField;
+            }
+            set {
+                this.salidasField = value;
+                this.RaisePropertyChanged("salidas");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     /// <remarks/>
@@ -1936,6 +2019,150 @@ namespace StockifyWeb.StockifyWS {
         VENDIDO,
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.9032.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.stockify.pucp.edu.pe/")]
+    public partial class alertaStockDTO : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string estadoField;
+        
+        private int idProductoField;
+        
+        private string nombreProductoField;
+        
+        private int stockActualField;
+        
+        private int stockMinimoField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public string estado {
+            get {
+                return this.estadoField;
+            }
+            set {
+                this.estadoField = value;
+                this.RaisePropertyChanged("estado");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public int idProducto {
+            get {
+                return this.idProductoField;
+            }
+            set {
+                this.idProductoField = value;
+                this.RaisePropertyChanged("idProducto");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public string nombreProducto {
+            get {
+                return this.nombreProductoField;
+            }
+            set {
+                this.nombreProductoField = value;
+                this.RaisePropertyChanged("nombreProducto");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public int stockActual {
+            get {
+                return this.stockActualField;
+            }
+            set {
+                this.stockActualField = value;
+                this.RaisePropertyChanged("stockActual");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public int stockMinimo {
+            get {
+                return this.stockMinimoField;
+            }
+            set {
+                this.stockMinimoField = value;
+                this.RaisePropertyChanged("stockMinimo");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarEmpresas", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarEmpresasRequest {
+        
+        public listarEmpresasRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarEmpresasResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarEmpresasResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.empresa[] @return;
+        
+        public listarEmpresasResponse() {
+        }
+        
+        public listarEmpresasResponse(StockifyWeb.StockifyWS.empresa[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarProveedores", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarProveedoresRequest {
+        
+        public contarProveedoresRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarProveedoresResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarProveedoresResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public contarProveedoresResponse() {
+        }
+        
+        public contarProveedoresResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1968,34 +2195,6 @@ namespace StockifyWeb.StockifyWS {
         }
         
         public obtenerEmpresaResponse(StockifyWeb.StockifyWS.empresa @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarEmpresas", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarEmpresasRequest {
-        
-        public listarEmpresasRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarEmpresasResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarEmpresasResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.empresa[] @return;
-        
-        public listarEmpresasResponse() {
-        }
-        
-        public listarEmpresasResponse(StockifyWeb.StockifyWS.empresa[] @return) {
             this.@return = @return;
         }
     }
@@ -2105,6 +2304,48 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarEmpresasResponse StockifyWeb.StockifyWS.EmpresaWS.listarEmpresas(StockifyWeb.StockifyWS.listarEmpresasRequest request) {
+            return base.Channel.listarEmpresas(request);
+        }
+        
+        public StockifyWeb.StockifyWS.empresa[] listarEmpresas() {
+            StockifyWeb.StockifyWS.listarEmpresasRequest inValue = new StockifyWeb.StockifyWS.listarEmpresasRequest();
+            StockifyWeb.StockifyWS.listarEmpresasResponse retVal = ((StockifyWeb.StockifyWS.EmpresaWS)(this)).listarEmpresas(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarEmpresasResponse> StockifyWeb.StockifyWS.EmpresaWS.listarEmpresasAsync(StockifyWeb.StockifyWS.listarEmpresasRequest request) {
+            return base.Channel.listarEmpresasAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarEmpresasResponse> listarEmpresasAsync() {
+            StockifyWeb.StockifyWS.listarEmpresasRequest inValue = new StockifyWeb.StockifyWS.listarEmpresasRequest();
+            return ((StockifyWeb.StockifyWS.EmpresaWS)(this)).listarEmpresasAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.contarProveedoresResponse StockifyWeb.StockifyWS.EmpresaWS.contarProveedores(StockifyWeb.StockifyWS.contarProveedoresRequest request) {
+            return base.Channel.contarProveedores(request);
+        }
+        
+        public int contarProveedores() {
+            StockifyWeb.StockifyWS.contarProveedoresRequest inValue = new StockifyWeb.StockifyWS.contarProveedoresRequest();
+            StockifyWeb.StockifyWS.contarProveedoresResponse retVal = ((StockifyWeb.StockifyWS.EmpresaWS)(this)).contarProveedores(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProveedoresResponse> StockifyWeb.StockifyWS.EmpresaWS.contarProveedoresAsync(StockifyWeb.StockifyWS.contarProveedoresRequest request) {
+            return base.Channel.contarProveedoresAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProveedoresResponse> contarProveedoresAsync() {
+            StockifyWeb.StockifyWS.contarProveedoresRequest inValue = new StockifyWeb.StockifyWS.contarProveedoresRequest();
+            return ((StockifyWeb.StockifyWS.EmpresaWS)(this)).contarProveedoresAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         StockifyWeb.StockifyWS.obtenerEmpresaResponse StockifyWeb.StockifyWS.EmpresaWS.obtenerEmpresa(StockifyWeb.StockifyWS.obtenerEmpresaRequest request) {
             return base.Channel.obtenerEmpresa(request);
         }
@@ -2125,27 +2366,6 @@ namespace StockifyWeb.StockifyWS {
             StockifyWeb.StockifyWS.obtenerEmpresaRequest inValue = new StockifyWeb.StockifyWS.obtenerEmpresaRequest();
             inValue.id = id;
             return ((StockifyWeb.StockifyWS.EmpresaWS)(this)).obtenerEmpresaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarEmpresasResponse StockifyWeb.StockifyWS.EmpresaWS.listarEmpresas(StockifyWeb.StockifyWS.listarEmpresasRequest request) {
-            return base.Channel.listarEmpresas(request);
-        }
-        
-        public StockifyWeb.StockifyWS.empresa[] listarEmpresas() {
-            StockifyWeb.StockifyWS.listarEmpresasRequest inValue = new StockifyWeb.StockifyWS.listarEmpresasRequest();
-            StockifyWeb.StockifyWS.listarEmpresasResponse retVal = ((StockifyWeb.StockifyWS.EmpresaWS)(this)).listarEmpresas(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarEmpresasResponse> StockifyWeb.StockifyWS.EmpresaWS.listarEmpresasAsync(StockifyWeb.StockifyWS.listarEmpresasRequest request) {
-            return base.Channel.listarEmpresasAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarEmpresasResponse> listarEmpresasAsync() {
-            StockifyWeb.StockifyWS.listarEmpresasRequest inValue = new StockifyWeb.StockifyWS.listarEmpresasRequest();
-            return ((StockifyWeb.StockifyWS.EmpresaWS)(this)).listarEmpresasAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2200,6 +2420,23 @@ namespace StockifyWeb.StockifyWS {
     public interface ExistenciasWS {
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerAlertasStockResponse obtenerAlertasStock(StockifyWeb.StockifyWS.obtenerAlertasStockRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerAlertasStockResponse> obtenerAlertasStockAsync(StockifyWeb.StockifyWS.obtenerAlertasStockRequest request);
+        
+        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.eliminarExistenciasResponse eliminarExistencias(StockifyWeb.StockifyWS.eliminarExistenciasRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> eliminarExistenciasAsync(StockifyWeb.StockifyWS.eliminarExistenciasRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -2225,13 +2462,70 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarExistenciasResponse> guardarExistenciasAsync(StockifyWeb.StockifyWS.guardarExistenciasRequest request);
         
-        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse")]
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.eliminarExistenciasResponse eliminarExistencias(StockifyWeb.StockifyWS.eliminarExistenciasRequest request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerStockTotalResponse obtenerStockTotal(StockifyWeb.StockifyWS.obtenerStockTotalRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> eliminarExistenciasAsync(StockifyWeb.StockifyWS.eliminarExistenciasRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerStockTotalResponse> obtenerStockTotalAsync(StockifyWeb.StockifyWS.obtenerStockTotalRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerAlertasStock", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerAlertasStockRequest {
+        
+        public obtenerAlertasStockRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerAlertasStockResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerAlertasStockResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.alertaStockDTO[] @return;
+        
+        public obtenerAlertasStockResponse() {
+        }
+        
+        public obtenerAlertasStockResponse(StockifyWeb.StockifyWS.alertaStockDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarExistencias", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarExistenciasRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarExistenciasRequest() {
+        }
+        
+        public eliminarExistenciasRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarExistenciasResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarExistenciasResponse {
+        
+        public eliminarExistenciasResponse() {
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2334,28 +2628,28 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarExistencias", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarExistenciasRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerStockTotal", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerStockTotalRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarExistenciasRequest() {
-        }
-        
-        public eliminarExistenciasRequest(int id) {
-            this.id = id;
+        public obtenerStockTotalRequest() {
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarExistenciasResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarExistenciasResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerStockTotalResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerStockTotalResponse {
         
-        public eliminarExistenciasResponse() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public obtenerStockTotalResponse() {
+        }
+        
+        public obtenerStockTotalResponse(int @return) {
+            this.@return = @return;
         }
     }
     
@@ -2384,6 +2678,49 @@ namespace StockifyWeb.StockifyWS {
         
         public ExistenciasWSClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.obtenerAlertasStockResponse StockifyWeb.StockifyWS.ExistenciasWS.obtenerAlertasStock(StockifyWeb.StockifyWS.obtenerAlertasStockRequest request) {
+            return base.Channel.obtenerAlertasStock(request);
+        }
+        
+        public StockifyWeb.StockifyWS.alertaStockDTO[] obtenerAlertasStock() {
+            StockifyWeb.StockifyWS.obtenerAlertasStockRequest inValue = new StockifyWeb.StockifyWS.obtenerAlertasStockRequest();
+            StockifyWeb.StockifyWS.obtenerAlertasStockResponse retVal = ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).obtenerAlertasStock(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerAlertasStockResponse> StockifyWeb.StockifyWS.ExistenciasWS.obtenerAlertasStockAsync(StockifyWeb.StockifyWS.obtenerAlertasStockRequest request) {
+            return base.Channel.obtenerAlertasStockAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerAlertasStockResponse> obtenerAlertasStockAsync() {
+            StockifyWeb.StockifyWS.obtenerAlertasStockRequest inValue = new StockifyWeb.StockifyWS.obtenerAlertasStockRequest();
+            return ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).obtenerAlertasStockAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarExistenciasResponse StockifyWeb.StockifyWS.ExistenciasWS.eliminarExistencias(StockifyWeb.StockifyWS.eliminarExistenciasRequest request) {
+            return base.Channel.eliminarExistencias(request);
+        }
+        
+        public void eliminarExistencias(int id) {
+            StockifyWeb.StockifyWS.eliminarExistenciasRequest inValue = new StockifyWeb.StockifyWS.eliminarExistenciasRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarExistenciasResponse retVal = ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).eliminarExistencias(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> StockifyWeb.StockifyWS.ExistenciasWS.eliminarExistenciasAsync(StockifyWeb.StockifyWS.eliminarExistenciasRequest request) {
+            return base.Channel.eliminarExistenciasAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> eliminarExistenciasAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarExistenciasRequest inValue = new StockifyWeb.StockifyWS.eliminarExistenciasRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).eliminarExistenciasAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2455,25 +2792,24 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarExistenciasResponse StockifyWeb.StockifyWS.ExistenciasWS.eliminarExistencias(StockifyWeb.StockifyWS.eliminarExistenciasRequest request) {
-            return base.Channel.eliminarExistencias(request);
+        StockifyWeb.StockifyWS.obtenerStockTotalResponse StockifyWeb.StockifyWS.ExistenciasWS.obtenerStockTotal(StockifyWeb.StockifyWS.obtenerStockTotalRequest request) {
+            return base.Channel.obtenerStockTotal(request);
         }
         
-        public void eliminarExistencias(int id) {
-            StockifyWeb.StockifyWS.eliminarExistenciasRequest inValue = new StockifyWeb.StockifyWS.eliminarExistenciasRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarExistenciasResponse retVal = ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).eliminarExistencias(inValue);
+        public int obtenerStockTotal() {
+            StockifyWeb.StockifyWS.obtenerStockTotalRequest inValue = new StockifyWeb.StockifyWS.obtenerStockTotalRequest();
+            StockifyWeb.StockifyWS.obtenerStockTotalResponse retVal = ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).obtenerStockTotal(inValue);
+            return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> StockifyWeb.StockifyWS.ExistenciasWS.eliminarExistenciasAsync(StockifyWeb.StockifyWS.eliminarExistenciasRequest request) {
-            return base.Channel.eliminarExistenciasAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerStockTotalResponse> StockifyWeb.StockifyWS.ExistenciasWS.obtenerStockTotalAsync(StockifyWeb.StockifyWS.obtenerStockTotalRequest request) {
+            return base.Channel.obtenerStockTotalAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarExistenciasResponse> eliminarExistenciasAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarExistenciasRequest inValue = new StockifyWeb.StockifyWS.eliminarExistenciasRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).eliminarExistenciasAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerStockTotalResponse> obtenerStockTotalAsync() {
+            StockifyWeb.StockifyWS.obtenerStockTotalRequest inValue = new StockifyWeb.StockifyWS.obtenerStockTotalRequest();
+            return ((StockifyWeb.StockifyWS.ExistenciasWS)(this)).obtenerStockTotalAsync(inValue);
         }
     }
     
@@ -2763,6 +3099,36 @@ namespace StockifyWeb.StockifyWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.OrdenCompraWS")]
     public interface OrdenCompraWS {
         
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirRequ" +
+            "est", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirResp" +
+            "onse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse obtenerProductosPorRecibir(StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirRequ" +
+            "est", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirResp" +
+            "onse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse> obtenerProductosPorRecibirAsync(StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarOrdenesCompraResponse listarOrdenesCompra(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> listarOrdenesCompraAsync(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request);
+        
+        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.eliminarOrdenCompraResponse eliminarOrdenCompra(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> eliminarOrdenCompraAsync(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request);
+        
         // CODEGEN: El parámetro 'ordenCompra' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -2779,23 +3145,90 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerOrdenCompraResponse> obtenerOrdenCompraAsync(StockifyWeb.StockifyWS.obtenerOrdenCompraRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerProductosPorRecibir", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerProductosPorRecibirRequest {
         
-        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.eliminarOrdenCompraResponse eliminarOrdenCompra(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request);
+        public obtenerProductosPorRecibirRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerProductosPorRecibirResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerProductosPorRecibirResponse {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> eliminarOrdenCompraAsync(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request);
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarOrdenesCompraResponse listarOrdenesCompra(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request);
+        public obtenerProductosPorRecibirResponse() {
+        }
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> listarOrdenesCompraAsync(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request);
+        public obtenerProductosPorRecibirResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesCompra", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarOrdenesCompraRequest {
+        
+        public listarOrdenesCompraRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesCompraResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarOrdenesCompraResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.ordenCompra[] @return;
+        
+        public listarOrdenesCompraResponse() {
+        }
+        
+        public listarOrdenesCompraResponse(StockifyWeb.StockifyWS.ordenCompra[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenCompra", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenCompraRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarOrdenCompraRequest() {
+        }
+        
+        public eliminarOrdenCompraRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenCompraResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenCompraResponse {
+        
+        public eliminarOrdenCompraResponse() {
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2867,62 +3300,6 @@ namespace StockifyWeb.StockifyWS {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenCompra", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenCompraRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarOrdenCompraRequest() {
-        }
-        
-        public eliminarOrdenCompraRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenCompraResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenCompraResponse {
-        
-        public eliminarOrdenCompraResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesCompra", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarOrdenesCompraRequest {
-        
-        public listarOrdenesCompraRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesCompraResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarOrdenesCompraResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.ordenCompra[] @return;
-        
-        public listarOrdenesCompraResponse() {
-        }
-        
-        public listarOrdenesCompraResponse(StockifyWeb.StockifyWS.ordenCompra[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface OrdenCompraWSChannel : StockifyWeb.StockifyWS.OrdenCompraWS, System.ServiceModel.IClientChannel {
     }
@@ -2948,6 +3325,70 @@ namespace StockifyWeb.StockifyWS {
         
         public OrdenCompraWSClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse StockifyWeb.StockifyWS.OrdenCompraWS.obtenerProductosPorRecibir(StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest request) {
+            return base.Channel.obtenerProductosPorRecibir(request);
+        }
+        
+        public int obtenerProductosPorRecibir() {
+            StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest inValue = new StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest();
+            StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse retVal = ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).obtenerProductosPorRecibir(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse> StockifyWeb.StockifyWS.OrdenCompraWS.obtenerProductosPorRecibirAsync(StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest request) {
+            return base.Channel.obtenerProductosPorRecibirAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse> obtenerProductosPorRecibirAsync() {
+            StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest inValue = new StockifyWeb.StockifyWS.obtenerProductosPorRecibirRequest();
+            return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).obtenerProductosPorRecibirAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarOrdenesCompraResponse StockifyWeb.StockifyWS.OrdenCompraWS.listarOrdenesCompra(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request) {
+            return base.Channel.listarOrdenesCompra(request);
+        }
+        
+        public StockifyWeb.StockifyWS.ordenCompra[] listarOrdenesCompra() {
+            StockifyWeb.StockifyWS.listarOrdenesCompraRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesCompraRequest();
+            StockifyWeb.StockifyWS.listarOrdenesCompraResponse retVal = ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).listarOrdenesCompra(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> StockifyWeb.StockifyWS.OrdenCompraWS.listarOrdenesCompraAsync(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request) {
+            return base.Channel.listarOrdenesCompraAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> listarOrdenesCompraAsync() {
+            StockifyWeb.StockifyWS.listarOrdenesCompraRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesCompraRequest();
+            return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).listarOrdenesCompraAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarOrdenCompraResponse StockifyWeb.StockifyWS.OrdenCompraWS.eliminarOrdenCompra(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request) {
+            return base.Channel.eliminarOrdenCompra(request);
+        }
+        
+        public void eliminarOrdenCompra(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenCompraRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenCompraRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarOrdenCompraResponse retVal = ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).eliminarOrdenCompra(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> StockifyWeb.StockifyWS.OrdenCompraWS.eliminarOrdenCompraAsync(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request) {
+            return base.Channel.eliminarOrdenCompraAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> eliminarOrdenCompraAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenCompraRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenCompraRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).eliminarOrdenCompraAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2996,49 +3437,6 @@ namespace StockifyWeb.StockifyWS {
             inValue.id = id;
             return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).obtenerOrdenCompraAsync(inValue);
         }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarOrdenCompraResponse StockifyWeb.StockifyWS.OrdenCompraWS.eliminarOrdenCompra(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request) {
-            return base.Channel.eliminarOrdenCompra(request);
-        }
-        
-        public void eliminarOrdenCompra(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenCompraRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenCompraRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarOrdenCompraResponse retVal = ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).eliminarOrdenCompra(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> StockifyWeb.StockifyWS.OrdenCompraWS.eliminarOrdenCompraAsync(StockifyWeb.StockifyWS.eliminarOrdenCompraRequest request) {
-            return base.Channel.eliminarOrdenCompraAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenCompraResponse> eliminarOrdenCompraAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenCompraRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenCompraRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).eliminarOrdenCompraAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarOrdenesCompraResponse StockifyWeb.StockifyWS.OrdenCompraWS.listarOrdenesCompra(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request) {
-            return base.Channel.listarOrdenesCompra(request);
-        }
-        
-        public StockifyWeb.StockifyWS.ordenCompra[] listarOrdenesCompra() {
-            StockifyWeb.StockifyWS.listarOrdenesCompraRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesCompraRequest();
-            StockifyWeb.StockifyWS.listarOrdenesCompraResponse retVal = ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).listarOrdenesCompra(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> StockifyWeb.StockifyWS.OrdenCompraWS.listarOrdenesCompraAsync(StockifyWeb.StockifyWS.listarOrdenesCompraRequest request) {
-            return base.Channel.listarOrdenesCompraAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesCompraResponse> listarOrdenesCompraAsync() {
-            StockifyWeb.StockifyWS.listarOrdenesCompraRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesCompraRequest();
-            return ((StockifyWeb.StockifyWS.OrdenCompraWS)(this)).listarOrdenesCompraAsync(inValue);
-        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3054,6 +3452,17 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/loginRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/loginResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.loginResponse> loginAsync(StockifyWeb.StockifyWS.loginRequest request);
         
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" +
+            "")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarCuentasUsuarioResponse listarCuentasUsuario(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" +
+            "")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> listarCuentasUsuarioAsync(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request);
+        
         // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/eliminarCuentaUsuarioRequest" +
             "", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/eliminarCuentaUsuarioRespons" +
@@ -3066,16 +3475,6 @@ namespace StockifyWeb.StockifyWS {
             "e")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCuentaUsuarioResponse> eliminarCuentaUsuarioAsync(StockifyWeb.StockifyWS.eliminarCuentaUsuarioRequest request);
         
-        // CODEGEN: El parámetro 'cuentaUsuario' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" +
-            "")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse guardarCuentaUsuario(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" +
-            "")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request);
-        
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/obtenerCuentaUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/obtenerCuentaUsuarioResponse" +
             "")]
@@ -3087,16 +3486,15 @@ namespace StockifyWeb.StockifyWS {
             "")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCuentaUsuarioResponse> obtenerCuentaUsuarioAsync(StockifyWeb.StockifyWS.obtenerCuentaUsuarioRequest request);
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" +
+        // CODEGEN: El parámetro 'cuentaUsuario' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" +
             "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarCuentasUsuarioResponse listarCuentasUsuario(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request);
+        StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse guardarCuentaUsuario(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/listarCuentasUsuarioResponse" +
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CuentaUsuarioWS/guardarCuentaUsuarioResponse" +
             "")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> listarCuentasUsuarioAsync(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3143,6 +3541,34 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarCuentasUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarCuentasUsuarioRequest {
+        
+        public listarCuentasUsuarioRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarCuentasUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarCuentasUsuarioResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.cuentaUsuario[] @return;
+        
+        public listarCuentasUsuarioResponse() {
+        }
+        
+        public listarCuentasUsuarioResponse(StockifyWeb.StockifyWS.cuentaUsuario[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarCuentaUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
     public partial class eliminarCuentaUsuarioRequest {
         
@@ -3165,39 +3591,6 @@ namespace StockifyWeb.StockifyWS {
     public partial class eliminarCuentaUsuarioResponse {
         
         public eliminarCuentaUsuarioResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCuentaUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarCuentaUsuarioRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.estado estado;
-        
-        public guardarCuentaUsuarioRequest() {
-        }
-        
-        public guardarCuentaUsuarioRequest(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
-            this.cuentaUsuario = cuentaUsuario;
-            this.estado = estado;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCuentaUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarCuentaUsuarioResponse {
-        
-        public guardarCuentaUsuarioResponse() {
         }
     }
     
@@ -3240,28 +3633,33 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarCuentasUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarCuentasUsuarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCuentaUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarCuentaUsuarioRequest {
         
-        public listarCuentasUsuarioRequest() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.estado estado;
+        
+        public guardarCuentaUsuarioRequest() {
+        }
+        
+        public guardarCuentaUsuarioRequest(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
+            this.cuentaUsuario = cuentaUsuario;
+            this.estado = estado;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarCuentasUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarCuentasUsuarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCuentaUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarCuentaUsuarioResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.cuentaUsuario[] @return;
-        
-        public listarCuentasUsuarioResponse() {
-        }
-        
-        public listarCuentasUsuarioResponse(StockifyWeb.StockifyWS.cuentaUsuario[] @return) {
-            this.@return = @return;
+        public guardarCuentaUsuarioResponse() {
         }
     }
     
@@ -3318,6 +3716,27 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarCuentasUsuarioResponse StockifyWeb.StockifyWS.CuentaUsuarioWS.listarCuentasUsuario(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request) {
+            return base.Channel.listarCuentasUsuario(request);
+        }
+        
+        public StockifyWeb.StockifyWS.cuentaUsuario[] listarCuentasUsuario() {
+            StockifyWeb.StockifyWS.listarCuentasUsuarioRequest inValue = new StockifyWeb.StockifyWS.listarCuentasUsuarioRequest();
+            StockifyWeb.StockifyWS.listarCuentasUsuarioResponse retVal = ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).listarCuentasUsuario(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> StockifyWeb.StockifyWS.CuentaUsuarioWS.listarCuentasUsuarioAsync(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request) {
+            return base.Channel.listarCuentasUsuarioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> listarCuentasUsuarioAsync() {
+            StockifyWeb.StockifyWS.listarCuentasUsuarioRequest inValue = new StockifyWeb.StockifyWS.listarCuentasUsuarioRequest();
+            return ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).listarCuentasUsuarioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         StockifyWeb.StockifyWS.eliminarCuentaUsuarioResponse StockifyWeb.StockifyWS.CuentaUsuarioWS.eliminarCuentaUsuario(StockifyWeb.StockifyWS.eliminarCuentaUsuarioRequest request) {
             return base.Channel.eliminarCuentaUsuario(request);
         }
@@ -3337,30 +3756,6 @@ namespace StockifyWeb.StockifyWS {
             StockifyWeb.StockifyWS.eliminarCuentaUsuarioRequest inValue = new StockifyWeb.StockifyWS.eliminarCuentaUsuarioRequest();
             inValue.id = id;
             return ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).eliminarCuentaUsuarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse StockifyWeb.StockifyWS.CuentaUsuarioWS.guardarCuentaUsuario(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request) {
-            return base.Channel.guardarCuentaUsuario(request);
-        }
-        
-        public void guardarCuentaUsuario(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
-            StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest();
-            inValue.cuentaUsuario = cuentaUsuario;
-            inValue.estado = estado;
-            StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse retVal = ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).guardarCuentaUsuario(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> StockifyWeb.StockifyWS.CuentaUsuarioWS.guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request) {
-            return base.Channel.guardarCuentaUsuarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
-            StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest();
-            inValue.cuentaUsuario = cuentaUsuario;
-            inValue.estado = estado;
-            return ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).guardarCuentaUsuarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3387,30 +3782,50 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarCuentasUsuarioResponse StockifyWeb.StockifyWS.CuentaUsuarioWS.listarCuentasUsuario(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request) {
-            return base.Channel.listarCuentasUsuario(request);
+        StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse StockifyWeb.StockifyWS.CuentaUsuarioWS.guardarCuentaUsuario(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request) {
+            return base.Channel.guardarCuentaUsuario(request);
         }
         
-        public StockifyWeb.StockifyWS.cuentaUsuario[] listarCuentasUsuario() {
-            StockifyWeb.StockifyWS.listarCuentasUsuarioRequest inValue = new StockifyWeb.StockifyWS.listarCuentasUsuarioRequest();
-            StockifyWeb.StockifyWS.listarCuentasUsuarioResponse retVal = ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).listarCuentasUsuario(inValue);
-            return retVal.@return;
+        public void guardarCuentaUsuario(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
+            StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest();
+            inValue.cuentaUsuario = cuentaUsuario;
+            inValue.estado = estado;
+            StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse retVal = ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).guardarCuentaUsuario(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> StockifyWeb.StockifyWS.CuentaUsuarioWS.listarCuentasUsuarioAsync(StockifyWeb.StockifyWS.listarCuentasUsuarioRequest request) {
-            return base.Channel.listarCuentasUsuarioAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> StockifyWeb.StockifyWS.CuentaUsuarioWS.guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest request) {
+            return base.Channel.guardarCuentaUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCuentasUsuarioResponse> listarCuentasUsuarioAsync() {
-            StockifyWeb.StockifyWS.listarCuentasUsuarioRequest inValue = new StockifyWeb.StockifyWS.listarCuentasUsuarioRequest();
-            return ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).listarCuentasUsuarioAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse> guardarCuentaUsuarioAsync(StockifyWeb.StockifyWS.cuentaUsuario cuentaUsuario, StockifyWeb.StockifyWS.estado estado) {
+            StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarCuentaUsuarioRequest();
+            inValue.cuentaUsuario = cuentaUsuario;
+            inValue.estado = estado;
+            return ((StockifyWeb.StockifyWS.CuentaUsuarioWS)(this)).guardarCuentaUsuarioAsync(inValue);
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.OrdenSalidaWS")]
     public interface OrdenSalidaWS {
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarOrdenesSalidaResponse listarOrdenesSalida(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> listarOrdenesSalidaAsync(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request);
+        
+        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse eliminarOrdenSalida(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> eliminarOrdenSalidaAsync(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaResponse")]
@@ -3428,23 +3843,62 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/guardarOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/guardarOrdenSalidaResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarOrdenSalidaResponse> guardarOrdenSalidaAsync(StockifyWeb.StockifyWS.guardarOrdenSalidaRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesSalida", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarOrdenesSalidaRequest {
         
-        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse eliminarOrdenSalida(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request);
+        public listarOrdenesSalidaRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesSalidaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarOrdenesSalidaResponse {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> eliminarOrdenSalidaAsync(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request);
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.ordenSalida[] @return;
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarOrdenesSalidaResponse listarOrdenesSalida(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request);
+        public listarOrdenesSalidaResponse() {
+        }
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> listarOrdenesSalidaAsync(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request);
+        public listarOrdenesSalidaResponse(StockifyWeb.StockifyWS.ordenSalida[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenSalida", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenSalidaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarOrdenSalidaRequest() {
+        }
+        
+        public eliminarOrdenSalidaRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenSalidaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenSalidaResponse {
+        
+        public eliminarOrdenSalidaResponse() {
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3516,62 +3970,6 @@ namespace StockifyWeb.StockifyWS {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenSalida", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenSalidaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarOrdenSalidaRequest() {
-        }
-        
-        public eliminarOrdenSalidaRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenSalidaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenSalidaResponse {
-        
-        public eliminarOrdenSalidaResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesSalida", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarOrdenesSalidaRequest {
-        
-        public listarOrdenesSalidaRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarOrdenesSalidaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarOrdenesSalidaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.ordenSalida[] @return;
-        
-        public listarOrdenesSalidaResponse() {
-        }
-        
-        public listarOrdenesSalidaResponse(StockifyWeb.StockifyWS.ordenSalida[] @return) {
-            this.@return = @return;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface OrdenSalidaWSChannel : StockifyWeb.StockifyWS.OrdenSalidaWS, System.ServiceModel.IClientChannel {
     }
@@ -3597,6 +3995,49 @@ namespace StockifyWeb.StockifyWS {
         
         public OrdenSalidaWSClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarOrdenesSalidaResponse StockifyWeb.StockifyWS.OrdenSalidaWS.listarOrdenesSalida(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request) {
+            return base.Channel.listarOrdenesSalida(request);
+        }
+        
+        public StockifyWeb.StockifyWS.ordenSalida[] listarOrdenesSalida() {
+            StockifyWeb.StockifyWS.listarOrdenesSalidaRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesSalidaRequest();
+            StockifyWeb.StockifyWS.listarOrdenesSalidaResponse retVal = ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).listarOrdenesSalida(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> StockifyWeb.StockifyWS.OrdenSalidaWS.listarOrdenesSalidaAsync(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request) {
+            return base.Channel.listarOrdenesSalidaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> listarOrdenesSalidaAsync() {
+            StockifyWeb.StockifyWS.listarOrdenesSalidaRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesSalidaRequest();
+            return ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).listarOrdenesSalidaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse StockifyWeb.StockifyWS.OrdenSalidaWS.eliminarOrdenSalida(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request) {
+            return base.Channel.eliminarOrdenSalida(request);
+        }
+        
+        public void eliminarOrdenSalida(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse retVal = ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).eliminarOrdenSalida(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> StockifyWeb.StockifyWS.OrdenSalidaWS.eliminarOrdenSalidaAsync(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request) {
+            return base.Channel.eliminarOrdenSalidaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> eliminarOrdenSalidaAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).eliminarOrdenSalidaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3645,54 +4086,28 @@ namespace StockifyWeb.StockifyWS {
             inValue.estado = estado;
             return ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).guardarOrdenSalidaAsync(inValue);
         }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse StockifyWeb.StockifyWS.OrdenSalidaWS.eliminarOrdenSalida(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request) {
-            return base.Channel.eliminarOrdenSalida(request);
-        }
-        
-        public void eliminarOrdenSalida(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse retVal = ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).eliminarOrdenSalida(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> StockifyWeb.StockifyWS.OrdenSalidaWS.eliminarOrdenSalidaAsync(StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest request) {
-            return base.Channel.eliminarOrdenSalidaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse> eliminarOrdenSalidaAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenSalidaRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).eliminarOrdenSalidaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarOrdenesSalidaResponse StockifyWeb.StockifyWS.OrdenSalidaWS.listarOrdenesSalida(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request) {
-            return base.Channel.listarOrdenesSalida(request);
-        }
-        
-        public StockifyWeb.StockifyWS.ordenSalida[] listarOrdenesSalida() {
-            StockifyWeb.StockifyWS.listarOrdenesSalidaRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesSalidaRequest();
-            StockifyWeb.StockifyWS.listarOrdenesSalidaResponse retVal = ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).listarOrdenesSalida(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> StockifyWeb.StockifyWS.OrdenSalidaWS.listarOrdenesSalidaAsync(StockifyWeb.StockifyWS.listarOrdenesSalidaRequest request) {
-            return base.Channel.listarOrdenesSalidaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarOrdenesSalidaResponse> listarOrdenesSalidaAsync() {
-            StockifyWeb.StockifyWS.listarOrdenesSalidaRequest inValue = new StockifyWeb.StockifyWS.listarOrdenesSalidaRequest();
-            return ((StockifyWeb.StockifyWS.OrdenSalidaWS)(this)).listarOrdenesSalidaAsync(inValue);
-        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.CategoriaWS")]
     public interface CategoriaWS {
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.contarCategoriasResponse contarCategorias(StockifyWeb.StockifyWS.contarCategoriasRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarCategoriasResponse> contarCategoriasAsync(StockifyWeb.StockifyWS.contarCategoriasRequest request);
+        
+        // CODEGEN: El parámetro 'categoria' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.guardarCategoriaResponse guardarCategoria(StockifyWeb.StockifyWS.guardarCategoriaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCategoriaResponse> guardarCategoriaAsync(StockifyWeb.StockifyWS.guardarCategoriaRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasResponse")]
@@ -3703,15 +4118,6 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCategoriasResponse> listarCategoriasAsync(StockifyWeb.StockifyWS.listarCategoriasRequest request);
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.obtenerCategoriaResponse obtenerCategoria(StockifyWeb.StockifyWS.obtenerCategoriaRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> obtenerCategoriaAsync(StockifyWeb.StockifyWS.obtenerCategoriaRequest request);
-        
         // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/eliminarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/eliminarCategoriaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -3720,13 +4126,75 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/eliminarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/eliminarCategoriaResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCategoriaResponse> eliminarCategoriaAsync(StockifyWeb.StockifyWS.eliminarCategoriaRequest request);
         
-        // CODEGEN: El parámetro 'categoria' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse")]
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.guardarCategoriaResponse guardarCategoria(StockifyWeb.StockifyWS.guardarCategoriaRequest request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerCategoriaResponse obtenerCategoria(StockifyWeb.StockifyWS.obtenerCategoriaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarCategoriaResponse> guardarCategoriaAsync(StockifyWeb.StockifyWS.guardarCategoriaRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> obtenerCategoriaAsync(StockifyWeb.StockifyWS.obtenerCategoriaRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarCategorias", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarCategoriasRequest {
+        
+        public contarCategoriasRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarCategoriasResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarCategoriasResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public contarCategoriasResponse() {
+        }
+        
+        public contarCategoriasResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarCategoriaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.categoria categoria;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.estado estado;
+        
+        public guardarCategoriaRequest() {
+        }
+        
+        public guardarCategoriaRequest(StockifyWeb.StockifyWS.categoria categoria, StockifyWeb.StockifyWS.estado estado) {
+            this.categoria = categoria;
+            this.estado = estado;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarCategoriaResponse {
+        
+        public guardarCategoriaResponse() {
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3754,6 +4222,34 @@ namespace StockifyWeb.StockifyWS {
         
         public listarCategoriasResponse(StockifyWeb.StockifyWS.categoria[] @return) {
             this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarCategoriaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarCategoriaRequest() {
+        }
+        
+        public eliminarCategoriaRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarCategoriaResponse {
+        
+        public eliminarCategoriaResponse() {
         }
     }
     
@@ -3793,67 +4289,6 @@ namespace StockifyWeb.StockifyWS {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarCategoriaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarCategoriaRequest() {
-        }
-        
-        public eliminarCategoriaRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarCategoriaResponse {
-        
-        public eliminarCategoriaResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarCategoriaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.categoria categoria;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.estado estado;
-        
-        public guardarCategoriaRequest() {
-        }
-        
-        public guardarCategoriaRequest(StockifyWeb.StockifyWS.categoria categoria, StockifyWeb.StockifyWS.estado estado) {
-            this.categoria = categoria;
-            this.estado = estado;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarCategoriaResponse {
-        
-        public guardarCategoriaResponse() {
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface CategoriaWSChannel : StockifyWeb.StockifyWS.CategoriaWS, System.ServiceModel.IClientChannel {
     }
@@ -3882,69 +4317,24 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarCategoriasResponse StockifyWeb.StockifyWS.CategoriaWS.listarCategorias(StockifyWeb.StockifyWS.listarCategoriasRequest request) {
-            return base.Channel.listarCategorias(request);
+        StockifyWeb.StockifyWS.contarCategoriasResponse StockifyWeb.StockifyWS.CategoriaWS.contarCategorias(StockifyWeb.StockifyWS.contarCategoriasRequest request) {
+            return base.Channel.contarCategorias(request);
         }
         
-        public StockifyWeb.StockifyWS.categoria[] listarCategorias() {
-            StockifyWeb.StockifyWS.listarCategoriasRequest inValue = new StockifyWeb.StockifyWS.listarCategoriasRequest();
-            StockifyWeb.StockifyWS.listarCategoriasResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).listarCategorias(inValue);
+        public int contarCategorias() {
+            StockifyWeb.StockifyWS.contarCategoriasRequest inValue = new StockifyWeb.StockifyWS.contarCategoriasRequest();
+            StockifyWeb.StockifyWS.contarCategoriasResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).contarCategorias(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCategoriasResponse> StockifyWeb.StockifyWS.CategoriaWS.listarCategoriasAsync(StockifyWeb.StockifyWS.listarCategoriasRequest request) {
-            return base.Channel.listarCategoriasAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarCategoriasResponse> StockifyWeb.StockifyWS.CategoriaWS.contarCategoriasAsync(StockifyWeb.StockifyWS.contarCategoriasRequest request) {
+            return base.Channel.contarCategoriasAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCategoriasResponse> listarCategoriasAsync() {
-            StockifyWeb.StockifyWS.listarCategoriasRequest inValue = new StockifyWeb.StockifyWS.listarCategoriasRequest();
-            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).listarCategoriasAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.obtenerCategoriaResponse StockifyWeb.StockifyWS.CategoriaWS.obtenerCategoria(StockifyWeb.StockifyWS.obtenerCategoriaRequest request) {
-            return base.Channel.obtenerCategoria(request);
-        }
-        
-        public StockifyWeb.StockifyWS.categoria obtenerCategoria(int id) {
-            StockifyWeb.StockifyWS.obtenerCategoriaRequest inValue = new StockifyWeb.StockifyWS.obtenerCategoriaRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.obtenerCategoriaResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).obtenerCategoria(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> StockifyWeb.StockifyWS.CategoriaWS.obtenerCategoriaAsync(StockifyWeb.StockifyWS.obtenerCategoriaRequest request) {
-            return base.Channel.obtenerCategoriaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> obtenerCategoriaAsync(int id) {
-            StockifyWeb.StockifyWS.obtenerCategoriaRequest inValue = new StockifyWeb.StockifyWS.obtenerCategoriaRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).obtenerCategoriaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarCategoriaResponse StockifyWeb.StockifyWS.CategoriaWS.eliminarCategoria(StockifyWeb.StockifyWS.eliminarCategoriaRequest request) {
-            return base.Channel.eliminarCategoria(request);
-        }
-        
-        public void eliminarCategoria(int id) {
-            StockifyWeb.StockifyWS.eliminarCategoriaRequest inValue = new StockifyWeb.StockifyWS.eliminarCategoriaRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarCategoriaResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).eliminarCategoria(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCategoriaResponse> StockifyWeb.StockifyWS.CategoriaWS.eliminarCategoriaAsync(StockifyWeb.StockifyWS.eliminarCategoriaRequest request) {
-            return base.Channel.eliminarCategoriaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCategoriaResponse> eliminarCategoriaAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarCategoriaRequest inValue = new StockifyWeb.StockifyWS.eliminarCategoriaRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).eliminarCategoriaAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarCategoriasResponse> contarCategoriasAsync() {
+            StockifyWeb.StockifyWS.contarCategoriasRequest inValue = new StockifyWeb.StockifyWS.contarCategoriasRequest();
+            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).contarCategoriasAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3970,27 +4360,114 @@ namespace StockifyWeb.StockifyWS {
             inValue.estado = estado;
             return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).guardarCategoriaAsync(inValue);
         }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarCategoriasResponse StockifyWeb.StockifyWS.CategoriaWS.listarCategorias(StockifyWeb.StockifyWS.listarCategoriasRequest request) {
+            return base.Channel.listarCategorias(request);
+        }
+        
+        public StockifyWeb.StockifyWS.categoria[] listarCategorias() {
+            StockifyWeb.StockifyWS.listarCategoriasRequest inValue = new StockifyWeb.StockifyWS.listarCategoriasRequest();
+            StockifyWeb.StockifyWS.listarCategoriasResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).listarCategorias(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCategoriasResponse> StockifyWeb.StockifyWS.CategoriaWS.listarCategoriasAsync(StockifyWeb.StockifyWS.listarCategoriasRequest request) {
+            return base.Channel.listarCategoriasAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarCategoriasResponse> listarCategoriasAsync() {
+            StockifyWeb.StockifyWS.listarCategoriasRequest inValue = new StockifyWeb.StockifyWS.listarCategoriasRequest();
+            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).listarCategoriasAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarCategoriaResponse StockifyWeb.StockifyWS.CategoriaWS.eliminarCategoria(StockifyWeb.StockifyWS.eliminarCategoriaRequest request) {
+            return base.Channel.eliminarCategoria(request);
+        }
+        
+        public void eliminarCategoria(int id) {
+            StockifyWeb.StockifyWS.eliminarCategoriaRequest inValue = new StockifyWeb.StockifyWS.eliminarCategoriaRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarCategoriaResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).eliminarCategoria(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCategoriaResponse> StockifyWeb.StockifyWS.CategoriaWS.eliminarCategoriaAsync(StockifyWeb.StockifyWS.eliminarCategoriaRequest request) {
+            return base.Channel.eliminarCategoriaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarCategoriaResponse> eliminarCategoriaAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarCategoriaRequest inValue = new StockifyWeb.StockifyWS.eliminarCategoriaRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).eliminarCategoriaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.obtenerCategoriaResponse StockifyWeb.StockifyWS.CategoriaWS.obtenerCategoria(StockifyWeb.StockifyWS.obtenerCategoriaRequest request) {
+            return base.Channel.obtenerCategoria(request);
+        }
+        
+        public StockifyWeb.StockifyWS.categoria obtenerCategoria(int id) {
+            StockifyWeb.StockifyWS.obtenerCategoriaRequest inValue = new StockifyWeb.StockifyWS.obtenerCategoriaRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.obtenerCategoriaResponse retVal = ((StockifyWeb.StockifyWS.CategoriaWS)(this)).obtenerCategoria(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> StockifyWeb.StockifyWS.CategoriaWS.obtenerCategoriaAsync(StockifyWeb.StockifyWS.obtenerCategoriaRequest request) {
+            return base.Channel.obtenerCategoriaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerCategoriaResponse> obtenerCategoriaAsync(int id) {
+            StockifyWeb.StockifyWS.obtenerCategoriaRequest inValue = new StockifyWeb.StockifyWS.obtenerCategoriaRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.CategoriaWS)(this)).obtenerCategoriaAsync(inValue);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.MovimientoWS")]
     public interface MovimientoWS {
         
-        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoResponse")]
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaRequest" +
+            "", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaRespons" +
+            "e")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.eliminarMovimientoResponse eliminarMovimiento(StockifyWeb.StockifyWS.eliminarMovimientoRequest request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.contarMovimientosEntradaResponse contarMovimientosEntrada(StockifyWeb.StockifyWS.contarMovimientosEntradaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> eliminarMovimientoAsync(StockifyWeb.StockifyWS.eliminarMovimientoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaRequest" +
+            "", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaRespons" +
+            "e")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosEntradaResponse> contarMovimientosEntradaAsync(StockifyWeb.StockifyWS.contarMovimientosEntradaRequest request);
         
-        // CODEGEN: El parámetro 'movimiento' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoResponse")]
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaResponse" +
+            "")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.guardarMovimientoResponse guardarMovimiento(StockifyWeb.StockifyWS.guardarMovimientoRequest request);
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.contarMovimientosSalidaResponse contarMovimientosSalida(StockifyWeb.StockifyWS.contarMovimientosSalidaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarMovimientoResponse> guardarMovimientoAsync(StockifyWeb.StockifyWS.guardarMovimientoRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaResponse" +
+            "")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosSalidaResponse> contarMovimientosSalidaAsync(StockifyWeb.StockifyWS.contarMovimientosSalidaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRequest" +
+            "", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRespons" +
+            "e")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse obtenerMovimientosPorMes(StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRequest" +
+            "", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRespons" +
+            "e")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse> obtenerMovimientosPorMesAsync(StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosResponse")]
@@ -4001,6 +4478,14 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarMovimientosResponse> listarMovimientosAsync(StockifyWeb.StockifyWS.listarMovimientosRequest request);
         
+        // CODEGEN: El parámetro 'movimiento' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.guardarMovimientoResponse guardarMovimiento(StockifyWeb.StockifyWS.guardarMovimientoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/guardarMovimientoResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarMovimientoResponse> guardarMovimientoAsync(StockifyWeb.StockifyWS.guardarMovimientoRequest request);
+        
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -4009,33 +4494,149 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientoResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerMovimientoResponse> obtenerMovimientoAsync(StockifyWeb.StockifyWS.obtenerMovimientoRequest request);
+        
+        // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.eliminarMovimientoResponse eliminarMovimiento(StockifyWeb.StockifyWS.eliminarMovimientoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/MovimientoWS/eliminarMovimientoResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> eliminarMovimientoAsync(StockifyWeb.StockifyWS.eliminarMovimientoRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarMovimiento", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarMovimientoRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarMovimientosEntrada", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarMovimientosEntradaRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
+        public int dias;
         
-        public eliminarMovimientoRequest() {
+        public contarMovimientosEntradaRequest() {
         }
         
-        public eliminarMovimientoRequest(int id) {
-            this.id = id;
+        public contarMovimientosEntradaRequest(int dias) {
+            this.dias = dias;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarMovimientoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarMovimientoResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarMovimientosEntradaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarMovimientosEntradaResponse {
         
-        public eliminarMovimientoResponse() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public contarMovimientosEntradaResponse() {
+        }
+        
+        public contarMovimientosEntradaResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarMovimientosSalida", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarMovimientosSalidaRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int dias;
+        
+        public contarMovimientosSalidaRequest() {
+        }
+        
+        public contarMovimientosSalidaRequest(int dias) {
+            this.dias = dias;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarMovimientosSalidaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarMovimientosSalidaResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public contarMovimientosSalidaResponse() {
+        }
+        
+        public contarMovimientosSalidaResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerMovimientosPorMes", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerMovimientosPorMesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int meses;
+        
+        public obtenerMovimientosPorMesRequest() {
+        }
+        
+        public obtenerMovimientosPorMesRequest(int meses) {
+            this.meses = meses;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerMovimientosPorMesResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class obtenerMovimientosPorMesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.movimientoMesDTO[] @return;
+        
+        public obtenerMovimientosPorMesResponse() {
+        }
+        
+        public obtenerMovimientosPorMesResponse(StockifyWeb.StockifyWS.movimientoMesDTO[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarMovimientos", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarMovimientosRequest {
+        
+        public listarMovimientosRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarMovimientosResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarMovimientosResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.movimiento[] @return;
+        
+        public listarMovimientosResponse() {
+        }
+        
+        public listarMovimientosResponse(StockifyWeb.StockifyWS.movimiento[] @return) {
+            this.@return = @return;
         }
     }
     
@@ -4075,34 +4676,6 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarMovimientos", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarMovimientosRequest {
-        
-        public listarMovimientosRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarMovimientosResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarMovimientosResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.movimiento[] @return;
-        
-        public listarMovimientosResponse() {
-        }
-        
-        public listarMovimientosResponse(StockifyWeb.StockifyWS.movimiento[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="obtenerMovimiento", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
     public partial class obtenerMovimientoRequest {
         
@@ -4136,6 +4709,34 @@ namespace StockifyWeb.StockifyWS {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarMovimiento", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarMovimientoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarMovimientoRequest() {
+        }
+        
+        public eliminarMovimientoRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarMovimientoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarMovimientoResponse {
+        
+        public eliminarMovimientoResponse() {
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface MovimientoWSChannel : StockifyWeb.StockifyWS.MovimientoWS, System.ServiceModel.IClientChannel {
     }
@@ -4164,25 +4765,93 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarMovimientoResponse StockifyWeb.StockifyWS.MovimientoWS.eliminarMovimiento(StockifyWeb.StockifyWS.eliminarMovimientoRequest request) {
-            return base.Channel.eliminarMovimiento(request);
+        StockifyWeb.StockifyWS.contarMovimientosEntradaResponse StockifyWeb.StockifyWS.MovimientoWS.contarMovimientosEntrada(StockifyWeb.StockifyWS.contarMovimientosEntradaRequest request) {
+            return base.Channel.contarMovimientosEntrada(request);
         }
         
-        public void eliminarMovimiento(int id) {
-            StockifyWeb.StockifyWS.eliminarMovimientoRequest inValue = new StockifyWeb.StockifyWS.eliminarMovimientoRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarMovimientoResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).eliminarMovimiento(inValue);
+        public int contarMovimientosEntrada(int dias) {
+            StockifyWeb.StockifyWS.contarMovimientosEntradaRequest inValue = new StockifyWeb.StockifyWS.contarMovimientosEntradaRequest();
+            inValue.dias = dias;
+            StockifyWeb.StockifyWS.contarMovimientosEntradaResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).contarMovimientosEntrada(inValue);
+            return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> StockifyWeb.StockifyWS.MovimientoWS.eliminarMovimientoAsync(StockifyWeb.StockifyWS.eliminarMovimientoRequest request) {
-            return base.Channel.eliminarMovimientoAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosEntradaResponse> StockifyWeb.StockifyWS.MovimientoWS.contarMovimientosEntradaAsync(StockifyWeb.StockifyWS.contarMovimientosEntradaRequest request) {
+            return base.Channel.contarMovimientosEntradaAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> eliminarMovimientoAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarMovimientoRequest inValue = new StockifyWeb.StockifyWS.eliminarMovimientoRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).eliminarMovimientoAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosEntradaResponse> contarMovimientosEntradaAsync(int dias) {
+            StockifyWeb.StockifyWS.contarMovimientosEntradaRequest inValue = new StockifyWeb.StockifyWS.contarMovimientosEntradaRequest();
+            inValue.dias = dias;
+            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).contarMovimientosEntradaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.contarMovimientosSalidaResponse StockifyWeb.StockifyWS.MovimientoWS.contarMovimientosSalida(StockifyWeb.StockifyWS.contarMovimientosSalidaRequest request) {
+            return base.Channel.contarMovimientosSalida(request);
+        }
+        
+        public int contarMovimientosSalida(int dias) {
+            StockifyWeb.StockifyWS.contarMovimientosSalidaRequest inValue = new StockifyWeb.StockifyWS.contarMovimientosSalidaRequest();
+            inValue.dias = dias;
+            StockifyWeb.StockifyWS.contarMovimientosSalidaResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).contarMovimientosSalida(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosSalidaResponse> StockifyWeb.StockifyWS.MovimientoWS.contarMovimientosSalidaAsync(StockifyWeb.StockifyWS.contarMovimientosSalidaRequest request) {
+            return base.Channel.contarMovimientosSalidaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarMovimientosSalidaResponse> contarMovimientosSalidaAsync(int dias) {
+            StockifyWeb.StockifyWS.contarMovimientosSalidaRequest inValue = new StockifyWeb.StockifyWS.contarMovimientosSalidaRequest();
+            inValue.dias = dias;
+            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).contarMovimientosSalidaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse StockifyWeb.StockifyWS.MovimientoWS.obtenerMovimientosPorMes(StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest request) {
+            return base.Channel.obtenerMovimientosPorMes(request);
+        }
+        
+        public StockifyWeb.StockifyWS.movimientoMesDTO[] obtenerMovimientosPorMes(int meses) {
+            StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest inValue = new StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest();
+            inValue.meses = meses;
+            StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).obtenerMovimientosPorMes(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse> StockifyWeb.StockifyWS.MovimientoWS.obtenerMovimientosPorMesAsync(StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest request) {
+            return base.Channel.obtenerMovimientosPorMesAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse> obtenerMovimientosPorMesAsync(int meses) {
+            StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest inValue = new StockifyWeb.StockifyWS.obtenerMovimientosPorMesRequest();
+            inValue.meses = meses;
+            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).obtenerMovimientosPorMesAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarMovimientosResponse StockifyWeb.StockifyWS.MovimientoWS.listarMovimientos(StockifyWeb.StockifyWS.listarMovimientosRequest request) {
+            return base.Channel.listarMovimientos(request);
+        }
+        
+        public StockifyWeb.StockifyWS.movimiento[] listarMovimientos() {
+            StockifyWeb.StockifyWS.listarMovimientosRequest inValue = new StockifyWeb.StockifyWS.listarMovimientosRequest();
+            StockifyWeb.StockifyWS.listarMovimientosResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).listarMovimientos(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarMovimientosResponse> StockifyWeb.StockifyWS.MovimientoWS.listarMovimientosAsync(StockifyWeb.StockifyWS.listarMovimientosRequest request) {
+            return base.Channel.listarMovimientosAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarMovimientosResponse> listarMovimientosAsync() {
+            StockifyWeb.StockifyWS.listarMovimientosRequest inValue = new StockifyWeb.StockifyWS.listarMovimientosRequest();
+            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).listarMovimientosAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4210,27 +4879,6 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarMovimientosResponse StockifyWeb.StockifyWS.MovimientoWS.listarMovimientos(StockifyWeb.StockifyWS.listarMovimientosRequest request) {
-            return base.Channel.listarMovimientos(request);
-        }
-        
-        public StockifyWeb.StockifyWS.movimiento[] listarMovimientos() {
-            StockifyWeb.StockifyWS.listarMovimientosRequest inValue = new StockifyWeb.StockifyWS.listarMovimientosRequest();
-            StockifyWeb.StockifyWS.listarMovimientosResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).listarMovimientos(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarMovimientosResponse> StockifyWeb.StockifyWS.MovimientoWS.listarMovimientosAsync(StockifyWeb.StockifyWS.listarMovimientosRequest request) {
-            return base.Channel.listarMovimientosAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarMovimientosResponse> listarMovimientosAsync() {
-            StockifyWeb.StockifyWS.listarMovimientosRequest inValue = new StockifyWeb.StockifyWS.listarMovimientosRequest();
-            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).listarMovimientosAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         StockifyWeb.StockifyWS.obtenerMovimientoResponse StockifyWeb.StockifyWS.MovimientoWS.obtenerMovimiento(StockifyWeb.StockifyWS.obtenerMovimientoRequest request) {
             return base.Channel.obtenerMovimiento(request);
         }
@@ -4252,28 +4900,33 @@ namespace StockifyWeb.StockifyWS {
             inValue.id = id;
             return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).obtenerMovimientoAsync(inValue);
         }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarMovimientoResponse StockifyWeb.StockifyWS.MovimientoWS.eliminarMovimiento(StockifyWeb.StockifyWS.eliminarMovimientoRequest request) {
+            return base.Channel.eliminarMovimiento(request);
+        }
+        
+        public void eliminarMovimiento(int id) {
+            StockifyWeb.StockifyWS.eliminarMovimientoRequest inValue = new StockifyWeb.StockifyWS.eliminarMovimientoRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarMovimientoResponse retVal = ((StockifyWeb.StockifyWS.MovimientoWS)(this)).eliminarMovimiento(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> StockifyWeb.StockifyWS.MovimientoWS.eliminarMovimientoAsync(StockifyWeb.StockifyWS.eliminarMovimientoRequest request) {
+            return base.Channel.eliminarMovimientoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarMovimientoResponse> eliminarMovimientoAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarMovimientoRequest inValue = new StockifyWeb.StockifyWS.eliminarMovimientoRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.MovimientoWS)(this)).eliminarMovimientoAsync(inValue);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.UsuarioWS")]
     public interface UsuarioWS {
-        
-        // CODEGEN: El parámetro 'usuario' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.guardarUsuarioResponse guardarUsuario(StockifyWeb.StockifyWS.guardarUsuarioRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> guardarUsuarioAsync(StockifyWeb.StockifyWS.guardarUsuarioRequest request);
-        
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarUsuariosResponse listarUsuarios(StockifyWeb.StockifyWS.listarUsuariosRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarUsuariosResponse> listarUsuariosAsync(StockifyWeb.StockifyWS.listarUsuariosRequest request);
         
         // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/eliminarUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/eliminarUsuarioResponse")]
@@ -4284,6 +4937,15 @@ namespace StockifyWeb.StockifyWS {
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarUsuarioResponse> eliminarUsuarioAsync(StockifyWeb.StockifyWS.eliminarUsuarioRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarUsuariosResponse listarUsuarios(StockifyWeb.StockifyWS.listarUsuariosRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarUsuariosResponse> listarUsuariosAsync(StockifyWeb.StockifyWS.listarUsuariosRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
@@ -4291,38 +4953,41 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerUsuarioResponse> obtenerUsuarioAsync(StockifyWeb.StockifyWS.obtenerUsuarioRequest request);
+        
+        // CODEGEN: El parámetro 'usuario' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.guardarUsuarioResponse guardarUsuario(StockifyWeb.StockifyWS.guardarUsuarioRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest", ReplyAction="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> guardarUsuarioAsync(StockifyWeb.StockifyWS.guardarUsuarioRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarUsuarioRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarUsuarioRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.usuario usuario;
+        public int id;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.estado estado;
-        
-        public guardarUsuarioRequest() {
+        public eliminarUsuarioRequest() {
         }
         
-        public guardarUsuarioRequest(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
-            this.usuario = usuario;
-            this.estado = estado;
+        public eliminarUsuarioRequest(int id) {
+            this.id = id;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class guardarUsuarioResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarUsuarioResponse {
         
-        public guardarUsuarioResponse() {
+        public eliminarUsuarioResponse() {
         }
     }
     
@@ -4351,34 +5016,6 @@ namespace StockifyWeb.StockifyWS {
         
         public listarUsuariosResponse(StockifyWeb.StockifyWS.usuario[] @return) {
             this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarUsuarioRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarUsuarioRequest() {
-        }
-        
-        public eliminarUsuarioRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarUsuarioResponse {
-        
-        public eliminarUsuarioResponse() {
         }
     }
     
@@ -4418,6 +5055,39 @@ namespace StockifyWeb.StockifyWS {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarUsuario", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarUsuarioRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.usuario usuario;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.estado estado;
+        
+        public guardarUsuarioRequest() {
+        }
+        
+        public guardarUsuarioRequest(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
+            this.usuario = usuario;
+            this.estado = estado;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="guardarUsuarioResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class guardarUsuarioResponse {
+        
+        public guardarUsuarioResponse() {
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface UsuarioWSChannel : StockifyWeb.StockifyWS.UsuarioWS, System.ServiceModel.IClientChannel {
     }
@@ -4446,27 +5116,25 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.guardarUsuarioResponse StockifyWeb.StockifyWS.UsuarioWS.guardarUsuario(StockifyWeb.StockifyWS.guardarUsuarioRequest request) {
-            return base.Channel.guardarUsuario(request);
+        StockifyWeb.StockifyWS.eliminarUsuarioResponse StockifyWeb.StockifyWS.UsuarioWS.eliminarUsuario(StockifyWeb.StockifyWS.eliminarUsuarioRequest request) {
+            return base.Channel.eliminarUsuario(request);
         }
         
-        public void guardarUsuario(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
-            StockifyWeb.StockifyWS.guardarUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarUsuarioRequest();
-            inValue.usuario = usuario;
-            inValue.estado = estado;
-            StockifyWeb.StockifyWS.guardarUsuarioResponse retVal = ((StockifyWeb.StockifyWS.UsuarioWS)(this)).guardarUsuario(inValue);
+        public void eliminarUsuario(int id) {
+            StockifyWeb.StockifyWS.eliminarUsuarioRequest inValue = new StockifyWeb.StockifyWS.eliminarUsuarioRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarUsuarioResponse retVal = ((StockifyWeb.StockifyWS.UsuarioWS)(this)).eliminarUsuario(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> StockifyWeb.StockifyWS.UsuarioWS.guardarUsuarioAsync(StockifyWeb.StockifyWS.guardarUsuarioRequest request) {
-            return base.Channel.guardarUsuarioAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarUsuarioResponse> StockifyWeb.StockifyWS.UsuarioWS.eliminarUsuarioAsync(StockifyWeb.StockifyWS.eliminarUsuarioRequest request) {
+            return base.Channel.eliminarUsuarioAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> guardarUsuarioAsync(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
-            StockifyWeb.StockifyWS.guardarUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarUsuarioRequest();
-            inValue.usuario = usuario;
-            inValue.estado = estado;
-            return ((StockifyWeb.StockifyWS.UsuarioWS)(this)).guardarUsuarioAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarUsuarioResponse> eliminarUsuarioAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarUsuarioRequest inValue = new StockifyWeb.StockifyWS.eliminarUsuarioRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.UsuarioWS)(this)).eliminarUsuarioAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4491,28 +5159,6 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarUsuarioResponse StockifyWeb.StockifyWS.UsuarioWS.eliminarUsuario(StockifyWeb.StockifyWS.eliminarUsuarioRequest request) {
-            return base.Channel.eliminarUsuario(request);
-        }
-        
-        public void eliminarUsuario(int id) {
-            StockifyWeb.StockifyWS.eliminarUsuarioRequest inValue = new StockifyWeb.StockifyWS.eliminarUsuarioRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarUsuarioResponse retVal = ((StockifyWeb.StockifyWS.UsuarioWS)(this)).eliminarUsuario(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarUsuarioResponse> StockifyWeb.StockifyWS.UsuarioWS.eliminarUsuarioAsync(StockifyWeb.StockifyWS.eliminarUsuarioRequest request) {
-            return base.Channel.eliminarUsuarioAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarUsuarioResponse> eliminarUsuarioAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarUsuarioRequest inValue = new StockifyWeb.StockifyWS.eliminarUsuarioRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.UsuarioWS)(this)).eliminarUsuarioAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         StockifyWeb.StockifyWS.obtenerUsuarioResponse StockifyWeb.StockifyWS.UsuarioWS.obtenerUsuario(StockifyWeb.StockifyWS.obtenerUsuarioRequest request) {
             return base.Channel.obtenerUsuario(request);
         }
@@ -4534,11 +5180,94 @@ namespace StockifyWeb.StockifyWS {
             inValue.id = id;
             return ((StockifyWeb.StockifyWS.UsuarioWS)(this)).obtenerUsuarioAsync(inValue);
         }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.guardarUsuarioResponse StockifyWeb.StockifyWS.UsuarioWS.guardarUsuario(StockifyWeb.StockifyWS.guardarUsuarioRequest request) {
+            return base.Channel.guardarUsuario(request);
+        }
+        
+        public void guardarUsuario(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
+            StockifyWeb.StockifyWS.guardarUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarUsuarioRequest();
+            inValue.usuario = usuario;
+            inValue.estado = estado;
+            StockifyWeb.StockifyWS.guardarUsuarioResponse retVal = ((StockifyWeb.StockifyWS.UsuarioWS)(this)).guardarUsuario(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> StockifyWeb.StockifyWS.UsuarioWS.guardarUsuarioAsync(StockifyWeb.StockifyWS.guardarUsuarioRequest request) {
+            return base.Channel.guardarUsuarioAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarUsuarioResponse> guardarUsuarioAsync(StockifyWeb.StockifyWS.usuario usuario, StockifyWeb.StockifyWS.estado estado) {
+            StockifyWeb.StockifyWS.guardarUsuarioRequest inValue = new StockifyWeb.StockifyWS.guardarUsuarioRequest();
+            inValue.usuario = usuario;
+            inValue.estado = estado;
+            return ((StockifyWeb.StockifyWS.UsuarioWS)(this)).guardarUsuarioAsync(inValue);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.stockify.pucp.edu.pe/", ConfigurationName="StockifyWS.ProductoWS")]
     public interface ProductoWS {
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaReques" +
+            "t", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRespon" +
+            "se")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse listarProductosPorCategoria(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaReques" +
+            "t", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRespon" +
+            "se")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> listarProductosPorCategoriaAsync(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
+            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
+            "esponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse listarProductosOrdenadoPorCodigo(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
+            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
+            "esponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> listarProductosOrdenadoPorCodigoAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
+            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
+            "esponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse listarProductosOrdenadoPorNombre(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
+            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
+            "esponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> listarProductosOrdenadoPorNombreAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" +
+            "")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse importarProductosDesdeCSV(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" +
+            "")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> importarProductosDesdeCSVAsync(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request);
+        
+        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
+        StockifyWeb.StockifyWS.listarProductosResponse listarProductos(StockifyWeb.StockifyWS.listarProductosRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> listarProductosAsync(StockifyWeb.StockifyWS.listarProductosRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerProductoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerProductoResponse")]
@@ -4566,63 +5295,169 @@ namespace StockifyWeb.StockifyWS {
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarProductoResponse> guardarProductoAsync(StockifyWeb.StockifyWS.guardarProductoRequest request);
         
         // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarProductosResponse listarProductos(StockifyWeb.StockifyWS.listarProductosRequest request);
+        StockifyWeb.StockifyWS.contarProductosResponse contarProductos(StockifyWeb.StockifyWS.contarProductosRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> listarProductosAsync(StockifyWeb.StockifyWS.listarProductosRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProductosResponse> contarProductosAsync(StockifyWeb.StockifyWS.contarProductosRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosPorCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosPorCategoriaRequest {
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
-            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
-            "esponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse listarProductosOrdenadoPorNombre(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request);
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int idCategoria;
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
-            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreR" +
-            "esponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> listarProductosOrdenadoPorNombreAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request);
+        public listarProductosPorCategoriaRequest() {
+        }
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaReques" +
-            "t", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRespon" +
-            "se")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse listarProductosPorCategoria(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request);
+        public listarProductosPorCategoriaRequest(int idCategoria) {
+            this.idCategoria = idCategoria;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosPorCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosPorCategoriaResponse {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaReques" +
-            "t", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRespon" +
-            "se")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> listarProductosPorCategoriaAsync(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request);
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.producto[] @return;
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" +
-            "")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse importarProductosDesdeCSV(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request);
+        public listarProductosPorCategoriaResponse() {
+        }
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" +
-            "")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> importarProductosDesdeCSVAsync(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request);
+        public listarProductosPorCategoriaResponse(StockifyWeb.StockifyWS.producto[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorCodigo", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosOrdenadoPorCodigoRequest {
         
-        // CODEGEN: El parámetro 'return' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
-            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
-            "esponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="return")]
-        StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse listarProductosOrdenadoPorCodigo(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request);
+        public listarProductosOrdenadoPorCodigoRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorCodigoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosOrdenadoPorCodigoResponse {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
-            "equest", ReplyAction="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoR" +
-            "esponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> listarProductosOrdenadoPorCodigoAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request);
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.producto[] @return;
+        
+        public listarProductosOrdenadoPorCodigoResponse() {
+        }
+        
+        public listarProductosOrdenadoPorCodigoResponse(StockifyWeb.StockifyWS.producto[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorNombre", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosOrdenadoPorNombreRequest {
+        
+        public listarProductosOrdenadoPorNombreRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorNombreResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosOrdenadoPorNombreResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.producto[] @return;
+        
+        public listarProductosOrdenadoPorNombreResponse() {
+        }
+        
+        public listarProductosOrdenadoPorNombreResponse(StockifyWeb.StockifyWS.producto[] @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="importarProductosDesdeCSV", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class importarProductosDesdeCSVRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="base64Binary", IsNullable=true)]
+        public byte[] archivoCSV;
+        
+        public importarProductosDesdeCSVRequest() {
+        }
+        
+        public importarProductosDesdeCSVRequest(byte[] archivoCSV) {
+            this.archivoCSV = archivoCSV;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="importarProductosDesdeCSVResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class importarProductosDesdeCSVResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int @return;
+        
+        public importarProductosDesdeCSVResponse() {
+        }
+        
+        public importarProductosDesdeCSVResponse(int @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductos", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosRequest {
+        
+        public listarProductosRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class listarProductosResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public StockifyWeb.StockifyWS.producto[] @return;
+        
+        public listarProductosResponse() {
+        }
+        
+        public listarProductosResponse(StockifyWeb.StockifyWS.producto[] @return) {
+            this.@return = @return;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -4725,155 +5560,27 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductos", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarProductos", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarProductosRequest {
         
-        public listarProductosRequest() {
+        public contarProductosRequest() {
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.producto[] @return;
-        
-        public listarProductosResponse() {
-        }
-        
-        public listarProductosResponse(StockifyWeb.StockifyWS.producto[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorNombre", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosOrdenadoPorNombreRequest {
-        
-        public listarProductosOrdenadoPorNombreRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorNombreResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosOrdenadoPorNombreResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.producto[] @return;
-        
-        public listarProductosOrdenadoPorNombreResponse() {
-        }
-        
-        public listarProductosOrdenadoPorNombreResponse(StockifyWeb.StockifyWS.producto[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosPorCategoria", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosPorCategoriaRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int idCategoria;
-        
-        public listarProductosPorCategoriaRequest() {
-        }
-        
-        public listarProductosPorCategoriaRequest(int idCategoria) {
-            this.idCategoria = idCategoria;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosPorCategoriaResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosPorCategoriaResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.producto[] @return;
-        
-        public listarProductosPorCategoriaResponse() {
-        }
-        
-        public listarProductosPorCategoriaResponse(StockifyWeb.StockifyWS.producto[] @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="importarProductosDesdeCSV", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class importarProductosDesdeCSVRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="base64Binary", IsNullable=true)]
-        public byte[] archivoCSV;
-        
-        public importarProductosDesdeCSVRequest() {
-        }
-        
-        public importarProductosDesdeCSVRequest(byte[] archivoCSV) {
-            this.archivoCSV = archivoCSV;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="importarProductosDesdeCSVResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class importarProductosDesdeCSVResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="contarProductosResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class contarProductosResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public int @return;
         
-        public importarProductosDesdeCSVResponse() {
+        public contarProductosResponse() {
         }
         
-        public importarProductosDesdeCSVResponse(int @return) {
-            this.@return = @return;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorCodigo", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosOrdenadoPorCodigoRequest {
-        
-        public listarProductosOrdenadoPorCodigoRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="listarProductosOrdenadoPorCodigoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class listarProductosOrdenadoPorCodigoResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("return", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public StockifyWeb.StockifyWS.producto[] @return;
-        
-        public listarProductosOrdenadoPorCodigoResponse() {
-        }
-        
-        public listarProductosOrdenadoPorCodigoResponse(StockifyWeb.StockifyWS.producto[] @return) {
+        public contarProductosResponse(int @return) {
             this.@return = @return;
         }
     }
@@ -4903,6 +5610,115 @@ namespace StockifyWeb.StockifyWS {
         
         public ProductoWSClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosPorCategoria(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request) {
+            return base.Channel.listarProductosPorCategoria(request);
+        }
+        
+        public StockifyWeb.StockifyWS.producto[] listarProductosPorCategoria(int idCategoria) {
+            StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest inValue = new StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest();
+            inValue.idCategoria = idCategoria;
+            StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosPorCategoria(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosPorCategoriaAsync(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request) {
+            return base.Channel.listarProductosPorCategoriaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> listarProductosPorCategoriaAsync(int idCategoria) {
+            StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest inValue = new StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest();
+            inValue.idCategoria = idCategoria;
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosPorCategoriaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorCodigo(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request) {
+            return base.Channel.listarProductosOrdenadoPorCodigo(request);
+        }
+        
+        public StockifyWeb.StockifyWS.producto[] listarProductosOrdenadoPorCodigo() {
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest();
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorCodigo(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorCodigoAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request) {
+            return base.Channel.listarProductosOrdenadoPorCodigoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> listarProductosOrdenadoPorCodigoAsync() {
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest();
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorCodigoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorNombre(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request) {
+            return base.Channel.listarProductosOrdenadoPorNombre(request);
+        }
+        
+        public StockifyWeb.StockifyWS.producto[] listarProductosOrdenadoPorNombre() {
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest();
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorNombre(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorNombreAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request) {
+            return base.Channel.listarProductosOrdenadoPorNombreAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> listarProductosOrdenadoPorNombreAsync() {
+            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest();
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorNombreAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse StockifyWeb.StockifyWS.ProductoWS.importarProductosDesdeCSV(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request) {
+            return base.Channel.importarProductosDesdeCSV(request);
+        }
+        
+        public int importarProductosDesdeCSV(byte[] archivoCSV) {
+            StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest inValue = new StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest();
+            inValue.archivoCSV = archivoCSV;
+            StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).importarProductosDesdeCSV(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> StockifyWeb.StockifyWS.ProductoWS.importarProductosDesdeCSVAsync(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request) {
+            return base.Channel.importarProductosDesdeCSVAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> importarProductosDesdeCSVAsync(byte[] archivoCSV) {
+            StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest inValue = new StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest();
+            inValue.archivoCSV = archivoCSV;
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).importarProductosDesdeCSVAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.listarProductosResponse StockifyWeb.StockifyWS.ProductoWS.listarProductos(StockifyWeb.StockifyWS.listarProductosRequest request) {
+            return base.Channel.listarProductos(request);
+        }
+        
+        public StockifyWeb.StockifyWS.producto[] listarProductos() {
+            StockifyWeb.StockifyWS.listarProductosRequest inValue = new StockifyWeb.StockifyWS.listarProductosRequest();
+            StockifyWeb.StockifyWS.listarProductosResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductos(inValue);
+            return retVal.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosAsync(StockifyWeb.StockifyWS.listarProductosRequest request) {
+            return base.Channel.listarProductosAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> listarProductosAsync() {
+            StockifyWeb.StockifyWS.listarProductosRequest inValue = new StockifyWeb.StockifyWS.listarProductosRequest();
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4975,112 +5791,24 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarProductosResponse StockifyWeb.StockifyWS.ProductoWS.listarProductos(StockifyWeb.StockifyWS.listarProductosRequest request) {
-            return base.Channel.listarProductos(request);
+        StockifyWeb.StockifyWS.contarProductosResponse StockifyWeb.StockifyWS.ProductoWS.contarProductos(StockifyWeb.StockifyWS.contarProductosRequest request) {
+            return base.Channel.contarProductos(request);
         }
         
-        public StockifyWeb.StockifyWS.producto[] listarProductos() {
-            StockifyWeb.StockifyWS.listarProductosRequest inValue = new StockifyWeb.StockifyWS.listarProductosRequest();
-            StockifyWeb.StockifyWS.listarProductosResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductos(inValue);
+        public int contarProductos() {
+            StockifyWeb.StockifyWS.contarProductosRequest inValue = new StockifyWeb.StockifyWS.contarProductosRequest();
+            StockifyWeb.StockifyWS.contarProductosResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).contarProductos(inValue);
             return retVal.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosAsync(StockifyWeb.StockifyWS.listarProductosRequest request) {
-            return base.Channel.listarProductosAsync(request);
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProductosResponse> StockifyWeb.StockifyWS.ProductoWS.contarProductosAsync(StockifyWeb.StockifyWS.contarProductosRequest request) {
+            return base.Channel.contarProductosAsync(request);
         }
         
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosResponse> listarProductosAsync() {
-            StockifyWeb.StockifyWS.listarProductosRequest inValue = new StockifyWeb.StockifyWS.listarProductosRequest();
-            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorNombre(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request) {
-            return base.Channel.listarProductosOrdenadoPorNombre(request);
-        }
-        
-        public StockifyWeb.StockifyWS.producto[] listarProductosOrdenadoPorNombre() {
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest();
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorNombre(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorNombreAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest request) {
-            return base.Channel.listarProductosOrdenadoPorNombreAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse> listarProductosOrdenadoPorNombreAsync() {
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreRequest();
-            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorNombreAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosPorCategoria(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request) {
-            return base.Channel.listarProductosPorCategoria(request);
-        }
-        
-        public StockifyWeb.StockifyWS.producto[] listarProductosPorCategoria(int idCategoria) {
-            StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest inValue = new StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest();
-            inValue.idCategoria = idCategoria;
-            StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosPorCategoria(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosPorCategoriaAsync(StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest request) {
-            return base.Channel.listarProductosPorCategoriaAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse> listarProductosPorCategoriaAsync(int idCategoria) {
-            StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest inValue = new StockifyWeb.StockifyWS.listarProductosPorCategoriaRequest();
-            inValue.idCategoria = idCategoria;
-            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosPorCategoriaAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse StockifyWeb.StockifyWS.ProductoWS.importarProductosDesdeCSV(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request) {
-            return base.Channel.importarProductosDesdeCSV(request);
-        }
-        
-        public int importarProductosDesdeCSV(byte[] archivoCSV) {
-            StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest inValue = new StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest();
-            inValue.archivoCSV = archivoCSV;
-            StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).importarProductosDesdeCSV(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> StockifyWeb.StockifyWS.ProductoWS.importarProductosDesdeCSVAsync(StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest request) {
-            return base.Channel.importarProductosDesdeCSVAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse> importarProductosDesdeCSVAsync(byte[] archivoCSV) {
-            StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest inValue = new StockifyWeb.StockifyWS.importarProductosDesdeCSVRequest();
-            inValue.archivoCSV = archivoCSV;
-            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).importarProductosDesdeCSVAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorCodigo(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request) {
-            return base.Channel.listarProductosOrdenadoPorCodigo(request);
-        }
-        
-        public StockifyWeb.StockifyWS.producto[] listarProductosOrdenadoPorCodigo() {
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest();
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse retVal = ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorCodigo(inValue);
-            return retVal.@return;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> StockifyWeb.StockifyWS.ProductoWS.listarProductosOrdenadoPorCodigoAsync(StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest request) {
-            return base.Channel.listarProductosOrdenadoPorCodigoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse> listarProductosOrdenadoPorCodigoAsync() {
-            StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest inValue = new StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoRequest();
-            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).listarProductosOrdenadoPorCodigoAsync(inValue);
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.contarProductosResponse> contarProductosAsync() {
+            StockifyWeb.StockifyWS.contarProductosRequest inValue = new StockifyWeb.StockifyWS.contarProductosRequest();
+            return ((StockifyWeb.StockifyWS.ProductoWS)(this)).contarProductosAsync(inValue);
         }
     }
     
@@ -5106,14 +5834,6 @@ namespace StockifyWeb.StockifyWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/obtenerOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/obtenerOrdenIngresoResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.obtenerOrdenIngresoResponse> obtenerOrdenIngresoAsync(StockifyWeb.StockifyWS.obtenerOrdenIngresoRequest request);
         
-        // CODEGEN: El parámetro 'ordenIngreso' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        StockifyWeb.StockifyWS.guardarOrdenIngresoResponse guardarOrdenIngreso(StockifyWeb.StockifyWS.guardarOrdenIngresoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse")]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarOrdenIngresoResponse> guardarOrdenIngresoAsync(StockifyWeb.StockifyWS.guardarOrdenIngresoRequest request);
-        
         // CODEGEN: El parámetro 'id' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -5121,6 +5841,14 @@ namespace StockifyWeb.StockifyWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoResponse")]
         System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse> eliminarOrdenIngresoAsync(StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest request);
+        
+        // CODEGEN: El parámetro 'ordenIngreso' requiere información adicional de esquema que no se puede capturar con el modo de parámetros. El atributo específico es 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        StockifyWeb.StockifyWS.guardarOrdenIngresoResponse guardarOrdenIngreso(StockifyWeb.StockifyWS.guardarOrdenIngresoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest", ReplyAction="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse")]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.guardarOrdenIngresoResponse> guardarOrdenIngresoAsync(StockifyWeb.StockifyWS.guardarOrdenIngresoRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -5190,6 +5918,34 @@ namespace StockifyWeb.StockifyWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenIngreso", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenIngresoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public int id;
+        
+        public eliminarOrdenIngresoRequest() {
+        }
+        
+        public eliminarOrdenIngresoRequest(int id) {
+            this.id = id;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenIngresoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
+    public partial class eliminarOrdenIngresoResponse {
+        
+        public eliminarOrdenIngresoResponse() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(WrapperName="guardarOrdenIngreso", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
     public partial class guardarOrdenIngresoRequest {
         
@@ -5217,34 +5973,6 @@ namespace StockifyWeb.StockifyWS {
     public partial class guardarOrdenIngresoResponse {
         
         public guardarOrdenIngresoResponse() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenIngreso", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenIngresoRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.stockify.pucp.edu.pe/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public int id;
-        
-        public eliminarOrdenIngresoRequest() {
-        }
-        
-        public eliminarOrdenIngresoRequest(int id) {
-            this.id = id;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="eliminarOrdenIngresoResponse", WrapperNamespace="http://services.stockify.pucp.edu.pe/", IsWrapped=true)]
-    public partial class eliminarOrdenIngresoResponse {
-        
-        public eliminarOrdenIngresoResponse() {
         }
     }
     
@@ -5320,6 +6048,28 @@ namespace StockifyWeb.StockifyWS {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse StockifyWeb.StockifyWS.OrdenIngresoWS.eliminarOrdenIngreso(StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest request) {
+            return base.Channel.eliminarOrdenIngreso(request);
+        }
+        
+        public void eliminarOrdenIngreso(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest();
+            inValue.id = id;
+            StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse retVal = ((StockifyWeb.StockifyWS.OrdenIngresoWS)(this)).eliminarOrdenIngreso(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse> StockifyWeb.StockifyWS.OrdenIngresoWS.eliminarOrdenIngresoAsync(StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest request) {
+            return base.Channel.eliminarOrdenIngresoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse> eliminarOrdenIngresoAsync(int id) {
+            StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest();
+            inValue.id = id;
+            return ((StockifyWeb.StockifyWS.OrdenIngresoWS)(this)).eliminarOrdenIngresoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         StockifyWeb.StockifyWS.guardarOrdenIngresoResponse StockifyWeb.StockifyWS.OrdenIngresoWS.guardarOrdenIngreso(StockifyWeb.StockifyWS.guardarOrdenIngresoRequest request) {
             return base.Channel.guardarOrdenIngreso(request);
         }
@@ -5341,28 +6091,6 @@ namespace StockifyWeb.StockifyWS {
             inValue.ordenIngreso = ordenIngreso;
             inValue.estado = estado;
             return ((StockifyWeb.StockifyWS.OrdenIngresoWS)(this)).guardarOrdenIngresoAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse StockifyWeb.StockifyWS.OrdenIngresoWS.eliminarOrdenIngreso(StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest request) {
-            return base.Channel.eliminarOrdenIngreso(request);
-        }
-        
-        public void eliminarOrdenIngreso(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest();
-            inValue.id = id;
-            StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse retVal = ((StockifyWeb.StockifyWS.OrdenIngresoWS)(this)).eliminarOrdenIngreso(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse> StockifyWeb.StockifyWS.OrdenIngresoWS.eliminarOrdenIngresoAsync(StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest request) {
-            return base.Channel.eliminarOrdenIngresoAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse> eliminarOrdenIngresoAsync(int id) {
-            StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest inValue = new StockifyWeb.StockifyWS.eliminarOrdenIngresoRequest();
-            inValue.id = id;
-            return ((StockifyWeb.StockifyWS.OrdenIngresoWS)(this)).eliminarOrdenIngresoAsync(inValue);
         }
     }
 }

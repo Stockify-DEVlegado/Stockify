@@ -4,8 +4,10 @@
  */
 package pe.edu.pucp.inf30.stockify.bo.almacen;
 
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
 import pe.edu.pucp.inf30.stockify.bo.Gestionable;
+import pe.edu.pucp.inf30.stockify.model.dto.MovimientoMesDTO;
 
 /**
  *
@@ -13,5 +15,6 @@ import pe.edu.pucp.inf30.stockify.bo.Gestionable;
  */
 
 public interface MovimientoBO extends Gestionable<Movimiento> {
-    
+    int contarPorTipo(String tipo, int dias);
+    List<MovimientoMesDTO> obtenerMovimientosPorMes(int meses);
 }
