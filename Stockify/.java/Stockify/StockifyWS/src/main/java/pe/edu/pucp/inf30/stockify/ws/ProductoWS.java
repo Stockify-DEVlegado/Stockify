@@ -96,4 +96,14 @@ public class ProductoWS {
             throw new RuntimeException("Error al importar productos: " + e.getMessage());
         }
     }
+    
+    @WebMethod(operationName = "contarProductos")
+    public int contarProductos() {
+        try {
+            return this.productoBO.contarTotal();
+        } catch (Exception e) {
+            System.err.println("Error en WS contarProductos: " + e.getMessage());
+            return 0;
+        }
+    }
 }

@@ -3,11 +3,13 @@ package pe.edu.pucp.inf30.stockify.ws;
 import jakarta.jws.WebService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
+import java.util.ArrayList;
 import java.util.List;
 import pe.edu.pucp.inf30.stockify.model.Estado;
 import pe.edu.pucp.inf30.stockify.bo.almacen.ExistenciasBO;
 import pe.edu.pucp.inf30.stockify.boimpl.almacen.ExistenciasBOImpl;
 import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
+import pe.edu.pucp.inf30.stockify.model.dto.AlertaStockDTO;
 
 /**
  *
@@ -47,5 +49,25 @@ public class ExistenciasWS {
         @WebParam(name = "estado") Estado estado
     ) {
         this.existenciasBO.guardar(existencias, estado);
+    }
+    
+    @WebMethod(operationName = "obtenerStockTotal")
+    public int obtenerStockTotal() {
+        try {
+            return this.existenciasBO.obtenerStockTotal();
+        } catch (Exception e) {
+            System.err.println("Error en WS obtenerStockTotal: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    @WebMethod(operationName = "obtenerAlertasStock")
+    public List<AlertaStockDTO> obtenerAlertasStock() {
+        try {
+            return this.existenciasBO.obtenerProductosStockBajo();
+        } catch (Exception e) {
+            System.err.println("Error en WS obtenerAlertasStock: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }

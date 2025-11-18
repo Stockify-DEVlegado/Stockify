@@ -5,6 +5,24 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/OrdenCompraWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="obtenerProductosPorRecibir">
+    <part name="parameters" element="tns:obtenerProductosPorRecibir" />
+  </message>
+  <message name="obtenerProductosPorRecibirResponse">
+    <part name="parameters" element="tns:obtenerProductosPorRecibirResponse" />
+  </message>
+  <message name="listarOrdenesCompra">
+    <part name="parameters" element="tns:listarOrdenesCompra" />
+  </message>
+  <message name="listarOrdenesCompraResponse">
+    <part name="parameters" element="tns:listarOrdenesCompraResponse" />
+  </message>
+  <message name="eliminarOrdenCompra">
+    <part name="parameters" element="tns:eliminarOrdenCompra" />
+  </message>
+  <message name="eliminarOrdenCompraResponse">
+    <part name="parameters" element="tns:eliminarOrdenCompraResponse" />
+  </message>
   <message name="guardarOrdenCompra">
     <part name="parameters" element="tns:guardarOrdenCompra" />
   </message>
@@ -17,19 +35,19 @@
   <message name="obtenerOrdenCompraResponse">
     <part name="parameters" element="tns:obtenerOrdenCompraResponse" />
   </message>
-  <message name="eliminarOrdenCompra">
-    <part name="parameters" element="tns:eliminarOrdenCompra" />
-  </message>
-  <message name="eliminarOrdenCompraResponse">
-    <part name="parameters" element="tns:eliminarOrdenCompraResponse" />
-  </message>
-  <message name="listarOrdenesCompra">
-    <part name="parameters" element="tns:listarOrdenesCompra" />
-  </message>
-  <message name="listarOrdenesCompraResponse">
-    <part name="parameters" element="tns:listarOrdenesCompraResponse" />
-  </message>
   <portType name="OrdenCompraWS">
+    <operation name="obtenerProductosPorRecibir">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirRequest" message="tns:obtenerProductosPorRecibir" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirResponse" message="tns:obtenerProductosPorRecibirResponse" />
+    </operation>
+    <operation name="listarOrdenesCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest" message="tns:listarOrdenesCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse" message="tns:listarOrdenesCompraResponse" />
+    </operation>
+    <operation name="eliminarOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest" message="tns:eliminarOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse" message="tns:eliminarOrdenCompraResponse" />
+    </operation>
     <operation name="guardarOrdenCompra">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
@@ -38,17 +56,36 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest" message="tns:obtenerOrdenCompra" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse" message="tns:obtenerOrdenCompraResponse" />
     </operation>
-    <operation name="eliminarOrdenCompra">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest" message="tns:eliminarOrdenCompra" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse" message="tns:eliminarOrdenCompraResponse" />
-    </operation>
-    <operation name="listarOrdenesCompra">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraRequest" message="tns:listarOrdenesCompra" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/listarOrdenesCompraResponse" message="tns:listarOrdenesCompraResponse" />
-    </operation>
   </portType>
   <binding name="OrdenCompraWSPortBinding" type="tns:OrdenCompraWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerProductosPorRecibir">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarOrdenesCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="guardarOrdenCompra">
       <soap:operation soapAction="" />
       <input>
@@ -59,24 +96,6 @@
       </output>
     </operation>
     <operation name="obtenerOrdenCompra">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="eliminarOrdenCompra">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarOrdenesCompra">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

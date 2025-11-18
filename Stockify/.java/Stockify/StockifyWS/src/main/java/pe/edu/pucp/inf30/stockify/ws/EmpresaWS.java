@@ -48,4 +48,14 @@ public class EmpresaWS {
     ) {
         this.empresaBO.guardar(empresa, estado);
     }
+    
+    @WebMethod(operationName = "contarProveedores")
+    public int contarProveedores() {
+        try {
+            return this.empresaBO.contarProveedores();
+        } catch (Exception e) {
+            System.err.println("Error en WS contarProveedores: " + e.getMessage());
+            return 0;
+        }
+    }
 }

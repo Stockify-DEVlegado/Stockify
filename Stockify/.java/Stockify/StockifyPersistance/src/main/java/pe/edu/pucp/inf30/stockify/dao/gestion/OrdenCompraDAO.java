@@ -13,5 +13,5 @@ import pe.edu.pucp.inf30.stockify.model.gestion.OrdenCompra;
  */
 
 public interface OrdenCompraDAO extends PersistibleTransaccional<OrdenCompra, Integer> {
-    
+    int obtenerProductosPorRecibir();
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://services.stockify.pucp.edu.pe/" targetNamespace="http://services.stockify.pucp.edu.pe/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="contarCategorias" type="tns:contarCategorias" />
+  <xs:element name="contarCategoriasResponse" type="tns:contarCategoriasResponse" />
   <xs:element name="eliminarCategoria" type="tns:eliminarCategoria" />
   <xs:element name="eliminarCategoriaResponse" type="tns:eliminarCategoriaResponse" />
   <xs:element name="guardarCategoria" type="tns:guardarCategoria" />
@@ -40,6 +42,14 @@
   <xs:complexType name="obtenerCategoriaResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="tns:categoria" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="contarCategorias">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="contarCategoriasResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="eliminarCategoria">

@@ -120,4 +120,21 @@ public class OrdenCompraDAOImpl extends TransaccionalBaseDAO<OrdenCompra>
         return ordenCompra;
     }
     
+    @Override
+    public int obtenerProductosPorRecibir() {
+        return ejecutarComando(conn -> {
+            try (CallableStatement cmd = conn.prepareCall("{call obtenerProductosPorRecibir()}")) {
+                ResultSet rs = cmd.executeQuery();
+                if (rs.next()) {
+                    int porRecibir = rs.getInt("porRecibir");
+                    return rs.wasNull() ? 0 : porRecibir;
+                }
+                return 0;
+            } catch (SQLException e) {
+                System.err.println("Error SQL en obtenerProductosPorRecibir: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    
 }

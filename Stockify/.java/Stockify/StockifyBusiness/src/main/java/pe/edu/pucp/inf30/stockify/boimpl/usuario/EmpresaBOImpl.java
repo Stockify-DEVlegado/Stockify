@@ -47,4 +47,9 @@ public class EmpresaBOImpl implements EmpresaBO{
             this.empresaDao.actualizar(modelo);
         }
     }
+    
+    @Override
+    public int contarProveedores() {
+        return this.empresaDao.contarProveedores();
+    }
 }

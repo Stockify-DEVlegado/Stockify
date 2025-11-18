@@ -4,8 +4,10 @@
  */
 package pe.edu.pucp.inf30.stockify.dao.almacen;
 
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.dao.Persistible;
 import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
+import pe.edu.pucp.inf30.stockify.model.dto.MovimientoMesDTO;
 
 /**
  *
@@ -13,5 +15,6 @@ import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
  */
 
 public interface MovimientoDAO extends Persistible<Movimiento, Integer>{
-    
+    int contarPorTipo(String tipo, int dias);
+    List<MovimientoMesDTO> obtenerMovimientosPorMes(int meses);
 }

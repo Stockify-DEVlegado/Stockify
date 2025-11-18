@@ -421,6 +421,39 @@
     <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.alertaStockDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarCategoriasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarMovimientosEntradaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarMovimientosSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarProductosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarProveedoresResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.movimientoMesDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerAlertasStockResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerStockTotalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />
     <None Include="Connected Services\StockifyWS\UsuarioWS.xsd">
       <SubType>Designer</SubType>
