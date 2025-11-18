@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Reportes" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="StockifyWeb.Reportes" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="StockifyWeb.Reportes" %>
 
 <asp:Content ID="ContentHead" ContentPlaceHolderID="head" runat="server">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>

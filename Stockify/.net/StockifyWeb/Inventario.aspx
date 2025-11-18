@@ -627,7 +627,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="cph_Contenido" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" />
+ 
     
     <div class="products-container">
         <div class="header-actions">
