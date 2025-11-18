@@ -195,6 +195,7 @@
     <Compile Include="Inventario.aspx.designer.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NotificationService.cs" />
     <Compile Include="Ordenes.aspx.cs">
       <DependentUpon>Ordenes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -415,6 +416,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />

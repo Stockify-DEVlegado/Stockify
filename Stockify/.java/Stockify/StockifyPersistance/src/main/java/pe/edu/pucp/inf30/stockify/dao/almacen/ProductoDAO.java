@@ -13,13 +13,13 @@ import pe.edu.pucp.inf30.stockify.model.almacen.Producto;
  *
  * @author DEVlegado
  */
-
 public interface ProductoDAO extends Persistible<Producto, Integer> {
     
     List<Producto> leerTodosOrdenados(String criterio);
-    List<Producto> leerTodosOrdenados(String criterio,Connection conn);
+    List<Producto> leerTodosOrdenados(String criterio, Connection conn);
     
     List<Producto> leerTodosPorCategoria(int idCategoria);
     List<Producto> leerTodosPorCategoria(int idCategoria, Connection conn);
     
+    int insertarBloque(List<Producto> productos);
 }
