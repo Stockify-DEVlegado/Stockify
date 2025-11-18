@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\6Ciclo</_PublishTargetUrl>
+    <History>True|2025-11-18T05:02:43.8926189Z||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/AWSSDK.CognitoIdentityProvider.dll">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="bin/AWSSDK.CognitoIdentityProvider.pdb">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="bin/AWSSDK.Core.dll">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="bin/AWSSDK.Core.pdb">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe.config">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.rsp">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.exe">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.exe.config">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.rsp">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.x86.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Managed.Core.targets">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Win32.Primitives.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.AppContext.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Console.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.DiagnosticSource.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.FileVersionInfo.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.StackTrace.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Globalization.Calendars.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.Compression.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.Compression.ZipFile.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.Primitives.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Net.Http.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Net.Sockets.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Runtime.InteropServices.RuntimeInformation.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Security.Cryptography.Algorithms.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Security.Cryptography.Encoding.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Security.Cryptography.Primitives.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Security.Cryptography.X509Certificates.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Text.Encoding.CodePages.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Threading.Tasks.Extensions.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.ValueTuple.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Xml.ReaderWriter.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Xml.XmlDocument.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Xml.XPath.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Xml.XPath.XDocument.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe.config">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.rsp">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/StockifyWeb.dll">
+      <publishTime>11/18/2025 00:02:40</publishTime>
+    </File>
+    <File Include="bin/StockifyWeb.pdb">
+      <publishTime>11/18/2025 00:02:40</publishTime>
+    </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Text.Json.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Extensions.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="bin/System.ValueTuple.dll">
+      <publishTime>11/17/2025 22:24:35</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.categoria.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.cuentaUsuario.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarCategoriaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarCuentaUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarEmpresaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarExistenciasResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarMovimientoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarOrdenCompraResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarOrdenIngresoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarOrdenSalidaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarOrdenVentaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarProductoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.eliminarUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.empresa.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.existencias.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarCategoriaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarCuentaUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarEmpresaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarExistenciasResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarMovimientoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarOrdenCompraResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarOrdenIngresoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarOrdenSalidaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarOrdenVentaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarProductoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.guardarUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarCategoriasResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarCuentasUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarEmpresasResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarExistenciasResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarMovimientosResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarOrdenesCompraResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarOrdenesIngresoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarOrdenesSalidaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarOrdenesVentaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarProductosOrdenadoPorCodigoResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarProductosOrdenadoPorNombreResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarProductosPorCategoriaResponse.datasource">
+      <publishTime>11/17/2025 22:24:33</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarProductosResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.listarUsuariosResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.loginResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.movimiento.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerCategoriaResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerCuentaUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerEmpresaResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerExistenciasResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerMovimientoResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerOrdenCompraResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerOrdenIngresoResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerOrdenSalidaResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerOrdenVentaResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerProductoResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.obtenerUsuarioResponse.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.ordenCompra.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.ordenIngreso.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.ordenSalida.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.ordenVenta.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.producto.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Connected Services/StockifyWS/StockifyWeb.StockifyWS.usuario.datasource">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="DetalleProducto.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="GestionCuentas.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Inicio.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Inventario.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="login.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Ordenes.aspx">
+      <publishTime>11/17/2025 23:29:28</publishTime>
+    </File>
+    <File Include="Proveedores.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Register.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Reportes.aspx">
+      <publishTime>11/17/2025 22:24:34</publishTime>
+    </File>
+    <File Include="Stockify.Master">
+      <publishTime>11/17/2025 23:27:54</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>11/18/2025 00:02:42</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

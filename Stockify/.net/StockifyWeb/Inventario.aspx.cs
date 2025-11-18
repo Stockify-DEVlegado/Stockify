@@ -180,10 +180,46 @@ namespace StockifyWeb
 
                 await productoClient.guardarProductoAsync(producto, estado);
 
+<<<<<<< Updated upstream
                 // Recargar productos después de guardar
                 await CargarProductosAsync();
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModal", "cerrarModal();", true);
+=======
+                // ====== AGREGAR NOTIFICACIÓN ANTES DE REDIRIGIR ======
+                if (esNuevo)
+                {
+                    // Notificar nuevo producto (incluye envío de correo)
+                    NotificationService.NotificarNuevoProducto(producto.nombre);
+
+                    // Debug: Verificar que se guardó
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Producto agregado: {producto.nombre}");
+                    var notifs = NotificationService.ObtenerNotificaciones();
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Total en sesión: {notifs.Count}");
+                }
+                else
+                {
+                    // Solo notificación de actualización
+                    NotificationService.AgregarNotificacion(
+                        $"Producto '{producto.nombre}' actualizado exitosamente",
+                        "info",
+                        "fa-edit"
+                    );
+                }
+
+                // ====== REDIRIGIR PARA ACTUALIZAR NOTIFICACIONES ====== //
+                // Esto recarga la página completa y el Master Page carga las notificaciones
+                Response.Redirect(Request.RawUrl, false);
+                Context.ApplicationInstance.CompleteRequest();
+
+                // IMPORTANTE No colocar código después del Redirect
+                // porque no se ejecutará
+            }
+            catch (FormatException)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                    "alert('Error: Formato de datos incorrecto. Verifique los valores numéricos.');", true);
+>>>>>>> Stashed changes
             }
             catch (Exception ex)
             {
