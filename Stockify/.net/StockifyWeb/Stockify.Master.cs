@@ -1,93 +1,110 @@
 ﻿using System;
 using System.Web.UI;
+//using StockifyWeb.Services;
 
 namespace StockifyWeb
 {
-    public partial class Stockify : System.Web.UI.MasterPage
+    public partial class Stockify : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-           
-
-
             if (!IsPostBack)
             {
-                
-                AplicarPermisosPorRol();
-              
                 // Verificar si hay una sesión activa
                 if (Session["Usuario"] == null)
                 {
-                    // Si no hay sesión, redirigir al login
                     Response.Redirect("Login.aspx");
                 }
                 else
                 {
-                    // Mostrar el nombre del usuario
                     lblUsuario.Text = Session["Usuario"].ToString();
+                }
+
+                CargarNotificaciones();
+            }
+
+            // Manejar postback para marcar como leída
+            if (IsPostBack)
+            {
+                string eventTarget = Request["__EVENTTARGET"];
+                string eventArgument = Request["__EVENTARGUMENT"];
+
+                if (eventTarget == "MarcarLeida" && !string.IsNullOrEmpty(eventArgument))
+                {
+                    int notifId = int.Parse(eventArgument);
+                    NotificationService.MarcarComoLeida(notifId);
+                    CargarNotificaciones();
                 }
             }
         }
 
-        private void AplicarPermisosPorRol()
+        private void CargarNotificaciones()
         {
-            string rol = Session["TipoUsuario"] as string;
+            var notificaciones = NotificationService.ObtenerNotificaciones();
+            var noLeidas = NotificationService.ContarNoLeidas();
 
-            // Ocultar todo por defecto
-            lnkInicio.Visible = false;
-            lnkInventario.Visible = false;
-            lnkReportes.Visible = false;
-            lnkProveedores.Visible = false;
-            lnkOrdenes.Visible = false;
-            lnkGestionCuentas.Visible = false;
-
-            if (string.IsNullOrEmpty(rol))
+            // Configurar badge
+            if (noLeidas > 0)
             {
-                // Si no hay sesión, redirige al login
-                Response.Redirect("Login.aspx");
-                return;
+                pnlBadge.Visible = true;
+                litBadgeCount.Text = noLeidas > 99 ? "99+" : noLeidas.ToString();
+            }
+            else
+            {
+                pnlBadge.Visible = false;
             }
 
-            switch (rol.ToLower())
+            // Configurar lista de notificaciones
+            if (notificaciones.Count > 0)
             {
-                case "administrador":
-                    lnkInicio.Visible = true;
-                    lnkInventario.Visible = true;
-                    lnkReportes.Visible = true;
-                    lnkProveedores.Visible = true;
-                    lnkOrdenes.Visible = true;
-                    lnkGestionCuentas.Visible = true;
-                    break;
+                rptNotificaciones.DataSource = notificaciones;
+                rptNotificaciones.DataBind();
+                pnlSinNotificaciones.Visible = false;
 
-                case "operario":
-                    lnkInicio.Visible = true;
-                    lnkInventario.Visible = true;
-                    lnkProveedores.Visible = true;
-                    lnkOrdenes.Visible = true;
-                    break;
-
-                default:
-                    // Opcional: redirigir o mostrar error si el rol no es válido
-                    break;
+                litTotalNotifications.Text = notificaciones.Count == 1
+                    ? "1 notificación"
+                    : $"{notificaciones.Count} notificaciones";
+            }
+            else
+            {
+                rptNotificaciones.DataSource = null;
+                rptNotificaciones.DataBind();
+                pnlSinNotificaciones.Visible = true;
+                litTotalNotifications.Text = "0 notificaciones";
             }
         }
 
+        protected void btnMarcarTodasLeidas_Click(object sender, EventArgs e)
+        {
+            NotificationService.MarcarTodasComoLeidas();
+            CargarNotificaciones();
+        }
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            // Limpiar la sesión
             Session.Clear();
             Session.Abandon();
 
-            // Limpiar cookies si existen
             if (Request.Cookies["StockifyUser"] != null)
             {
                 Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(-1);
             }
 
-            // Redirigir al login
             Response.Redirect("Login.aspx");
+        }
+
+        // Método auxiliar para mostrar tiempo transcurrido
+        protected string GetTiempoTranscurrido(DateTime fecha)
+        {
+            var diferencia = DateTime.Now - fecha;
+
+            if (diferencia.TotalMinutes < 1)
+                return "Ahora mismo";
+            if (diferencia.TotalMinutes < 60)
+                return $"Hace {(int)diferencia.TotalMinutes} min";
+            if (diferencia.TotalHours < 24)
+                return $"Hace {(int)diferencia.TotalHours} h";
+            return diferencia.TotalDays < 7 ? $"Hace {(int)diferencia.TotalDays} d" : fecha.ToString("dd/MM/yyyy");
         }
     }
 }
