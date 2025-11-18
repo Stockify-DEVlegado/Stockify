@@ -243,11 +243,16 @@ namespace StockifyWeb
                 // ====== GUARDAR EN LA BASE DE DATOS ======
                 await productoClient.guardarProductoAsync(producto, estado);
 
-                // Agregar notificación y enviar correo solo si es nuevo producto
+                // ====== AGREGAR NOTIFICACIÓN ANTES DE REDIRIGIR ======
                 if (esNuevo)
                 {
                     // Notificar nuevo producto (incluye envío de correo)
                     NotificationService.NotificarNuevoProducto(producto.nombre);
+
+                    // Debug: Verificar que se guardó
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Producto agregado: {producto.nombre}");
+                    var notifs = NotificationService.ObtenerNotificaciones();
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Total en sesión: {notifs.Count}");
                 }
                 else
                 {
@@ -259,17 +264,13 @@ namespace StockifyWeb
                     );
                 }
 
-                // ====== RECARGAR Y CERRAR MODAL ======
-                await CargarProductosAsync();
+                // ====== REDIRIGIR PARA ACTUALIZAR NOTIFICACIONES ====== //
+                // Esto recarga la página completa y el Master Page carga las notificaciones
+                Response.Redirect(Request.RawUrl, false);
+                Context.ApplicationInstance.CompleteRequest();
 
-                LimpiarFormulario();
-
-                var mensaje = productoId > 0
-                    ? "Producto actualizado exitosamente."
-                    : "Producto agregado exitosamente.";
-
-                ScriptManager.RegisterStartupScript(this, GetType(), "success",
-                    $"cerrarModal(); alert('{mensaje}');", true);
+                // IMPORTANTE No colocar código después del Redirect
+                // porque no se ejecutará
             }
             catch (FormatException)
             {
