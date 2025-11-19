@@ -13,6 +13,6 @@ import pe.edu.pucp.inf30.stockify.model.almacen.Categoria;
  */
 
 public interface CategoriaDAO extends Persistible<Categoria, Integer>{
-    
+    int contarTotal();
 }
 

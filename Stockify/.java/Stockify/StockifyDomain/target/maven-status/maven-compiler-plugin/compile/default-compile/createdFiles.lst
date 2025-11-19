@@ -1,7 +1,9 @@
+pe\edu\pucp\inf30\stockify\model\dto\MovimientoMesDTO.class
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenSalida.class
 pe\edu\pucp\inf30\stockify\model\gestion\LineaOrdenSalida.class
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenIngreso.class
 pe\edu\pucp\inf30\stockify\model\almacen\TipoMovimiento.class
+pe\edu\pucp\inf30\stockify\model\dto\AlertaStockDTO.class
 pe\edu\pucp\inf30\stockify\model\gestion\LineaOrdenVenta.class
 pe\edu\pucp\inf30\stockify\model\gestion\OrdenCompra.class
 pe\edu\pucp\inf30\stockify\model\gestion\LineaOrdenIngreso.class

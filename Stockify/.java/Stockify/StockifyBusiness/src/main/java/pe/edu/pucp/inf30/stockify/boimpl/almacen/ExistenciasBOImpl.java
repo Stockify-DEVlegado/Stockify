@@ -10,6 +10,7 @@ import pe.edu.pucp.inf30.stockify.dao.almacen.ExistenciasDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.almacen.ExistenciasDAOImpl;
 import pe.edu.pucp.inf30.stockify.model.Estado;
 import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
+import pe.edu.pucp.inf30.stockify.model.dto.AlertaStockDTO;
 
 /**
  *
@@ -46,5 +47,15 @@ public class ExistenciasBOImpl implements ExistenciasBO{
         else {
             this.existenciasDao.actualizar(modelo);
         }
+    }
+    
+    @Override
+    public int obtenerStockTotal() {
+        return this.existenciasDao.obtenerStockTotal();
+    }
+
+    @Override
+    public List<AlertaStockDTO> obtenerProductosStockBajo() {
+        return this.existenciasDao.obtenerProductosStockBajo();
     }
 }

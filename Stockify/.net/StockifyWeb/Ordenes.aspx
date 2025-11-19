@@ -115,7 +115,7 @@
 
         .form-grid-compact {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 0.8rem;
             margin-bottom: 0.8rem;
         }
@@ -169,7 +169,6 @@
 
         .btn-agregar { background-color: var(--accent-green); color: white; }
         .btn-anular { background-color: var(--accent-red); color: white; }
-        .btn-editar { background-color: var(--accent-blue); color: white; }
         .btn-view { background-color: var(--accent-orange); color: white; }
 
         .table-section {
@@ -239,7 +238,7 @@
         }
 
         .accion-column {
-            width: 140px;
+            width: 80px;
             text-align: center;
         }
 
@@ -250,11 +249,11 @@
             align-items: center;
         }
 
-        .accion-column .btn-editar,
+       
         .accion-column .btn-anular {
             padding: 0.25rem 0.5rem;
             font-size: 0.7rem;
-            min-width: 55px;
+            min-width: 60px;
             white-space: nowrap;
         }
 
@@ -265,7 +264,8 @@
             font-weight: 500;
         }
 
-        .badge-procesando { background-color: var(--accent-orange); color: black; }
+        .badge-pendiente { background-color: var(--accent-orange); color: black; }
+        .badge-procesando { background-color: var(--accent-blue); color: white; }
         .badge-cancelado { background-color: var(--accent-red); color: white; }
         .badge-aceptado { background-color: var(--accent-green); color: white; }
 
@@ -325,20 +325,11 @@
                         <label>Nombre Proveedor</label>
                         <asp:DropDownList ID="ddlProveedor" runat="server">
                             <asp:ListItem Text="-- Seleccione un proveedor --" Value=""></asp:ListItem>
-                            <asp:ListItem Text="194 - BHAVANI SALES CORPORATION" Value="194"></asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <label>Número de Orden de Compra</label>
-                        <asp:TextBox ID="txtNumeroOrdenCompra" runat="server" placeholder="Número de orden"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Fecha de Orden de Compra</label>
                         <asp:TextBox ID="txtFechaOrdenCompra" runat="server" TextMode="Date"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label>Responsable</label>
-                        <asp:TextBox ID="txtResponsableCompra" runat="server" ReadOnly="true" Text="Carlos Chipana Cruz"></asp:TextBox>
                     </div>
                 </div>
 
@@ -379,7 +370,6 @@
                             <asp:BoundField DataField="Codigo" HeaderText="Código" />
                             <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre Proveedor" />
-                            <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
                             <asp:BoundField DataField="Total" HeaderText="Total" />
                             <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
@@ -390,7 +380,6 @@
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
                                     <div class="button-group">
-                                        <asp:Button ID="btnEditarCompraFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnEditarCompraFila_Click" />
                                         <asp:Button ID="btnAnularCompraFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdOrdenCompra") %>' OnClick="btnAnularCompraFila_Click" />
                                     </div>
                                 </ItemTemplate>
@@ -398,7 +387,7 @@
                         </Columns>
                         <EmptyDataTemplate>
                             <tr>
-                                <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
+                                <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
                                     No hay datos para mostrar
                                 </td>
                             </tr>
@@ -448,20 +437,11 @@
                         <label>Nombre Cliente</label>
                         <asp:DropDownList ID="ddlCliente" runat="server">
                             <asp:ListItem Text="-- Seleccione un cliente --" Value=""></asp:ListItem>
-                            <asp:ListItem Text="194 - BHAVANI SALES CORPORATION" Value="194"></asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <label>Número de Orden de Venta</label>
-                        <asp:TextBox ID="txtNumeroOrdenVenta" runat="server" placeholder="Número de orden de venta"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Fecha de Orden Venta</label>
                         <asp:TextBox ID="txtFechaOrdenVenta" runat="server" TextMode="Date"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label>Responsable</label>
-                        <asp:TextBox ID="txtResponsableVenta" runat="server" ReadOnly="true" Text="Carlos Chipana Cruz"></asp:TextBox>
                     </div>
                 </div>
 
@@ -502,7 +482,6 @@
                             <asp:BoundField DataField="Codigo" HeaderText="Código" />
                             <asp:BoundField DataField="FechaRegistrada" HeaderText="Fecha Registrada" />
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre Cliente" />
-                            <asp:BoundField DataField="Responsable" HeaderText="Responsable" />
                             <asp:BoundField DataField="Total" HeaderText="Total" />
                             <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
@@ -513,7 +492,6 @@
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
                                     <div class="button-group">
-                                        <asp:Button ID="btnEditarVentaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnEditarVentaFila_Click" />
                                         <asp:Button ID="btnAnularVentaFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdOrdenVenta") %>' OnClick="btnAnularVentaFila_Click" />
                                     </div>
                                 </ItemTemplate>
@@ -569,29 +547,29 @@
                 <div class="form-grid-compact">
                     <div class="form-group">
                         <label>Orden de Compra Asociada</label>
-                        <asp:DropDownList ID="ddlOrdenCompraIngreso" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlOrdenCompraIngreso_SelectedIndexChanged">
-                            <asp:ListItem Text="Seleccione una orden de compra" Value=""></asp:ListItem>
-                            <asp:ListItem Text="PO-2025-001 - BHAVANI SALES CORPORATION" Value="PO-2025-001"></asp:ListItem>
-                            <asp:ListItem Text="PO-2025-002 - BHAVANI SALES CORPORATION" Value="PO-2025-002"></asp:ListItem>
-                            <asp:ListItem Text="PO-2025-003 - BHAVANI SALES CORPORATION" Value="PO-2025-003"></asp:ListItem>
+                        <asp:DropDownList ID="ddlOrdenCompraIngreso" runat="server">
+                            <asp:ListItem Text="-- Seleccione una orden de compra --" Value=""></asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <label>Responsable</label>
-                        <asp:TextBox ID="txtResponsableIngreso" runat="server" placeholder="Nombre del responsable"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <label>Fecha de Ingreso</label>
                         <asp:TextBox ID="txtFechaIngreso" runat="server" TextMode="Date"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <label>Código de Ingreso</label>
-                        <asp:TextBox ID="txtCodigoIngresoInv" runat="server" ReadOnly="true" Text="ING-001"></asp:TextBox>
+                        <label>Responsable</label>
+                        <asp:DropDownList ID="ddlResponsableIngreso" runat="server">
+                            <asp:ListItem Text="-- Seleccione un responsable --" Value=""></asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                 </div>
 
-                <div class="actions-bar">
-                    <asp:Button ID="btnAgregarIngreso" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarIngreso_Click" />
+                <!-- SECCIÓN ADJUNTAR DOCUMENTO PARA INGRESO -->
+                <div class="form-group">
+                    <label>Adjuntar Documento de Ingreso</label>
+                    <div class="file-upload-section">
+                        <asp:FileUpload ID="fileDocumentoIngreso" runat="server" CssClass="file-upload" />
+                        <asp:Button ID="btnAgregarIngreso" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarIngreso_Click" />
+                    </div>
                 </div>
             </div>
 
@@ -612,7 +590,7 @@
                 </div>
                 <div class="table-responsive">
                     <asp:GridView ID="gvRegistrosIngreso" runat="server" CssClass="data-table" AutoGenerateColumns="false"
-                        DataKeyNames="Codigo" OnRowDataBound="gvRegistrosIngreso_RowDataBound">
+                        OnRowDataBound="gvRegistrosIngreso_RowDataBound" DataKeyNames="IdIngreso">
                         <Columns>
                             <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
                                 <ItemTemplate>
@@ -633,8 +611,7 @@
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
                                     <div class="button-group">
-                                        <asp:Button ID="btnEditarIngresoFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarIngresoFila_Click" />
-                                        <asp:Button ID="btnAnularIngresoFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnAnularIngresoFila_Click" />
+                                        <asp:Button ID="btnAnularIngresoFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdIngreso") %>' OnClick="btnAnularIngresoFila_Click" />
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -650,7 +627,7 @@
                 </div>
             </div>
 
-            <!-- NUEVA TABLA: Líneas de Orden de Compra Asociada -->
+            <!-- Tabla: Líneas de Orden de Compra Asociada -->
             <div class="table-section">
                 <h3>Líneas de Orden de Compra Asociada</h3>
                 <div class="table-responsive">
@@ -674,7 +651,7 @@
                         <EmptyDataTemplate>
                             <tr>
                                 <td colspan="9" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
-                                    Seleccione una orden de compra para ver los detalles
+                                    Seleccione un ingreso para ver los detalles
                                 </td>
                             </tr>
                         </EmptyDataTemplate>
@@ -683,37 +660,37 @@
             </div>
         </div>
 
-        <!-- CONTENIDO SALIDA -->
-        <div id="salidaContent" class="orden-content" runat="server">
-            <div class="form-card">
-                <div class="form-grid-compact">
-                    <div class="form-group">
-                        <label>Orden de Venta Asociada</label>
-                        <asp:DropDownList ID="ddlOrdenVentaSalida" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlOrdenVentaSalida_SelectedIndexChanged">
-                            <asp:ListItem Text="Seleccione una orden de venta" Value=""></asp:ListItem>
-                            <asp:ListItem Text="SO-2025-001 - BHAVANI SALES CORPORATION" Value="SO-2025-001"></asp:ListItem>
-                            <asp:ListItem Text="SO-2025-002 - BHAVANI SALES CORPORATION" Value="SO-2025-002"></asp:ListItem>
-                            <asp:ListItem Text="SO-2025-003 - BHAVANI SALES CORPORATION" Value="SO-2025-003"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                    <div class="form-group">
-                        <label>Responsable</label>
-                        <asp:TextBox ID="txtResponsableSalida" runat="server" placeholder="Nombre del responsable"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha de Salida</label>
-                        <asp:TextBox ID="txtFechaSalida" runat="server" TextMode="Date"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label>Código de Salida</label>
-                        <asp:TextBox ID="txtCodigoSalidaInv" runat="server" ReadOnly="true" Text="SAL-001"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="actions-bar">
-                    <asp:Button ID="btnAgregarSalida" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarSalida_Click" />
-                </div>
+<div id="salidaContent" class="orden-content" runat="server">
+    <div class="form-card">
+        <div class="form-grid-compact">
+            <div class="form-group">
+                <label>Orden de Venta Asociada</label>
+                <asp:DropDownList ID="ddlOrdenVentaSalida" runat="server">
+                    <asp:ListItem Text="-- Seleccione una orden de venta --" Value=""></asp:ListItem>
+                </asp:DropDownList>
             </div>
+            <div class="form-group">
+                <label>Fecha de Salida</label>
+                <asp:TextBox ID="txtFechaSalida" runat="server" TextMode="Date"></asp:TextBox>
+            </div>
+            <!-- ⭐ AGREGAR ESTE NUEVO CONTROL ⭐ -->
+            <div class="form-group">
+                <label>Responsable</label>
+                <asp:DropDownList ID="ddlResponsableSalida" runat="server">
+                    <asp:ListItem Text="-- Seleccione un responsable --" Value=""></asp:ListItem>
+                </asp:DropDownList>
+            </div>
+        </div>
+
+        <!-- SECCIÓN ADJUNTAR DOCUMENTO PARA SALIDA -->
+        <div class="form-group">
+            <label>Adjuntar Documento de Salida</label>
+            <div class="file-upload-section">
+                <asp:FileUpload ID="fileDocumentoSalida" runat="server" CssClass="file-upload" />
+                <asp:Button ID="btnAgregarSalida" runat="server" Text="Agregar" CssClass="btn-agregar" OnClick="btnAgregarSalida_Click" />
+            </div>
+        </div>
+    </div>
 
             <!-- BARRA DE BÚSQUEDA PARA SALIDA -->
             <div class="search-section">
@@ -732,7 +709,7 @@
                 </div>
                 <div class="table-responsive">
                     <asp:GridView ID="gvRegistrosSalida" runat="server" CssClass="data-table" AutoGenerateColumns="false"
-                        DataKeyNames="Codigo" OnRowDataBound="gvRegistrosSalida_RowDataBound">
+                        OnRowDataBound="gvRegistrosSalida_RowDataBound" DataKeyNames="IdSalida">
                         <Columns>
                             <asp:TemplateField HeaderText="" ItemStyle-CssClass="checkbox-column">
                                 <ItemTemplate>
@@ -753,15 +730,14 @@
                             <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="accion-column">
                                 <ItemTemplate>
                                     <div class="button-group">
-                                        <asp:Button ID="btnEditarSalidaFila" runat="server" Text="Editar" CssClass="btn-editar" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnEditarSalidaFila_Click" />
-                                        <asp:Button ID="btnAnularSalidaFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("Codigo") %>' OnClick="btnAnularSalidaFila_Click" />
+                                        <asp:Button ID="btnAnularSalidaFila" runat="server" Text="Anular" CssClass="btn-anular" CommandArgument='<%# Eval("IdSalida") %>' OnClick="btnAnularSalidaFila_Click" />
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>
                             <tr>
-                                <td colspan="8" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
+                                <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
                                     No hay datos para mostrar
                                 </td>
                             </tr>
@@ -770,7 +746,7 @@
                 </div>
             </div>
 
-            <!-- NUEVA TABLA: Líneas de Orden de Venta Asociada -->
+            <!-- Tabla: Líneas de Orden de Venta Asociada -->
             <div class="table-section">
                 <h3>Líneas de Orden de Venta Asociada</h3>
                 <div class="table-responsive">
@@ -794,7 +770,7 @@
                         <EmptyDataTemplate>
                             <tr>
                                 <td colspan="9" style="text-align: center; padding: 1.5rem; color: var(--txt-muted);">
-                                    Seleccione una orden de venta para ver los detalles
+                                    Seleccione una salida para ver los detalles
                                 </td>
                             </tr>
                         </EmptyDataTemplate>
@@ -805,9 +781,7 @@
     </div>
 
     <script>
-        // Agregar iconos a los botones principales usando JavaScript
         document.addEventListener('DOMContentLoaded', function () {
-            // Agregar iconos a los botones principales
             const btnCompra = document.getElementById('<%= btnCompra.ClientID %>');
             if (btnCompra) {
                 btnCompra.innerHTML = '<i class="fas fa-shopping-cart"></i> ' + btnCompra.textContent;

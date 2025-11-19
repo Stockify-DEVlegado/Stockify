@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK.CognitoIdentityProvider, Version=4.0.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
@@ -195,6 +197,7 @@
     <Compile Include="Inventario.aspx.designer.cs">
       <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NotificationService.cs" />
     <Compile Include="Ordenes.aspx.cs">
       <DependentUpon>Ordenes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -418,6 +421,39 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.importarProductosDesdeCSVResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.alertaStockDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarCategoriasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarMovimientosEntradaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarMovimientosSalidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarProductosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.contarProveedoresResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.movimientoMesDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerAlertasStockResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerMovimientosPorMesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerProductosPorRecibirResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerStockTotalResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />
