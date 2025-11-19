@@ -20,5 +20,5 @@ public interface ProductoBO extends Gestionable<Producto> {
     List<Producto> listarProductosPorCategoria(int idCategoria);
     
     int importarDesdeInputStream(InputStream inputStream, String nombreArchivo);
-    
+    int contarTotal();
 }

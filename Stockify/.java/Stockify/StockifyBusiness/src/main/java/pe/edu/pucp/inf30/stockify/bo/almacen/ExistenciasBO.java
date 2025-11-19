@@ -4,8 +4,10 @@
  */
 package pe.edu.pucp.inf30.stockify.bo.almacen;
 
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
 import pe.edu.pucp.inf30.stockify.bo.Gestionable;
+import pe.edu.pucp.inf30.stockify.model.dto.AlertaStockDTO;
 
 /**
  *
@@ -13,5 +15,6 @@ import pe.edu.pucp.inf30.stockify.bo.Gestionable;
  */
 
 public interface ExistenciasBO extends Gestionable<Existencias> {
-    
+    int obtenerStockTotal();
+    List<AlertaStockDTO> obtenerProductosStockBajo();
 }

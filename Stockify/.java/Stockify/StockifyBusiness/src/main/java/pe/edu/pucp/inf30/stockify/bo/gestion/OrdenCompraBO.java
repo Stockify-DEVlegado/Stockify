@@ -12,5 +12,5 @@ import pe.edu.pucp.inf30.stockify.model.gestion.OrdenCompra;
  * @author DEVlegado
  */
 public interface OrdenCompraBO extends Gestionable<OrdenCompra> {
-    
+    int obtenerProductosPorRecibir();
 }

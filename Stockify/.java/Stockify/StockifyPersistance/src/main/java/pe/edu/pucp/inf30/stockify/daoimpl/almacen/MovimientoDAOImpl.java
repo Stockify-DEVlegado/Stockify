@@ -10,12 +10,15 @@
     import java.sql.ResultSet;
     import java.sql.SQLException;
     import java.sql.Types;
+    import java.util.ArrayList;
+    import java.util.List;
     import pe.edu.pucp.inf30.stockify.dao.almacen.MovimientoDAO;
     import pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO;
     import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
     import pe.edu.pucp.inf30.stockify.model.almacen.TipoMovimiento;
     import pe.edu.pucp.inf30.stockify.daoimpl.gestion.LineaOrdenIngresoDAOImpl;
     import pe.edu.pucp.inf30.stockify.daoimpl.gestion.LineaOrdenSalidaDAOImpl;
+    import pe.edu.pucp.inf30.stockify.model.dto.MovimientoMesDTO;
 
     /**
      *
@@ -131,4 +134,52 @@
             movimiento.setCantidad(rs.getInt("cantidad"));
             return movimiento;
         }
+        
+        @Override
+        public int contarPorTipo(String tipo, int dias) {
+            return ejecutarComando(conn -> {
+                String procedure = tipo.equals("ENTRADA") ? 
+                    "{call contarMovimientosEntrada(?)}" : 
+                    "{call contarMovimientosSalida(?)}";
+
+                try (CallableStatement cmd = conn.prepareCall(procedure)) {
+                    cmd.setInt(1, dias);
+                    ResultSet rs = cmd.executeQuery();
+                    if (rs.next()) {
+                        return rs.getInt("total");
+                    }
+                    return 0;
+                } catch (SQLException e) {
+                    System.err.println("Error SQL en contarPorTipo: " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+        @Override
+        public List<MovimientoMesDTO> obtenerMovimientosPorMes(int meses) {
+            return ejecutarComando(conn -> {
+                try (CallableStatement cmd = conn.prepareCall("{call obtenerMovimientosPorMes(?)}")) {
+                    cmd.setInt(1, meses);
+                    ResultSet rs = cmd.executeQuery();
+                    List<MovimientoMesDTO> resultados = new ArrayList<>();
+
+                    while (rs.next()) {
+                        MovimientoMesDTO dato = new MovimientoMesDTO(
+                            rs.getString("mes"),
+                            rs.getInt("numeroMes"),
+                            rs.getInt("entradas"),
+                            rs.getInt("salidas")
+                        );
+                        resultados.add(dato);
+                    }
+                    return resultados;
+                } catch (SQLException e) {
+                    System.err.println("Error SQL en obtenerMovimientosPorMes: " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+   
+    
     }

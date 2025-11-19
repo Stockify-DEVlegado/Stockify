@@ -48,4 +48,14 @@ public class CategoriaWS {
     ) {
         this.categoriaBO.guardar(categoria, estado);
     }
+    
+    @WebMethod(operationName = "contarCategorias")
+    public int contarCategorias() {
+        try {
+            return this.categoriaBO.contarTotal();
+        } catch (Exception e) {
+            System.err.println("Error en WS contarCategorias: " + e.getMessage());
+            return 0;
+        }
+    }
 }

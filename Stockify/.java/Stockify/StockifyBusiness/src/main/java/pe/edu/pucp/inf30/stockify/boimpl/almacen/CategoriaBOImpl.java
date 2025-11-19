@@ -47,4 +47,9 @@ public class CategoriaBOImpl implements CategoriaBO{
             this.categoriaDao.actualizar(modelo);
         }
     }
+    
+    @Override
+    public int contarTotal() {
+        return this.categoriaDao.contarTotal();
+    }
 }

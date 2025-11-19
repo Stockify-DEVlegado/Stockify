@@ -223,5 +223,19 @@ public class ProductoDAOImpl extends BaseDAO<Producto> implements ProductoDAO {
         
         return insertados;
     }
-    
+    @Override
+    public int contarTotal() {
+        return ejecutarComando(conn -> {
+            try (CallableStatement cmd = conn.prepareCall("{call contarProductos()}")) {
+                ResultSet rs = cmd.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+                return 0;
+            } catch (SQLException e) {
+                System.err.println("Error SQL en contarTotal: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+        });
+    }
 }

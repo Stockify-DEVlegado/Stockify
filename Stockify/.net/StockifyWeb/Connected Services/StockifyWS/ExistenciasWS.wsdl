@@ -5,6 +5,18 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/ExistenciasWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="obtenerAlertasStock">
+    <part name="parameters" element="tns:obtenerAlertasStock" />
+  </message>
+  <message name="obtenerAlertasStockResponse">
+    <part name="parameters" element="tns:obtenerAlertasStockResponse" />
+  </message>
+  <message name="eliminarExistencias">
+    <part name="parameters" element="tns:eliminarExistencias" />
+  </message>
+  <message name="eliminarExistenciasResponse">
+    <part name="parameters" element="tns:eliminarExistenciasResponse" />
+  </message>
   <message name="listarExistencias">
     <part name="parameters" element="tns:listarExistencias" />
   </message>
@@ -23,13 +35,21 @@
   <message name="guardarExistenciasResponse">
     <part name="parameters" element="tns:guardarExistenciasResponse" />
   </message>
-  <message name="eliminarExistencias">
-    <part name="parameters" element="tns:eliminarExistencias" />
+  <message name="obtenerStockTotal">
+    <part name="parameters" element="tns:obtenerStockTotal" />
   </message>
-  <message name="eliminarExistenciasResponse">
-    <part name="parameters" element="tns:eliminarExistenciasResponse" />
+  <message name="obtenerStockTotalResponse">
+    <part name="parameters" element="tns:obtenerStockTotalResponse" />
   </message>
   <portType name="ExistenciasWS">
+    <operation name="obtenerAlertasStock">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockRequest" message="tns:obtenerAlertasStock" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerAlertasStockResponse" message="tns:obtenerAlertasStockResponse" />
+    </operation>
+    <operation name="eliminarExistencias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest" message="tns:eliminarExistencias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse" message="tns:eliminarExistenciasResponse" />
+    </operation>
     <operation name="listarExistencias">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasRequest" message="tns:listarExistencias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/listarExistenciasResponse" message="tns:listarExistenciasResponse" />
@@ -42,13 +62,31 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasRequest" message="tns:guardarExistencias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/guardarExistenciasResponse" message="tns:guardarExistenciasResponse" />
     </operation>
-    <operation name="eliminarExistencias">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasRequest" message="tns:eliminarExistencias" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/eliminarExistenciasResponse" message="tns:eliminarExistenciasResponse" />
+    <operation name="obtenerStockTotal">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalRequest" message="tns:obtenerStockTotal" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ExistenciasWS/obtenerStockTotalResponse" message="tns:obtenerStockTotalResponse" />
     </operation>
   </portType>
   <binding name="ExistenciasWSPortBinding" type="tns:ExistenciasWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerAlertasStock">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarExistencias">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="listarExistencias">
       <soap:operation soapAction="" />
       <input>
@@ -76,7 +114,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="eliminarExistencias">
+    <operation name="obtenerStockTotal">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

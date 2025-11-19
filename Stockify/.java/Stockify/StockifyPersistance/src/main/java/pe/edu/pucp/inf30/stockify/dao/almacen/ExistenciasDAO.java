@@ -4,8 +4,10 @@
  */
 package pe.edu.pucp.inf30.stockify.dao.almacen;
 
+import java.util.List;
 import pe.edu.pucp.inf30.stockify.dao.Persistible;
 import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
+import pe.edu.pucp.inf30.stockify.model.dto.AlertaStockDTO;
 
 /**
  *
@@ -13,5 +15,6 @@ import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
  */
 
 public interface ExistenciasDAO extends Persistible<Existencias, Integer>{
-    
+    int obtenerStockTotal();
+    List<AlertaStockDTO> obtenerProductosStockBajo();
 }

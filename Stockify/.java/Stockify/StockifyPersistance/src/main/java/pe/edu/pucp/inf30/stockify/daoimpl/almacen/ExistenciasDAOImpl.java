@@ -10,10 +10,13 @@
     import java.sql.ResultSet;
     import java.sql.SQLException;
     import java.sql.Types;
+    import java.util.ArrayList;
+    import java.util.List;
     import pe.edu.pucp.inf30.stockify.dao.almacen.ExistenciasDAO;
     import pe.edu.pucp.inf30.stockify.daoimpl.BaseDAO;
     import pe.edu.pucp.inf30.stockify.model.almacen.EstadoExistencias;
     import pe.edu.pucp.inf30.stockify.model.almacen.Existencias;
+    import pe.edu.pucp.inf30.stockify.model.dto.AlertaStockDTO;
 
     /**
      *
@@ -144,5 +147,46 @@
                 existencias.setMovimientoEgreso(new MovimientoDAOImpl().leer(idMovimientoEgreso));
             }
             return existencias;
+        }
+        
+        @Override
+        public int obtenerStockTotal() {
+            return ejecutarComando(conn -> {
+                try (CallableStatement cmd = conn.prepareCall("{call obtenerStockTotal()}")) {
+                    ResultSet rs = cmd.executeQuery();
+                    if (rs.next()) {
+                        return rs.getInt("stockTotal");
+                    }
+                    return 0;
+                } catch (SQLException e) {
+                    System.err.println("Error SQL en obtenerStockTotal: " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+        @Override
+        public List<AlertaStockDTO> obtenerProductosStockBajo() {
+            return ejecutarComando(conn -> {
+                try (CallableStatement cmd = conn.prepareCall("{call obtenerProductosStockBajo()}")) {
+                    ResultSet rs = cmd.executeQuery();
+                    List<AlertaStockDTO> resultados = new ArrayList<>();
+
+                    while (rs.next()) {
+                        AlertaStockDTO alerta = new AlertaStockDTO(
+                            rs.getInt("idProducto"),
+                            rs.getString("nombreProducto"),
+                            rs.getInt("stockActual"),
+                            rs.getInt("stockMinimo"),
+                            rs.getString("estado")
+                        );
+                        resultados.add(alerta);
+                    }
+                    return resultados;
+                } catch (SQLException e) {
+                    System.err.println("Error SQL en obtenerProductosStockBajo: " + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }

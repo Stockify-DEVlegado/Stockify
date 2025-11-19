@@ -90,4 +90,20 @@ public class EmpresaDAOImpl extends BaseDAO<Empresa> implements EmpresaDAO {
         empresa.setTipoEmpresa(TipoEmpresa.valueOf(rs.getString("tipoEmpresa")));
         return empresa;
     }
+    
+    @Override
+    public int contarProveedores() {
+        return ejecutarComando(conn -> {
+            try (CallableStatement cmd = conn.prepareCall("{call contarProveedores()}")) {
+                ResultSet rs = cmd.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+                return 0;
+            } catch (SQLException e) {
+                System.err.println("Error SQL en contarProveedores: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+        });
+    }
 }

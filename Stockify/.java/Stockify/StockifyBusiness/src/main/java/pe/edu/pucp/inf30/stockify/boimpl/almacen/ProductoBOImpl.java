@@ -189,4 +189,8 @@ public class ProductoBOImpl implements ProductoBO{
         return valores.toArray(new String[0]);
     }
     
+    @Override
+    public int contarTotal() {
+        return this.productoDao.contarTotal();
+    }
 }

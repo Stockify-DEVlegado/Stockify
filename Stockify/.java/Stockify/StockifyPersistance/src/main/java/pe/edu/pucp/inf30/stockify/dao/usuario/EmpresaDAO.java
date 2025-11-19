@@ -13,5 +13,5 @@ import pe.edu.pucp.inf30.stockify.model.usuario.Empresa;
  */
 
 public interface EmpresaDAO extends Persistible<Empresa, Integer> {
-    
+    int contarProveedores();
 }

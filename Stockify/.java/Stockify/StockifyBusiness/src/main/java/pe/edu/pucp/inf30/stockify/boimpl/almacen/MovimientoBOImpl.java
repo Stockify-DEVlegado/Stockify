@@ -10,6 +10,7 @@ import pe.edu.pucp.inf30.stockify.dao.almacen.MovimientoDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.almacen.MovimientoDAOImpl;
 import pe.edu.pucp.inf30.stockify.model.Estado;
 import pe.edu.pucp.inf30.stockify.model.almacen.Movimiento;
+import pe.edu.pucp.inf30.stockify.model.dto.MovimientoMesDTO;
 
 /**
  *
@@ -46,5 +47,15 @@ public class MovimientoBOImpl implements MovimientoBO{
         else {
             this.movimientoDao.actualizar(modelo);
         }
+    }
+    
+    @Override
+    public int contarPorTipo(String tipo, int dias) {
+        return this.movimientoDao.contarPorTipo(tipo, dias);
+    }
+
+    @Override
+    public List<MovimientoMesDTO> obtenerMovimientosPorMes(int meses) {
+        return this.movimientoDao.obtenerMovimientosPorMes(meses);
     }
 }
