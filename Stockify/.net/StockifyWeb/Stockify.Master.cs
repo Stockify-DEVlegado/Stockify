@@ -70,6 +70,15 @@ namespace StockifyWeb
                     lnkGestionCuentas.Visible = true;
                     break;
 
+                case "principal":
+                    lnkInicio.Visible = true;
+                    lnkInventario.Visible = true;
+                    lnkReportes.Visible = true;
+                    lnkProveedores.Visible = true;
+                    lnkOrdenes.Visible = true;
+                    lnkGestionCuentas.Visible = true;
+                    break;
+
                 case "operario":
                     lnkInicio.Visible = true;
                     lnkInventario.Visible = true;

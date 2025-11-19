@@ -23,17 +23,17 @@
   <message name="eliminarOrdenCompraResponse">
     <part name="parameters" element="tns:eliminarOrdenCompraResponse" />
   </message>
-  <message name="guardarOrdenCompra">
-    <part name="parameters" element="tns:guardarOrdenCompra" />
-  </message>
-  <message name="guardarOrdenCompraResponse">
-    <part name="parameters" element="tns:guardarOrdenCompraResponse" />
-  </message>
   <message name="obtenerOrdenCompra">
     <part name="parameters" element="tns:obtenerOrdenCompra" />
   </message>
   <message name="obtenerOrdenCompraResponse">
     <part name="parameters" element="tns:obtenerOrdenCompraResponse" />
+  </message>
+  <message name="guardarOrdenCompra">
+    <part name="parameters" element="tns:guardarOrdenCompra" />
+  </message>
+  <message name="guardarOrdenCompraResponse">
+    <part name="parameters" element="tns:guardarOrdenCompraResponse" />
   </message>
   <portType name="OrdenCompraWS">
     <operation name="obtenerProductosPorRecibir">
@@ -48,13 +48,13 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest" message="tns:eliminarOrdenCompra" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse" message="tns:eliminarOrdenCompraResponse" />
     </operation>
-    <operation name="guardarOrdenCompra">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
-    </operation>
     <operation name="obtenerOrdenCompra">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest" message="tns:obtenerOrdenCompra" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse" message="tns:obtenerOrdenCompraResponse" />
+    </operation>
+    <operation name="guardarOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
     </operation>
   </portType>
   <binding name="OrdenCompraWSPortBinding" type="tns:OrdenCompraWS">
@@ -86,7 +86,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarOrdenCompra">
+    <operation name="obtenerOrdenCompra">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -95,7 +95,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerOrdenCompra">
+    <operation name="guardarOrdenCompra">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

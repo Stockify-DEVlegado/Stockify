@@ -23,4 +23,5 @@ public interface ProductoDAO extends Persistible<Producto, Integer> {
     
     int insertarBloque(List<Producto> productos);
     int contarTotal();
+    int obtenerStockActual(int idProducto);
 }

@@ -238,4 +238,21 @@ public class ProductoDAOImpl extends BaseDAO<Producto> implements ProductoDAO {
             }
         });
     }
+    
+    @Override
+    public int obtenerStockActual(int idProducto) {
+        return ejecutarComando(conn -> {
+            try (CallableStatement cmd = conn.prepareCall("{call obtenerStockActualPorIdProducto(?)}")) {
+                cmd.setInt(1, idProducto);
+                ResultSet rs = cmd.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("stockActual");
+                }
+                return 0;
+            } catch (SQLException e) {
+                System.err.println("Error SQL en obtenerStockActual: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+        });
+    }
 }

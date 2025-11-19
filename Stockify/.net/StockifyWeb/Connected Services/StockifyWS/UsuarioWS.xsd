@@ -67,6 +67,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="ADMINISTRADOR" />
       <xs:enumeration value="OPERARIO" />
+      <xs:enumeration value="PRINCIPAL" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="estado">

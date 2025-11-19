@@ -18,6 +18,8 @@
   <xs:element name="listarProductosResponse" type="tns:listarProductosResponse" />
   <xs:element name="obtenerProducto" type="tns:obtenerProducto" />
   <xs:element name="obtenerProductoResponse" type="tns:obtenerProductoResponse" />
+  <xs:element name="obtenerStockActual" type="tns:obtenerStockActual" />
+  <xs:element name="obtenerStockActualResponse" type="tns:obtenerStockActualResponse" />
   <xs:complexType name="listarProductosOrdenadoPorCodigo">
     <xs:sequence />
   </xs:complexType>
@@ -115,6 +117,16 @@
   </xs:complexType>
   <xs:complexType name="eliminarProductoResponse">
     <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="obtenerStockActual">
+    <xs:sequence>
+      <xs:element name="idProducto" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerStockActualResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="estado">
     <xs:restriction base="xs:string">

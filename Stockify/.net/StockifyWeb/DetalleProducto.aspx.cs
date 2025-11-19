@@ -1,7 +1,5 @@
 ﻿using StockifyWeb.StockifyWS;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -27,9 +25,8 @@ namespace StockifyWeb
             {
                 if (ProductoId > 0)
                 {
-                    // Registrar tareas asíncronas
-                    RegisterAsyncTask(new PageAsyncTask(CargarCategoriasAsync));
-                    RegisterAsyncTask(new PageAsyncTask(CargarDetalleProductoAsync));
+                    CargarCategorias();
+                    CargarDetalleProducto();
                 }
                 else
                 {
@@ -38,15 +35,15 @@ namespace StockifyWeb
             }
         }
 
-        private async Task CargarCategoriasAsync()
+        private void CargarCategorias()
         {
             CategoriaWSClient categoriaClient = null;
             try
             {
                 categoriaClient = new CategoriaWSClient();
-                var response = await categoriaClient.listarCategoriasAsync();
+                var categorias = categoriaClient.listarCategorias();
 
-                ddlCategoriaEditar.DataSource = response.@return;
+                ddlCategoriaEditar.DataSource = categorias;
                 ddlCategoriaEditar.DataBind();
             }
             catch (Exception ex)
@@ -62,20 +59,19 @@ namespace StockifyWeb
             }
         }
 
-        private async Task CargarDetalleProductoAsync()
+        private void CargarDetalleProducto()
         {
             ProductoWSClient productoClient = null;
-            ExistenciasWSClient existenciasClient = null;
 
             try
             {
                 productoClient = new ProductoWSClient();
-                var response = await productoClient.obtenerProductoAsync(ProductoId);
-                var producto = response.@return;
+                productoClient.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(2);
+
+                var producto = productoClient.obtenerProducto(ProductoId);
 
                 if (producto != null)
                 {
-                    // Asignación de literales para visualización
                     litNombreProducto.Text = producto.nombre;
                     litNombre.Text = producto.nombre;
                     litIdProducto.Text = producto.idProducto.ToString();
@@ -86,7 +82,6 @@ namespace StockifyWeb
                     litStockMax.Text = producto.stockMaximo.ToString();
                     litStockMin.Text = producto.stockMinimo.ToString();
 
-                    // ====== GUARDAR DATOS EN HIDDENFIELDS PARA EL MODAL ======
                     hdnNombre.Value = producto.nombre ?? "";
                     hdnMarca.Value = producto.marca ?? "";
                     hdnPrecio.Value = producto.precioUnitario.ToString("F2");
@@ -100,22 +95,9 @@ namespace StockifyWeb
                         hdnCategoriaId.Value = producto.categoria.idCategoria.ToString();
                     }
 
-                    // Cálculo de Stock Actual
-                    existenciasClient = new ExistenciasWSClient();
-                    var existenciasResponse = await existenciasClient.listarExistenciasAsync();
-                    var existencias = existenciasResponse.@return;
-
-                    int stockActual = 0;
-                    if (existencias != null)
-                    {
-                        stockActual = existencias
-                            .Count(e => e.producto != null &&
-                                       e.producto.idProducto == producto.idProducto &&
-                                       e.estado == estadoExistencias.DISPONIBLE);
-                    }
+                    int stockActual = productoClient.obtenerStockActual(producto.idProducto);
                     litStockActual.Text = stockActual.ToString();
 
-                    // Habilitar botón de editar
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(),
                         "HabilitarBoton", "habilitarBotonEditar();", true);
                 }
@@ -127,14 +109,12 @@ namespace StockifyWeb
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al cargar detalle: {ex.Message}");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
+                    $"alert('Error al cargar detalle del producto: {ex.Message}');", true);
                 Response.Redirect("Inventario.aspx");
             }
             finally
             {
-                if (existenciasClient != null && existenciasClient.State == System.ServiceModel.CommunicationState.Opened)
-                {
-                    existenciasClient.Close();
-                }
                 if (productoClient != null && productoClient.State == System.ServiceModel.CommunicationState.Opened)
                 {
                     productoClient.Close();
@@ -142,13 +122,12 @@ namespace StockifyWeb
             }
         }
 
-        protected async void BtnGuardarCambios_Click(object sender, EventArgs e)
+        protected void BtnGuardarCambios_Click(object sender, EventArgs e)
         {
             ProductoWSClient productoClient = null;
 
             try
             {
-                // ====== VALIDACIONES ======
                 if (string.IsNullOrWhiteSpace(txtNombreEditar.Text))
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
@@ -200,7 +179,6 @@ namespace StockifyWeb
                     return;
                 }
 
-                // ====== GUARDAR CAMBIOS ======
                 if (ProductoId > 0)
                 {
                     productoClient = new ProductoWSClient();
@@ -225,9 +203,8 @@ namespace StockifyWeb
                         }
                     };
 
-                    await productoClient.guardarProductoAsync(productoModificado, estado.MODIFICADO);
+                    productoClient.guardarProducto(productoModificado, estado.MODIFICADO);
 
-                    // Mostrar mensaje de éxito y recargar
                     ScriptManager.RegisterStartupScript(this, GetType(), "success",
                         "alert('Producto actualizado exitosamente.'); window.location.href = window.location.href;", true);
                 }

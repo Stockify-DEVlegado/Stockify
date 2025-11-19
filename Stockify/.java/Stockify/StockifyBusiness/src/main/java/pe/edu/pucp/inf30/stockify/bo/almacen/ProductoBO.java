@@ -21,4 +21,5 @@ public interface ProductoBO extends Gestionable<Producto> {
     
     int importarDesdeInputStream(InputStream inputStream, String nombreArchivo);
     int contarTotal();
+    int obtenerStockActual(int idProducto);
 }

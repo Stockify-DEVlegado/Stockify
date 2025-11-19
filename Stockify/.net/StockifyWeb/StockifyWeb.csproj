@@ -454,6 +454,9 @@
     <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerStockTotalResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\StockifyWS\StockifyWeb.StockifyWS.obtenerStockActualResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\StockifyWS\UsuarioWS.wsdl" />
     <None Include="Connected Services\StockifyWS\UsuarioWS.xsd">
       <SubType>Designer</SubType>

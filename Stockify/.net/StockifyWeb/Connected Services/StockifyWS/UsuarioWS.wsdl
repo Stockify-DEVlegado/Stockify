@@ -11,11 +11,11 @@
   <message name="eliminarUsuarioResponse">
     <part name="parameters" element="tns:eliminarUsuarioResponse" />
   </message>
-  <message name="listarUsuarios">
-    <part name="parameters" element="tns:listarUsuarios" />
+  <message name="guardarUsuario">
+    <part name="parameters" element="tns:guardarUsuario" />
   </message>
-  <message name="listarUsuariosResponse">
-    <part name="parameters" element="tns:listarUsuariosResponse" />
+  <message name="guardarUsuarioResponse">
+    <part name="parameters" element="tns:guardarUsuarioResponse" />
   </message>
   <message name="obtenerUsuario">
     <part name="parameters" element="tns:obtenerUsuario" />
@@ -23,28 +23,28 @@
   <message name="obtenerUsuarioResponse">
     <part name="parameters" element="tns:obtenerUsuarioResponse" />
   </message>
-  <message name="guardarUsuario">
-    <part name="parameters" element="tns:guardarUsuario" />
+  <message name="listarUsuarios">
+    <part name="parameters" element="tns:listarUsuarios" />
   </message>
-  <message name="guardarUsuarioResponse">
-    <part name="parameters" element="tns:guardarUsuarioResponse" />
+  <message name="listarUsuariosResponse">
+    <part name="parameters" element="tns:listarUsuariosResponse" />
   </message>
   <portType name="UsuarioWS">
     <operation name="eliminarUsuario">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/eliminarUsuarioRequest" message="tns:eliminarUsuario" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/eliminarUsuarioResponse" message="tns:eliminarUsuarioResponse" />
     </operation>
-    <operation name="listarUsuarios">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest" message="tns:listarUsuarios" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse" message="tns:listarUsuariosResponse" />
+    <operation name="guardarUsuario">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest" message="tns:guardarUsuario" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse" message="tns:guardarUsuarioResponse" />
     </operation>
     <operation name="obtenerUsuario">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioRequest" message="tns:obtenerUsuario" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/obtenerUsuarioResponse" message="tns:obtenerUsuarioResponse" />
     </operation>
-    <operation name="guardarUsuario">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioRequest" message="tns:guardarUsuario" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/guardarUsuarioResponse" message="tns:guardarUsuarioResponse" />
+    <operation name="listarUsuarios">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosRequest" message="tns:listarUsuarios" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/UsuarioWS/listarUsuariosResponse" message="tns:listarUsuariosResponse" />
     </operation>
   </portType>
   <binding name="UsuarioWSPortBinding" type="tns:UsuarioWS">
@@ -58,7 +58,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="listarUsuarios">
+    <operation name="guardarUsuario">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarUsuario">
+    <operation name="listarUsuarios">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

@@ -5,18 +5,6 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/EmpresaWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarEmpresas">
-    <part name="parameters" element="tns:listarEmpresas" />
-  </message>
-  <message name="listarEmpresasResponse">
-    <part name="parameters" element="tns:listarEmpresasResponse" />
-  </message>
-  <message name="contarProveedores">
-    <part name="parameters" element="tns:contarProveedores" />
-  </message>
-  <message name="contarProveedoresResponse">
-    <part name="parameters" element="tns:contarProveedoresResponse" />
-  </message>
   <message name="obtenerEmpresa">
     <part name="parameters" element="tns:obtenerEmpresa" />
   </message>
@@ -29,21 +17,25 @@
   <message name="guardarEmpresaResponse">
     <part name="parameters" element="tns:guardarEmpresaResponse" />
   </message>
+  <message name="contarProveedores">
+    <part name="parameters" element="tns:contarProveedores" />
+  </message>
+  <message name="contarProveedoresResponse">
+    <part name="parameters" element="tns:contarProveedoresResponse" />
+  </message>
   <message name="eliminarEmpresa">
     <part name="parameters" element="tns:eliminarEmpresa" />
   </message>
   <message name="eliminarEmpresaResponse">
     <part name="parameters" element="tns:eliminarEmpresaResponse" />
   </message>
+  <message name="listarEmpresas">
+    <part name="parameters" element="tns:listarEmpresas" />
+  </message>
+  <message name="listarEmpresasResponse">
+    <part name="parameters" element="tns:listarEmpresasResponse" />
+  </message>
   <portType name="EmpresaWS">
-    <operation name="listarEmpresas">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasRequest" message="tns:listarEmpresas" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasResponse" message="tns:listarEmpresasResponse" />
-    </operation>
-    <operation name="contarProveedores">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresRequest" message="tns:contarProveedores" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresResponse" message="tns:contarProveedoresResponse" />
-    </operation>
     <operation name="obtenerEmpresa">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaRequest" message="tns:obtenerEmpresa" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/obtenerEmpresaResponse" message="tns:obtenerEmpresaResponse" />
@@ -52,31 +44,21 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/guardarEmpresaRequest" message="tns:guardarEmpresa" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/guardarEmpresaResponse" message="tns:guardarEmpresaResponse" />
     </operation>
+    <operation name="contarProveedores">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresRequest" message="tns:contarProveedores" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/contarProveedoresResponse" message="tns:contarProveedoresResponse" />
+    </operation>
     <operation name="eliminarEmpresa">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/eliminarEmpresaRequest" message="tns:eliminarEmpresa" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/eliminarEmpresaResponse" message="tns:eliminarEmpresaResponse" />
     </operation>
+    <operation name="listarEmpresas">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasRequest" message="tns:listarEmpresas" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/EmpresaWS/listarEmpresasResponse" message="tns:listarEmpresasResponse" />
+    </operation>
   </portType>
   <binding name="EmpresaWSPortBinding" type="tns:EmpresaWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarEmpresas">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="contarProveedores">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="obtenerEmpresa">
       <soap:operation soapAction="" />
       <input>
@@ -95,7 +77,25 @@
         <soap:body use="literal" />
       </output>
     </operation>
+    <operation name="contarProveedores">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="eliminarEmpresa">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarEmpresas">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

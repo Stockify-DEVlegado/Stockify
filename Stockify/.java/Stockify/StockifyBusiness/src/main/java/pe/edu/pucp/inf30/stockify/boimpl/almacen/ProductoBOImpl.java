@@ -193,4 +193,9 @@ public class ProductoBOImpl implements ProductoBO{
     public int contarTotal() {
         return this.productoDao.contarTotal();
     }
+    
+    @Override
+    public int obtenerStockActual(int idProducto) {
+        return this.productoDao.obtenerStockActual(idProducto);
+    }
 }

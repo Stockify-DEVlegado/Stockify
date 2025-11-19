@@ -5,6 +5,12 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/MovimientoWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="obtenerMovimientosPorMes">
+    <part name="parameters" element="tns:obtenerMovimientosPorMes" />
+  </message>
+  <message name="obtenerMovimientosPorMesResponse">
+    <part name="parameters" element="tns:obtenerMovimientosPorMesResponse" />
+  </message>
   <message name="contarMovimientosEntrada">
     <part name="parameters" element="tns:contarMovimientosEntrada" />
   </message>
@@ -16,12 +22,6 @@
   </message>
   <message name="contarMovimientosSalidaResponse">
     <part name="parameters" element="tns:contarMovimientosSalidaResponse" />
-  </message>
-  <message name="obtenerMovimientosPorMes">
-    <part name="parameters" element="tns:obtenerMovimientosPorMes" />
-  </message>
-  <message name="obtenerMovimientosPorMesResponse">
-    <part name="parameters" element="tns:obtenerMovimientosPorMesResponse" />
   </message>
   <message name="listarMovimientos">
     <part name="parameters" element="tns:listarMovimientos" />
@@ -48,6 +48,10 @@
     <part name="parameters" element="tns:eliminarMovimientoResponse" />
   </message>
   <portType name="MovimientoWS">
+    <operation name="obtenerMovimientosPorMes">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRequest" message="tns:obtenerMovimientosPorMes" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesResponse" message="tns:obtenerMovimientosPorMesResponse" />
+    </operation>
     <operation name="contarMovimientosEntrada">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaRequest" message="tns:contarMovimientosEntrada" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosEntradaResponse" message="tns:contarMovimientosEntradaResponse" />
@@ -55,10 +59,6 @@
     <operation name="contarMovimientosSalida">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaRequest" message="tns:contarMovimientosSalida" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/contarMovimientosSalidaResponse" message="tns:contarMovimientosSalidaResponse" />
-    </operation>
-    <operation name="obtenerMovimientosPorMes">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesRequest" message="tns:obtenerMovimientosPorMes" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/obtenerMovimientosPorMesResponse" message="tns:obtenerMovimientosPorMesResponse" />
     </operation>
     <operation name="listarMovimientos">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/MovimientoWS/listarMovimientosRequest" message="tns:listarMovimientos" />
@@ -79,6 +79,15 @@
   </portType>
   <binding name="MovimientoWSPortBinding" type="tns:MovimientoWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="obtenerMovimientosPorMes">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="contarMovimientosEntrada">
       <soap:operation soapAction="" />
       <input>
@@ -89,15 +98,6 @@
       </output>
     </operation>
     <operation name="contarMovimientosSalida">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerMovimientosPorMes">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

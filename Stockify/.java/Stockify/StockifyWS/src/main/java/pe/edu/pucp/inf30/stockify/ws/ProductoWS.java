@@ -106,4 +106,16 @@ public class ProductoWS {
             return 0;
         }
     }
+    
+    @WebMethod(operationName = "obtenerStockActual")
+    public int obtenerStockActual(
+        @WebParam(name = "idProducto") int idProducto
+    ) {
+        try {
+            return this.productoBO.obtenerStockActual(idProducto);
+        } catch (Exception e) {
+            System.err.println("Error en WS obtenerStockActual: " + e.getMessage());
+            return 0;
+        }
+    }
 }

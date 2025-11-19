@@ -1,0 +1,113 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Reporte_ProveedoresPorProducto" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e73fe8ad-96ba-4d34-a6ee-52f89aa92f68">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Stockify"/>
+	<parameter name="logo" class="java.awt.Image"/>
+	<parameter name="idProducto" class="java.lang.Integer"/>
+	<parameter name="fechaDesde" class="java.util.Date"/>
+	<parameter name="fechaHasta" class="java.util.Date"/>
+	<query language="SQL"><![CDATA[call reporteProveedoresPorProducto($P{idProducto}, $P{fechaDesde}, $P{fechaHasta})]]></query>
+	<field name="idProducto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="idProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Producto"/>
+	</field>
+	<field name="nombreProducto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Producto"/>
+	</field>
+	<field name="rucProveedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipoDocumento"/>
+		<property name="com.jaspersoft.studio.field.label" value="rucProveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Empresa"/>
+	</field>
+	<field name="nombreProveedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="razonSocial"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreProveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Empresa"/>
+	</field>
+	<field name="numeroOrdenes" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="numeroOrdenes"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroOrdenes"/>
+	</field>
+	<field name="cantidadTotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="cantidadTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidadTotal"/>
+	</field>
+	<field name="ultimaFechaCompra" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="ultimaFechaCompra"/>
+		<property name="com.jaspersoft.studio.field.label" value="ultimaFechaCompra"/>
+	</field>
+	<field name="precioUltimoUnitario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="precioUltimoUnitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioUltimoUnitario"/>
+	</field>
+	<field name="precioPromedio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="precioPromedio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioPromedio"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="82" splitType="Stretch">
+		<element kind="image" uuid="75cee634-6ae7-400f-9f41-fadd7e0709e6" x="420" y="-10" width="127" height="82">
+			<expression><![CDATA[$P{logo}]]></expression>
+		</element>
+		<element kind="staticText" uuid="bedc6b8a-1993-4038-816f-ac4ebc12fd53" x="160" y="3" width="246" height="56" fontSize="22.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Reporte de Proveedores]]></text>
+		</element>
+	</title>
+	<columnHeader height="47" splitType="Stretch">
+		<element kind="staticText" uuid="cda38e7a-2205-42fd-8d8d-7783b99362f1" x="10" y="7" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[RUC]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30601462-3bb1-4044-9e3b-a624c6636121"/>
+		</element>
+		<element kind="staticText" uuid="f512681f-5b59-400b-85ba-229053426029" x="120" y="7" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[NOMBRE]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd7a6d53-cc07-4664-9f36-4572862a806a"/>
+		</element>
+		<element kind="staticText" uuid="2a94f6b4-d488-41c8-9ff1-d9f78f84c786" x="227" y="7" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[N° ÓRDENES]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="862aefb5-7bac-4e82-bc75-90e402e9304d"/>
+		</element>
+		<element kind="staticText" uuid="bcd269ca-7c6b-4143-8039-3a236aaffd53" x="350" y="7" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Cantidad Total]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b62512a-40e8-4bf6-9c03-adcf6f72c586"/>
+		</element>
+		<element kind="staticText" uuid="61cbeea5-6c1f-4abb-b35c-33a5c4bb2fe5" x="450" y="7" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Última Fecha Compra]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="314b9553-8acd-4682-8670-aa5ae70ac41a"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<element kind="textField" uuid="c39a4983-152a-4965-b3e8-5bb02f64916d" x="10" y="14" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{rucProveedor}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30601462-3bb1-4044-9e3b-a624c6636121"/>
+			</element>
+			<element kind="textField" uuid="e14b5960-4f2e-431b-9e91-67b9231b87dd" x="120" y="14" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{nombreProveedor}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd7a6d53-cc07-4664-9f36-4572862a806a"/>
+			</element>
+			<element kind="textField" uuid="ece5b3ad-3ec7-4125-b0dc-a49dc30f4291" x="233" y="13" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{numeroOrdenes}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="862aefb5-7bac-4e82-bc75-90e402e9304d"/>
+			</element>
+			<element kind="textField" uuid="6738e4f9-c14e-4129-ba70-63e213daecc5" x="350" y="14" width="100" height="30" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{cantidadTotal}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4b62512a-40e8-4bf6-9c03-adcf6f72c586"/>
+			</element>
+			<element kind="textField" uuid="84b20150-92fb-41e4-bc77-eb564d0a6196" x="450" y="13" width="100" height="30" pattern="dd/MM/yyyy" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{ultimaFechaCompra}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="314b9553-8acd-4682-8670-aa5ae70ac41a"/>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="54" splitType="Stretch">
+		<element kind="textField" uuid="068b5582-747b-40c9-a424-36ab15dfd9aa" x="180" y="12" width="100" height="30" hTextAlign="Right">
+			<expression><![CDATA["Page " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+		<element kind="textField" uuid="c9a75e2d-0018-4e3a-8e88-090e05dba8b4" x="280" y="12" width="100" height="30" evaluationTime="Report" hTextAlign="Left">
+			<expression><![CDATA[" of " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>

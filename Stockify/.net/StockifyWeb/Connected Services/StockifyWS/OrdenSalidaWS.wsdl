@@ -5,23 +5,17 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/OrdenSalidaWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="listarOrdenesSalida">
-    <part name="parameters" element="tns:listarOrdenesSalida" />
-  </message>
-  <message name="listarOrdenesSalidaResponse">
-    <part name="parameters" element="tns:listarOrdenesSalidaResponse" />
-  </message>
   <message name="eliminarOrdenSalida">
     <part name="parameters" element="tns:eliminarOrdenSalida" />
   </message>
   <message name="eliminarOrdenSalidaResponse">
     <part name="parameters" element="tns:eliminarOrdenSalidaResponse" />
   </message>
-  <message name="obtenerOrdenSalida">
-    <part name="parameters" element="tns:obtenerOrdenSalida" />
+  <message name="listarOrdenesSalida">
+    <part name="parameters" element="tns:listarOrdenesSalida" />
   </message>
-  <message name="obtenerOrdenSalidaResponse">
-    <part name="parameters" element="tns:obtenerOrdenSalidaResponse" />
+  <message name="listarOrdenesSalidaResponse">
+    <part name="parameters" element="tns:listarOrdenesSalidaResponse" />
   </message>
   <message name="guardarOrdenSalida">
     <part name="parameters" element="tns:guardarOrdenSalida" />
@@ -29,35 +23,32 @@
   <message name="guardarOrdenSalidaResponse">
     <part name="parameters" element="tns:guardarOrdenSalidaResponse" />
   </message>
+  <message name="obtenerOrdenSalida">
+    <part name="parameters" element="tns:obtenerOrdenSalida" />
+  </message>
+  <message name="obtenerOrdenSalidaResponse">
+    <part name="parameters" element="tns:obtenerOrdenSalidaResponse" />
+  </message>
   <portType name="OrdenSalidaWS">
-    <operation name="listarOrdenesSalida">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest" message="tns:listarOrdenesSalida" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse" message="tns:listarOrdenesSalidaResponse" />
-    </operation>
     <operation name="eliminarOrdenSalida">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaRequest" message="tns:eliminarOrdenSalida" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/eliminarOrdenSalidaResponse" message="tns:eliminarOrdenSalidaResponse" />
     </operation>
-    <operation name="obtenerOrdenSalida">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaRequest" message="tns:obtenerOrdenSalida" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaResponse" message="tns:obtenerOrdenSalidaResponse" />
+    <operation name="listarOrdenesSalida">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaRequest" message="tns:listarOrdenesSalida" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/listarOrdenesSalidaResponse" message="tns:listarOrdenesSalidaResponse" />
     </operation>
     <operation name="guardarOrdenSalida">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/guardarOrdenSalidaRequest" message="tns:guardarOrdenSalida" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/guardarOrdenSalidaResponse" message="tns:guardarOrdenSalidaResponse" />
     </operation>
+    <operation name="obtenerOrdenSalida">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaRequest" message="tns:obtenerOrdenSalida" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenSalidaWS/obtenerOrdenSalidaResponse" message="tns:obtenerOrdenSalidaResponse" />
+    </operation>
   </portType>
   <binding name="OrdenSalidaWSPortBinding" type="tns:OrdenSalidaWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="listarOrdenesSalida">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="eliminarOrdenSalida">
       <soap:operation soapAction="" />
       <input>
@@ -67,7 +58,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerOrdenSalida">
+    <operation name="listarOrdenesSalida">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -77,6 +68,15 @@
       </output>
     </operation>
     <operation name="guardarOrdenSalida">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerOrdenSalida">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

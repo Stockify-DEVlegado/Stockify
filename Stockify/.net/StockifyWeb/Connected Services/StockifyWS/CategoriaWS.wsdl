@@ -5,18 +5,6 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/CategoriaWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="contarCategorias">
-    <part name="parameters" element="tns:contarCategorias" />
-  </message>
-  <message name="contarCategoriasResponse">
-    <part name="parameters" element="tns:contarCategoriasResponse" />
-  </message>
-  <message name="guardarCategoria">
-    <part name="parameters" element="tns:guardarCategoria" />
-  </message>
-  <message name="guardarCategoriaResponse">
-    <part name="parameters" element="tns:guardarCategoriaResponse" />
-  </message>
   <message name="listarCategorias">
     <part name="parameters" element="tns:listarCategorias" />
   </message>
@@ -35,15 +23,19 @@
   <message name="obtenerCategoriaResponse">
     <part name="parameters" element="tns:obtenerCategoriaResponse" />
   </message>
+  <message name="guardarCategoria">
+    <part name="parameters" element="tns:guardarCategoria" />
+  </message>
+  <message name="guardarCategoriaResponse">
+    <part name="parameters" element="tns:guardarCategoriaResponse" />
+  </message>
+  <message name="contarCategorias">
+    <part name="parameters" element="tns:contarCategorias" />
+  </message>
+  <message name="contarCategoriasResponse">
+    <part name="parameters" element="tns:contarCategoriasResponse" />
+  </message>
   <portType name="CategoriaWS">
-    <operation name="contarCategorias">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasRequest" message="tns:contarCategorias" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasResponse" message="tns:contarCategoriasResponse" />
-    </operation>
-    <operation name="guardarCategoria">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest" message="tns:guardarCategoria" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse" message="tns:guardarCategoriaResponse" />
-    </operation>
     <operation name="listarCategorias">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasRequest" message="tns:listarCategorias" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/listarCategoriasResponse" message="tns:listarCategoriasResponse" />
@@ -56,27 +48,17 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaRequest" message="tns:obtenerCategoria" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/obtenerCategoriaResponse" message="tns:obtenerCategoriaResponse" />
     </operation>
+    <operation name="guardarCategoria">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaRequest" message="tns:guardarCategoria" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/guardarCategoriaResponse" message="tns:guardarCategoriaResponse" />
+    </operation>
+    <operation name="contarCategorias">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasRequest" message="tns:contarCategorias" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/CategoriaWS/contarCategoriasResponse" message="tns:contarCategoriasResponse" />
+    </operation>
   </portType>
   <binding name="CategoriaWSPortBinding" type="tns:CategoriaWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="contarCategorias">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="guardarCategoria">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
     <operation name="listarCategorias">
       <soap:operation soapAction="" />
       <input>
@@ -96,6 +78,24 @@
       </output>
     </operation>
     <operation name="obtenerCategoria">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="guardarCategoria">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="contarCategorias">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

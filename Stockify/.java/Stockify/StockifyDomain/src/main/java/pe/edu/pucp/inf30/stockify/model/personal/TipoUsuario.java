@@ -11,5 +11,6 @@ package pe.edu.pucp.inf30.stockify.model.personal;
 
 public enum TipoUsuario {
     ADMINISTRADOR,
-    OPERARIO
+    OPERARIO,
+    PRINCIPAL
 }
