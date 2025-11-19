@@ -13,5 +13,5 @@ import pe.edu.pucp.inf30.stockify.bo.Gestionable;
  */
 
 public interface EmpresaBO extends Gestionable<Empresa> {
-    
+    int contarProveedores();
 }

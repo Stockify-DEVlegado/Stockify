@@ -69,22 +69,22 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.Label lblSalidas;
 
         /// <summary>
-        /// Control lblLeyendaCompras.
+        /// Control lblLeyendaEntradas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLeyendaCompras;
+        protected global::System.Web.UI.WebControls.Label lblLeyendaEntradas;
 
         /// <summary>
-        /// Control lblLeyendaVentas.
+        /// Control lblLeyendaSalidas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLeyendaVentas;
+        protected global::System.Web.UI.WebControls.Label lblLeyendaSalidas;
 
         /// <summary>
         /// Control rptOrdenesRecientes.
@@ -94,6 +94,15 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptOrdenesRecientes;
+
+        /// <summary>
+        /// Control pnlNoOrdenes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlNoOrdenes;
 
         /// <summary>
         /// Control lblNumProveedores.
@@ -121,5 +130,14 @@ namespace StockifyWeb
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptAlertasStock;
+
+        /// <summary>
+        /// Control pnlNoAlertas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlNoAlertas;
     }
 }

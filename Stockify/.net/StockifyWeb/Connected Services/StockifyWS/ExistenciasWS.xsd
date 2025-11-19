@@ -6,8 +6,12 @@
   <xs:element name="guardarExistenciasResponse" type="tns:guardarExistenciasResponse" />
   <xs:element name="listarExistencias" type="tns:listarExistencias" />
   <xs:element name="listarExistenciasResponse" type="tns:listarExistenciasResponse" />
+  <xs:element name="obtenerAlertasStock" type="tns:obtenerAlertasStock" />
+  <xs:element name="obtenerAlertasStockResponse" type="tns:obtenerAlertasStockResponse" />
   <xs:element name="obtenerExistencias" type="tns:obtenerExistencias" />
   <xs:element name="obtenerExistenciasResponse" type="tns:obtenerExistenciasResponse" />
+  <xs:element name="obtenerStockTotal" type="tns:obtenerStockTotal" />
+  <xs:element name="obtenerStockTotalResponse" type="tns:obtenerStockTotalResponse" />
   <xs:complexType name="listarExistencias">
     <xs:sequence />
   </xs:complexType>
@@ -166,6 +170,31 @@
       <xs:element minOccurs="0" name="ordenVenta" type="tns:ordenVenta" />
       <xs:element minOccurs="0" name="producto" type="tns:producto" />
       <xs:element name="subtotal" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerStockTotal">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="obtenerStockTotalResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="obtenerAlertasStock">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="obtenerAlertasStockResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:alertaStockDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="alertaStockDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="estado" type="xs:string" />
+      <xs:element name="idProducto" type="xs:int" />
+      <xs:element minOccurs="0" name="nombreProducto" type="xs:string" />
+      <xs:element name="stockActual" type="xs:int" />
+      <xs:element name="stockMinimo" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="eliminarExistencias">

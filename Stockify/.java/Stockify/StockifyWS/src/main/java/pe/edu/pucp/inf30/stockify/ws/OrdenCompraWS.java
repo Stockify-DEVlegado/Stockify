@@ -5,7 +5,7 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import java.util.List;
 import pe.edu.pucp.inf30.stockify.model.Estado;
-import pe.edu.pucp.inf30.stockify.bo.Gestionable;
+import pe.edu.pucp.inf30.stockify.bo.gestion.OrdenCompraBO;
 import pe.edu.pucp.inf30.stockify.boimpl.gestion.OrdenCompraBOImpl;
 import pe.edu.pucp.inf30.stockify.model.gestion.OrdenCompra;
 
@@ -16,7 +16,7 @@ import pe.edu.pucp.inf30.stockify.model.gestion.OrdenCompra;
 @WebService(serviceName = "OrdenCompraWS", 
         targetNamespace = "http://services.stockify.pucp.edu.pe/")
 public class OrdenCompraWS {
-    private final Gestionable<OrdenCompra> ordenCompraBO;
+    private final OrdenCompraBO ordenCompraBO;
     
     public OrdenCompraWS() {
         this.ordenCompraBO = new OrdenCompraBOImpl();
@@ -47,5 +47,15 @@ public class OrdenCompraWS {
         @WebParam(name = "estado") Estado estado
     ) {
         this.ordenCompraBO.guardar(ordenCompra, estado);
+    }
+    
+    @WebMethod(operationName = "obtenerProductosPorRecibir")
+    public int obtenerProductosPorRecibir() {
+        try {
+            return this.ordenCompraBO.obtenerProductosPorRecibir();
+        } catch (Exception e) {
+            System.err.println("Error en WS obtenerProductosPorRecibir: " + e.getMessage());
+            return 0;
+        }
     }
 }

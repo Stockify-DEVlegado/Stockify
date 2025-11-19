@@ -17,17 +17,17 @@
   <message name="obtenerOrdenIngresoResponse">
     <part name="parameters" element="tns:obtenerOrdenIngresoResponse" />
   </message>
-  <message name="guardarOrdenIngreso">
-    <part name="parameters" element="tns:guardarOrdenIngreso" />
-  </message>
-  <message name="guardarOrdenIngresoResponse">
-    <part name="parameters" element="tns:guardarOrdenIngresoResponse" />
-  </message>
   <message name="eliminarOrdenIngreso">
     <part name="parameters" element="tns:eliminarOrdenIngreso" />
   </message>
   <message name="eliminarOrdenIngresoResponse">
     <part name="parameters" element="tns:eliminarOrdenIngresoResponse" />
+  </message>
+  <message name="guardarOrdenIngreso">
+    <part name="parameters" element="tns:guardarOrdenIngreso" />
+  </message>
+  <message name="guardarOrdenIngresoResponse">
+    <part name="parameters" element="tns:guardarOrdenIngresoResponse" />
   </message>
   <portType name="OrdenIngresoWS">
     <operation name="listarOrdenesIngreso">
@@ -38,13 +38,13 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/obtenerOrdenIngresoRequest" message="tns:obtenerOrdenIngreso" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/obtenerOrdenIngresoResponse" message="tns:obtenerOrdenIngresoResponse" />
     </operation>
-    <operation name="guardarOrdenIngreso">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest" message="tns:guardarOrdenIngreso" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse" message="tns:guardarOrdenIngresoResponse" />
-    </operation>
     <operation name="eliminarOrdenIngreso">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoRequest" message="tns:eliminarOrdenIngreso" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/eliminarOrdenIngresoResponse" message="tns:eliminarOrdenIngresoResponse" />
+    </operation>
+    <operation name="guardarOrdenIngreso">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoRequest" message="tns:guardarOrdenIngreso" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenIngresoWS/guardarOrdenIngresoResponse" message="tns:guardarOrdenIngresoResponse" />
     </operation>
   </portType>
   <binding name="OrdenIngresoWSPortBinding" type="tns:OrdenIngresoWS">
@@ -67,7 +67,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarOrdenIngreso">
+    <operation name="eliminarOrdenIngreso">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -76,7 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="eliminarOrdenIngreso">
+    <operation name="guardarOrdenIngreso">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
