@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,10 +16,11 @@ namespace StockifyWeb
 {
     public partial class GestionCuentas : System.Web.UI.Page
     {
-        // Configuración de Cognito
-        private const string UserPoolId = "us-east-1_LIZsvOxNv";
-        private const string ClientId = "5f0hvfclu5ichnmd8r1vjs3rpl";
-        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k";
+
+        private static readonly string UserPoolId = ConfigurationManager.AppSettings["UserPoolId"];
+        private static readonly string ClientId = ConfigurationManager.AppSettings["ClientId"];
+        private static readonly string ClientSecret = ConfigurationManager.AppSettings["ClientSecret"];
+
         private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
 
         private CuentaUsuarioWSClient clienteCuenta;

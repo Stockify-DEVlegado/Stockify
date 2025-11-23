@@ -1,81 +1,89 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\",
+  "WorkspaceRootPath": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|c:\\users\\patri\\onedrive\\escritorio\\stockify\\stockify\\stockify\\.net\\stockifyweb\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|d:\\6ciclo\\programaci\u00F3n03\\stockifyfinalprog03\\stockify\\stockify\\.net\\stockifyweb\\gestioncategorias.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\gestioncategorias.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|d:\\6ciclo\\programaci\u00F3n03\\stockifyfinalprog03\\stockify\\stockify\\.net\\stockifyweb\\gestioncategorias.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\gestioncategorias.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\ordenes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\stockify.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\stockify.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\stockify.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\stockify.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\inventario.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inventario.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\gestioncuentas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\gestioncuentas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\gestioncuentas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\gestioncuentas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|d:\\6ciclo\\programaci\u00F3n03\\stockifyfinalprog03\\stockify\\stockify\\.net\\stockifyweb\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inicio.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\ordenes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\ordenes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inventario.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\inventario.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\inventario.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\gestioncuentas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\gestioncuentas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\whatsappservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\whatsappservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\whatsappservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\detalleproducto.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\detalleproducto.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\detalleproducto.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\proveedores.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\proveedores.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\proveedores.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\stockifyweb\\detalleproducto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\stockifyweb\\detalleproducto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{70E426C9-E24D-4B71-B6E4-5AB2F0AABA1A}|StockifyWeb\\StockifyWeb.csproj|solutionrelative:stockifyweb\\detalleproducto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
@@ -86,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -94,48 +102,63 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GestionCategorias.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCategorias.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\GestionCategorias.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCategorias.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\GestionCategorias.aspx.cs",
+              "ViewState": "AgIAAEABAAAAAAAAAAAswEcBAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T22:02:24.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "GestionCategorias.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCategorias.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\GestionCategorias.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCategorias.aspx",
+              "RelativeToolTip": "StockifyWeb\\GestionCategorias.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-11-23T22:01:57.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Web.config",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Web.config",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Web.config",
               "RelativeDocumentMoniker": "StockifyWeb\\Web.config",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Web.config",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Web.config",
               "RelativeToolTip": "StockifyWeb\\Web.config",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAHkAAAAdAwAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2025-11-18T06:09:53.398Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "GestionCuentas.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx.cs",
-              "RelativeDocumentMoniker": "StockifyWeb\\GestionCuentas.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx.cs",
-              "RelativeToolTip": "StockifyWeb\\GestionCuentas.aspx.cs",
-              "ViewState": "AgIAAM4CAAAAAAAAAAAzwOMCAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T09:08:36.909Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "WhatsAppService.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\WhatsAppService.cs",
-              "RelativeDocumentMoniker": "StockifyWeb\\WhatsAppService.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\WhatsAppService.cs",
-              "RelativeToolTip": "StockifyWeb\\WhatsAppService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T09:04:23.738Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "GestionCuentas.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\GestionCuentas.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx.cs",
+              "RelativeToolTip": "StockifyWeb\\GestionCuentas.aspx.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T09:08:36.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Inicio.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Inicio.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx",
               "RelativeToolTip": "StockifyWeb\\Inicio.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -143,49 +166,74 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "login.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\login.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx.cs",
               "RelativeToolTip": "StockifyWeb\\login.aspx.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAvwK8AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-12T06:40:19.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Stockify.Master",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master",
-              "RelativeDocumentMoniker": "StockifyWeb\\Stockify.Master",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master",
-              "RelativeToolTip": "StockifyWeb\\Stockify.Master",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-11-16T22:43:40.156Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "login.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx",
-              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx",
-              "RelativeToolTip": "StockifyWeb\\login.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-11-12T06:39:40.476Z",
+              "DocumentIndex": 3,
+              "Title": "Stockify.Master.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\Stockify.Master.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
+              "RelativeToolTip": "StockifyWeb\\Stockify.Master.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAswGQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T04:02:58.965Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "Stockify.Master",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master",
+              "RelativeDocumentMoniker": "StockifyWeb\\Stockify.Master",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master",
+              "RelativeToolTip": "StockifyWeb\\Stockify.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-11-16T22:43:40.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "WhatsAppService.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\WhatsAppService.cs",
+              "RelativeDocumentMoniker": "StockifyWeb\\WhatsAppService.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\WhatsAppService.cs",
+              "RelativeToolTip": "StockifyWeb\\WhatsAppService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T09:04:23.738Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "login.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx",
+              "RelativeDocumentMoniker": "StockifyWeb\\login.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\login.aspx",
+              "RelativeToolTip": "StockifyWeb\\login.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-11-12T06:39:40.476Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Inicio.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\Inicio.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inicio.aspx.cs",
               "RelativeToolTip": "StockifyWeb\\Inicio.aspx.cs",
               "ViewState": "AgIAAAYCAAAAAAAAAAAAAAYCAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -193,11 +241,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "Ordenes.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\Ordenes.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx.cs",
               "RelativeToolTip": "StockifyWeb\\Ordenes.aspx.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAOAAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -205,11 +253,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "Ordenes.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Ordenes.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Ordenes.aspx",
               "RelativeToolTip": "StockifyWeb\\Ordenes.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -217,11 +265,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Inventario.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx.cs",
               "RelativeToolTip": "StockifyWeb\\Inventario.aspx.cs",
               "ViewState": "AgIAAOYBAAAAAAAAAADwvxwCAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -229,11 +277,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "Inventario.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Inventario.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Inventario.aspx",
               "RelativeToolTip": "StockifyWeb\\Inventario.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -241,11 +289,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "NotificationService.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\NotificationService.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\NotificationService.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\NotificationService.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\NotificationService.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\NotificationService.cs",
               "RelativeToolTip": "StockifyWeb\\NotificationService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -253,23 +301,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Stockify.Master.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
-              "RelativeDocumentMoniker": "StockifyWeb\\Stockify.Master.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Stockify.Master.cs",
-              "RelativeToolTip": "StockifyWeb\\Stockify.Master.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T04:02:58.965Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "Reportes.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Reportes.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Reportes.aspx",
               "RelativeToolTip": "StockifyWeb\\Reportes.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -277,11 +313,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "DetalleProducto.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx.cs",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx.cs",
               "RelativeDocumentMoniker": "StockifyWeb\\DetalleProducto.aspx.cs",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx.cs",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx.cs",
               "RelativeToolTip": "StockifyWeb\\DetalleProducto.aspx.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAOcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -289,11 +325,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "GestionCuentas.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\GestionCuentas.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\GestionCuentas.aspx",
               "RelativeToolTip": "StockifyWeb\\GestionCuentas.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -301,11 +337,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Proveedores.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\Proveedores.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\Proveedores.aspx",
               "RelativeToolTip": "StockifyWeb\\Proveedores.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
@@ -313,11 +349,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "DetalleProducto.aspx",
-              "DocumentMoniker": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx",
+              "DocumentMoniker": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx",
               "RelativeDocumentMoniker": "StockifyWeb\\DetalleProducto.aspx",
-              "ToolTip": "C:\\Users\\patri\\OneDrive\\Escritorio\\Stockify\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx",
+              "ToolTip": "D:\\6Ciclo\\Programaci\u00F3n03\\StockifyFinalProg03\\Stockify\\Stockify\\.net\\StockifyWeb\\DetalleProducto.aspx",
               "RelativeToolTip": "StockifyWeb\\DetalleProducto.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",

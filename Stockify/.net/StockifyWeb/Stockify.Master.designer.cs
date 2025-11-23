@@ -69,6 +69,15 @@ namespace StockifyWeb
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkOrdenes;
 
         /// <summary>
+        /// Control lnkGestionCategorias.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkGestionCategorias;
+
+        /// <summary>
         /// Control lnkGestionCuentas.
         /// </summary>
         /// <remarks>

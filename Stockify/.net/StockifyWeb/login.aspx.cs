@@ -1,21 +1,23 @@
-﻿using StockifyWeb.StockifyWS;
+﻿using Amazon;
+using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
+using StockifyWeb.StockifyWS;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
-using Amazon;
-using Amazon.CognitoIdentityProvider;
-using Amazon.CognitoIdentityProvider.Model;
+using System.Web.UI.WebControls;
 
 namespace StockifyWeb
 {
     public partial class Login : Page
     {
-        private const string UserPoolId = "us-east-1_LIZsvOxNv";
-        private const string ClientId = "3ulgett49hntbsgid3a5p337si";
-        private const string ClientSecret = "5ljn9dmiu8c2enrgnq10lhc1efj7omlpp4r9i35ttoi0lp9pg6c";
+        private static readonly string UserPoolId = ConfigurationManager.AppSettings["UserPoolId"];
+        private static readonly string ClientId = ConfigurationManager.AppSettings["ClientId"];
+        private static readonly string ClientSecret = ConfigurationManager.AppSettings["ClientSecret"];
         private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
 
         private CuentaUsuarioWSClient clienteCuenta;
@@ -172,7 +174,6 @@ namespace StockifyWeb
                     var request = new RespondToAuthChallengeRequest
                     {
                         ClientId = ClientId,
-                        ChallengeName = ChallengeNameType.NEW_PASSWORD_REQUIRED,
                         Session = session,
                         ChallengeResponses = new Dictionary<string, string>
                         {

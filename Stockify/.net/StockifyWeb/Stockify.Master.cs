@@ -56,9 +56,11 @@ namespace StockifyWeb
             lnkProveedores.Visible = false;
             lnkOrdenes.Visible = false;
             lnkGestionCuentas.Visible = false;
+            lnkGestionCategorias.Visible = false; // ← AGREGADO
 
             if (string.IsNullOrEmpty(rol))
             {
+                // Si no hay sesión, redirige al login
                 Response.Redirect("Login.aspx");
                 return;
             }
@@ -72,6 +74,7 @@ namespace StockifyWeb
                     lnkProveedores.Visible = true;
                     lnkOrdenes.Visible = true;
                     lnkGestionCuentas.Visible = true;
+                    lnkGestionCategorias.Visible = true; // ← AGREGADO
                     break;
 
                 case "principal":
@@ -81,6 +84,7 @@ namespace StockifyWeb
                     lnkProveedores.Visible = true;
                     lnkOrdenes.Visible = true;
                     lnkGestionCuentas.Visible = true;
+                    lnkGestionCategorias.Visible = true; // ← AGREGADO
                     break;
 
                 case "operario":
@@ -88,9 +92,11 @@ namespace StockifyWeb
                     lnkInventario.Visible = true;
                     lnkProveedores.Visible = true;
                     lnkOrdenes.Visible = true;
+                    // Los operarios NO ven Gestión de Cuentas ni Categorías
                     break;
 
                 default:
+                    // Opcional: redirigir o mostrar error si el rol no es válido
                     break;
             }
         }
