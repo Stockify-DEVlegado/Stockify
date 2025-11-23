@@ -915,5 +915,20 @@
             }
         });
     </script>
-    
+    <script>
+        // Función para actualizar las notificaciones sin recargar la página
+        function actualizarNotificaciones() {
+            // Recargar solo el contador de la campanita
+            __doPostBack('', 'RefreshNotifications');
+        }
+
+        // Función toast opcional (si no tienes una librería de toast)
+        function mostrarToast(mensaje, tipo) {
+            // Si usas una librería como Toastr, SweetAlert, etc:
+            // toastr[tipo](mensaje);
+
+            // Si no, usa alert temporal:
+            console.log(`[${tipo.toUpperCase()}] ${mensaje}`);
+        }
+    </script>
 </asp:Content>

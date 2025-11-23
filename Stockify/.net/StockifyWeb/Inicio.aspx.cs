@@ -9,11 +9,6 @@ namespace StockifyWeb
 {
     public partial class Inicio : Page
     {
-        // ❌ ELIMINAR estas declaraciones de variables de clase
-        // private ProductoWSClient wsProducto;
-        // private ExistenciasWSClient wsExistencias;
-        // etc...
-
         // Clases DTO locales
         public class OrdenReciente
         {
@@ -31,6 +26,20 @@ namespace StockifyWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // CRÍTICO: Detectar si es una petición de notificaciones y SALIR inmediatamente
+            string eventTarget = Request["__EVENTTARGET"];
+            string eventArgument = Request["__EVENTARGUMENT"];
+
+            // Si es actualización de notificaciones o marcar como leída, NO cargar el dashboard
+            if (eventArgument == "RefreshNotifications" ||
+                eventTarget == "UpdateNotifications" ||
+                eventTarget == "MarcarLeida")
+            {
+                // NO hacer nada, el Master ya manejó la notificación
+                return;
+            }
+
+            // Cargar dashboard solo si NO es postback
             if (!IsPostBack)
             {
                 CargarDashboard();

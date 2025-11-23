@@ -19,12 +19,20 @@ namespace StockifyWeb.Services
         private static readonly string WhatsAppNumero = ConfigurationManager.AppSettings["WhatsAppNotificationNumber"];
 
         /// <summary>
-        /// Envía un mensaje de WhatsApp
+        /// Envía un mensaje de WhatsApp a un número específico o al configurado por defecto
         /// </summary>
-        public static async Task<bool> EnviarMensajeWhatsApp(string mensaje)
+        /// <param name="mensaje">Mensaje a enviar</param>
+        /// <param name="numeroDestino">Número de teléfono en formato 51XXXXXXXXX (opcional)</param>
+        public static async Task<bool> EnviarMensajeWhatsApp(string mensaje, string numeroDestino = null)
         {
             try
             {
+                // Si no se proporciona número, usar el de configuración
+                if (string.IsNullOrEmpty(numeroDestino))
+                {
+                    numeroDestino = WhatsAppNumero;
+                }
+
                 // Validar configuración
                 if (string.IsNullOrEmpty(UltramsgInstanceId) || string.IsNullOrEmpty(UltramsgToken))
                 {
@@ -32,7 +40,7 @@ namespace StockifyWeb.Services
                     return false;
                 }
 
-                if (string.IsNullOrEmpty(WhatsAppNumero))
+                if (string.IsNullOrEmpty(numeroDestino))
                 {
                     System.Diagnostics.Debug.WriteLine("[WHATSAPP] Número de destino no configurado");
                     return false;
@@ -45,7 +53,7 @@ namespace StockifyWeb.Services
 
                     // Preparar datos
                     var content = new StringContent(
-                        $"{{\"token\":\"{UltramsgToken}\",\"to\":\"{WhatsAppNumero}\",\"body\":\"{EscaparJson(mensaje)}\"}}",
+                        $"{{\"token\":\"{UltramsgToken}\",\"to\":\"{numeroDestino}\",\"body\":\"{EscaparJson(mensaje)}\"}}",
                         Encoding.UTF8,
                         "application/json"
                     );
@@ -56,13 +64,13 @@ namespace StockifyWeb.Services
 
                     if (response.IsSuccessStatusCode)
                     {
-                        System.Diagnostics.Debug.WriteLine($"[WHATSAPP] Mensaje enviado exitosamente a {WhatsAppNumero}");
+                        System.Diagnostics.Debug.WriteLine($"[WHATSAPP] ✅ Mensaje enviado exitosamente a {numeroDestino}");
                         System.Diagnostics.Debug.WriteLine($"[WHATSAPP] Respuesta: {responseBody}");
                         return true;
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine($"[WHATSAPP ERROR] Status: {response.StatusCode}");
+                        System.Diagnostics.Debug.WriteLine($"[WHATSAPP ERROR] ❌ Status: {response.StatusCode}");
                         System.Diagnostics.Debug.WriteLine($"[WHATSAPP ERROR] Respuesta: {responseBody}");
                         return false;
                     }
@@ -70,7 +78,7 @@ namespace StockifyWeb.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[WHATSAPP ERROR] {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[WHATSAPP ERROR] ❌ {ex.Message}");
                 return false;
             }
         }
@@ -78,7 +86,7 @@ namespace StockifyWeb.Services
         /// <summary>
         /// Envía notificación de nuevo producto por WhatsApp
         /// </summary>
-        public static async Task EnviarNotificacionNuevoProducto(string nombreProducto, string categoria = "Sin categoría", double precio = 0)
+        public static async Task EnviarNotificacionNuevoProducto(string nombreProducto, string categoria = "Sin categoría", double precio = 0, string numeroDestino = null)
         {
             string mensaje = $"🆕 *NUEVO PRODUCTO REGISTRADO*\n\n" +
                            $"📦 Producto: *{nombreProducto}*\n" +
@@ -87,13 +95,13 @@ namespace StockifyWeb.Services
                            $"✅ El producto ha sido agregado exitosamente al inventario.\n\n" +
                            $"_Sistema Stockify_";
 
-            await EnviarMensajeWhatsApp(mensaje);
+            await EnviarMensajeWhatsApp(mensaje, numeroDestino);
         }
 
         /// <summary>
         /// Envía alerta de stock bajo por WhatsApp
         /// </summary>
-        public static async Task EnviarAlertaStockBajo(string nombreProducto, int stockActual, int stockMinimo)
+        public static async Task EnviarAlertaStockBajo(string nombreProducto, int stockActual, int stockMinimo, string numeroDestino = null)
         {
             string mensaje = $"⚠️ *ALERTA DE STOCK BAJO*\n\n" +
                            $"📦 Producto: *{nombreProducto}*\n" +
@@ -102,45 +110,45 @@ namespace StockifyWeb.Services
                            $"🔔 Se recomienda reabastecer este producto.\n\n" +
                            $"_Sistema Stockify_";
 
-            await EnviarMensajeWhatsApp(mensaje);
+            await EnviarMensajeWhatsApp(mensaje, numeroDestino);
         }
 
         /// <summary>
         /// Envía notificación de producto eliminado
         /// </summary>
-        public static async Task EnviarNotificacionProductoEliminado(string nombreProducto)
+        public static async Task EnviarNotificacionProductoEliminado(string nombreProducto, string numeroDestino = null)
         {
             string mensaje = $"🗑️ *PRODUCTO ELIMINADO*\n\n" +
                            $"📦 Producto: *{nombreProducto}*\n\n" +
                            $"❌ El producto ha sido eliminado del inventario.\n\n" +
                            $"_Sistema Stockify_";
 
-            await EnviarMensajeWhatsApp(mensaje);
+            await EnviarMensajeWhatsApp(mensaje, numeroDestino);
         }
 
         /// <summary>
         /// Envía notificación de producto actualizado
         /// </summary>
-        public static async Task EnviarNotificacionProductoActualizado(string nombreProducto)
+        public static async Task EnviarNotificacionProductoActualizado(string nombreProducto, string numeroDestino = null)
         {
             string mensaje = $"✏️ *PRODUCTO ACTUALIZADO*\n\n" +
                            $"📦 Producto: *{nombreProducto}*\n\n" +
                            $"✅ La información del producto ha sido actualizada.\n\n" +
                            $"_Sistema Stockify_";
 
-            await EnviarMensajeWhatsApp(mensaje);
+            await EnviarMensajeWhatsApp(mensaje, numeroDestino);
         }
 
         /// <summary>
         /// Envía mensaje de prueba
         /// </summary>
-        public static async Task<bool> EnviarMensajePrueba()
+        public static async Task<bool> EnviarMensajePrueba(string numeroDestino = null)
         {
             string mensaje = "🧪 *MENSAJE DE PRUEBA*\n\n" +
                            "✅ La integración con WhatsApp está funcionando correctamente.\n\n" +
                            "_Sistema Stockify_";
 
-            return await EnviarMensajeWhatsApp(mensaje);
+            return await EnviarMensajeWhatsApp(mensaje, numeroDestino);
         }
 
         /// <summary>

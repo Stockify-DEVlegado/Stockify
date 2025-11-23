@@ -29,8 +29,6 @@ namespace StockifyWeb
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error en carga inicial: {ex.Message}");
-                ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
-                    $"alert('Error al cargar datos: {ex.Message}');", true);
             }
         }
 
@@ -143,28 +141,28 @@ namespace StockifyWeb
                 if (string.IsNullOrWhiteSpace(txtProductName.Text))
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "abrirModal(); alert('Por favor, ingrese el nombre del producto.');", true);
+                        "abrirModal(); mostrarToast('Por favor, ingrese el nombre del producto.', 'error');", true);
                     return;
                 }
 
                 if (ddlCategoria.SelectedValue == "0")
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "abrirModal(); alert('Por favor, seleccione una categoría.');", true);
+                        "abrirModal(); mostrarToast('Por favor, seleccione una categoría.', 'error');", true);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "abrirModal(); alert('Por favor, ingrese el precio unitario.');", true);
+                        "abrirModal(); mostrarToast('Por favor, ingrese el precio unitario.', 'error');", true);
                     return;
                 }
 
                 if (!double.TryParse(txtPrecioUnitario.Text, out var precioUnitario) || precioUnitario <= 0)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "abrirModal(); alert('Por favor, ingrese un precio válido mayor a 0.');", true);
+                        "abrirModal(); mostrarToast('Por favor, ingrese un precio válido mayor a 0.', 'error');", true);
                     return;
                 }
 
@@ -174,7 +172,7 @@ namespace StockifyWeb
                     if (!int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "abrirModal(); alert('Por favor, ingrese un stock mínimo válido (número entero mayor o igual a 0).');", true);
+                            "abrirModal(); mostrarToast('Por favor, ingrese un stock mínimo válido.', 'error');", true);
                         return;
                     }
                 }
@@ -185,7 +183,7 @@ namespace StockifyWeb
                     if (!int.TryParse(txtStockMaximo.Text, out stockMaximo) || stockMaximo < 0)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "abrirModal(); alert('Por favor, ingrese un stock máximo válido (número entero mayor o igual a 0).');", true);
+                            "abrirModal(); mostrarToast('Por favor, ingrese un stock máximo válido.', 'error');", true);
                         return;
                     }
                 }
@@ -193,7 +191,7 @@ namespace StockifyWeb
                 if (stockMaximo > 0 && stockMinimo > stockMaximo)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "abrirModal(); alert('El stock máximo debe ser mayor o igual al stock mínimo.');", true);
+                        "abrirModal(); mostrarToast('El stock máximo debe ser mayor o igual al stock mínimo.', 'error');", true);
                     return;
                 }
 
@@ -248,7 +246,7 @@ namespace StockifyWeb
 
                 System.Diagnostics.Debug.WriteLine("[GUARDAR] Producto guardado exitosamente");
 
-                // ====== NOTIFICACIONES ======
+                // ====== NOTIFICACIONES (SIN AWAIT - DISPARO Y OLVIDO) ======
                 if (esNuevo)
                 {
                     NotificationService.NotificarNuevoProducto(
@@ -267,22 +265,22 @@ namespace StockifyWeb
                 // ====== RECARGAR DATOS ======
                 CargarProductos();
 
-                // ====== CERRAR MODAL Y MOSTRAR ÉXITO ======
+                // ====== CERRAR MODAL Y REFRESCAR CAMPANITA (SIN ALERT) ======
                 ScriptManager.RegisterStartupScript(this, GetType(), "successSave",
-                    "cerrarModal(); alert('✅ Producto guardado exitosamente!');", true);
+                    "cerrarModal(); actualizarNotificaciones();", true);
             }
             catch (FormatException)
             {
                 System.Diagnostics.Debug.WriteLine("[GUARDAR] Error de formato");
                 ScriptManager.RegisterStartupScript(this, GetType(), "errorFormat",
-                    "abrirModal(); alert('❌ Error: Formato de datos incorrecto. Verifique los valores numéricos.');", true);
+                    "abrirModal(); mostrarToast('Error: Formato de datos incorrecto. Verifique los valores numéricos.', 'error');", true);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[GUARDAR] Error: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"[GUARDAR] StackTrace: {ex.StackTrace}");
                 ScriptManager.RegisterStartupScript(this, GetType(), "errorSave",
-                    $"abrirModal(); alert('❌ Error al guardar el producto. Por favor, intente nuevamente.');", true);
+                    "abrirModal(); mostrarToast('Error al guardar el producto. Por favor, intente nuevamente.', 'error');", true);
             }
             finally
             {
@@ -306,7 +304,7 @@ namespace StockifyWeb
                     if (!fuCSV.HasFile)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
-                            "abrirModalImportar(); alert('⚠ Por favor selecciona un archivo CSV.');", true);
+                            "abrirModalImportar(); mostrarToast('Por favor selecciona un archivo CSV.', 'warning');", true);
                         return;
                     }
 
@@ -314,14 +312,14 @@ namespace StockifyWeb
                     if (extension != ".csv")
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
-                            "abrirModalImportar(); alert('⚠ Solo se permiten archivos CSV.');", true);
+                            "abrirModalImportar(); mostrarToast('Solo se permiten archivos CSV.', 'warning');", true);
                         return;
                     }
 
                     if (fuCSV.PostedFile.ContentLength > 10485760)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
-                            "abrirModalImportar(); alert('⚠ El archivo es demasiado grande. Máximo 10MB.');", true);
+                            "abrirModalImportar(); mostrarToast('El archivo es demasiado grande. Máximo 10MB.', 'warning');", true);
                         return;
                     }
 
@@ -337,7 +335,7 @@ namespace StockifyWeb
                     CargarProductos();
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "successImport",
-                        $"cerrarModalImportar(); alert('✅ Importación exitosa!\\n\\nSe importaron {productosImportados} productos correctamente.');",
+                        $"cerrarModalImportar(); mostrarToast('Importación exitosa! Se importaron {productosImportados} productos.', 'success'); actualizarNotificaciones();",
                         true);
                 }
                 catch (System.ServiceModel.FaultException<System.ServiceModel.ExceptionDetail> faultEx)
@@ -347,26 +345,22 @@ namespace StockifyWeb
 
                     if (mensajeError.Contains("Error en la inserción masiva"))
                     {
-                        mensajeError = "Error en la base de datos. Verifica que todos los datos del CSV sean válidos.\\n\\n" +
-                                      "Ningún producto fue insertado (transacción revertida).";
+                        mensajeError = "Error en la base de datos. Ningún producto fue insertado.";
                     }
                     else if (mensajeError.Contains("Error al parsear"))
                     {
-                        mensajeError = "Error al leer el archivo CSV. Verifica el formato:\\n" +
-                                      "- Primera fila debe ser el encabezado\\n" +
-                                      "- 7 columnas: nombre,descripcion,marca,stockMinimo,stockMaximo,precioUnitario,idCategoria\\n" +
-                                      "- Valores numéricos válidos";
+                        mensajeError = "Error al leer el archivo CSV. Verifica el formato.";
                     }
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
-                        $"abrirModalImportar(); alert('❌ Error al importar productos:\\n\\n{mensajeError}');",
+                        $"abrirModalImportar(); mostrarToast('Error al importar: {mensajeError}', 'error');",
                         true);
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error al importar CSV: {ex.Message}");
                     ScriptManager.RegisterStartupScript(this, GetType(), "errorImport",
-                        "abrirModalImportar(); alert('❌ Error inesperado al importar productos. Por favor, intenta nuevamente.');",
+                        "abrirModalImportar(); mostrarToast('Error inesperado al importar productos.', 'error');",
                         true);
                 }
             }
@@ -388,17 +382,25 @@ namespace StockifyWeb
                     var productoId = int.Parse(hdnProductoIdEliminar.Value);
                     if (productoId <= 0) return;
 
+                    // Obtener nombre del producto antes de eliminarlo
+                    var producto = productoClient.obtenerProducto(productoId);
+                    string nombreProducto = producto?.nombre ?? "Producto";
+
                     productoClient.eliminarProducto(productoId);
+
+                    // Notificar eliminación
+                    NotificationService.NotificarProductoEliminado(nombreProducto);
+
                     CargarProductos();
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "successDelete",
-                        "cerrarModalEliminar(); alert('✅ Producto eliminado exitosamente.');", true);
+                        "cerrarModalEliminar(); actualizarNotificaciones();", true);
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error al eliminar producto: {ex.Message}");
                     ScriptManager.RegisterStartupScript(this, GetType(), "errorDelete",
-                        "cerrarModalEliminar(); alert('❌ Error al eliminar el producto. Por favor, intente nuevamente.');", true);
+                        "cerrarModalEliminar(); mostrarToast('Error al eliminar el producto.', 'error');", true);
                 }
             }
         }
@@ -449,8 +451,6 @@ namespace StockifyWeb
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error al cargar productos ordenados: {ex.Message}");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
-                        $"alert('Error al cargar productos: {ex.Message}');", true);
                 }
             }
         }
@@ -507,8 +507,6 @@ namespace StockifyWeb
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"Error al cargar productos por categoría: {ex.Message}");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "errorCarga",
-                        $"alert('Error al cargar productos: {ex.Message}');", true);
                 }
             }
         }

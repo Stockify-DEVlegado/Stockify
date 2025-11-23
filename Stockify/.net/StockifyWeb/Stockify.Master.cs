@@ -7,37 +7,42 @@ namespace StockifyWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Verificar si hay una sesión activa
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+            // IMPORTANTE: Manejar actualización de notificaciones ANTES de cualquier otra cosa
+            string eventTarget = Request["__EVENTTARGET"];
+            string eventArgument = Request["__EVENTARGUMENT"];
+
+            // Si es una solicitud de actualización de notificaciones
+            if (eventArgument == "RefreshNotifications" || eventTarget == "UpdateNotifications")
+            {
+                CargarNotificaciones();
+                return; // SALIR inmediatamente para NO ejecutar Page_Load de las páginas hijas
+            }
+
+            // Si es marcar como leída
+            if (eventTarget == "MarcarLeida" && !string.IsNullOrEmpty(eventArgument))
+            {
+                int notifId = int.Parse(eventArgument);
+                NotificationService.MarcarComoLeida(notifId);
+                CargarNotificaciones();
+                return; // SALIR inmediatamente
+            }
+
+            // Cargar datos iniciales solo la primera vez
             if (!IsPostBack)
             {
-
                 AplicarPermisosPorRol();
-
-                // Verificar si hay una sesión activa
-                if (Session["Usuario"] == null)
-                {
-                    // Si no hay sesión, redirigir al login
-                    Response.Redirect("Login.aspx");
-                }
-                else
-                {
-                    // Mostrar el nombre del usuario
-                    lblUsuario.Text = Session["Usuario"].ToString();
-                }
-
-                CargarNotificaciones();
+                lblUsuario.Text = Session["Usuario"].ToString();
             }
-            else
-            {
-                string eventTarget = Request["__EVENTTARGET"];
-                string eventArgument = Request["__EVENTARGUMENT"];
 
-                if (eventTarget == "MarcarLeida" && !string.IsNullOrEmpty(eventArgument))
-                {
-                    int notifId = int.Parse(eventArgument);
-                    NotificationService.MarcarComoLeida(notifId);
-                    CargarNotificaciones();
-                }
-            }
+            // Siempre cargar notificaciones
+            CargarNotificaciones();
         }
 
         private void AplicarPermisosPorRol()
@@ -54,7 +59,6 @@ namespace StockifyWeb
 
             if (string.IsNullOrEmpty(rol))
             {
-                // Si no hay sesión, redirige al login
                 Response.Redirect("Login.aspx");
                 return;
             }
@@ -87,25 +91,20 @@ namespace StockifyWeb
                     break;
 
                 default:
-                    // Opcional: redirigir o mostrar error si el rol no es válido
                     break;
             }
         }
 
-
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            // Limpiar la sesión
             Session.Clear();
             Session.Abandon();
 
-            // Limpiar cookies si existen
             if (Request.Cookies["StockifyUser"] != null)
             {
                 Response.Cookies["StockifyUser"].Expires = DateTime.Now.AddDays(-1);
             }
 
-            // Redirigir al login
             Response.Redirect("Login.aspx");
         }
 
@@ -151,7 +150,6 @@ namespace StockifyWeb
             CargarNotificaciones();
         }
 
-        // Método auxiliar para mostrar tiempo transcurrido
         protected string GetTiempoTranscurrido(DateTime fecha)
         {
             var diferencia = DateTime.Now - fecha;
@@ -164,6 +162,5 @@ namespace StockifyWeb
                 return $"Hace {(int)diferencia.TotalHours} h";
             return diferencia.TotalDays < 7 ? $"Hace {(int)diferencia.TotalDays} d" : fecha.ToString("dd/MM/yyyy");
         }
-
     }
 }
