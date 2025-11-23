@@ -5,29 +5,11 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/ProductoWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="importarProductosDesdeCSV">
-    <part name="parameters" element="tns:importarProductosDesdeCSV" />
+  <message name="guardarProducto">
+    <part name="parameters" element="tns:guardarProducto" />
   </message>
-  <message name="importarProductosDesdeCSVResponse">
-    <part name="parameters" element="tns:importarProductosDesdeCSVResponse" />
-  </message>
-  <message name="listarProductosOrdenadoPorCodigo">
-    <part name="parameters" element="tns:listarProductosOrdenadoPorCodigo" />
-  </message>
-  <message name="listarProductosOrdenadoPorCodigoResponse">
-    <part name="parameters" element="tns:listarProductosOrdenadoPorCodigoResponse" />
-  </message>
-  <message name="listarProductosOrdenadoPorNombre">
-    <part name="parameters" element="tns:listarProductosOrdenadoPorNombre" />
-  </message>
-  <message name="listarProductosOrdenadoPorNombreResponse">
-    <part name="parameters" element="tns:listarProductosOrdenadoPorNombreResponse" />
-  </message>
-  <message name="listarProductosPorCategoria">
-    <part name="parameters" element="tns:listarProductosPorCategoria" />
-  </message>
-  <message name="listarProductosPorCategoriaResponse">
-    <part name="parameters" element="tns:listarProductosPorCategoriaResponse" />
+  <message name="guardarProductoResponse">
+    <part name="parameters" element="tns:guardarProductoResponse" />
   </message>
   <message name="eliminarProducto">
     <part name="parameters" element="tns:eliminarProducto" />
@@ -41,18 +23,6 @@
   <message name="listarProductosResponse">
     <part name="parameters" element="tns:listarProductosResponse" />
   </message>
-  <message name="guardarProducto">
-    <part name="parameters" element="tns:guardarProducto" />
-  </message>
-  <message name="guardarProductoResponse">
-    <part name="parameters" element="tns:guardarProductoResponse" />
-  </message>
-  <message name="obtenerStockActual">
-    <part name="parameters" element="tns:obtenerStockActual" />
-  </message>
-  <message name="obtenerStockActualResponse">
-    <part name="parameters" element="tns:obtenerStockActualResponse" />
-  </message>
   <message name="obtenerProducto">
     <part name="parameters" element="tns:obtenerProducto" />
   </message>
@@ -65,22 +35,40 @@
   <message name="contarProductosResponse">
     <part name="parameters" element="tns:contarProductosResponse" />
   </message>
+  <message name="obtenerStockActual">
+    <part name="parameters" element="tns:obtenerStockActual" />
+  </message>
+  <message name="obtenerStockActualResponse">
+    <part name="parameters" element="tns:obtenerStockActualResponse" />
+  </message>
+  <message name="listarProductosPorCategoria">
+    <part name="parameters" element="tns:listarProductosPorCategoria" />
+  </message>
+  <message name="listarProductosPorCategoriaResponse">
+    <part name="parameters" element="tns:listarProductosPorCategoriaResponse" />
+  </message>
+  <message name="listarProductosOrdenadoPorNombre">
+    <part name="parameters" element="tns:listarProductosOrdenadoPorNombre" />
+  </message>
+  <message name="listarProductosOrdenadoPorNombreResponse">
+    <part name="parameters" element="tns:listarProductosOrdenadoPorNombreResponse" />
+  </message>
+  <message name="listarProductosOrdenadoPorCodigo">
+    <part name="parameters" element="tns:listarProductosOrdenadoPorCodigo" />
+  </message>
+  <message name="listarProductosOrdenadoPorCodigoResponse">
+    <part name="parameters" element="tns:listarProductosOrdenadoPorCodigoResponse" />
+  </message>
+  <message name="importarProductosDesdeCSV">
+    <part name="parameters" element="tns:importarProductosDesdeCSV" />
+  </message>
+  <message name="importarProductosDesdeCSVResponse">
+    <part name="parameters" element="tns:importarProductosDesdeCSVResponse" />
+  </message>
   <portType name="ProductoWS">
-    <operation name="importarProductosDesdeCSV">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest" message="tns:importarProductosDesdeCSV" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" message="tns:importarProductosDesdeCSVResponse" />
-    </operation>
-    <operation name="listarProductosOrdenadoPorCodigo">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoRequest" message="tns:listarProductosOrdenadoPorCodigo" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoResponse" message="tns:listarProductosOrdenadoPorCodigoResponse" />
-    </operation>
-    <operation name="listarProductosOrdenadoPorNombre">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreRequest" message="tns:listarProductosOrdenadoPorNombre" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreResponse" message="tns:listarProductosOrdenadoPorNombreResponse" />
-    </operation>
-    <operation name="listarProductosPorCategoria">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRequest" message="tns:listarProductosPorCategoria" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaResponse" message="tns:listarProductosPorCategoriaResponse" />
+    <operation name="guardarProducto">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/guardarProductoRequest" message="tns:guardarProducto" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/guardarProductoResponse" message="tns:guardarProductoResponse" />
     </operation>
     <operation name="eliminarProducto">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/eliminarProductoRequest" message="tns:eliminarProducto" />
@@ -90,14 +78,6 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosRequest" message="tns:listarProductos" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosResponse" message="tns:listarProductosResponse" />
     </operation>
-    <operation name="guardarProducto">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/guardarProductoRequest" message="tns:guardarProducto" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/guardarProductoResponse" message="tns:guardarProductoResponse" />
-    </operation>
-    <operation name="obtenerStockActual">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerStockActualRequest" message="tns:obtenerStockActual" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerStockActualResponse" message="tns:obtenerStockActualResponse" />
-    </operation>
     <operation name="obtenerProducto">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerProductoRequest" message="tns:obtenerProducto" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerProductoResponse" message="tns:obtenerProductoResponse" />
@@ -106,37 +86,30 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosRequest" message="tns:contarProductos" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/contarProductosResponse" message="tns:contarProductosResponse" />
     </operation>
+    <operation name="obtenerStockActual">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerStockActualRequest" message="tns:obtenerStockActual" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/obtenerStockActualResponse" message="tns:obtenerStockActualResponse" />
+    </operation>
+    <operation name="listarProductosPorCategoria">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaRequest" message="tns:listarProductosPorCategoria" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosPorCategoriaResponse" message="tns:listarProductosPorCategoriaResponse" />
+    </operation>
+    <operation name="listarProductosOrdenadoPorNombre">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreRequest" message="tns:listarProductosOrdenadoPorNombre" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorNombreResponse" message="tns:listarProductosOrdenadoPorNombreResponse" />
+    </operation>
+    <operation name="listarProductosOrdenadoPorCodigo">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoRequest" message="tns:listarProductosOrdenadoPorCodigo" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/listarProductosOrdenadoPorCodigoResponse" message="tns:listarProductosOrdenadoPorCodigoResponse" />
+    </operation>
+    <operation name="importarProductosDesdeCSV">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVRequest" message="tns:importarProductosDesdeCSV" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/ProductoWS/importarProductosDesdeCSVResponse" message="tns:importarProductosDesdeCSVResponse" />
+    </operation>
   </portType>
   <binding name="ProductoWSPortBinding" type="tns:ProductoWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="importarProductosDesdeCSV">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarProductosOrdenadoPorCodigo">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarProductosOrdenadoPorNombre">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarProductosPorCategoria">
+    <operation name="guardarProducto">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -163,7 +136,16 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarProducto">
+    <operation name="obtenerProducto">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="contarProductos">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -181,7 +163,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="obtenerProducto">
+    <operation name="listarProductosPorCategoria">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -190,7 +172,25 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="contarProductos">
+    <operation name="listarProductosOrdenadoPorNombre">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarProductosOrdenadoPorCodigo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="importarProductosDesdeCSV">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

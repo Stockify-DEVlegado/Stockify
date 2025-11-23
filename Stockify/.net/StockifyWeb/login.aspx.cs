@@ -14,8 +14,8 @@ namespace StockifyWeb
     public partial class Login : Page
     {
         private const string UserPoolId = "us-east-1_LIZsvOxNv";
-        private const string ClientId = "5f0hvfclu5ichnmd8r1vjs3rpl";
-        private const string ClientSecret = "1sbcm6efocmo314c8re3dqkg6pj2fhi984vfc95vcd431q0s5a6k";
+        private const string ClientId = "3ulgett49hntbsgid3a5p337si";
+        private const string ClientSecret = "5ljn9dmiu8c2enrgnq10lhc1efj7omlpp4r9i35ttoi0lp9pg6c";
         private static readonly RegionEndpoint CognitoRegion = RegionEndpoint.USEast1;
 
         private CuentaUsuarioWSClient clienteCuenta;

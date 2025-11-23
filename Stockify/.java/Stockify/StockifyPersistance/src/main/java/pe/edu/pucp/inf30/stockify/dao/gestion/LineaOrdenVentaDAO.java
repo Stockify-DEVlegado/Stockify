@@ -11,12 +11,12 @@ import pe.edu.pucp.inf30.stockify.model.gestion.LineaOrdenVenta;
 
 /**
  *
- * @author DEVlegado
+// * @author DEVlegado
  */
 
 public interface LineaOrdenVentaDAO extends PersistibleTransaccional<LineaOrdenVenta, Integer> {
     
     List<LineaOrdenVenta> leerTodosPorOrden(int idOrden);
     List<LineaOrdenVenta> leerTodosPorOrden(int idOrden,Connection conn);
-    
+    int insertarBloque(List<LineaOrdenVenta> lineas, int idOrdenVenta);
 }

@@ -1,363 +1,751 @@
 ﻿using StockifyWeb.StockifyWS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace StockifyWeb
 {
     public partial class Ordenes : System.Web.UI.Page
     {
+        // Enum para tipos de orden
+        private enum TipoOrden { Compra, Venta, Ingreso, Salida }
+
+        // Servicios
         private OrdenCompraWSClient ordenCompraService;
         private OrdenVentaWSClient ordenVentaService;
         private EmpresaWSClient empresaService;
         private OrdenIngresoWSClient ingresoService;
         private OrdenSalidaWSClient salidaService;
+        private UsuarioWSClient usuarioService;
+        private LineaOrdenCompraWSClient lineaOrdenCompraService;
+        private LineaOrdenVentaWSClient lineaOrdenVentaService;
+
+        // Propiedades para trackear las órdenes seleccionadas
+        private int OrdenCompraSeleccionadaId
+        {
+            get => ViewState["OrdenCompraSeleccionadaId"] as int? ?? 0;
+            set
+            {
+                ViewState["OrdenCompraSeleccionadaId"] = value;
+                if (hdnOrdenCompraSeleccionada != null)
+                    hdnOrdenCompraSeleccionada.Value = value.ToString();
+            }
+        }
+
+        private int OrdenVentaSeleccionadaId
+        {
+            get => ViewState["OrdenVentaSeleccionadaId"] as int? ?? 0;
+            set
+            {
+                ViewState["OrdenVentaSeleccionadaId"] = value;
+                if (hdnOrdenVentaSeleccionada != null)
+                    hdnOrdenVentaSeleccionada.Value = value.ToString();
+            }
+        }
+
+        // Configuración de controles por tipo de orden
+        private class ConfiguracionOrden
+        {
+            public GridView GridPrincipal { get; set; }
+            public GridView GridDetalle { get; set; }
+            public TextBox TxtFecha { get; set; }
+            public FileUpload FileUpload { get; set; }
+            public DropDownList DdlPrincipal { get; set; }
+            public DropDownList DdlResponsable { get; set; }
+            public HtmlGenericControl Contenedor { get; set; }
+            public Button BtnModo { get; set; }
+        }
+
+        private Dictionary<TipoOrden, ConfiguracionOrden> configuraciones;
 
         protected void Page_Load(object sender, EventArgs e)
+        {
+            InicializarServicios();
+            InicializarConfiguraciones();
+
+            if (!IsPostBack)
+            {
+                MostrarSeccion(TipoOrden.Compra);
+                CargarDatosIniciales();
+            }
+        }
+
+        #region INICIALIZACIÓN
+
+        private void InicializarServicios()
         {
             ordenCompraService = new OrdenCompraWSClient();
             ordenVentaService = new OrdenVentaWSClient();
             empresaService = new EmpresaWSClient();
             ingresoService = new OrdenIngresoWSClient();
             salidaService = new OrdenSalidaWSClient();
+            usuarioService = new UsuarioWSClient();
+            lineaOrdenCompraService = new LineaOrdenCompraWSClient();
+            lineaOrdenVentaService = new LineaOrdenVentaWSClient();
+        }
 
-            if (!IsPostBack)
+        private void InicializarConfiguraciones()
+        {
+            configuraciones = new Dictionary<TipoOrden, ConfiguracionOrden>
             {
-                MostrarCompra();
-                CargarDatosIniciales();
-            }
+                [TipoOrden.Compra] = new ConfiguracionOrden
+                {
+                    GridPrincipal = gvOrdenesCompra,
+                    GridDetalle = gvDetalleOrdenCompra,
+                    TxtFecha = txtFechaOrdenCompra,
+                    FileUpload = fileDocumentoCompra,
+                    DdlPrincipal = ddlProveedor,
+                    Contenedor = compraContent,
+                    BtnModo = btnCompra
+                },
+                [TipoOrden.Venta] = new ConfiguracionOrden
+                {
+                    GridPrincipal = gvOrdenesVenta,
+                    GridDetalle = gvDetalleOrdenVenta,
+                    TxtFecha = txtFechaOrdenVenta,
+                    FileUpload = fileDocumentoVenta,
+                    DdlPrincipal = ddlCliente,
+                    Contenedor = ventaContent,
+                    BtnModo = btnVenta
+                },
+                [TipoOrden.Ingreso] = new ConfiguracionOrden
+                {
+                    GridPrincipal = gvRegistrosIngreso,
+                    GridDetalle = gvDetalleOrdenCompraIngreso,
+                    TxtFecha = txtFechaIngreso,
+                    FileUpload = fileDocumentoIngreso,
+                    DdlPrincipal = ddlOrdenCompraIngreso,
+                    DdlResponsable = ddlResponsableIngreso,
+                    Contenedor = ingresoContent,
+                    BtnModo = btnIngreso
+                },
+                [TipoOrden.Salida] = new ConfiguracionOrden
+                {
+                    GridPrincipal = gvRegistrosSalida,
+                    GridDetalle = gvDetalleOrdenVentaSalida,
+                    TxtFecha = txtFechaSalida,
+                    FileUpload = fileDocumentoSalida,
+                    DdlPrincipal = ddlOrdenVentaSalida,
+                    DdlResponsable = ddlResponsableSalida,
+                    Contenedor = salidaContent,
+                    BtnModo = btnSalida
+                }
+            };
         }
 
         private void CargarDatosIniciales()
         {
-            CargarProveedores();
-            CargarOrdenesCompra();
-            CargarOrdenesVenta();
-            CargarRegistrosIngreso();
-            CargarRegistrosSalida();
+            CargarProveedoresYClientes();
+            CargarUsuariosParaIngresoYSalida();
+
+            // Cargar todas las órdenes
+            CargarOrdenes(TipoOrden.Compra);
+            CargarOrdenes(TipoOrden.Venta);
+            CargarOrdenes(TipoOrden.Ingreso);
+            CargarOrdenes(TipoOrden.Salida);
+
+            CargarOrdenesCompraParaIngreso();
+            CargarOrdenesVentaParaSalida();
             CargarDetalleOrdenVacia();
 
-            txtFechaOrdenCompra.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            txtFechaOrdenVenta.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            txtFechaIngreso.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            txtFechaSalida.Text = DateTime.Now.ToString("yyyy-MM-dd");
-
-            txtFechaOrdenCompra.Attributes.Add("readonly", "readonly");
-            txtFechaOrdenVenta.Attributes.Add("readonly", "readonly");
-            txtFechaIngreso.Attributes.Add("readonly", "readonly");
-            txtFechaSalida.Attributes.Add("readonly", "readonly");
+            // Configurar fechas
+            foreach (var config in configuraciones.Values)
+            {
+                config.TxtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                config.TxtFecha.Attributes.Add("readonly", "readonly");
+            }
         }
 
-        #region ORDEN DE COMPRA - CONECTADO CON BACKEND
+        #endregion
 
-        private void CargarProveedores()
+        #region CARGA DE DATOS COMUNES
+
+        private void CargarProveedoresYClientes()
         {
             try
             {
                 ddlProveedor.Items.Clear();
                 ddlCliente.Items.Clear();
-
                 ddlProveedor.Items.Add(new ListItem("-- Seleccione un proveedor --", ""));
                 ddlCliente.Items.Add(new ListItem("-- Seleccione un cliente --", ""));
 
                 var empresasArray = empresaService.listarEmpresas();
-
-                if (empresasArray != null && empresasArray.Length > 0)
+                if (empresasArray?.Length > 0)
                 {
-                    foreach (var empresa in empresasArray)
+                    foreach (var empresa in empresasArray.Where(e => e.idEmpresa > 0 && !string.IsNullOrEmpty(e.razonSocial)))
                     {
-                        if (empresa.idEmpresa > 0 && !string.IsNullOrEmpty(empresa.razonSocial))
-                        {
-                            string texto = $"{empresa.idEmpresa} - {empresa.razonSocial}";
-                            ddlProveedor.Items.Add(new ListItem(texto, empresa.idEmpresa.ToString()));
-                            ddlCliente.Items.Add(new ListItem(texto, empresa.idEmpresa.ToString()));
-                        }
+                        string texto = $"{empresa.idEmpresa} - {empresa.razonSocial}";
+                        var item = new ListItem(texto, empresa.idEmpresa.ToString());
+                        ddlProveedor.Items.Add(item);
+                        ddlCliente.Items.Add(item);
                     }
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarProveedores",
-                    $"alert('Error al cargar empresas: {ex.Message}');", true);
+                MostrarAlerta("errorCargarProveedores", $"Error al cargar empresas: {ex.Message}");
             }
         }
 
-        private void CargarOrdenesCompra()
+        private void CargarUsuariosParaIngresoYSalida()
         {
             try
             {
-                var ordenesArray = ordenCompraService.listarOrdenesCompra();
+                ddlResponsableIngreso.Items.Clear();
+                ddlResponsableSalida.Items.Clear();
+                ddlResponsableIngreso.Items.Add(new ListItem("-- Seleccione un responsable --", ""));
+                ddlResponsableSalida.Items.Add(new ListItem("-- Seleccione un responsable --", ""));
 
-                if (ordenesArray == null || ordenesArray.Length == 0)
+                var usuariosArray = usuarioService.listarUsuarios();
+                if (usuariosArray?.Length > 0)
                 {
-                    gvOrdenesCompra.DataSource = new List<object>();
-                    gvOrdenesCompra.DataBind();
-                    return;
+                    foreach (var usuario in usuariosArray.Where(u => u.idUsuario > 0))
+                    {
+                        string texto = ObtenerTextoUsuario(usuario);
+                        var item = new ListItem(texto, usuario.idUsuario.ToString());
+                        ddlResponsableIngreso.Items.Add(item);
+                        ddlResponsableSalida.Items.Add(item);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MostrarAlerta("errorCargarUsuarios", $"Error al cargar usuarios: {ex.Message}");
+            }
+        }
 
+        private string ObtenerTextoUsuario(usuario usuario)
+        {
+            string nombre = usuario.nombres ?? "";
+            string apellido = usuario.apellidos ?? "";
+            string email = usuario.email ?? "";
+
+            string texto = $"{nombre} {apellido}".Trim();
+            if (string.IsNullOrEmpty(texto))
+                texto = $"Usuario {usuario.idUsuario}";
+
+            if (!string.IsNullOrEmpty(email))
+                texto += $" - {email}";
+
+            return texto;
+        }
+
+        private void CargarOrdenesCompraParaIngreso()
+        {
+            try
+            {
+                ddlOrdenCompraIngreso.Items.Clear();
+                ddlOrdenCompraIngreso.Items.Add(new ListItem("-- Seleccione una orden de compra --", ""));
+
+                var ordenesArray = ordenCompraService.listarOrdenesCompra();
+                if (ordenesArray?.Length > 0)
+                {
+                    foreach (var orden in ordenesArray.Where(o =>
+                        o.estado == estadoDocumento.PENDIENTE || o.estado == estadoDocumento.PROCESADO))
+                    {
+                        string nombreProveedor = orden.proveedor?.razonSocial ?? "Sin Proveedor";
+                        string texto = $"PO-{orden.idOrdenCompra:D6} - {nombreProveedor}";
+                        ddlOrdenCompraIngreso.Items.Add(new ListItem(texto, orden.idOrdenCompra.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarAlerta("errorCargarOrdenesCompra", $"Error al cargar órdenes de compra: {ex.Message}");
+            }
+        }
+
+        private void CargarOrdenesVentaParaSalida()
+        {
+            try
+            {
+                ddlOrdenVentaSalida.Items.Clear();
+                ddlOrdenVentaSalida.Items.Add(new ListItem("-- Seleccione una orden de venta --", ""));
+
+                var ordenesArray = ordenVentaService.listarOrdenesVenta();
+                if (ordenesArray?.Length > 0)
+                {
+                    foreach (var orden in ordenesArray.Where(o =>
+                        o.estado == estadoDocumento.PENDIENTE || o.estado == estadoDocumento.PROCESADO))
+                    {
+                        string nombreCliente = orden.cliente?.razonSocial ?? "Sin Cliente";
+                        string texto = $"SO-{orden.idOrdenVenta:D6} - {nombreCliente}";
+                        ddlOrdenVentaSalida.Items.Add(new ListItem(texto, orden.idOrdenVenta.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarAlerta("errorCargarOrdenesVenta", $"Error al cargar órdenes de venta: {ex.Message}");
+            }
+        }
+
+        #endregion
+
+        #region CARGA DE ÓRDENES UNIFICADA
+
+        private void CargarOrdenes(TipoOrden tipo)
+        {
+            try
+            {
+                var config = configuraciones[tipo];
                 var ordenes = new List<object>();
 
-                foreach (var o in ordenesArray)
+                switch (tipo)
                 {
-                    try
-                    {
-                        string estadoMostrar = "PENDIENTE";
-                        string nombreProveedor = "Sin Proveedor";
-                        double total = 0;
-                        DateTime fecha = DateTime.Now;
-
-                        try
-                        {
-                            if (o.estado != null)
-                            {
-                                estadoMostrar = o.estado.ToString();
-                            }
-                        }
-                        catch (Exception estadoEx)
-                        {
-                            estadoMostrar = "PENDIENTE";
-                            System.Diagnostics.Debug.WriteLine($"Error en estado orden {o.idOrdenCompra}: {estadoEx.Message}");
-                        }
-
-                        try
-                        {
-                            if (o.proveedor != null && !string.IsNullOrEmpty(o.proveedor.razonSocial))
-                            {
-                                nombreProveedor = o.proveedor.razonSocial;
-                            }
-                        }
-                        catch
-                        {
-                            nombreProveedor = "Sin Proveedor";
-                        }
-
-                        try { total = o.total; } catch { total = 0; }
-                        try { fecha = o.fecha; } catch { fecha = DateTime.Now; }
-
-                        var orden = new
-                        {
-                            Codigo = "PO-" + o.idOrdenCompra.ToString("D6"),
-                            IdOrdenCompra = o.idOrdenCompra,
-                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
-                            Nombre = nombreProveedor,
-                            Responsable = "Sistema",
-                            Total = total.ToString("C2"),
-                            Estado = estadoMostrar
-                        };
-
-                        ordenes.Add(orden);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando orden {o.idOrdenCompra}: {ex.Message}");
-                        continue;
-                    }
+                    case TipoOrden.Compra:
+                        ordenes = ObtenerOrdenesCompra();
+                        break;
+                    case TipoOrden.Venta:
+                        ordenes = ObtenerOrdenesVenta();
+                        break;
+                    case TipoOrden.Ingreso:
+                        ordenes = ObtenerOrdenesIngreso();
+                        break;
+                    case TipoOrden.Salida:
+                        ordenes = ObtenerOrdenesSalida();
+                        break;
                 }
 
-                gvOrdenesCompra.DataSource = ordenes;
-                gvOrdenesCompra.DataBind();
+                config.GridPrincipal.DataSource = ordenes;
+                config.GridPrincipal.DataBind();
             }
             catch (Exception ex)
             {
-                string errorMessage = ex.Message;
-                if (errorMessage.Contains("EstadoDocumento.null") || errorMessage.Contains("estado nulo"))
-                {
-                    errorMessage = "Hay órdenes con estado no definido. Se mostrarán como PENDIENTE.";
-                    gvOrdenesCompra.DataSource = new List<object>();
-                    gvOrdenesCompra.DataBind();
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "infoEstados",
-                        $"alert('{errorMessage}');", true);
-                    return;
-                }
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarOrdenes",
-                    $"alert('Error al cargar órdenes de compra: {errorMessage}');", true);
-
-                gvOrdenesCompra.DataSource = new List<object>();
-                gvOrdenesCompra.DataBind();
+                MostrarAlerta($"errorCargar{tipo}", $"Error al cargar órdenes de {tipo}: {ex.Message}");
+                configuraciones[tipo].GridPrincipal.DataSource = new List<object>();
+                configuraciones[tipo].GridPrincipal.DataBind();
             }
         }
 
-        private void CargarDetalleOrdenCompra(int idOrdenCompra)
+        private List<object> ObtenerOrdenesCompra()
+        {
+            var ordenesArray = ordenCompraService.listarOrdenesCompra();
+            if (ordenesArray == null || ordenesArray.Length == 0) return new List<object>();
+
+            return ordenesArray.Select(o => new
+            {
+                Codigo = "PO-" + o.idOrdenCompra.ToString("D6"),
+                IdOrdenCompra = o.idOrdenCompra,
+                FechaRegistrada = (o.fecha == default(DateTime) ? DateTime.Now : o.fecha).ToString("yyyy-MM-dd"),
+                Nombre = o.proveedor?.razonSocial ?? "Sin Proveedor",
+                Total = o.total.ToString("C2"),
+                Estado = o.estado.ToString() ?? "PENDIENTE"
+            }).ToList<object>();
+        }
+
+        private List<object> ObtenerOrdenesVenta()
+        {
+            var ordenesArray = ordenVentaService.listarOrdenesVenta();
+            if (ordenesArray == null || ordenesArray.Length == 0) return new List<object>();
+
+            return ordenesArray.Select(o => new
+            {
+                Codigo = "SO-" + o.idOrdenVenta.ToString("D6"),
+                IdOrdenVenta = o.idOrdenVenta,
+                FechaRegistrada = (o.fecha == default(DateTime) ? DateTime.Now : o.fecha).ToString("yyyy-MM-dd"),
+                Nombre = o.cliente?.razonSocial ?? "Sin Cliente",
+                Total = o.total.ToString("C2"),
+                Estado = o.estado.ToString() ?? "PENDIENTE"
+            }).ToList<object>();
+        }
+
+        private List<object> ObtenerOrdenesIngreso()
+        {
+            var ingresosArray = ingresoService.listarOrdenesIngreso();
+            if (ingresosArray == null || ingresosArray.Length == 0) return new List<object>();
+
+            return ingresosArray.Select(i => new
+            {
+                Codigo = "ING-" + i.idOrdenIngreso.ToString("D6"),
+                IdIngreso = i.idOrdenIngreso,
+                FechaRegistrada = (i.fecha == default(DateTime) ? DateTime.Now : i.fecha).ToString("yyyy-MM-dd"),
+                Nombre = i.ordenCompra?.proveedor?.razonSocial ?? "Sin Proveedor",
+                Responsable = ObtenerNombreResponsable(i),
+                Total = i.total.ToString("C2"),
+                Estado = i.estado.ToString() ?? "PENDIENTE"
+            }).ToList<object>();
+        }
+
+        private List<object> ObtenerOrdenesSalida()
+        {
+            var salidasArray = salidaService.listarOrdenesSalida();
+            if (salidasArray == null || salidasArray.Length == 0) return new List<object>();
+
+            return salidasArray.Select(s => new
+            {
+                Codigo = "SAL-" + s.idOrdenSalida.ToString("D6"),
+                IdSalida = s.idOrdenSalida,
+                FechaRegistrada = (s.fecha == default(DateTime) ? DateTime.Now : s.fecha).ToString("yyyy-MM-dd"),
+                Nombre = s.ordenVenta?.cliente?.razonSocial ?? "Sin Cliente",
+                Responsable = ObtenerNombreResponsable(s),
+                Total = s.total.ToString("C2"),
+                Estado = s.estado.ToString() ?? "PENDIENTE"
+            }).ToList<object>();
+        }
+
+        #endregion
+
+        #region CARGA DE DETALLES UNIFICADA
+
+        private void CargarDetalle(TipoOrden tipo, int id)
         {
             try
             {
-                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenCompra);
-
-                if (orden == null || orden.lineas == null || orden.lineas.Length == 0)
-                {
-                    gvDetalleOrdenCompra.DataSource = new List<object>();
-                    gvDetalleOrdenCompra.DataBind();
-                    return;
-                }
-
+                var config = configuraciones[tipo];
                 var lineas = new List<object>();
 
-                foreach (var l in orden.lineas)
+                switch (tipo)
                 {
-                    try
-                    {
-                        string codigo = "N/A";
-                        string nombre = "N/A";
-                        string descripcion = "N/A";
-                        string marca = "N/A";
-                        string categoria = "N/A";
-                        double precioUnitario = 0;
-                        int cantidad = 0;
-                        double subtotal = 0;
-
-                        if (l.producto != null)
-                        {
-                            try { codigo = l.producto.idProducto.ToString(); } catch { }
-                            try { nombre = l.producto.nombre ?? "N/A"; } catch { }
-                            try { descripcion = l.producto.descripcion ?? "N/A"; } catch { }
-                            try { marca = l.producto.marca ?? "N/A"; } catch { }
-                            try { categoria = l.producto.categoria?.nombre ?? "N/A"; } catch { }
-                        }
-
-                        try { cantidad = l.cantidad; } catch { }
-                        try { subtotal = l.subtotal; } catch { }
-
-                        if (cantidad > 0)
-                        {
-                            precioUnitario = subtotal / cantidad;
-                        }
-
-                        var linea = new
-                        {
-                            Codigo = codigo,
-                            Nombre = nombre,
-                            Descripcion = descripcion,
-                            Marca = marca,
-                            PrecioUnitario = precioUnitario.ToString("C2"),
-                            Categoria = categoria,
-                            Cantidad = cantidad.ToString(),
-                            SubTotal = subtotal.ToString("C2"),
-                            Estado = "Disponible"
-                        };
-
-                        lineas.Add(linea);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando línea de orden: {ex.Message}");
-                        continue;
-                    }
+                    case TipoOrden.Compra:
+                        lineas = ObtenerDetalleCompra(id);
+                        break;
+                    case TipoOrden.Venta:
+                        lineas = ObtenerDetalleVenta(id);
+                        break;
+                    case TipoOrden.Ingreso:
+                        lineas = ObtenerDetalleIngreso(id);
+                        break;
+                    case TipoOrden.Salida:
+                        lineas = ObtenerDetalleSalida(id);
+                        break;
                 }
 
-                gvDetalleOrdenCompra.DataSource = lineas;
-                gvDetalleOrdenCompra.DataBind();
+                config.GridDetalle.DataSource = lineas;
+                config.GridDetalle.DataBind();
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarDetalle",
-                    $"alert('Error al cargar detalle de orden: {ex.Message}');", true);
-
-                gvDetalleOrdenCompra.DataSource = new List<object>();
-                gvDetalleOrdenCompra.DataBind();
+                MostrarAlerta($"errorCargarDetalle{tipo}", $"Error al cargar detalle: {ex.Message}");
+                configuraciones[tipo].GridDetalle.DataSource = new List<object>();
+                configuraciones[tipo].GridDetalle.DataBind();
             }
         }
 
+        private List<object> ObtenerDetalleCompra(int id)
+        {
+            var orden = ordenCompraService.obtenerOrdenCompra(id);
+            return ProcesarLineas(orden?.lineas);
+        }
+
+        private List<object> ObtenerDetalleVenta(int id)
+        {
+            var orden = ordenVentaService.obtenerOrdenVenta(id);
+            return ProcesarLineas(orden?.lineas);
+        }
+
+        private List<object> ObtenerDetalleIngreso(int id)
+        {
+            var ingreso = ingresoService.obtenerOrdenIngreso(id);
+            return ProcesarLineas(ingreso?.lineas);
+        }
+
+        private List<object> ObtenerDetalleSalida(int id)
+        {
+            var salida = salidaService.obtenerOrdenSalida(id);
+            return ProcesarLineas(salida?.lineas);
+        }
+
+        private List<object> ProcesarLineas(Array lineasArray)
+        {
+            var lineas = new List<object>();
+            if (lineasArray == null || lineasArray.Length == 0) return lineas;
+
+            foreach (var linea in lineasArray)
+            {
+                try
+                {
+                    var propProducto = linea.GetType().GetProperty("producto");
+                    var propCantidad = linea.GetType().GetProperty("cantidad");
+                    var propSubtotal = linea.GetType().GetProperty("subtotal");
+
+                    var producto = propProducto?.GetValue(linea);
+                    int cantidad = (int)(propCantidad?.GetValue(linea) ?? 0);
+                    double subtotal = (double)(propSubtotal?.GetValue(linea) ?? 0);
+
+                    lineas.Add(new
+                    {
+                        Codigo = ObtenerPropiedadProducto(producto, "idProducto", "N/A"),
+                        Nombre = ObtenerPropiedadProducto(producto, "nombre", "N/A"),
+                        Descripcion = ObtenerPropiedadProducto(producto, "descripcion", "N/A"),
+                        Marca = ObtenerPropiedadProducto(producto, "marca", "N/A"),
+                        PrecioUnitario = (cantidad > 0 ? subtotal / cantidad : 0).ToString("C2"),
+                        Categoria = ObtenerCategoriaProducto(producto),
+                        Cantidad = cantidad.ToString(),
+                        SubTotal = subtotal.ToString("C2"),
+                        Estado = "Disponible"
+                    });
+                }
+                catch { continue; }
+            }
+
+            return lineas;
+        }
+
+        private string ObtenerPropiedadProducto(object producto, string propiedad, string valorPorDefecto)
+        {
+            if (producto == null) return valorPorDefecto;
+
+            try
+            {
+                var prop = producto.GetType().GetProperty(propiedad);
+                var valor = prop?.GetValue(producto);
+
+                if (propiedad == "idProducto")
+                    return valor?.ToString() ?? valorPorDefecto;
+
+                return valor as string ?? valorPorDefecto;
+            }
+            catch
+            {
+                return valorPorDefecto;
+            }
+        }
+
+        private string ObtenerCategoriaProducto(object producto)
+        {
+            if (producto == null) return "N/A";
+
+            try
+            {
+                var propCategoria = producto.GetType().GetProperty("categoria");
+                var categoria = propCategoria?.GetValue(producto);
+                if (categoria == null) return "N/A";
+
+                var propNombre = categoria.GetType().GetProperty("nombre");
+                return propNombre?.GetValue(categoria) as string ?? "N/A";
+            }
+            catch
+            {
+                return "N/A";
+            }
+        }
+
+        private void CargarDetalleOrdenVacia()
+        {
+            foreach (var config in configuraciones.Values)
+            {
+                config.GridDetalle.DataSource = new List<object>();
+                config.GridDetalle.DataBind();
+            }
+        }
+
+        #endregion
+
+        #region EVENTOS CHECKBOX UNIFICADOS
+
         protected void chkSeleccionCompra_CheckedChanged(object sender, EventArgs e)
+            => ManejarSeleccion(sender, TipoOrden.Compra, "IdOrdenCompra", "chkSeleccionCompra");
+
+        protected void chkSeleccionVenta_CheckedChanged(object sender, EventArgs e)
+            => ManejarSeleccion(sender, TipoOrden.Venta, "IdOrdenVenta", "chkSeleccionVenta");
+
+        protected void chkSeleccionIngreso_CheckedChanged(object sender, EventArgs e)
+            => ManejarSeleccion(sender, TipoOrden.Ingreso, "IdIngreso", "chkSeleccionIngreso");
+
+        protected void chkSeleccionSalida_CheckedChanged(object sender, EventArgs e)
+            => ManejarSeleccion(sender, TipoOrden.Salida, "IdSalida", "chkSeleccionSalida");
+
+        private void ManejarSeleccion(object sender, TipoOrden tipo, string keyName, string checkboxName)
         {
             CheckBox chkSeleccion = (CheckBox)sender;
             GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
+            var config = configuraciones[tipo];
 
             if (chkSeleccion.Checked)
             {
-                int idOrdenCompra = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
-                CargarDetalleOrdenCompra(idOrdenCompra);
+                int id = Convert.ToInt32(config.GridPrincipal.DataKeys[row.RowIndex][keyName]);
 
-                foreach (GridViewRow otherRow in gvOrdenesCompra.Rows)
+                // Guardar el ID de la orden seleccionada
+                if (tipo == TipoOrden.Compra)
+                {
+                    OrdenCompraSeleccionadaId = id;
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG] Orden compra seleccionada: {id}");
+                }
+                else if (tipo == TipoOrden.Venta)
+                {
+                    OrdenVentaSeleccionadaId = id;
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG] Orden venta seleccionada: {id}");
+                }
+
+                CargarDetalle(tipo, id);
+
+                // Desmarcar otros checkboxes
+                foreach (GridViewRow otherRow in config.GridPrincipal.Rows)
                 {
                     if (otherRow.RowIndex != row.RowIndex)
                     {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionCompra");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
+                        CheckBox otherChk = (CheckBox)otherRow.FindControl(checkboxName);
+                        if (otherChk != null) otherChk.Checked = false;
                     }
                 }
             }
             else
             {
                 CargarDetalleOrdenVacia();
+
+                // Limpiar el ID si se deselecciona
+                if (tipo == TipoOrden.Compra)
+                {
+                    OrdenCompraSeleccionadaId = 0;
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG] Orden compra deseleccionada");
+                }
+                else if (tipo == TipoOrden.Venta)
+                {
+                    OrdenVentaSeleccionadaId = 0;
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG] Orden venta deseleccionada");
+                }
             }
         }
 
+        #endregion
+
+        #region EVENTOS EDITAR UNIFICADOS
+
         protected void btnEditarCompraFila_Click(object sender, EventArgs e)
+            => ManejarEdicion(sender, TipoOrden.Compra, "IdOrdenCompra", "chkSeleccionCompra");
+
+        protected void btnEditarVentaFila_Click(object sender, EventArgs e)
+            => ManejarEdicion(sender, TipoOrden.Venta, "IdOrdenVenta", "chkSeleccionVenta");
+
+        protected void btnEditarIngresoFila_Click(object sender, EventArgs e)
+            => ManejarEdicion(sender, TipoOrden.Ingreso, "IdIngreso", "chkSeleccionIngreso");
+
+        protected void btnEditarSalidaFila_Click(object sender, EventArgs e)
+            => ManejarEdicion(sender, TipoOrden.Salida, "IdSalida", "chkSeleccionSalida");
+
+        private void ManejarEdicion(object sender, TipoOrden tipo, string keyName, string checkboxName)
         {
             Button btn = (Button)sender;
-            int idOrdenCompra = Convert.ToInt32(btn.CommandArgument);
+            int id = Convert.ToInt32(btn.CommandArgument);
+            var config = configuraciones[tipo];
 
-            foreach (GridViewRow row in gvOrdenesCompra.Rows)
+            foreach (GridViewRow row in config.GridPrincipal.Rows)
             {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionCompra");
-                int idFila = Convert.ToInt32(gvOrdenesCompra.DataKeys[row.RowIndex]["IdOrdenCompra"]);
+                CheckBox chkSeleccion = (CheckBox)row.FindControl(checkboxName);
+                int idFila = Convert.ToInt32(config.GridPrincipal.DataKeys[row.RowIndex][keyName]);
 
-                if (idFila == idOrdenCompra)
+                if (idFila == id)
                 {
                     chkSeleccion.Checked = true;
-                    CargarDetalleOrdenCompra(idOrdenCompra);
+                    CargarDetalle(tipo, id);
                 }
                 else
                 {
                     chkSeleccion.Checked = false;
                 }
             }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarCompraFila",
-                $"alert('Editando orden de compra ID: {idOrdenCompra}');", true);
         }
 
+        #endregion
+
+        #region EVENTOS ANULAR UNIFICADOS
+
         protected void btnAnularCompraFila_Click(object sender, EventArgs e)
+            => AnularOrden(sender, TipoOrden.Compra);
+
+        protected void btnAnularVentaFila_Click(object sender, EventArgs e)
+            => AnularOrden(sender, TipoOrden.Venta);
+
+        protected void btnAnularIngresoFila_Click(object sender, EventArgs e)
+            => AnularOrden(sender, TipoOrden.Ingreso);
+
+        protected void btnAnularSalidaFila_Click(object sender, EventArgs e)
+            => AnularOrden(sender, TipoOrden.Salida);
+
+        private void AnularOrden(object sender, TipoOrden tipo)
         {
             Button btn = (Button)sender;
-            int idOrdenCompra = Convert.ToInt32(btn.CommandArgument);
+            int id = Convert.ToInt32(btn.CommandArgument);
 
             try
             {
-                var orden = ordenCompraService.obtenerOrdenCompra(idOrdenCompra);
-                if (orden != null)
+                switch (tipo)
                 {
-                    orden.estado = GetEstadoDocumento("CANCELADO");
-                    ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularFila",
-                        $"alert('Orden de compra anulada exitosamente');", true);
-
-                    CargarOrdenesCompra();
-                    CargarDetalleOrdenVacia();
+                    case TipoOrden.Compra:
+                        AnularOrdenCompra(id);
+                        break;
+                    case TipoOrden.Venta:
+                        AnularOrdenVenta(id);
+                        break;
+                    case TipoOrden.Ingreso:
+                        AnularOrdenIngreso(id);
+                        break;
+                    case TipoOrden.Salida:
+                        AnularOrdenSalida(id);
+                        break;
                 }
+
+                MostrarAlerta($"exitoAnular{tipo}", $"Orden de {tipo} anulada exitosamente");
+                CargarOrdenes(tipo);
+                CargarDetalleOrdenVacia();
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularFila",
-                    $"alert('Error al anular orden de compra: {ex.Message}');", true);
+                MostrarAlerta($"errorAnular{tipo}", $"Error al anular orden: {ex.Message}");
             }
         }
 
+        private void AnularOrdenCompra(int id)
+        {
+            var orden = ordenCompraService.obtenerOrdenCompra(id);
+            if (orden != null)
+            {
+                orden.estado = estadoDocumento.CANCELADO;
+                orden.estadoSpecified = true;
+                ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
+            }
+        }
+
+        private void AnularOrdenVenta(int id)
+        {
+            var orden = ordenVentaService.obtenerOrdenVenta(id);
+            if (orden != null)
+            {
+                orden.estado = estadoDocumento.CANCELADO;
+                orden.estadoSpecified = true;
+                ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
+            }
+        }
+
+        private void AnularOrdenIngreso(int id)
+        {
+            var ingreso = ingresoService.obtenerOrdenIngreso(id);
+            if (ingreso != null)
+            {
+                ingreso.estado = estadoDocumento.CANCELADO;
+                ingreso.estadoSpecified = true;
+                ingresoService.guardarOrdenIngreso(ingreso, estado.MODIFICADO);
+            }
+        }
+
+        private void AnularOrdenSalida(int id)
+        {
+            var salida = salidaService.obtenerOrdenSalida(id);
+            if (salida != null)
+            {
+                salida.estado = estadoDocumento.CANCELADO;
+                salida.estadoSpecified = true;
+                salidaService.guardarOrdenSalida(salida, estado.MODIFICADO);
+            }
+        }
+
+        #endregion
+
+        #region EVENTOS AGREGAR
+
         protected void btnAgregarCompra_Click(object sender, EventArgs e)
         {
+            if (!ValidarFormulario(txtFechaOrdenCompra, ddlProveedor, null)) return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(txtFechaOrdenCompra.Text))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una fecha');", true);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(ddlProveedor.SelectedValue))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar un proveedor');", true);
-                    return;
-                }
+                ManejarArchivoAdjunto(fileDocumentoCompra, "Orden de Compra");
 
                 var nuevaOrden = new ordenCompra
                 {
@@ -366,301 +754,28 @@ namespace StockifyWeb
                     total = 0,
                     estado = estadoDocumento.PENDIENTE,
                     estadoSpecified = true,
-                    proveedor = new empresa
-                    {
-                        idEmpresa = Convert.ToInt32(ddlProveedor.SelectedValue),
-                    },
+                    proveedor = new empresa { idEmpresa = Convert.ToInt32(ddlProveedor.SelectedValue) },
                     lineas = new lineaOrdenCompra[0]
                 };
 
                 ordenCompraService.guardarOrdenCompra(nuevaOrden, estado.NUEVO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Orden de compra agregada exitosamente');", true);
-
-                CargarOrdenesCompra();
-                LimpiarFormularioCompra();
+                MostrarAlerta("exito", "Orden de compra agregada exitosamente");
+                CargarOrdenes(TipoOrden.Compra);
+                LimpiarFormulario(TipoOrden.Compra);
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregar",
-                    $"alert('Error al agregar orden de compra: {ex.Message}');", true);
-            }
-        }
-
-        private void LimpiarFormularioCompra()
-        {
-            txtFechaOrdenCompra.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            ddlProveedor.SelectedIndex = 0;
-        }
-
-        #endregion
-
-        #region ORDEN DE VENTA - CONECTADO CON BACKEND
-
-        private void CargarOrdenesVenta()
-        {
-            try
-            {
-                var ordenesArray = ordenVentaService.listarOrdenesVenta();
-
-                if (ordenesArray == null || ordenesArray.Length == 0)
-                {
-                    gvOrdenesVenta.DataSource = new List<object>();
-                    gvOrdenesVenta.DataBind();
-                    return;
-                }
-
-                var ordenes = new List<object>();
-
-                foreach (var o in ordenesArray)
-                {
-                    try
-                    {
-                        string estadoMostrar = "PENDIENTE";
-                        string nombreCliente = "Sin Cliente";
-                        double total = 0;
-                        DateTime fecha = DateTime.Now;
-
-                        try
-                        {
-                            if (o.estado != null)
-                            {
-                                estadoMostrar = o.estado.ToString();
-                            }
-                        }
-                        catch (Exception estadoEx)
-                        {
-                            estadoMostrar = "PENDIENTE";
-                            System.Diagnostics.Debug.WriteLine($"Error en estado orden venta {o.idOrdenVenta}: {estadoEx.Message}");
-                        }
-
-                        try
-                        {
-                            if (o.cliente != null && !string.IsNullOrEmpty(o.cliente.razonSocial))
-                            {
-                                nombreCliente = o.cliente.razonSocial;
-                            }
-                        }
-                        catch
-                        {
-                            nombreCliente = "Sin Cliente";
-                        }
-
-                        try { total = o.total; } catch { total = 0; }
-                        try { fecha = o.fecha; } catch { fecha = DateTime.Now; }
-
-                        var orden = new
-                        {
-                            Codigo = "SO-" + o.idOrdenVenta.ToString("D6"),
-                            IdOrdenVenta = o.idOrdenVenta,
-                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
-                            Nombre = nombreCliente,
-                            Responsable = "Sistema",
-                            Total = total.ToString("C2"),
-                            Estado = estadoMostrar
-                        };
-
-                        ordenes.Add(orden);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando orden venta {o.idOrdenVenta}: {ex.Message}");
-                        continue;
-                    }
-                }
-
-                gvOrdenesVenta.DataSource = ordenes;
-                gvOrdenesVenta.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarVentas",
-                    $"alert('Error al cargar órdenes de venta: {ex.Message}');", true);
-
-                gvOrdenesVenta.DataSource = new List<object>();
-                gvOrdenesVenta.DataBind();
-            }
-        }
-
-        private void CargarDetalleOrdenVenta(int idOrdenVenta)
-        {
-            try
-            {
-                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenVenta);
-
-                if (orden == null || orden.lineas == null || orden.lineas.Length == 0)
-                {
-                    gvDetalleOrdenVenta.DataSource = new List<object>();
-                    gvDetalleOrdenVenta.DataBind();
-                    return;
-                }
-
-                var lineas = new List<object>();
-
-                foreach (var l in orden.lineas)
-                {
-                    try
-                    {
-                        string codigo = "N/A";
-                        string nombre = "N/A";
-                        string descripcion = "N/A";
-                        string marca = "N/A";
-                        string categoria = "N/A";
-                        double precioUnitario = 0;
-                        int cantidad = 0;
-                        double subtotal = 0;
-
-                        if (l.producto != null)
-                        {
-                            try { codigo = l.producto.idProducto.ToString(); } catch { }
-                            try { nombre = l.producto.nombre ?? "N/A"; } catch { }
-                            try { descripcion = l.producto.descripcion ?? "N/A"; } catch { }
-                            try { marca = l.producto.marca ?? "N/A"; } catch { }
-                            try { categoria = l.producto.categoria?.nombre ?? "N/A"; } catch { }
-                        }
-
-                        try { cantidad = l.cantidad; } catch { }
-                        try { subtotal = l.subtotal; } catch { }
-
-                        if (cantidad > 0)
-                        {
-                            precioUnitario = subtotal / cantidad;
-                        }
-
-                        var linea = new
-                        {
-                            Codigo = codigo,
-                            Nombre = nombre,
-                            Descripcion = descripcion,
-                            Marca = marca,
-                            PrecioUnitario = precioUnitario.ToString("C2"),
-                            Categoria = categoria,
-                            Cantidad = cantidad.ToString(),
-                            SubTotal = subtotal.ToString("C2"),
-                            Estado = "Disponible"
-                        };
-
-                        lineas.Add(linea);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando línea de orden venta: {ex.Message}");
-                        continue;
-                    }
-                }
-
-                gvDetalleOrdenVenta.DataSource = lineas;
-                gvDetalleOrdenVenta.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarDetalleVenta",
-                    $"alert('Error al cargar detalle de orden de venta: {ex.Message}');", true);
-
-                gvDetalleOrdenVenta.DataSource = new List<object>();
-                gvDetalleOrdenVenta.DataBind();
-            }
-        }
-
-        protected void chkSeleccionVenta_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox chkSeleccion = (CheckBox)sender;
-            GridViewRow row = (GridViewRow)chkSeleccion.NamingContainer;
-
-            if (chkSeleccion.Checked)
-            {
-                int idOrdenVenta = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
-                CargarDetalleOrdenVenta(idOrdenVenta);
-
-                foreach (GridViewRow otherRow in gvOrdenesVenta.Rows)
-                {
-                    if (otherRow.RowIndex != row.RowIndex)
-                    {
-                        CheckBox otherChk = (CheckBox)otherRow.FindControl("chkSeleccionVenta");
-                        if (otherChk != null)
-                        {
-                            otherChk.Checked = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                CargarDetalleOrdenVacia();
-            }
-        }
-
-        protected void btnEditarVentaFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            int idOrdenVenta = Convert.ToInt32(btn.CommandArgument);
-
-            foreach (GridViewRow row in gvOrdenesVenta.Rows)
-            {
-                CheckBox chkSeleccion = (CheckBox)row.FindControl("chkSeleccionVenta");
-                int idFila = Convert.ToInt32(gvOrdenesVenta.DataKeys[row.RowIndex]["IdOrdenVenta"]);
-
-                if (idFila == idOrdenVenta)
-                {
-                    chkSeleccion.Checked = true;
-                    CargarDetalleOrdenVenta(idOrdenVenta);
-                }
-                else
-                {
-                    chkSeleccion.Checked = false;
-                }
-            }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "editarVentaFila",
-                $"alert('Editando orden de venta ID: {idOrdenVenta}');", true);
-        }
-
-        protected void btnAnularVentaFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            int idOrdenVenta = Convert.ToInt32(btn.CommandArgument);
-
-            try
-            {
-                var orden = ordenVentaService.obtenerOrdenVenta(idOrdenVenta);
-                if (orden != null)
-                {
-                    orden.estado = GetEstadoDocumento("CANCELADO");
-                    orden.estadoSpecified = true;
-                    ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularVentaFila",
-                        $"alert('Orden de venta anulada exitosamente');", true);
-
-                    CargarOrdenesVenta();
-                    CargarDetalleOrdenVacia();
-                }
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularVentaFila",
-                    $"alert('Error al anular orden de venta: {ex.Message}');", true);
+                MostrarAlerta("errorAgregar", $"Error al agregar orden de compra: {ex.Message}");
             }
         }
 
         protected void btnAgregarVenta_Click(object sender, EventArgs e)
         {
+            if (!ValidarFormulario(txtFechaOrdenVenta, ddlCliente, null)) return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(txtFechaOrdenVenta.Text))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una fecha');", true);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(ddlCliente.SelectedValue))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar un cliente');", true);
-                    return;
-                }
+                ManejarArchivoAdjunto(fileDocumentoVenta, "Orden de Venta");
 
                 var nuevaOrden = new ordenVenta
                 {
@@ -669,116 +784,28 @@ namespace StockifyWeb
                     total = 0,
                     estado = estadoDocumento.PENDIENTE,
                     estadoSpecified = true,
-                    cliente = new empresa
-                    {
-                        idEmpresa = Convert.ToInt32(ddlCliente.SelectedValue),
-                    },
+                    cliente = new empresa { idEmpresa = Convert.ToInt32(ddlCliente.SelectedValue) },
                     lineas = new lineaOrdenVenta[0]
                 };
 
                 ordenVentaService.guardarOrdenVenta(nuevaOrden, estado.NUEVO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Orden de venta agregada exitosamente');", true);
-
-                CargarOrdenesVenta();
-                LimpiarFormularioVenta();
+                MostrarAlerta("exito", "Orden de venta agregada exitosamente");
+                CargarOrdenes(TipoOrden.Venta);
+                LimpiarFormulario(TipoOrden.Venta);
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarVenta",
-                    $"alert('Error al agregar orden de venta: {ex.Message}');", true);
-            }
-        }
-
-        private void LimpiarFormularioVenta()
-        {
-            txtFechaOrdenVenta.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            ddlCliente.SelectedIndex = 0;
-        }
-
-        #endregion
-
-        #region INGRESO - IMPLEMENTACIÓN COMPLETA
-
-        private void CargarRegistrosIngreso()
-        {
-            try
-            {
-                var ingresosArray = ingresoService.listarOrdenesIngreso();
-
-                if (ingresosArray == null || ingresosArray.Length == 0)
-                {
-                    gvRegistrosIngreso.DataSource = new List<object>();
-                    gvRegistrosIngreso.DataBind();
-                    return;
-                }
-
-                var ingresos = new List<object>();
-
-                foreach (var i in ingresosArray)
-                {
-                    try
-                    {
-                        string estadoMostrar = "PENDIENTE";
-                        string nombreProveedor = "Sin Proveedor";
-                        double total = 0;
-                        DateTime fecha = DateTime.Now;
-
-                        try { estadoMostrar = i.estado.ToString() ?? "PENDIENTE"; } catch { }
-                        try { nombreProveedor = i.ordenCompra?.proveedor?.razonSocial ?? "Sin Proveedor"; } catch { }
-                        try { total = i.total; } catch { }
-                        try { fecha = i.fecha; } catch { }
-
-                        var ingreso = new
-                        {
-                            Codigo = "ING-" + i.idOrdenIngreso.ToString("D6"),
-                            IdIngreso = i.idOrdenIngreso,
-                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
-                            Nombre = nombreProveedor,
-                            Responsable = "Sistema",
-                            Total = total.ToString("C2"),
-                            Estado = estadoMostrar
-                        };
-
-                        ingresos.Add(ingreso);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando ingreso: {ex.Message}");
-                        continue;
-                    }
-                }
-
-                gvRegistrosIngreso.DataSource = ingresos;
-                gvRegistrosIngreso.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarIngresos",
-                    $"alert('Error al cargar registros de ingreso: {ex.Message}');", true);
-                gvRegistrosIngreso.DataSource = new List<object>();
-                gvRegistrosIngreso.DataBind();
+                MostrarAlerta("errorAgregarVenta", $"Error al agregar orden de venta: {ex.Message}");
             }
         }
 
         protected void btnAgregarIngreso_Click(object sender, EventArgs e)
         {
+            if (!ValidarFormulario(txtFechaIngreso, ddlOrdenCompraIngreso, ddlResponsableIngreso)) return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(txtFechaIngreso.Text))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una fecha');", true);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(ddlOrdenCompraIngreso.SelectedValue))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una orden de compra');", true);
-                    return;
-                }
+                ManejarArchivoAdjunto(fileDocumentoIngreso, "Ingreso");
 
                 var nuevoIngreso = new ordenIngreso
                 {
@@ -787,147 +814,29 @@ namespace StockifyWeb
                     total = 0,
                     estado = estadoDocumento.PENDIENTE,
                     estadoSpecified = true,
-                    ordenCompra = new ordenCompra
-                    {
-                        idOrdenCompra = Convert.ToInt32(ddlOrdenCompraIngreso.SelectedValue)
-                    },
+                    ordenCompra = new ordenCompra { idOrdenCompra = Convert.ToInt32(ddlOrdenCompraIngreso.SelectedValue) },
                     lineas = new lineaOrdenIngreso[0]
                 };
 
+                AsignarResponsable(nuevoIngreso, ddlResponsableIngreso.SelectedValue);
                 ingresoService.guardarOrdenIngreso(nuevoIngreso, estado.NUEVO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Ingreso agregado exitosamente');", true);
-
-                CargarRegistrosIngreso();
-                LimpiarFormularioIngreso();
+                MostrarAlerta("exito", "Ingreso agregado exitosamente");
+                CargarOrdenes(TipoOrden.Ingreso);
+                LimpiarFormulario(TipoOrden.Ingreso);
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarIngreso",
-                    $"alert('Error al agregar ingreso: {ex.Message}');", true);
-            }
-        }
-
-        protected void btnAnularIngresoFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoIngreso = btn.CommandArgument.ToString();
-
-            try
-            {
-                // Extraer el ID numérico del código ING-000001
-                int idIngreso = Convert.ToInt32(codigoIngreso.Replace("ING-", ""));
-                var ingreso = ingresoService.obtenerOrdenIngreso(idIngreso);
-
-                if (ingreso != null)
-                {
-                    ingreso.estado = GetEstadoDocumento("CANCELADO");
-                    ingreso.estadoSpecified = true;
-                    ingresoService.guardarOrdenIngreso(ingreso, estado.MODIFICADO);
-
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularIngresoFila",
-                        $"alert('Ingreso anulado exitosamente');", true);
-
-                    CargarRegistrosIngreso();
-                    CargarDetalleOrdenVacia();
-                }
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularIngresoFila",
-                    $"alert('Error al anular ingreso: {ex.Message}');", true);
-            }
-        }
-
-        private void LimpiarFormularioIngreso()
-        {
-            txtFechaIngreso.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            ddlOrdenCompraIngreso.SelectedIndex = 0;
-        }
-
-        #endregion
-
-        #region SALIDA - IMPLEMENTACIÓN COMPLETA
-
-        private void CargarRegistrosSalida()
-        {
-            try
-            {
-                var salidasArray = salidaService.listarOrdenesSalida();
-
-                if (salidasArray == null || salidasArray.Length == 0)
-                {
-                    gvRegistrosSalida.DataSource = new List<object>();
-                    gvRegistrosSalida.DataBind();
-                    return;
-                }
-
-                var salidas = new List<object>();
-
-                foreach (var s in salidasArray)
-                {
-                    try
-                    {
-                        string estadoMostrar = "PENDIENTE";
-                        string nombreCliente = "Sin Cliente";
-                        double total = 0;
-                        DateTime fecha = DateTime.Now;
-
-                        try { estadoMostrar = s.estado.ToString() ?? "PENDIENTE"; } catch { }
-                        try { nombreCliente = s.ordenVenta?.cliente?.razonSocial ?? "Sin Cliente"; } catch { }
-                        try { total = s.total; } catch { }
-                        try { fecha = s.fecha; } catch { }
-
-                        var salida = new
-                        {
-                            Codigo = "SAL-" + s.idOrdenSalida.ToString("D6"),
-                            IdSalida = s.idOrdenSalida,
-                            FechaRegistrada = fecha.ToString("yyyy-MM-dd"),
-                            Nombre = nombreCliente,
-                            Responsable = "Sistema",
-                            Total = total.ToString("C2"),
-                            Estado = estadoMostrar
-                        };
-
-                        salidas.Add(salida);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Error procesando salida: {ex.Message}");
-                        continue;
-                    }
-                }
-
-                gvRegistrosSalida.DataSource = salidas;
-                gvRegistrosSalida.DataBind();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorCargarSalidas",
-                    $"alert('Error al cargar registros de salida: {ex.Message}');", true);
-                gvRegistrosSalida.DataSource = new List<object>();
-                gvRegistrosSalida.DataBind();
+                MostrarAlerta("errorAgregarIngreso", $"Error al agregar ingreso: {ex.Message}");
             }
         }
 
         protected void btnAgregarSalida_Click(object sender, EventArgs e)
         {
+            if (!ValidarFormulario(txtFechaSalida, ddlOrdenVentaSalida, ddlResponsableSalida)) return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(txtFechaSalida.Text))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una fecha');", true);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(ddlOrdenVentaSalida.SelectedValue))
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "validacion",
-                        "alert('Debe seleccionar una orden de venta');", true);
-                    return;
-                }
+                ManejarArchivoAdjunto(fileDocumentoSalida, "Salida");
 
                 var nuevaSalida = new ordenSalida
                 {
@@ -936,142 +845,408 @@ namespace StockifyWeb
                     total = 0,
                     estado = estadoDocumento.PENDIENTE,
                     estadoSpecified = true,
-                    ordenVenta = new ordenVenta
-                    {
-                        idOrdenVenta = Convert.ToInt32(ddlOrdenVentaSalida.SelectedValue)
-                    },
+                    ordenVenta = new ordenVenta { idOrdenVenta = Convert.ToInt32(ddlOrdenVentaSalida.SelectedValue) },
                     lineas = new lineaOrdenSalida[0]
                 };
 
+                AsignarResponsable(nuevaSalida, ddlResponsableSalida.SelectedValue);
                 salidaService.guardarOrdenSalida(nuevaSalida, estado.NUEVO);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "exito",
-                    "alert('Salida agregada exitosamente');", true);
-
-                CargarRegistrosSalida();
-                LimpiarFormularioSalida();
+                MostrarAlerta("exito", "Salida agregada exitosamente");
+                CargarOrdenes(TipoOrden.Salida);
+                LimpiarFormulario(TipoOrden.Salida);
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAgregarSalida",
-                    $"alert('Error al agregar salida: {ex.Message}');", true);
+                MostrarAlerta("errorAgregarSalida", $"Error al agregar salida: {ex.Message}");
             }
         }
 
-        protected void btnAnularSalidaFila_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            string codigoSalida = btn.CommandArgument.ToString();
+        #endregion
 
+        #region IMPORTAR CSV - COMPRA
+
+        protected void btnImportarCSVCompra_Click(object sender, EventArgs e)
+        {
             try
             {
-                // Extraer el ID numérico del código SAL-000001
-                int idSalida = Convert.ToInt32(codigoSalida.Replace("SAL-", ""));
-                var salida = salidaService.obtenerOrdenSalida(idSalida);
-
-                if (salida != null)
+                // Validar que hay una orden seleccionada
+                if (OrdenCompraSeleccionadaId == 0)
                 {
-                    salida.estado = GetEstadoDocumento("CANCELADO");
-                    salida.estadoSpecified = true;
-                    salidaService.guardarOrdenSalida(salida, estado.MODIFICADO);
+                    MostrarAlerta("errorSeleccion", "⚠️ Por favor, selecciona una orden de compra primero.");
+                    return;
+                }
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "exitoAnularSalidaFila",
-                        $"alert('Salida anulada exitosamente');", true);
+                // Validar que se subió un archivo
+                if (!fuCSVCompra.HasFile)
+                {
+                    MostrarAlerta("errorArchivo", "⚠️ Por favor selecciona un archivo CSV.");
+                    return;
+                }
 
-                    CargarRegistrosSalida();
-                    CargarDetalleOrdenVacia();
+                // Validar extensión
+                string extension = System.IO.Path.GetExtension(fuCSVCompra.FileName).ToLower();
+                if (extension != ".csv")
+                {
+                    MostrarAlerta("errorExtension", "❌ Solo se permiten archivos CSV.");
+                    return;
+                }
+
+                // Validar tamaño (10MB)
+                if (fuCSVCompra.PostedFile.ContentLength > 10485760)
+                {
+                    MostrarAlerta("errorTamano", "❌ El archivo es demasiado grande. Máximo 10MB.");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] Orden ID: {OrdenCompraSeleccionadaId}, Archivo: {fuCSVCompra.FileName}");
+
+                // Leer archivo como bytes (versión síncrona)
+                byte[] fileBytes;
+                using (var memoryStream = new System.IO.MemoryStream())
+                {
+                    fuCSVCompra.PostedFile.InputStream.CopyTo(memoryStream);
+                    fileBytes = memoryStream.ToArray();
+                }
+
+                // Llamar al Web Service para importar líneas (versión síncrona)
+                var task = lineaOrdenCompraService.importarLineasCompraDesdeCSVAsync(fileBytes, OrdenCompraSeleccionadaId);
+                task.Wait(); // Esperar sincrónicamente
+                int lineasImportadas = task.Result.@return;
+
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] Líneas importadas: {lineasImportadas}");
+
+                // Actualizar la orden para recalcular el total
+                ActualizarTotalOrdenCompra(OrdenCompraSeleccionadaId);
+
+                // Recargar los detalles de la orden
+                CargarDetalle(TipoOrden.Compra, OrdenCompraSeleccionadaId);
+
+                // Cerrar modal y mostrar mensaje de éxito
+                ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModal",
+                    "if(typeof cerrarModalImportarCompra === 'function') cerrarModalImportarCompra();", true);
+
+                MostrarAlerta("exitoImportar", $"✅ ¡Importación exitosa!\\n\\nSe importaron {lineasImportadas} líneas correctamente.");
+
+                // Limpiar el file upload
+                fuCSVCompra.Attributes.Clear();
+            }
+            catch (System.ServiceModel.FaultException faultEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ERROR SOAP] {faultEx.Message}");
+                MostrarAlerta("errorImportar", $"❌ Error en el servicio: {faultEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ERROR] Al importar líneas CSV: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ERROR] StackTrace: {ex.StackTrace}");
+                MostrarAlerta("errorImportar", $"❌ Error al importar líneas: {ex.Message}");
+            }
+        }
+
+        // Método síncrono para actualizar el total
+        private void ActualizarTotalOrdenCompra(int ordenId)
+        {
+            try
+            {
+                // Obtener la orden actualizada con las nuevas líneas
+                var orden = ordenCompraService.obtenerOrdenCompra(ordenId);
+                if (orden != null)
+                {
+                    // Recalcular el total sumando todas las líneas
+                    double nuevoTotal = 0;
+                    if (orden.lineas != null && orden.lineas.Length > 0)
+                    {
+                        foreach (var linea in orden.lineas)
+                        {
+                            nuevoTotal += linea.subtotal;
+                        }
+                    }
+
+                    // Actualizar el total si cambió
+                    if (Math.Abs(orden.total - nuevoTotal) > 0.01)
+                    {
+                        orden.total = nuevoTotal;
+                        ordenCompraService.guardarOrdenCompra(orden, estado.MODIFICADO);
+
+                        System.Diagnostics.Debug.WriteLine($"[DEBUG] Total actualizado: {nuevoTotal:C2}");
+                    }
+
+                    // Recargar la lista de órdenes para reflejar el nuevo total
+                    CargarOrdenes(TipoOrden.Compra);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "errorAnularSalidaFila",
-                    $"alert('Error al anular salida: {ex.Message}');", true);
+                System.Diagnostics.Debug.WriteLine($"[ERROR] Al actualizar total: {ex.Message}");
             }
         }
 
-        private void LimpiarFormularioSalida()
+        #endregion
+
+        #region IMPORTAR CSV - VENTA
+
+        protected void btnImportarCSVVenta_Click(object sender, EventArgs e)
         {
-            txtFechaSalida.Text = DateTime.Now.ToString("yyyy-MM-dd");
-            ddlOrdenVentaSalida.SelectedIndex = 0;
+            try
+            {
+                // Validar que hay una orden seleccionada
+                if (OrdenVentaSeleccionadaId == 0)
+                {
+                    MostrarAlerta("errorSeleccionVenta", "⚠️ Por favor, selecciona una orden de venta primero.");
+                    return;
+                }
+
+                // Validar que se subió un archivo
+                if (!fuCSVVenta.HasFile)
+                {
+                    MostrarAlerta("errorArchivoVenta", "⚠️ Por favor selecciona un archivo CSV.");
+                    return;
+                }
+
+                // Validar extensión
+                string extension = System.IO.Path.GetExtension(fuCSVVenta.FileName).ToLower();
+                if (extension != ".csv")
+                {
+                    MostrarAlerta("errorExtensionVenta", "❌ Solo se permiten archivos CSV.");
+                    return;
+                }
+
+                // Validar tamaño (10MB)
+                if (fuCSVVenta.PostedFile.ContentLength > 10485760)
+                {
+                    MostrarAlerta("errorTamanoVenta", "❌ El archivo es demasiado grande. Máximo 10MB.");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[DEBUG VENTA] Orden ID: {OrdenVentaSeleccionadaId}, Archivo: {fuCSVVenta.FileName}");
+
+                // Leer archivo como bytes
+                byte[] fileBytes;
+                using (var memoryStream = new System.IO.MemoryStream())
+                {
+                    fuCSVVenta.PostedFile.InputStream.CopyTo(memoryStream);
+                    fileBytes = memoryStream.ToArray();
+                }
+
+                // Llamar al Web Service para importar líneas
+                var task = lineaOrdenVentaService.importarLineasVentaDesdeCSVAsync(fileBytes, OrdenVentaSeleccionadaId);
+                task.Wait(); // Esperar sincrónicamente
+                int lineasImportadas = task.Result.@return;
+
+                System.Diagnostics.Debug.WriteLine($"[DEBUG VENTA] Líneas importadas: {lineasImportadas}");
+
+                // Actualizar la orden para recalcular el total
+                ActualizarTotalOrdenVenta(OrdenVentaSeleccionadaId);
+
+                // Recargar los detalles de la orden
+                CargarDetalle(TipoOrden.Venta, OrdenVentaSeleccionadaId);
+
+                // Cerrar modal y mostrar mensaje de éxito
+                ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModalVenta",
+                    "if(typeof cerrarModalImportarVenta === 'function') cerrarModalImportarVenta();", true);
+
+                MostrarAlerta("exitoImportarVenta", $"✅ ¡Importación exitosa!\\n\\nSe importaron {lineasImportadas} líneas correctamente.");
+
+                // Limpiar el file upload
+                fuCSVVenta.Attributes.Clear();
+            }
+            catch (System.ServiceModel.FaultException faultEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ERROR SOAP VENTA] {faultEx.Message}");
+                MostrarAlerta("errorImportarVenta", $"❌ Error en el servicio: {faultEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ERROR VENTA] Al importar líneas CSV: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ERROR VENTA] StackTrace: {ex.StackTrace}");
+                MostrarAlerta("errorImportarVenta", $"❌ Error al importar líneas: {ex.Message}");
+            }
+        }
+
+        // Método síncrono para actualizar el total de venta
+        private void ActualizarTotalOrdenVenta(int ordenId)
+        {
+            try
+            {
+                // Obtener la orden actualizada con las nuevas líneas
+                var orden = ordenVentaService.obtenerOrdenVenta(ordenId);
+                if (orden != null)
+                {
+                    // Recalcular el total sumando todas las líneas
+                    double nuevoTotal = 0;
+                    if (orden.lineas != null && orden.lineas.Length > 0)
+                    {
+                        foreach (var linea in orden.lineas)
+                        {
+                            nuevoTotal += linea.subtotal;
+                        }
+                    }
+
+                    // Actualizar el total si cambió
+                    if (Math.Abs(orden.total - nuevoTotal) > 0.01)
+                    {
+                        orden.total = nuevoTotal;
+                        ordenVentaService.guardarOrdenVenta(orden, estado.MODIFICADO);
+
+                        System.Diagnostics.Debug.WriteLine($"[DEBUG VENTA] Total actualizado: {nuevoTotal:C2}");
+                    }
+
+                    // Recargar la lista de órdenes para reflejar el nuevo total
+                    CargarOrdenes(TipoOrden.Venta);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ERROR VENTA] Al actualizar total: {ex.Message}");
+            }
+        }
+
+        #endregion
+
+        #region NAVEGACIÓN
+
+        protected void btnCompra_Click(object sender, EventArgs e) => MostrarSeccion(TipoOrden.Compra);
+        protected void btnVenta_Click(object sender, EventArgs e) => MostrarSeccion(TipoOrden.Venta);
+        protected void btnIngreso_Click(object sender, EventArgs e) => MostrarSeccion(TipoOrden.Ingreso);
+        protected void btnSalida_Click(object sender, EventArgs e) => MostrarSeccion(TipoOrden.Salida);
+
+        private void MostrarSeccion(TipoOrden tipoActivo)
+        {
+            foreach (var kvp in configuraciones)
+            {
+                bool esActivo = kvp.Key == tipoActivo;
+                kvp.Value.Contenedor.Style["display"] = esActivo ? "block" : "none";
+                kvp.Value.BtnModo.CssClass = esActivo ? "mode-btn active" : "mode-btn";
+            }
         }
 
         #endregion
 
         #region MÉTODOS AUXILIARES
 
-        private estadoDocumento GetEstadoDocumentoSeguro()
+        private bool ValidarFormulario(TextBox txtFecha, DropDownList ddlPrincipal, DropDownList ddlResponsable)
         {
-            try
+            if (string.IsNullOrWhiteSpace(txtFecha.Text))
             {
-                if (Enum.IsDefined(typeof(estadoDocumento), "PENDIENTE"))
-                {
-                    return (estadoDocumento)Enum.Parse(typeof(estadoDocumento), "PENDIENTE");
-                }
-
-                if (Enum.IsDefined(typeof(estadoDocumento), "PROCESADO"))
-                {
-                    return estadoDocumento.PROCESADO;
-                }
-
-                var valores = Enum.GetValues(typeof(estadoDocumento));
-                if (valores.Length > 0)
-                {
-                    return (estadoDocumento)valores.GetValue(0);
-                }
-
-                throw new InvalidOperationException("No se pudo determinar un estado válido");
+                MostrarAlerta("validacion", "Debe seleccionar una fecha");
+                return false;
             }
-            catch (Exception ex)
+
+            if (string.IsNullOrWhiteSpace(ddlPrincipal.SelectedValue))
             {
-                throw new Exception($"Error al obtener estado del documento: {ex.Message}");
+                string campo = ddlPrincipal.ID.Contains("Proveedor") ? "proveedor" :
+                              ddlPrincipal.ID.Contains("Cliente") ? "cliente" :
+                              ddlPrincipal.ID.Contains("Compra") ? "orden de compra" : "orden de venta";
+                MostrarAlerta("validacion", $"Debe seleccionar un {campo}");
+                return false;
             }
+
+            if (ddlResponsable != null && string.IsNullOrWhiteSpace(ddlResponsable.SelectedValue))
+            {
+                MostrarAlerta("validacion", "Debe seleccionar un responsable");
+                return false;
+            }
+
+            return true;
         }
 
-        private estadoDocumento GetEstadoDocumento(string estado)
+        private void LimpiarFormulario(TipoOrden tipo)
+        {
+            var config = configuraciones[tipo];
+            config.TxtFecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            config.DdlPrincipal.SelectedIndex = 0;
+            config.DdlResponsable?.SelectedIndex = 0;
+            config.FileUpload.Attributes.Clear();
+        }
+
+        private void ManejarArchivoAdjunto(FileUpload fileUpload, string tipoDocumento)
         {
             try
             {
-                if (Enum.TryParse<estadoDocumento>(estado, true, out estadoDocumento resultado))
+                if (fileUpload.HasFile)
                 {
-                    return resultado;
-                }
+                    string fileName = fileUpload.FileName;
+                    string fileExtension = Path.GetExtension(fileName).ToLower();
+                    string[] allowedExtensions = { ".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png" };
 
-                if (Enum.IsDefined(typeof(estadoDocumento), estadoDocumento.PENDIENTE))
-                {
-                    return estadoDocumento.PENDIENTE;
-                }
-                else if (Enum.IsDefined(typeof(estadoDocumento), estadoDocumento.PROCESADO))
-                {
-                    return estadoDocumento.PROCESADO;
+                    if (!allowedExtensions.Contains(fileExtension))
+                    {
+                        MostrarAlerta("errorArchivo", "Tipo de archivo no permitido. Formatos aceptados: PDF, DOC, DOCX, JPG, JPEG, PNG");
+                        return;
+                    }
+
+                    if (fileUpload.PostedFile.ContentLength > 10 * 1024 * 1024)
+                    {
+                        MostrarAlerta("errorTamano", "El archivo es demasiado grande. Tamaño máximo: 10MB");
+                        return;
+                    }
+
+                    MostrarAlerta("exitoArchivo", $"Archivo {fileName} adjuntado correctamente para {tipoDocumento}");
                 }
                 else
                 {
-                    var valores = Enum.GetValues(typeof(estadoDocumento));
-                    return (estadoDocumento)valores.GetValue(0);
+                    MostrarAlerta("infoArchivo", $"No se seleccionó ningún archivo para {tipoDocumento}. La orden se guardará sin documento adjunto.");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return estadoDocumento.PROCESADO;
+                MostrarAlerta("errorArchivoGeneral", $"Error al adjuntar archivo: {ex.Message}");
             }
         }
 
-        private void CargarDetalleOrdenVacia()
+        private string ObtenerNombreResponsable(object entidad)
         {
-            gvDetalleOrdenCompra.DataSource = new List<object>();
-            gvDetalleOrdenCompra.DataBind();
-            gvDetalleOrdenVenta.DataSource = new List<object>();
-            gvDetalleOrdenVenta.DataBind();
-            gvDetalleOrdenCompraIngreso.DataSource = new List<object>();
-            gvDetalleOrdenCompraIngreso.DataBind();
-            gvDetalleOrdenVentaSalida.DataSource = new List<object>();
-            gvDetalleOrdenVentaSalida.DataBind();
+            try
+            {
+                var propResponsable = entidad.GetType().GetProperty("responsable");
+                if (propResponsable != null)
+                {
+                    var responsable = propResponsable.GetValue(entidad) as usuario;
+                    if (responsable != null)
+                        return $"{responsable.nombres} {responsable.apellidos}".Trim();
+                }
+
+                var propUsuario = entidad.GetType().GetProperty("usuario");
+                if (propUsuario != null)
+                {
+                    var usuario = propUsuario.GetValue(entidad) as usuario;
+                    if (usuario != null)
+                        return $"{usuario.nombres} {usuario.apellidos}".Trim();
+                }
+            }
+            catch { }
+
+            return "Sistema";
+        }
+
+        private void AsignarResponsable(object entidad, string idUsuario)
+        {
+            try
+            {
+                var propResponsable = entidad.GetType().GetProperty("responsable");
+                if (propResponsable != null)
+                {
+                    propResponsable.SetValue(entidad, new usuario { idUsuario = Convert.ToInt32(idUsuario) });
+                    return;
+                }
+
+                var propUsuario = entidad.GetType().GetProperty("usuario");
+                if (propUsuario != null)
+                {
+                    propUsuario.SetValue(entidad, new usuario { idUsuario = Convert.ToInt32(idUsuario) });
+                }
+            }
+            catch { }
+        }
+
+        private void MostrarAlerta(string key, string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), key, $"alert('{mensaje.Replace("'", "\\'")}');", true);
         }
 
         public string GetBadgeClass(string estado)
         {
-            if (string.IsNullOrEmpty(estado))
-                return "badge";
+            if (string.IsNullOrEmpty(estado)) return "badge";
 
             switch (estado.ToLower())
             {
@@ -1084,7 +1259,6 @@ namespace StockifyWeb
                     return "badge badge-cancelado";
                 case "aceptado":
                 case "completado":
-                    return "badge badge-aceptado";
                 case "disponible":
                     return "badge badge-aceptado";
                 default:
@@ -1094,84 +1268,8 @@ namespace StockifyWeb
 
         #endregion
 
-        #region EVENTOS DE NAVEGACIÓN
+        #region EVENTOS PENDIENTES (GridView RowDataBound y DropDownList SelectedIndexChanged)
 
-        protected void btnCompra_Click(object sender, EventArgs e)
-        {
-            MostrarCompra();
-        }
-
-        protected void btnVenta_Click(object sender, EventArgs e)
-        {
-            MostrarVenta();
-        }
-
-        protected void btnIngreso_Click(object sender, EventArgs e)
-        {
-            MostrarIngreso();
-        }
-
-        protected void btnSalida_Click(object sender, EventArgs e)
-        {
-            MostrarSalida();
-        }
-
-        private void MostrarCompra()
-        {
-            compraContent.Style["display"] = "block";
-            ventaContent.Style["display"] = "none";
-            ingresoContent.Style["display"] = "none";
-            salidaContent.Style["display"] = "none";
-            btnCompra.CssClass = "mode-btn active";
-            btnVenta.CssClass = "mode-btn";
-            btnIngreso.CssClass = "mode-btn";
-            btnSalida.CssClass = "mode-btn";
-        }
-
-        private void MostrarVenta()
-        {
-            compraContent.Style["display"] = "none";
-            ventaContent.Style["display"] = "block";
-            ingresoContent.Style["display"] = "none";
-            salidaContent.Style["display"] = "none";
-            btnVenta.CssClass = "mode-btn active";
-            btnCompra.CssClass = "mode-btn";
-            btnIngreso.CssClass = "mode-btn";
-            btnSalida.CssClass = "mode-btn";
-        }
-
-        private void MostrarIngreso()
-        {
-            compraContent.Style["display"] = "none";
-            ventaContent.Style["display"] = "none";
-            ingresoContent.Style["display"] = "block";
-            salidaContent.Style["display"] = "none";
-            btnIngreso.CssClass = "mode-btn active";
-            btnCompra.CssClass = "mode-btn";
-            btnVenta.CssClass = "mode-btn";
-            btnSalida.CssClass = "mode-btn";
-        }
-
-        private void MostrarSalida()
-        {
-            compraContent.Style["display"] = "none";
-            ventaContent.Style["display"] = "none";
-            ingresoContent.Style["display"] = "none";
-            salidaContent.Style["display"] = "block";
-            btnSalida.CssClass = "mode-btn active";
-            btnCompra.CssClass = "mode-btn";
-            btnVenta.CssClass = "mode-btn";
-            btnIngreso.CssClass = "mode-btn";
-        }
-
-        #endregion
-
-        #region EVENTOS PENDIENTES
-
-        protected void chkSeleccionIngreso_CheckedChanged(object sender, EventArgs e) { }
-        protected void chkSeleccionSalida_CheckedChanged(object sender, EventArgs e) { }
-        protected void btnEditarIngresoFila_Click(object sender, EventArgs e) { }
-        protected void btnEditarSalidaFila_Click(object sender, EventArgs e) { }
         protected void gvOrdenesCompra_RowDataBound(object sender, GridViewRowEventArgs e) { }
         protected void gvOrdenesVenta_RowDataBound(object sender, GridViewRowEventArgs e) { }
         protected void gvRegistrosIngreso_RowDataBound(object sender, GridViewRowEventArgs e) { }

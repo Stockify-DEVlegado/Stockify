@@ -11,4 +11,6 @@
   <contractRef ref="http://localhost:8080/StockifyWS/OrdenVentaWS?wsdl" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
   <contractRef ref="http://localhost:8080/StockifyWS/ProductoWS?wsdl" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
   <contractRef ref="http://localhost:8080/StockifyWS/UsuarioWS?wsdl" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <contractRef ref="http://localhost:8080/StockifyWS/LineaOrdenCompraWS?wsdl" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <contractRef ref="http://localhost:8080/StockifyWS/LineaOrdenVentaWS?wsdl" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
 </discovery>

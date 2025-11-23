@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -128,132 +129,170 @@ namespace StockifyWeb
 
         protected void btnSaveProduct_Click(object sender, EventArgs e)
         {
-            using (var productoClient = new ProductoWSClient())
-            using (var categoriaClient = new CategoriaWSClient())
+            RegisterAsyncTask(new PageAsyncTask(GuardarProductoAsync));
+        }
+
+        private async Task GuardarProductoAsync()
+        {
+            ProductoWSClient productoClient = null;
+            CategoriaWSClient categoriaClient = null;
+
+            try
             {
-                try
+                // ====== VALIDACIONES ======
+                if (string.IsNullOrWhiteSpace(txtProductName.Text))
                 {
-                    if (string.IsNullOrWhiteSpace(txtProductName.Text))
+                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                        "abrirModal(); alert('Por favor, ingrese el nombre del producto.');", true);
+                    return;
+                }
+
+                if (ddlCategoria.SelectedValue == "0")
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                        "abrirModal(); alert('Por favor, seleccione una categoría.');", true);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                        "abrirModal(); alert('Por favor, ingrese el precio unitario.');", true);
+                    return;
+                }
+
+                if (!double.TryParse(txtPrecioUnitario.Text, out var precioUnitario) || precioUnitario <= 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                        "abrirModal(); alert('Por favor, ingrese un precio válido mayor a 0.');", true);
+                    return;
+                }
+
+                var stockMinimo = 0;
+                if (!string.IsNullOrWhiteSpace(txtStockMinimo.Text))
+                {
+                    if (!int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "alert('Por favor, ingrese el nombre del producto.');", true);
+                            "abrirModal(); alert('Por favor, ingrese un stock mínimo válido (número entero mayor o igual a 0).');", true);
                         return;
                     }
+                }
 
-                    if (ddlCategoria.SelectedValue == "0")
+                var stockMaximo = 0;
+                if (!string.IsNullOrWhiteSpace(txtStockMaximo.Text))
+                {
+                    if (!int.TryParse(txtStockMaximo.Text, out stockMaximo) || stockMaximo < 0)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "alert('Por favor, seleccione una categoría.');", true);
+                            "abrirModal(); alert('Por favor, ingrese un stock máximo válido (número entero mayor o igual a 0).');", true);
                         return;
                     }
+                }
 
-                    if (string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
-                    {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "alert('Por favor, ingrese el precio unitario.');", true);
-                        return;
-                    }
+                if (stockMaximo > 0 && stockMinimo > stockMaximo)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
+                        "abrirModal(); alert('El stock máximo debe ser mayor o igual al stock mínimo.');", true);
+                    return;
+                }
 
-                    if (!double.TryParse(txtPrecioUnitario.Text, out var precioUnitario) || precioUnitario <= 0)
-                    {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "alert('Por favor, ingrese un precio válido mayor a 0.');", true);
-                        return;
-                    }
+                System.Diagnostics.Debug.WriteLine($"[GUARDAR] Iniciando guardado de producto: {txtProductName.Text}");
 
-                    var stockMinimo = 0;
-                    if (!string.IsNullOrWhiteSpace(txtStockMinimo.Text))
-                    {
-                        if (!int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
-                        {
-                            ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                                "alert('Por favor, ingrese un stock mínimo válido (número entero mayor o igual a 0).');", true);
-                            return;
-                        }
-                    }
+                // ====== CREAR OBJETO PRODUCTO ======
+                productoClient = new ProductoWSClient();
 
-                    var stockMaximo = 0;
-                    if (!string.IsNullOrWhiteSpace(txtStockMaximo.Text))
-                    {
-                        if (!int.TryParse(txtStockMaximo.Text, out stockMaximo) || stockMaximo < 0)
-                        {
-                            ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                                "alert('Por favor, ingrese un stock máximo válido (número entero mayor o igual a 0).');", true);
-                            return;
-                        }
-                    }
+                var producto = new producto
+                {
+                    nombre = txtProductName.Text.Trim(),
+                    descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text)
+                        ? "Sin descripción"
+                        : txtDescripcion.Text.Trim(),
+                    marca = string.IsNullOrWhiteSpace(txtMarca.Text)
+                        ? "Sin marca"
+                        : txtMarca.Text.Trim(),
+                    precioUnitario = precioUnitario,
+                    stockMinimo = stockMinimo,
+                    stockMaximo = stockMaximo
+                };
 
-                    if (stockMaximo > 0 && stockMinimo > stockMaximo)
-                    {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                            "alert('El stock máximo debe ser mayor o igual al stock mínimo.');", true);
-                        return;
-                    }
+                // ====== ASIGNAR CATEGORÍA ======
+                int categoriaId = int.Parse(ddlCategoria.SelectedValue);
+                categoriaClient = new CategoriaWSClient();
+                var categoriaResponse = await categoriaClient.obtenerCategoriaAsync(categoriaId);
 
-                    var producto = new producto
+                if (categoriaResponse.@return != null)
+                {
+                    producto.categoria = new categoria
                     {
-                        nombre = txtProductName.Text.Trim(),
-                        descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text)
-                            ? "Sin descripción"
-                            : txtDescripcion.Text.Trim(),
-                        marca = string.IsNullOrWhiteSpace(txtMarca.Text)
-                            ? "Sin marca"
-                            : txtMarca.Text.Trim(),
-                        precioUnitario = precioUnitario,
-                        stockMinimo = stockMinimo,
-                        stockMaximo = stockMaximo
+                        idCategoria = categoriaResponse.@return.idCategoria,
+                        nombre = categoriaResponse.@return.nombre
                     };
-
-                    int categoriaId = int.Parse(ddlCategoria.SelectedValue);
-                    var categoria = categoriaClient.obtenerCategoria(categoriaId);
-
-                    if (categoria != null)
-                    {
-                        producto.categoria = new categoria
-                        {
-                            idCategoria = categoria.idCategoria,
-                            nombre = categoria.nombre
-                        };
-                    }
-
-                    var estado = StockifyWS.estado.NUEVO;
-                    var productoId = int.Parse(hdnProductoId.Value);
-                    var esNuevo = productoId == 0;
-
-                    if (productoId > 0)
-                    {
-                        producto.idProducto = productoId;
-                        estado = estado.MODIFICADO;
-                    }
-
-                    productoClient.guardarProducto(producto, estado);
-
-                    if (esNuevo)
-                    {
-                        NotificationService.NotificarNuevoProducto(producto.nombre);
-                    }
-                    else
-                    {
-                        NotificationService.AgregarNotificacion(
-                            $"Producto '{producto.nombre}' actualizado exitosamente",
-                            "info",
-                            "fa-edit"
-                        );
-                    }
-
-                    Response.Redirect(Request.RawUrl, false);
-                    Context.ApplicationInstance.CompleteRequest();
                 }
-                catch (FormatException)
+
+                // ====== DETERMINAR SI ES NUEVO O MODIFICADO ======
+                var estado = StockifyWS.estado.NUEVO;
+                var productoId = int.Parse(hdnProductoId.Value);
+                var esNuevo = productoId == 0;
+
+                if (productoId > 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        "alert('Error: Formato de datos incorrecto. Verifique los valores numéricos.');", true);
+                    producto.idProducto = productoId;
+                    estado = StockifyWS.estado.MODIFICADO;
                 }
-                catch (Exception ex)
+
+                System.Diagnostics.Debug.WriteLine($"[GUARDAR] Estado: {estado}, EsNuevo: {esNuevo}");
+
+                // ====== GUARDAR EN LA BASE DE DATOS ======
+                await productoClient.guardarProductoAsync(producto, estado);
+
+                System.Diagnostics.Debug.WriteLine("[GUARDAR] Producto guardado exitosamente");
+
+                // ====== NOTIFICACIONES ======
+                if (esNuevo)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Error al guardar producto: {ex.Message}");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "error",
-                        $"alert('Error al guardar el producto. Por favor, intente nuevamente.');", true);
+                    NotificationService.NotificarNuevoProducto(
+                        producto.nombre,
+                        producto.categoria?.nombre ?? "Sin categoría",
+                        producto.precioUnitario
+                    );
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Producto agregado: {producto.nombre}");
+                }
+                else
+                {
+                    NotificationService.NotificarProductoActualizado(producto.nombre);
+                    System.Diagnostics.Debug.WriteLine($"[NOTIFICACIÓN] Producto actualizado: {producto.nombre}");
+                }
+
+                // ====== RECARGAR DATOS ======
+                CargarProductos();
+
+                // ====== CERRAR MODAL Y MOSTRAR ÉXITO ======
+                ScriptManager.RegisterStartupScript(this, GetType(), "successSave",
+                    "cerrarModal(); alert('✅ Producto guardado exitosamente!');", true);
+            }
+            catch (FormatException)
+            {
+                System.Diagnostics.Debug.WriteLine("[GUARDAR] Error de formato");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorFormat",
+                    "abrirModal(); alert('❌ Error: Formato de datos incorrecto. Verifique los valores numéricos.');", true);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GUARDAR] Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GUARDAR] StackTrace: {ex.StackTrace}");
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorSave",
+                    $"abrirModal(); alert('❌ Error al guardar el producto. Por favor, intente nuevamente.');", true);
+            }
+            finally
+            {
+                if (categoriaClient != null && categoriaClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    categoriaClient.Close();
+                }
+                if (productoClient != null && productoClient.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                    productoClient.Close();
                 }
             }
         }

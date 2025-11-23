@@ -18,5 +18,6 @@ public interface LineaOrdenCompraDAO extends PersistibleTransaccional<LineaOrden
     
     List<LineaOrdenCompra> leerTodosPorOrden(int idOrden);
     List<LineaOrdenCompra> leerTodosPorOrden(int idOrden, Connection conn);
+    int insertarBloque(List<LineaOrdenCompra> lineas, int idOrdenCompra);
     
 }

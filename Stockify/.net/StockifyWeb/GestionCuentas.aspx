@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Stockify.Master" AutoEventWireup="true" 
-CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
+CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -149,16 +149,10 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
             border: 1px solid rgba(255, 87, 87, 0.3);
         }
         
-        .badge-usuario {
+        .badge-operario {
             background: rgba(138, 162, 255, 0.2);
             color: #8aa2ff;
             border: 1px solid rgba(138, 162, 255, 0.3);
-        }
-
-        .badge-supervisor {
-            background: rgba(240, 183, 93, 0.2);
-            color: #f0b75d;
-            border: 1px solid rgba(240, 183, 93, 0.3);
         }
         
         .action-buttons-cell {
@@ -199,48 +193,6 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
         .btn-delete:hover {
             background: var(--danger);
             color: white;
-        }
-        
-        .pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-        .pagination-left {
-            flex: 1;
-            text-align: left;
-        }
-        .pagination-center {
-            flex: 1;
-            text-align: center;
-            color: var(--muted);
-        }
-        .pagination-right {
-            flex: 1;
-            text-align: right;
-        }
-        .btn-pagination {
-            background: var(--card2);
-            color: var(--text);
-            border: 1px solid var(--stroke);
-            padding: 8px 16px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-pagination:hover:not(.button-disabled) {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
-        }
-        .button-disabled {
-            background: var(--bg);
-            color: var(--muted);
-            cursor: not-allowed;
-            border: 1px solid var(--stroke);
-            opacity: 0.6;
         }
         
         h1 {
@@ -396,6 +348,18 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
         .toggle-password:hover {
             color: var(--text);
         }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
         
         @media (max-width: 768px) {
             .header-actions {
@@ -407,14 +371,6 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
             }
             .action-buttons {
                 justify-content: space-between;
-            }
-            .pagination {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .pagination-left, .pagination-center, .pagination-right {
-                text-align: center;
-                width: 100%;
             }
             
             .modal-content {
@@ -431,104 +387,73 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
     <div class="accounts-container">
         <div class="header-actions">
             <div class="search-box">
-                <input type="text" placeholder="Buscar cuentas..." id="txtBuscar">
+                <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar cuentas..." CssClass="form-control" />
                 <i class="fas fa-search"></i>
             </div>
             <div class="action-buttons">
-                <button class="btn-filter" type="button">
-                    <i class="fas fa-filter"></i> Filtros
-                </button>
-                <button class="btn-add" type="button" onclick="abrirModalAgregar()">
-                    <i class="fas fa-plus"></i> Crear Cuenta
-                </button>
+                <asp:Button ID="btnCrearCuenta" runat="server" Text="Crear Cuenta" CssClass="btn-add" 
+                    OnClientClick="abrirModalAgregar(); return false;" />
             </div>
         </div>
 
         <h1>Gestión de Cuentas</h1>
         
-        <!-- Aquí va tu GridView con los datos de la base de datos -->
-        <table class="accounts-table">
-            <thead>
+        <asp:Repeater ID="rptCuentas" runat="server">
+            <HeaderTemplate>
+                <table class="accounts-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Teléfono</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            </HeaderTemplate>
+            <ItemTemplate>
                 <tr>
-                    <th>Usuario</th>
-                    <th>Nombre Completo</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Fecha Creación</th>
-                    <th>Activo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Ejemplo de fila - Reemplaza con tu GridView -->
-                <tr>
-                    <td>admin</td>
-                    <td>Administrador Sistema</td>
-                    <td>admin@stockify.com</td>
-                    <td><span class="badge-rol badge-admin">ADMIN</span></td>
-                    <td>15/01/2025</td>
-                    <td><span class="status-active">Si</span></td>
+                    <td><%# Eval("Username") %></td>
+                    <td><%# Eval("NombreCompleto") %></td>
+                    <td><%# Eval("Email") %></td>
+                    <td>
+                        <span class='badge-rol <%# Eval("TipoUsuario").ToString() == "ADMINISTRADOR" ? "badge-admin" : "badge-operario" %>'>
+                            <%# Eval("TipoUsuario") %>
+                        </span>
+                    </td>
+                    <td><%# string.IsNullOrEmpty(Eval("Telefono")?.ToString()) ? "-" : Eval("Telefono") %></td>
+                    <td>
+                        <span class='<%# (bool)Eval("Activo") ? "status-active" : "status-inactive" %>'>
+                            <%# (bool)Eval("Activo") ? "Sí" : "No" %>
+                        </span>
+                    </td>
                     <td>
                         <div class="action-buttons-cell">
-                            <button type="button" class="btn-edit" onclick="editarCuenta(1, 'admin', 'Administrador Sistema', 'admin@stockify.com', 'ADMIN', 'si')">
+                            <button type="button" class="btn-edit" 
+                                onclick='editarCuenta(<%# Eval("IdUsuario") %>, "<%# Eval("Username") %>", "<%# Eval("Nombres") %>", "<%# Eval("Apellidos") %>", "<%# Eval("Email") %>", "<%# Eval("Telefono") %>", "<%# Eval("TipoUsuario") %>", <%# Eval("Activo").ToString().ToLower() %>)'>
                                 Editar
                             </button>
-                            <button type="button" class="btn-delete" onclick="confirmarEliminacion('admin')">
+                            <button type="button" class="btn-delete" 
+                                onclick='confirmarEliminacion(<%# Eval("IdUsuario") %>, "<%# Eval("Username") %>")'>
                                 Eliminar
                             </button>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>usuario1</td>
-                    <td>Juan Pérez</td>
-                    <td>juan.perez@stockify.com</td>
-                    <td><span class="badge-rol badge-usuario">USUARIO</span></td>
-                    <td>20/01/2025</td>
-                    <td><span class="status-active">Si</span></td>
-                    <td>
-                        <div class="action-buttons-cell">
-                            <button type="button" class="btn-edit" onclick="editarCuenta(2, 'usuario1', 'Juan Pérez', 'juan.perez@stockify.com', 'USUARIO', 'si')">
-                                Editar
-                            </button>
-                            <button type="button" class="btn-delete" onclick="confirmarEliminacion('usuario1')">
-                                Eliminar
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>supervisor1</td>
-                    <td>María García</td>
-                    <td>maria.garcia@stockify.com</td>
-                    <td><span class="badge-rol badge-supervisor">SUPERVISOR</span></td>
-                    <td>22/01/2025</td>
-                    <td><span class="status-inactive">No</span></td>
-                    <td>
-                        <div class="action-buttons-cell">
-                            <button type="button" class="btn-edit" onclick="editarCuenta(3, 'supervisor1', 'María García', 'maria.garcia@stockify.com', 'SUPERVISOR', 'no')">
-                                Editar
-                            </button>
-                            <button type="button" class="btn-delete" onclick="confirmarEliminacion('supervisor1')">
-                                Eliminar
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="pagination">
-            <div class="pagination-left">
-                <button class="btn-pagination button-disabled">Anterior</button>
-            </div>
-            <div class="pagination-center">
-                <span>Página 1 de 1</span>
-            </div>
-            <div class="pagination-right">
-                <button class="btn-pagination button-disabled">Siguiente</button>
-            </div>
-        </div>
+            </ItemTemplate>
+            <FooterTemplate>
+                    </tbody>
+                </table>
+            </FooterTemplate>
+        </asp:Repeater>
+
+        <asp:Panel ID="pnlEmpty" runat="server" CssClass="empty-state" Visible="false">
+            <i class="fas fa-users-slash"></i>
+            <p>No hay cuentas registradas</p>
+        </asp:Panel>
     </div>
 
     <!-- Modal Agregar/Editar -->
@@ -539,140 +464,194 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
                 <button class="close-modal" type="button" onclick="cerrarModal()">&times;</button>
             </div>
             
-            <input type="hidden" id="hfIdCuenta" value="0" />
-            <input type="hidden" id="hfModoEdicion" value="false" />
+            <asp:HiddenField ID="hfIdUsuario" runat="server" Value="0" />
+            <asp:HiddenField ID="hfModoEdicion" runat="server" Value="false" />
             
             <div class="form-group">
-                <label for="txtNombreUsuario">Nombre de Usuario *</label>
-                <input type="text" id="txtNombreUsuario" class="form-control" placeholder="Ingrese nombre de usuario" />
+                <label for="<%= txtUsername.ClientID %>">Nombre de Usuario *</label>
+                <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" 
+                    placeholder="Ingrese nombre de usuario" />
             </div>
             
             <div class="form-group">
-                <label for="txtNombreCompleto">Nombre Completo *</label>
-                <input type="text" id="txtNombreCompleto" class="form-control" placeholder="Ingrese nombre completo" />
+                <label for="<%= txtNombres.ClientID %>">Nombres *</label>
+                <asp:TextBox ID="txtNombres" runat="server" CssClass="form-control" 
+                    placeholder="Ingrese nombres" />
+            </div>
+
+            <div class="form-group">
+                <label for="<%= txtApellidos.ClientID %>">Apellidos *</label>
+                <asp:TextBox ID="txtApellidos" runat="server" CssClass="form-control" 
+                    placeholder="Ingrese apellidos" />
             </div>
             
             <div class="form-group">
-                <label for="txtEmail">Email *</label>
-                <input type="email" id="txtEmail" class="form-control" placeholder="Ingrese email" />
+                <label for="<%= txtEmail.ClientID %>">Email *</label>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" 
+                    TextMode="Email" placeholder="Ingrese email" />
+            </div>
+
+            <div class="form-group">
+                <label for="<%= txtTelefono.ClientID %>">Teléfono</label>
+                <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" 
+                    placeholder="Ingrese teléfono (opcional)" />
             </div>
             
             <div class="form-group" id="passwordGroup">
-                <label for="txtPassword">Contraseña *</label>
+                <label for="<%= txtPassword.ClientID %>">Contraseña *</label>
                 <div class="password-field">
-                    <input type="password" id="txtPassword" class="form-control" placeholder="Ingrese contraseña" />
+                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" 
+                        CssClass="form-control" placeholder="Mínimo 8 caracteres" />
                     <button type="button" class="toggle-password" onclick="togglePassword()">
                         <i class="fas fa-eye" id="eyeIcon"></i>
                     </button>
                 </div>
+                <small style="color: var(--muted); font-size: 12px;">
+                    Mínimo 8 caracteres, debe incluir mayúsculas, minúsculas y números
+                </small>
             </div>
             
             <div class="form-group">
-                <label for="ddlRol">Rol *</label>
-                <select id="ddlRol" class="form-control">
-                    <option value="">Seleccione un rol</option>
-                    <option value="ADMIN">Administrador</option>
-                    <option value="SUPERVISOR">Supervisor</option>
-                    <option value="USUARIO">Usuario</option>
-                </select>
+                <label for="<%= ddlTipoUsuario.ClientID %>">Rol *</label>
+                <asp:DropDownList ID="ddlTipoUsuario" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="" Text="Seleccione un rol" />
+                    <asp:ListItem Value="ADMINISTRADOR" Text="Administrador" />
+                    <asp:ListItem Value="OPERARIO" Text="Operario" />
+                </asp:DropDownList>
             </div>
             
             <div class="form-group">
-                <label for="ddlActivo">Estado</label>
-                <select id="ddlActivo" class="form-control">
-                    <option value="si" selected>Activo</option>
-                    <option value="no">Inactivo</option>
-                </select>
+                <label for="<%= ddlActivo.ClientID %>">Estado</label>
+                <asp:DropDownList ID="ddlActivo" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="true" Text="Activo" Selected="True" />
+                    <asp:ListItem Value="false" Text="Inactivo" />
+                </asp:DropDownList>
             </div>
             
             <div class="modal-actions">
                 <button type="button" class="btn-discard" onclick="cerrarModal()">Descartar</button>
-                <button type="button" id="btnSubmit" class="btn-submit" onclick="guardarCuenta()">Crear Cuenta</button>
+                <asp:Button ID="btnGuardarCuenta" runat="server" Text="Crear Cuenta" 
+                    CssClass="btn-submit" OnClick="btnGuardarCuenta_Click" 
+                    OnClientClick="return validarFormulario();" />
             </div>
         </div>
     </div>
 
+    <asp:HiddenField ID="hfAccion" runat="server" />
+    <asp:HiddenField ID="hfIdEliminar" runat="server" />
+
     <script>
         // Búsqueda en tiempo real
-        document.getElementById('txtBuscar').addEventListener('keyup', function () {
-            var filter = this.value.toLowerCase();
-            var rows = document.querySelectorAll('.accounts-table tbody tr');
+        var txtBuscar = document.getElementById('<%= txtBuscar.ClientID %>');
+        if (txtBuscar) {
+            txtBuscar.addEventListener('keyup', function () {
+                var filter = this.value.toLowerCase();
+                var rows = document.querySelectorAll('.accounts-table tbody tr');
 
-            rows.forEach(function (row) {
-                var userName = row.cells[0].textContent.toLowerCase();
-                var fullName = row.cells[1].textContent.toLowerCase();
-                var email = row.cells[2].textContent.toLowerCase();
-                
-                if (userName.indexOf(filter) > -1 || fullName.indexOf(filter) > -1 || email.indexOf(filter) > -1) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
+                rows.forEach(function (row) {
+                    var userName = row.cells[0].textContent.toLowerCase();
+                    var fullName = row.cells[1].textContent.toLowerCase();
+                    var email = row.cells[2].textContent.toLowerCase();
+
+                    if (userName.indexOf(filter) > -1 || fullName.indexOf(filter) > -1 || email.indexOf(filter) > -1) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
             });
-        });
+        }
 
-        // Abrir modal para agregar
         function abrirModalAgregar() {
             document.getElementById('modalTitle').innerText = 'Crear Cuenta';
-            document.getElementById('hfModoEdicion').value = 'false';
-            document.getElementById('hfIdCuenta').value = '0';
-            document.getElementById('btnSubmit').innerText = 'Crear Cuenta';
+            document.getElementById('<%= hfModoEdicion.ClientID %>').value = 'false';
+            document.getElementById('<%= hfIdUsuario.ClientID %>').value = '0';
+            document.getElementById('<%= btnGuardarCuenta.ClientID %>').value = 'Crear Cuenta';
             document.getElementById('passwordGroup').style.display = 'block';
             limpiarFormulario();
             document.getElementById('accountModal').style.display = 'flex';
         }
 
-        // Abrir modal para editar
-        function editarCuenta(id, usuario, nombreCompleto, email, rol, activo) {
+        function editarCuenta(id, usuario, nombres, apellidos, email, telefono, rol, activo) {
             document.getElementById('modalTitle').innerText = 'Editar Cuenta';
-            document.getElementById('hfModoEdicion').value = 'true';
-            document.getElementById('hfIdCuenta').value = id;
-            document.getElementById('btnSubmit').innerText = 'Guardar Cambios';
+            document.getElementById('<%= hfModoEdicion.ClientID %>').value = 'true';
+            document.getElementById('<%= hfIdUsuario.ClientID %>').value = id;
+            document.getElementById('<%= btnGuardarCuenta.ClientID %>').value = 'Guardar Cambios';
             document.getElementById('passwordGroup').style.display = 'none';
-            
-            document.getElementById('txtNombreUsuario').value = usuario;
-            document.getElementById('txtNombreCompleto').value = nombreCompleto;
-            document.getElementById('txtEmail').value = email;
-            document.getElementById('ddlRol').value = rol;
-            document.getElementById('ddlActivo').value = activo.toLowerCase();
-            
+
+            document.getElementById('<%= txtUsername.ClientID %>').value = usuario;
+            document.getElementById('<%= txtUsername.ClientID %>').disabled = true;
+            document.getElementById('<%= txtNombres.ClientID %>').value = nombres;
+            document.getElementById('<%= txtApellidos.ClientID %>').value = apellidos;
+            document.getElementById('<%= txtEmail.ClientID %>').value = email;
+            document.getElementById('<%= txtTelefono.ClientID %>').value = telefono || '';
+            document.getElementById('<%= ddlTipoUsuario.ClientID %>').value = rol;
+            document.getElementById('<%= ddlActivo.ClientID %>').value = activo.toString();
+
             document.getElementById('accountModal').style.display = 'flex';
         }
 
-        // Cerrar modal
         function cerrarModal() {
             document.getElementById('accountModal').style.display = 'none';
             limpiarFormulario();
+            document.getElementById('<%= txtUsername.ClientID %>').disabled = false;
         }
 
-        // Limpiar formulario
         function limpiarFormulario() {
-            document.getElementById('txtNombreUsuario').value = '';
-            document.getElementById('txtNombreCompleto').value = '';
-            document.getElementById('txtEmail').value = '';
-            document.getElementById('txtPassword').value = '';
-            document.getElementById('ddlRol').selectedIndex = 0;
-            document.getElementById('ddlActivo').selectedIndex = 0;
-            
+            document.getElementById('<%= txtUsername.ClientID %>').value = '';
+            document.getElementById('<%= txtNombres.ClientID %>').value = '';
+            document.getElementById('<%= txtApellidos.ClientID %>').value = '';
+            document.getElementById('<%= txtEmail.ClientID %>').value = '';
+            document.getElementById('<%= txtTelefono.ClientID %>').value = '';
+            document.getElementById('<%= txtPassword.ClientID %>').value = '';
+            document.getElementById('<%= ddlTipoUsuario.ClientID %>').selectedIndex = 0;
+            document.getElementById('<%= ddlActivo.ClientID %>').selectedIndex = 0;
+
             var eyeIcon = document.getElementById('eyeIcon');
             eyeIcon.classList.remove('fa-eye-slash');
             eyeIcon.classList.add('fa-eye');
-            document.getElementById('txtPassword').type = 'password';
+            document.getElementById('<%= txtPassword.ClientID %>').type = 'password';
         }
 
-        // Confirmar eliminación
-        function confirmarEliminacion(nombre) {
-            if (confirm('¿Está seguro que desea eliminar la cuenta "' + nombre + '"?\n\nEsta acción no se puede deshacer.')) {
-                // Aquí llamarías a tu función del code-behind para eliminar
-                console.log('Eliminar cuenta: ' + nombre);
+        function validarFormulario() {
+            var modoEdicion = document.getElementById('<%= hfModoEdicion.ClientID %>').value === 'true';
+            var usuario = document.getElementById('<%= txtUsername.ClientID %>').value.trim();
+            var nombres = document.getElementById('<%= txtNombres.ClientID %>').value.trim();
+            var apellidos = document.getElementById('<%= txtApellidos.ClientID %>').value.trim();
+            var email = document.getElementById('<%= txtEmail.ClientID %>').value.trim();
+            var password = document.getElementById('<%= txtPassword.ClientID %>').value;
+            var rol = document.getElementById('<%= ddlTipoUsuario.ClientID %>').value;
+
+            if (!usuario || !nombres || !apellidos || !email || !rol) {
+                alert('Por favor complete todos los campos obligatorios (*)');
+                return false;
+            }
+
+            if (!modoEdicion && password.length < 8) {
+                alert('La contraseña debe tener al menos 8 caracteres');
+                return false;
+            }
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor ingrese un email válido');
+                return false;
+            }
+
+            return true;
+        }
+
+        function confirmarEliminacion(id, nombre) {
+            if (confirm('¿Está seguro que desea eliminar la cuenta "' + nombre + '"?\n\nEsta acción eliminará el usuario tanto de la base de datos como de AWS Cognito.')) {
+                document.getElementById('<%= hfIdEliminar.ClientID %>').value = id;
+                <%= Page.ClientScript.GetPostBackEventReference(btnEliminar, "") %>;
             }
         }
 
-        // Toggle mostrar/ocultar contraseña
         function togglePassword() {
-            var passwordField = document.getElementById('txtPassword');
+            var passwordField = document.getElementById('<%= txtPassword.ClientID %>');
             var eyeIcon = document.getElementById('eyeIcon');
-            
+
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
                 eyeIcon.classList.remove('fa-eye');
@@ -684,46 +663,23 @@ CodeBehind="GestionCuentas.aspx.cs" Inherits="StockifyWeb.GestionCuentas" %>
             }
         }
 
-        // Guardar cuenta (conecta con tu code-behind)
-        function guardarCuenta() {
-            var modoEdicion = document.getElementById('hfModoEdicion').value === 'true';
-            var id = document.getElementById('hfIdCuenta').value;
-            var usuario = document.getElementById('txtNombreUsuario').value;
-            var nombreCompleto = document.getElementById('txtNombreCompleto').value;
-            var email = document.getElementById('txtEmail').value;
-            var password = document.getElementById('txtPassword').value;
-            var rol = document.getElementById('ddlRol').value;
-            var activo = document.getElementById('ddlActivo').value;
-
-            // Validaciones básicas
-            if (!usuario || !nombreCompleto || !email || !rol) {
-                alert('Por favor complete todos los campos obligatorios (*)');
-                return;
-            }
-
-            if (!modoEdicion && !password) {
-                alert('La contraseña es obligatoria para crear una cuenta');
-                return;
-            }
-
-            // Aquí llamarías a tu función del code-behind
-            console.log('Guardar cuenta:', { id, usuario, nombreCompleto, email, rol, activo, modoEdicion });
-            
-            // Después de guardar exitosamente:
-            // cerrarModal();
-            // Recargar el GridView o la tabla
-        }
-
-        // Cerrar modal al hacer clic fuera
         document.getElementById('accountModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 cerrarModal();
             }
         });
 
-        // Funcionalidad de filtros (placeholder)
-        document.querySelector('.btn-filter').addEventListener('click', function () {
-            alert('Funcionalidad de filtros próximamente...');
-        });
+        <% if (!string.IsNullOrEmpty(Request.QueryString["success"])) { %>
+        alert('<%= Request.QueryString["success"] %>');
+        window.history.replaceState({}, document.title, window.location.pathname);
+        <% } %>
+
+        <% if (!string.IsNullOrEmpty(Request.QueryString["error"])) { %>
+        alert('<%= Request.QueryString["error"] %>');
+        window.history.replaceState({}, document.title, window.location.pathname);
+        <% } %>
     </script>
+
+    <asp:Button ID="btnEliminar" runat="server" OnClick="btnEliminar_Click" 
+        style="display:none;" />
 </asp:Content>

@@ -5,18 +5,6 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/OrdenVentaWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
-  <message name="eliminarOrdenVenta">
-    <part name="parameters" element="tns:eliminarOrdenVenta" />
-  </message>
-  <message name="eliminarOrdenVentaResponse">
-    <part name="parameters" element="tns:eliminarOrdenVentaResponse" />
-  </message>
-  <message name="obtenerOrdenVenta">
-    <part name="parameters" element="tns:obtenerOrdenVenta" />
-  </message>
-  <message name="obtenerOrdenVentaResponse">
-    <part name="parameters" element="tns:obtenerOrdenVentaResponse" />
-  </message>
   <message name="guardarOrdenVenta">
     <part name="parameters" element="tns:guardarOrdenVenta" />
   </message>
@@ -29,15 +17,19 @@
   <message name="listarOrdenesVentaResponse">
     <part name="parameters" element="tns:listarOrdenesVentaResponse" />
   </message>
+  <message name="obtenerOrdenVenta">
+    <part name="parameters" element="tns:obtenerOrdenVenta" />
+  </message>
+  <message name="obtenerOrdenVentaResponse">
+    <part name="parameters" element="tns:obtenerOrdenVentaResponse" />
+  </message>
+  <message name="eliminarOrdenVenta">
+    <part name="parameters" element="tns:eliminarOrdenVenta" />
+  </message>
+  <message name="eliminarOrdenVentaResponse">
+    <part name="parameters" element="tns:eliminarOrdenVentaResponse" />
+  </message>
   <portType name="OrdenVentaWS">
-    <operation name="eliminarOrdenVenta">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/eliminarOrdenVentaRequest" message="tns:eliminarOrdenVenta" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/eliminarOrdenVentaResponse" message="tns:eliminarOrdenVentaResponse" />
-    </operation>
-    <operation name="obtenerOrdenVenta">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/obtenerOrdenVentaRequest" message="tns:obtenerOrdenVenta" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/obtenerOrdenVentaResponse" message="tns:obtenerOrdenVentaResponse" />
-    </operation>
     <operation name="guardarOrdenVenta">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/guardarOrdenVentaRequest" message="tns:guardarOrdenVenta" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/guardarOrdenVentaResponse" message="tns:guardarOrdenVentaResponse" />
@@ -46,10 +38,27 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/listarOrdenesVentaRequest" message="tns:listarOrdenesVenta" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/listarOrdenesVentaResponse" message="tns:listarOrdenesVentaResponse" />
     </operation>
+    <operation name="obtenerOrdenVenta">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/obtenerOrdenVentaRequest" message="tns:obtenerOrdenVenta" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/obtenerOrdenVentaResponse" message="tns:obtenerOrdenVentaResponse" />
+    </operation>
+    <operation name="eliminarOrdenVenta">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/eliminarOrdenVentaRequest" message="tns:eliminarOrdenVenta" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenVentaWS/eliminarOrdenVentaResponse" message="tns:eliminarOrdenVentaResponse" />
+    </operation>
   </portType>
   <binding name="OrdenVentaWSPortBinding" type="tns:OrdenVentaWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="eliminarOrdenVenta">
+    <operation name="guardarOrdenVenta">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarOrdenesVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />
@@ -67,16 +76,7 @@
         <soap:body use="literal" />
       </output>
     </operation>
-    <operation name="guardarOrdenVenta">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="listarOrdenesVenta">
+    <operation name="eliminarOrdenVenta">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

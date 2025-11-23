@@ -5,6 +5,18 @@
       <xsd:import schemaLocation="http://localhost:8080/StockifyWS/OrdenCompraWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
     </xsd:schema>
   </types>
+  <message name="guardarOrdenCompra">
+    <part name="parameters" element="tns:guardarOrdenCompra" />
+  </message>
+  <message name="guardarOrdenCompraResponse">
+    <part name="parameters" element="tns:guardarOrdenCompraResponse" />
+  </message>
+  <message name="obtenerOrdenCompra">
+    <part name="parameters" element="tns:obtenerOrdenCompra" />
+  </message>
+  <message name="obtenerOrdenCompraResponse">
+    <part name="parameters" element="tns:obtenerOrdenCompraResponse" />
+  </message>
   <message name="obtenerProductosPorRecibir">
     <part name="parameters" element="tns:obtenerProductosPorRecibir" />
   </message>
@@ -23,19 +35,15 @@
   <message name="eliminarOrdenCompraResponse">
     <part name="parameters" element="tns:eliminarOrdenCompraResponse" />
   </message>
-  <message name="obtenerOrdenCompra">
-    <part name="parameters" element="tns:obtenerOrdenCompra" />
-  </message>
-  <message name="obtenerOrdenCompraResponse">
-    <part name="parameters" element="tns:obtenerOrdenCompraResponse" />
-  </message>
-  <message name="guardarOrdenCompra">
-    <part name="parameters" element="tns:guardarOrdenCompra" />
-  </message>
-  <message name="guardarOrdenCompraResponse">
-    <part name="parameters" element="tns:guardarOrdenCompraResponse" />
-  </message>
   <portType name="OrdenCompraWS">
+    <operation name="guardarOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
+    </operation>
+    <operation name="obtenerOrdenCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest" message="tns:obtenerOrdenCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse" message="tns:obtenerOrdenCompraResponse" />
+    </operation>
     <operation name="obtenerProductosPorRecibir">
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirRequest" message="tns:obtenerProductosPorRecibir" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerProductosPorRecibirResponse" message="tns:obtenerProductosPorRecibirResponse" />
@@ -48,17 +56,27 @@
       <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraRequest" message="tns:eliminarOrdenCompra" />
       <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/eliminarOrdenCompraResponse" message="tns:eliminarOrdenCompraResponse" />
     </operation>
-    <operation name="obtenerOrdenCompra">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraRequest" message="tns:obtenerOrdenCompra" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/obtenerOrdenCompraResponse" message="tns:obtenerOrdenCompraResponse" />
-    </operation>
-    <operation name="guardarOrdenCompra">
-      <input wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraRequest" message="tns:guardarOrdenCompra" />
-      <output wsam:Action="http://services.stockify.pucp.edu.pe/OrdenCompraWS/guardarOrdenCompraResponse" message="tns:guardarOrdenCompraResponse" />
-    </operation>
   </portType>
   <binding name="OrdenCompraWSPortBinding" type="tns:OrdenCompraWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="guardarOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="obtenerOrdenCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="obtenerProductosPorRecibir">
       <soap:operation soapAction="" />
       <input>
@@ -78,24 +96,6 @@
       </output>
     </operation>
     <operation name="eliminarOrdenCompra">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="obtenerOrdenCompra">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-    </operation>
-    <operation name="guardarOrdenCompra">
       <soap:operation soapAction="" />
       <input>
         <soap:body use="literal" />

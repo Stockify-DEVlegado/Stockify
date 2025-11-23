@@ -16,6 +16,9 @@ import pe.edu.pucp.inf30.stockify.daoimpl.TransaccionalBaseDAO;
 import pe.edu.pucp.inf30.stockify.model.gestion.LineaOrdenCompra;
 import pe.edu.pucp.inf30.stockify.dao.gestion.LineaOrdenCompraDAO;
 import pe.edu.pucp.inf30.stockify.daoimpl.almacen.ProductoDAOImpl;
+import pe.edu.pucp.inf30.stockify.db.DBFactoryProvider;
+import pe.edu.pucp.inf30.stockify.db.DBManager;
+import pe.edu.pucp.inf30.stockify.model.gestion.OrdenCompra;
 
 /**
  *
@@ -146,6 +149,57 @@ public class LineaOrdenCompraDAOImpl extends TransaccionalBaseDAO<LineaOrdenComp
             System.err.println("Error SQL: " + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    
+    @Override
+    public int insertarBloque(List<LineaOrdenCompra> lineas, int idOrdenCompra) {
+        Connection conn = null;
+        int insertados = 0;
+
+        try {
+            DBManager dbManager = DBFactoryProvider.getManager();
+            conn = dbManager.getConnection();
+            conn.setAutoCommit(false); // Iniciar transacción
+
+            for (LineaOrdenCompra linea : lineas) {
+                // Asignar la orden de compra a cada línea
+                OrdenCompra orden = new OrdenCompra();
+                orden.setIdOrdenCompra(idOrdenCompra);
+                linea.setOrdenCompra(orden);
+
+                // Insertar la línea
+                int idLinea = crear(linea, conn);
+                linea.setIdLineaOrdenCompra(idLinea);
+                insertados++;
+            }
+
+            conn.commit(); // Confirmar transacción
+            System.out.println("✓ Se insertaron " + insertados + " líneas de orden de compra exitosamente.");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("✗ Error al insertar bloque de líneas: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Revertir todos los cambios
+                    System.err.println("✗ Transacción revertida. No se insertó ninguna línea.");
+                } catch (SQLException ex) {
+                    System.err.println("✗ Error al hacer rollback: " + ex.getMessage());
+                }
+            }
+            insertados = 0;
+            throw new RuntimeException("Error en la inserción masiva de líneas", e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // Restaurar el modo auto-commit
+                    conn.close();
+                } catch (SQLException e) {
+                    System.err.println("✗ Error al cerrar conexión: " + e.getMessage());
+                }
+            }
+        }
+
+        return insertados;
     }
     
 }

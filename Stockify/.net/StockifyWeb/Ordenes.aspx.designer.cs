@@ -69,15 +69,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
 
         /// <summary>
-        /// txtNumeroOrdenCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroOrdenCompra;
-
-        /// <summary>
         /// txtFechaOrdenCompra control.
         /// </summary>
         /// <remarks>
@@ -85,24 +76,6 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenCompra;
-
-        /// <summary>
-        /// txtResponsableCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtResponsableCompra;
-
-        /// <summary>
-        /// fileDocumentoCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoCompra;
 
         /// <summary>
         /// btnAgregarCompra control.
@@ -132,6 +105,24 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.GridView gvOrdenesCompra;
 
         /// <summary>
+        /// btnImportarLineasCompra control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarLineasCompra;
+
+        /// <summary>
+        /// fileDocumentoCompra control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoCompra;
+
+        /// <summary>
         /// gvDetalleOrdenCompra control.
         /// </summary>
         /// <remarks>
@@ -159,15 +150,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlCliente;
 
         /// <summary>
-        /// txtNumeroOrdenVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroOrdenVenta;
-
-        /// <summary>
         /// txtFechaOrdenVenta control.
         /// </summary>
         /// <remarks>
@@ -175,24 +157,6 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaOrdenVenta;
-
-        /// <summary>
-        /// txtResponsableVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtResponsableVenta;
-
-        /// <summary>
-        /// fileDocumentoVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoVenta;
 
         /// <summary>
         /// btnAgregarVenta control.
@@ -222,6 +186,24 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.GridView gvOrdenesVenta;
 
         /// <summary>
+        /// btnImportarLineasVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarLineasVenta;
+
+        /// <summary>
+        /// fileDocumentoVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoVenta;
+
+        /// <summary>
         /// gvDetalleOrdenVenta control.
         /// </summary>
         /// <remarks>
@@ -249,15 +231,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlOrdenCompraIngreso;
 
         /// <summary>
-        /// txtResponsableIngreso control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtResponsableIngreso;
-
-        /// <summary>
         /// txtFechaIngreso control.
         /// </summary>
         /// <remarks>
@@ -267,13 +240,13 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtFechaIngreso;
 
         /// <summary>
-        /// txtCodigoIngresoInv control.
+        /// ddlResponsableIngreso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoIngresoInv;
+        protected global::System.Web.UI.WebControls.DropDownList ddlResponsableIngreso;
 
         /// <summary>
         /// btnAgregarIngreso control.
@@ -303,6 +276,15 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.GridView gvRegistrosIngreso;
 
         /// <summary>
+        /// fileDocumentoIngreso control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoIngreso;
+
+        /// <summary>
         /// gvDetalleOrdenCompraIngreso control.
         /// </summary>
         /// <remarks>
@@ -330,15 +312,6 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlOrdenVentaSalida;
 
         /// <summary>
-        /// txtResponsableSalida control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtResponsableSalida;
-
-        /// <summary>
         /// txtFechaSalida control.
         /// </summary>
         /// <remarks>
@@ -348,13 +321,13 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.TextBox txtFechaSalida;
 
         /// <summary>
-        /// txtCodigoSalidaInv control.
+        /// ddlResponsableSalida control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoSalidaInv;
+        protected global::System.Web.UI.WebControls.DropDownList ddlResponsableSalida;
 
         /// <summary>
         /// btnAgregarSalida control.
@@ -384,6 +357,15 @@ namespace StockifyWeb
         protected global::System.Web.UI.WebControls.GridView gvRegistrosSalida;
 
         /// <summary>
+        /// fileDocumentoSalida control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fileDocumentoSalida;
+
+        /// <summary>
         /// gvDetalleOrdenVentaSalida control.
         /// </summary>
         /// <remarks>
@@ -391,5 +373,59 @@ namespace StockifyWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDetalleOrdenVentaSalida;
+
+        /// <summary>
+        /// fuCSVCompra control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuCSVCompra;
+
+        /// <summary>
+        /// btnImportarCSVCompra control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarCSVCompra;
+
+        /// <summary>
+        /// fuCSVVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuCSVVenta;
+
+        /// <summary>
+        /// btnImportarCSVVenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnImportarCSVVenta;
+
+        /// <summary>
+        /// hdnOrdenCompraSeleccionada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnOrdenCompraSeleccionada;
+
+        /// <summary>
+        /// hdnOrdenVentaSeleccionada control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnOrdenVentaSeleccionada;
     }
 }

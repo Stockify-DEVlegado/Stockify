@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.stockify.pucp.edu.pe/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="LineaOrdenCompraWS" targetNamespace="http://services.stockify.pucp.edu.pe/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/StockifyWS/LineaOrdenCompraWS?xsd=1" namespace="http://services.stockify.pucp.edu.pe/" />
+    </xsd:schema>
+  </types>
+  <message name="guardarLineaCompra">
+    <part name="parameters" element="tns:guardarLineaCompra" />
+  </message>
+  <message name="guardarLineaCompraResponse">
+    <part name="parameters" element="tns:guardarLineaCompraResponse" />
+  </message>
+  <message name="listarLineasCompraPorOrden">
+    <part name="parameters" element="tns:listarLineasCompraPorOrden" />
+  </message>
+  <message name="listarLineasCompraPorOrdenResponse">
+    <part name="parameters" element="tns:listarLineasCompraPorOrdenResponse" />
+  </message>
+  <message name="eliminarLineaCompra">
+    <part name="parameters" element="tns:eliminarLineaCompra" />
+  </message>
+  <message name="eliminarLineaCompraResponse">
+    <part name="parameters" element="tns:eliminarLineaCompraResponse" />
+  </message>
+  <message name="importarLineasCompraDesdeCSV">
+    <part name="parameters" element="tns:importarLineasCompraDesdeCSV" />
+  </message>
+  <message name="importarLineasCompraDesdeCSVResponse">
+    <part name="parameters" element="tns:importarLineasCompraDesdeCSVResponse" />
+  </message>
+  <portType name="LineaOrdenCompraWS">
+    <operation name="guardarLineaCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/guardarLineaCompraRequest" message="tns:guardarLineaCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/guardarLineaCompraResponse" message="tns:guardarLineaCompraResponse" />
+    </operation>
+    <operation name="listarLineasCompraPorOrden">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/listarLineasCompraPorOrdenRequest" message="tns:listarLineasCompraPorOrden" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/listarLineasCompraPorOrdenResponse" message="tns:listarLineasCompraPorOrdenResponse" />
+    </operation>
+    <operation name="eliminarLineaCompra">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/eliminarLineaCompraRequest" message="tns:eliminarLineaCompra" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/eliminarLineaCompraResponse" message="tns:eliminarLineaCompraResponse" />
+    </operation>
+    <operation name="importarLineasCompraDesdeCSV">
+      <input wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/importarLineasCompraDesdeCSVRequest" message="tns:importarLineasCompraDesdeCSV" />
+      <output wsam:Action="http://services.stockify.pucp.edu.pe/LineaOrdenCompraWS/importarLineasCompraDesdeCSVResponse" message="tns:importarLineasCompraDesdeCSVResponse" />
+    </operation>
+  </portType>
+  <binding name="LineaOrdenCompraWSPortBinding" type="tns:LineaOrdenCompraWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="guardarLineaCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="listarLineasCompraPorOrden">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="eliminarLineaCompra">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="importarLineasCompraDesdeCSV">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="LineaOrdenCompraWS">
+    <port name="LineaOrdenCompraWSPort" binding="tns:LineaOrdenCompraWSPortBinding">
+      <soap:address location="http://localhost:8080/StockifyWS/LineaOrdenCompraWS" />
+    </port>
+  </service>
+</definitions>

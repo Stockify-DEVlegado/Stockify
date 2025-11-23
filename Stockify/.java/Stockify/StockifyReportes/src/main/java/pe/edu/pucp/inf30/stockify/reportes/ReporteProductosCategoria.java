@@ -27,7 +27,7 @@ import pe.edu.pucp.inf30.stockify.db.DBFactoryProvider;
  * @author carlo
  */
 
-@WebServlet(name = "ReporteProductos", urlPatterns = {"/reportes/productosCategoria"})
+@WebServlet(name = "ReporteProductosCategoria", urlPatterns = {"/reportes/productosCategoria"})
 public class ReporteProductosCategoria extends HttpServlet {
 
     private final String NOMBRE_REPORTE = "reportes/Reporte_ProductosPorCategoria.jasper";
