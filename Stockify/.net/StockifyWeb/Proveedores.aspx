@@ -194,46 +194,103 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
             color: white;
         }
         
-        .pagination {
-            margin-top: 20px;
+        /* Estilos para la paginación moderna */
+        .pagination-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
-        }
-        .pagination-left {
-            flex: 1;
-            text-align: left;
-        }
-        .pagination-center {
-            flex: 1;
-            text-align: center;
-            color: var(--muted);
-        }
-        .pagination-right {
-            flex: 1;
-            text-align: right;
-        }
-        .btn-pagination {
-            background: var(--card2);
-            color: var(--text);
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: var(--card);
+            border-radius: 12px;
             border: 1px solid var(--stroke);
-            padding: 8px 16px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.3s;
         }
-        .btn-pagination:hover:not(.button-disabled) {
+
+        .pagination-info {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .pagination-info strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .pagination-button {
+            background: var(--card2);
+            border: 1px solid var(--stroke);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .pagination-button:hover:not(:disabled) {
+            background: var(--stroke);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-button.active {
             background: var(--accent);
             color: var(--bg);
             border-color: var(--accent);
+            font-weight: 700;
         }
-        .button-disabled {
-            background: var(--bg);
+
+        .pagination-button.first,
+        .pagination-button.last {
+            font-weight: 600;
+        }
+
+        .page-size-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-size-selector label {
             color: var(--muted);
-            cursor: not-allowed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .page-size-selector select {
+            padding: 8px 12px;
+            background: var(--bg);
             border: 1px solid var(--stroke);
-            opacity: 0.6;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-size-selector select:hover {
+            border-color: var(--accent);
+        }
+
+        .page-size-selector select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(138, 162, 255, 0.15);
         }
         
         h1 {
@@ -380,13 +437,9 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
             .action-buttons {
                 justify-content: space-between;
             }
-            .pagination {
+            .pagination-container {
                 flex-direction: column;
-                gap: 10px;
-            }
-            .pagination-left, .pagination-center, .pagination-right {
-                text-align: center;
-                width: 100%;
+                gap: 15px;
             }
             
             .modal-content {
@@ -411,15 +464,25 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
                 <button class="btn-filter" type="button">
                     <i class="fas fa-filter"></i> Filtros
                 </button>
-                <asp:Button ID="btnOpenModal" runat="server" Text="Agregar Empresa" 
+                <asp:Button ID="btnOpenModal" runat="server" Text="➕ Agregar Empresa" 
                     CssClass="btn-add" OnClientClick="abrirModalAgregar(); return false;" />
             </div>
         </div>
 
-        <h1>Empresas</h1>
+        <h1>🏢 Empresas</h1>
         
-        <asp:GridView ID="gvProveedores" runat="server" AutoGenerateColumns="false" CssClass="suppliers-table"
-            Width="100%" BorderStyle="None" GridLines="None" ShowHeader="true" OnRowCommand="gvProveedores_RowCommand">
+        <asp:GridView ID="gvProveedores" runat="server" 
+            AutoGenerateColumns="false" 
+            CssClass="suppliers-table"
+            Width="100%" 
+            BorderStyle="None" 
+            GridLines="None" 
+            ShowHeader="true" 
+            OnRowCommand="gvProveedores_RowCommand"
+            AllowPaging="true"
+            PageSize="10"
+            OnPageIndexChanging="gvProveedores_PageIndexChanging"
+            PagerSettings-Visible="false">
             <Columns>
                 <asp:BoundField DataField="Nombre" HeaderText="Razón Social" />
                 <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
@@ -444,9 +507,9 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
                         <div class="action-buttons-cell">
                             <button type="button" class="btn-edit" 
                                 onclick='editarEmpresa(<%# Eval("IdEmpresa") %>, "<%# System.Web.HttpUtility.JavaScriptStringEncode(Eval("Nombre").ToString()) %>", "<%# Eval("TipoDocumento") %>", "<%# Eval("Telefono") %>", "<%# Eval("Email") %>", "<%# Eval("TipoEmpresa") %>", "<%# Eval("Activo") %>")'>
-                                Editar
+                                ✏️ Editar
                             </button>
-                            <asp:Button ID="btnDelete" runat="server" Text="Eliminar" 
+                            <asp:Button ID="btnDelete" runat="server" Text="🗑️ Eliminar" 
                                 CssClass="btn-delete" 
                                 CommandName="EliminarEmpresa" 
                                 CommandArgument='<%# Eval("IdEmpresa") %>'
@@ -458,15 +521,39 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
             </Columns>
         </asp:GridView>
         
-        <div class="pagination">
-            <div class="pagination-left">
-                <button class="btn-pagination button-disabled">Anterior</button>
+        <!-- Paginación personalizada moderna -->
+        <div class="pagination-container">
+            <div class="pagination-info">
+                Mostrando 
+                <strong><asp:Literal ID="litPaginaActual" runat="server" /></strong> - 
+                <strong><asp:Literal ID="litPaginaTotal" runat="server" /></strong> 
+                de <strong><asp:Literal ID="litTotalEmpresas" runat="server" /></strong> empresas
             </div>
-            <div class="pagination-center">
-                <span>Página 1 de 1</span>
+            
+            <div class="pagination-controls">
+                <asp:Button ID="btnPrimeraPagina" runat="server" Text="⏮️ Primera" 
+                    CssClass="pagination-button first" OnClick="btnPrimeraPagina_Click" />
+                <asp:Button ID="btnPaginaAnterior" runat="server" Text="◀️ Anterior" 
+                    CssClass="pagination-button" OnClick="btnPaginaAnterior_Click" />
+                
+                <asp:Literal ID="litNumeroPaginas" runat="server" />
+                
+                <asp:Button ID="btnPaginaSiguiente" runat="server" Text="Siguiente ▶️" 
+                    CssClass="pagination-button" OnClick="btnPaginaSiguiente_Click" />
+                <asp:Button ID="btnUltimaPagina" runat="server" Text="Última ⏭️" 
+                    CssClass="pagination-button last" OnClick="btnUltimaPagina_Click" />
             </div>
-            <div class="pagination-right">
-                <button class="btn-pagination button-disabled">Siguiente</button>
+            
+            <div class="page-size-selector">
+                <label>Mostrar:</label>
+                <asp:DropDownList ID="ddlPageSize" runat="server" AutoPostBack="true" 
+                    OnSelectedIndexChanged="ddlPageSize_SelectedIndexChanged">
+                    <asp:ListItem Value="5">5</asp:ListItem>
+                    <asp:ListItem Value="10" Selected="True">10</asp:ListItem>
+                    <asp:ListItem Value="20">20</asp:ListItem>
+                    <asp:ListItem Value="50">50</asp:ListItem>
+                    <asp:ListItem Value="100">100</asp:ListItem>
+                </asp:DropDownList>
             </div>
         </div>
     </div>
@@ -601,5 +688,10 @@ CodeBehind="Proveedores.aspx.cs" Inherits="StockifyWeb.Proveedores" Async="true"
         document.querySelector('.btn-filter').addEventListener('click', function () {
             alert('Funcionalidad de filtros próximamente...');
         });
+
+        // Función para ir a una página específica
+        function irAPagina(numeroPagina) {
+            __doPostBack('IrAPagina', numeroPagina);
+        }
     </script>
 </asp:Content>

@@ -554,6 +554,119 @@ namespace StockifyWeb
         }
 
         /// <summary>
+        /// Notifica la importación de productos desde CSV por Email y WhatsApp
+        /// </summary>
+        public static void NotificarImportacionCSV(int cantidadProductos, List<string> nombresProductos = null)
+        {
+            // Agregar notificación al sistema
+            var mensaje = $"Importación CSV: {cantidadProductos} producto{(cantidadProductos != 1 ? "s" : "")} agregado{(cantidadProductos != 1 ? "s" : "")} exitosamente";
+            AgregarNotificacion(mensaje, "success", "fa-file-csv");
+
+            // Enviar notificaciones de forma asíncrona
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                var (emails, telefonos) = ObtenerContactosTodosLosUsuarios();
+
+                // Preparar lista de productos para el email
+                string listaProductosHtml = "";
+                if (nombresProductos != null && nombresProductos.Count > 0)
+                {
+                    listaProductosHtml = "<ul style='color: #666; font-size: 14px; line-height: 1.8;'>";
+                    foreach (var producto in nombresProductos.Take(10)) // Mostrar máximo 10
+                    {
+                        listaProductosHtml += $"<li>{producto}</li>";
+                    }
+                    if (nombresProductos.Count > 10)
+                    {
+                        listaProductosHtml += $"<li><em>... y {nombresProductos.Count - 10} productos más</em></li>";
+                    }
+                    listaProductosHtml += "</ul>";
+                }
+
+                // Enviar correo electrónico
+                if (emails.Count > 0)
+                {
+                    const string asunto = "📊 Importación CSV Exitosa - Stockify";
+                    var cuerpo = $@"
+                        <html>
+                        <body style='font-family: Arial, sans-serif;'>
+                            <div style='max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4;'>
+                                <div style='background-color: white; padding: 30px; border-radius: 10px;'>
+                                    <h2 style='color: #10b981;'>📊 Importación CSV Exitosa</h2>
+                                    <p style='color: #666; font-size: 16px;'>
+                                        Se ha completado exitosamente la importación de productos desde archivo CSV:
+                                    </p>
+                                    <div style='background-color: #d1fae5; padding: 20px; border-left: 4px solid #10b981; margin: 20px 0; border-radius: 5px;'>
+                                        <p style='color: #065f46; font-size: 24px; font-weight: bold; margin: 0;'>
+                                            ✅ {cantidadProductos} producto{(cantidadProductos != 1 ? "s" : "")}
+                                        </p>
+                                        <p style='color: #065f46; font-size: 14px; margin: 5px 0 0 0;'>
+                                            importado{(cantidadProductos != 1 ? "s" : "")} correctamente
+                                        </p>
+                                    </div>
+                                    {(string.IsNullOrEmpty(listaProductosHtml) ? "" : $@"
+                                    <div style='margin: 20px 0;'>
+                                        <h3 style='color: #333; font-size: 16px; margin-bottom: 10px;'>Productos importados:</h3>
+                                        {listaProductosHtml}
+                                    </div>
+                                    ")}
+                                    <p style='color: #666; font-size: 14px;'>
+                                        <strong>Fecha de importación:</strong> {DateTime.Now:dd/MM/yyyy HH:mm:ss}
+                                    </p>
+                                    <hr style='border: 1px solid #eee; margin: 20px 0;'>
+                                    <p style='color: #999; font-size: 12px;'>
+                                        Este es un mensaje automático del sistema Stockify. No responder a este correo.
+                                    </p>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    ";
+
+                    EnviarCorreo(asunto, cuerpo, emails);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("[NOTIFICACIÓN CSV] ⚠️ No se envió correo: no hay emails disponibles");
+                }
+
+                // Enviar WhatsApp a todos los teléfonos
+                if (telefonos.Count > 0)
+                {
+                    // Preparar lista de productos para WhatsApp (máximo 5)
+                    string listaProductosWA = "";
+                    if (nombresProductos != null && nombresProductos.Count > 0)
+                    {
+                        listaProductosWA = "\n\n📋 *Productos importados:*\n";
+                        foreach (var producto in nombresProductos.Take(5))
+                        {
+                            listaProductosWA += $"  • {producto}\n";
+                        }
+                        if (nombresProductos.Count > 5)
+                        {
+                            listaProductosWA += $"  _... y {nombresProductos.Count - 5} productos más_\n";
+                        }
+                    }
+
+                    string mensajeWhatsApp = $"📊 *IMPORTACIÓN CSV EXITOSA*\n\n" +
+                                           $"✅ Se han importado *{cantidadProductos} producto{(cantidadProductos != 1 ? "s" : "")}* correctamente desde un archivo CSV." +
+                                           listaProductosWA +
+                                           $"\n🕐 Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}\n\n" +
+                                           $"_Sistema Stockify_";
+
+                    foreach (var telefono in telefonos)
+                    {
+                        await WhatsAppService.EnviarMensajeWhatsApp(mensajeWhatsApp, telefono);
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("[NOTIFICACIÓN CSV] ⚠️ No se envió WhatsApp: no hay teléfonos disponibles");
+                }
+            });
+        }
+
+        /// <summary>
         /// Método genérico para enviar notificación personalizada por Email y WhatsApp a todos los usuarios activos
         /// </summary>
         public static void EnviarNotificacion(string titulo, string mensaje, string tipo = "info", string icono = "fa-bell")

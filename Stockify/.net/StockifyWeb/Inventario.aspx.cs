@@ -15,6 +15,7 @@ namespace StockifyWeb
             if (!IsPostBack)
             {
                 CargarDatosIniciales();
+                ActualizarInformacionPaginacion();
             }
         }
 
@@ -93,6 +94,7 @@ namespace StockifyWeb
 
                     gvProductos.DataSource = productosConExistencias;
                     gvProductos.DataBind();
+                    ActualizarInformacionPaginacion();
                 }
                 catch (Exception ex)
                 {
@@ -331,8 +333,17 @@ namespace StockifyWeb
                         fileBytes = memoryStream.ToArray();
                     }
 
+                    // Parsear CSV para obtener nombres de productos
+                    List<string> nombresProductos = ExtraerNombresDeCSV(fileBytes);
+
+                    // Importar productos
                     int productosImportados = productoClient.importarProductosDesdeCSV(fileBytes);
+
+                    // Recargar productos
                     CargarProductos();
+
+                    // NOTIFICAR IMPORTACIÓN
+                    NotificationService.NotificarImportacionCSV(productosImportados, nombresProductos);
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "successImport",
                         $"cerrarModalImportar(); mostrarToast('Importación exitosa! Se importaron {productosImportados} productos.', 'success'); actualizarNotificaciones();",
@@ -364,6 +375,36 @@ namespace StockifyWeb
                         true);
                 }
             }
+        }
+
+        /// <summary>
+        /// Extrae los nombres de los productos del CSV para mostrarlos en la notificación
+        /// </summary>
+        private List<string> ExtraerNombresDeCSV(byte[] fileBytes)
+        {
+            var nombres = new List<string>();
+
+            try
+            {
+                string csvContent = System.Text.Encoding.UTF8.GetString(fileBytes);
+                var lines = csvContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Saltar la primera línea (encabezados)
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    var columns = lines[i].Split(',');
+                    if (columns.Length > 0 && !string.IsNullOrWhiteSpace(columns[0]))
+                    {
+                        nombres.Add(columns[0].Trim());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al extraer nombres del CSV: {ex.Message}");
+            }
+
+            return nombres;
         }
 
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -521,6 +562,146 @@ namespace StockifyWeb
             txtStockMinimo.Text = string.Empty;
             txtStockMaximo.Text = string.Empty;
             ddlCategoria.SelectedIndex = 0;
+        }
+
+        // ==================== MÉTODOS DE PAGINACIÓN ====================
+
+        protected void gvProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvProductos.PageIndex = e.NewPageIndex;
+            CargarProductos();
+            ActualizarInformacionPaginacion();
+        }
+
+        protected void btnPrimeraPagina_Click(object sender, EventArgs e)
+        {
+            gvProductos.PageIndex = 0;
+            CargarProductos();
+            ActualizarInformacionPaginacion();
+        }
+
+        protected void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (gvProductos.PageIndex > 0)
+            {
+                gvProductos.PageIndex--;
+                CargarProductos();
+                ActualizarInformacionPaginacion();
+            }
+        }
+
+        protected void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            if (gvProductos.PageIndex < gvProductos.PageCount - 1)
+            {
+                gvProductos.PageIndex++;
+                CargarProductos();
+                ActualizarInformacionPaginacion();
+            }
+        }
+
+        protected void btnUltimaPagina_Click(object sender, EventArgs e)
+        {
+            gvProductos.PageIndex = gvProductos.PageCount - 1;
+            CargarProductos();
+            ActualizarInformacionPaginacion();
+        }
+
+        protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            gvProductos.PageSize = int.Parse(ddlPageSize.SelectedValue);
+            gvProductos.PageIndex = 0; // Volver a la primera página
+            CargarProductos();
+            ActualizarInformacionPaginacion();
+        }
+
+        private void ActualizarInformacionPaginacion()
+        {
+            if (gvProductos.Rows.Count == 0)
+            {
+                litPaginaActual.Text = "0";
+                litPaginaTotal.Text = "0";
+                litTotalProductos.Text = "0";
+                litNumeroPaginas.Text = "";
+
+                btnPrimeraPagina.Enabled = false;
+                btnPaginaAnterior.Enabled = false;
+                btnPaginaSiguiente.Enabled = false;
+                btnUltimaPagina.Enabled = false;
+                return;
+            }
+
+            int totalProductos = gvProductos.Rows.Count;
+            int paginaActual = gvProductos.PageIndex + 1;
+            int totalPaginas = gvProductos.PageCount;
+            int pageSize = gvProductos.PageSize;
+
+            // Calcular registros mostrados
+            int registroInicio = (gvProductos.PageIndex * pageSize) + 1;
+            int registroFin = Math.Min((gvProductos.PageIndex + 1) * pageSize, totalProductos);
+
+            litPaginaActual.Text = registroInicio.ToString();
+            litPaginaTotal.Text = registroFin.ToString();
+            litTotalProductos.Text = totalProductos.ToString();
+
+            // Generar botones de números de página
+            GenerarBotonesNumeroPagina(paginaActual, totalPaginas);
+
+            // Habilitar/deshabilitar botones de navegación
+            btnPrimeraPagina.Enabled = paginaActual > 1;
+            btnPaginaAnterior.Enabled = paginaActual > 1;
+            btnPaginaSiguiente.Enabled = paginaActual < totalPaginas;
+            btnUltimaPagina.Enabled = paginaActual < totalPaginas;
+        }
+
+        private void GenerarBotonesNumeroPagina(int paginaActual, int totalPaginas)
+        {
+            if (totalPaginas <= 1)
+            {
+                litNumeroPaginas.Text = "";
+                return;
+            }
+
+            var html = new System.Text.StringBuilder();
+            int rangoInicio = Math.Max(1, paginaActual - 2);
+            int rangoFin = Math.Min(totalPaginas, paginaActual + 2);
+
+            // Mostrar primera página si no está en el rango
+            if (rangoInicio > 1)
+            {
+                html.Append($"<button type='button' class='pagination-button' onclick='irAPagina(1)'>1</button>");
+                if (rangoInicio > 2)
+                {
+                    html.Append("<span style='color: var(--muted); padding: 0 8px;'>...</span>");
+                }
+            }
+
+            // Botones de páginas en el rango
+            for (int i = rangoInicio; i <= rangoFin; i++)
+            {
+                string activeClass = i == paginaActual ? "active" : "";
+                html.Append($"<button type='button' class='pagination-button {activeClass}' onclick='irAPagina({i})'>{i}</button>");
+            }
+
+            // Mostrar última página si no está en el rango
+            if (rangoFin < totalPaginas)
+            {
+                if (rangoFin < totalPaginas - 1)
+                {
+                    html.Append("<span style='color: var(--muted); padding: 0 8px;'>...</span>");
+                }
+                html.Append($"<button type='button' class='pagination-button' onclick='irAPagina({totalPaginas})'>{totalPaginas}</button>");
+            }
+
+            litNumeroPaginas.Text = html.ToString();
+        }
+
+        // Método para ir a una página específica (llamado desde JavaScript)
+        protected void IrAPagina(int numeroPagina)
+        {
+            gvProductos.PageIndex = numeroPagina - 1;
+            CargarProductos();
+            ActualizarInformacionPaginacion();
         }
     }
 

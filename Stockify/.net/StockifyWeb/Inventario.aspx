@@ -623,6 +623,115 @@
                 width: 100%;
             }
         }
+            .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--stroke);
+            }
+
+            .pagination-info {
+                color: var(--muted);
+                font-size: 14px;
+            }
+
+            .pagination-info strong {
+                color: var(--text);
+                font-weight: 600;
+            }
+
+            .pagination-controls {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .pagination-button {
+                background: var(--card2);
+                border: 1px solid var(--stroke);
+                color: var(--text);
+                padding: 8px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                min-width: 40px;
+                text-align: center;
+            }
+
+            .pagination-button:hover:not(:disabled) {
+                background: var(--stroke);
+                border-color: var(--accent);
+                color: var(--accent);
+                transform: translateY(-1px);
+            }
+
+            .pagination-button:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .pagination-button.active {
+                background: var(--accent);
+                color: var(--bg);
+                border-color: var(--accent);
+                font-weight: 700;
+            }
+
+            .pagination-button.first,
+            .pagination-button.last {
+                font-weight: 600;
+            }
+
+            .page-size-selector {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .page-size-selector label {
+                color: var(--muted);
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            .page-size-selector select {
+                padding: 8px 12px;
+                background: var(--bg);
+                border: 1px solid var(--stroke);
+                border-radius: 8px;
+                color: var(--text);
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .page-size-selector select:hover {
+                border-color: var(--accent);
+            }
+
+            .page-size-selector select:focus {
+                outline: none;
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(138, 162, 255, 0.15);
+            }
+
+            @media (max-width: 768px) {
+                .pagination-container {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+    
+                .pagination-controls {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+            }
     </style>
 </asp:Content>
 
@@ -650,9 +759,16 @@
 
         <h1>📦 Productos</h1>
         
-        <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" 
-            CssClass="products-table" OnRowCommand="gvProductos_RowCommand" 
-            AllowSorting="true" OnSorting="gvProductos_Sorting">
+        <asp:GridView ID="gvProductos" runat="server" 
+            AutoGenerateColumns="false" 
+            CssClass="products-table" 
+            OnRowCommand="gvProductos_RowCommand" 
+            AllowSorting="true" 
+            OnSorting="gvProductos_Sorting"
+            AllowPaging="true"
+            PageSize="10"
+            OnPageIndexChanging="gvProductos_PageIndexChanging"
+            PagerSettings-Visible="false">
             <Columns>
                 <asp:BoundField DataField="Producto" HeaderText="Producto" SortExpression="Producto" />
                 <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="S/ {0:N2}" />
@@ -675,6 +791,40 @@
             </Columns>
         </asp:GridView>
     </div>
+    <div class="pagination-container">
+    <div class="pagination-info">
+        Mostrando 
+        <strong><asp:Literal ID="litPaginaActual" runat="server" /></strong> - 
+        <strong><asp:Literal ID="litPaginaTotal" runat="server" /></strong> 
+        de <strong><asp:Literal ID="litTotalProductos" runat="server" /></strong> productos
+    </div>
+    
+    <div class="pagination-controls">
+        <asp:Button ID="btnPrimeraPagina" runat="server" Text="⏮️ Primera" 
+            CssClass="pagination-button first" OnClick="btnPrimeraPagina_Click" />
+        <asp:Button ID="btnPaginaAnterior" runat="server" Text="◀️ Anterior" 
+            CssClass="pagination-button" OnClick="btnPaginaAnterior_Click" />
+        
+        <asp:Literal ID="litNumeroPaginas" runat="server" />
+        
+        <asp:Button ID="btnPaginaSiguiente" runat="server" Text="Siguiente ▶️" 
+            CssClass="pagination-button" OnClick="btnPaginaSiguiente_Click" />
+        <asp:Button ID="btnUltimaPagina" runat="server" Text="Última ⏭️" 
+            CssClass="pagination-button last" OnClick="btnUltimaPagina_Click" />
+    </div>
+    
+    <div class="page-size-selector">
+        <label>Mostrar:</label>
+        <asp:DropDownList ID="ddlPageSize" runat="server" AutoPostBack="true" 
+            OnSelectedIndexChanged="ddlPageSize_SelectedIndexChanged">
+            <asp:ListItem Value="5">5</asp:ListItem>
+            <asp:ListItem Value="10" Selected="True">10</asp:ListItem>
+            <asp:ListItem Value="20">20</asp:ListItem>
+            <asp:ListItem Value="50">50</asp:ListItem>
+            <asp:ListItem Value="100">100</asp:ListItem>
+        </asp:DropDownList>
+    </div>
+</div>
 
     <!-- Modal Agregar/Editar Producto -->
     <div class="modal-overlay" id="addProductModal">
@@ -929,6 +1079,12 @@
 
             // Si no, usa alert temporal:
             console.log(`[${tipo.toUpperCase()}] ${mensaje}`);
+        }
+    </script>
+    <script>
+        // Función para ir a una página específica
+        function irAPagina(numeroPagina) {
+            __doPostBack('IrAPagina', numeroPagina);
         }
     </script>
 </asp:Content>

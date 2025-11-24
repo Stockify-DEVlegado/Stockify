@@ -10,11 +10,29 @@ namespace StockifyWeb
 {
     public partial class Proveedores : Page
     {
+        // Variable para almacenar temporalmente el DataSource completo (sin paginar)
+        private List<dynamic> _datasourceCompleto;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+            }
+            else
+            {
+                // Manejar eventos de paginación JavaScript
+                string eventTarget = Request["__EVENTTARGET"];
+                string eventArgument = Request["__EVENTARGUMENT"];
+
+                if (eventTarget == "IrAPagina" && !string.IsNullOrEmpty(eventArgument))
+                {
+                    if (int.TryParse(eventArgument, out int numeroPagina))
+                    {
+                        gvProveedores.PageIndex = numeroPagina - 1;
+                        RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+                    }
+                }
             }
         }
 
@@ -27,17 +45,12 @@ namespace StockifyWeb
                 System.Diagnostics.Debug.WriteLine("📥 CARGANDO EMPRESAS DESDE WS");
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
 
-                gvProveedores.DataSource = null;
-                gvProveedores.DataBind();
-                System.Diagnostics.Debug.WriteLine("🧹 GridView limpiado");
-
                 cliente = new EmpresaWSClient();
                 System.Diagnostics.Debug.WriteLine($"✅ Cliente WS creado");
                 System.Diagnostics.Debug.WriteLine($"   Endpoint: {cliente.Endpoint.Address.Uri}");
 
                 System.Diagnostics.Debug.WriteLine("🔄 Llamando a listarEmpresasAsync()...");
                 var response = await cliente.listarEmpresasAsync();
-
                 System.Diagnostics.Debug.WriteLine("✅ Respuesta recibida del WS");
 
                 var empresas = response.@return;
@@ -45,65 +58,59 @@ namespace StockifyWeb
                 if (empresas == null)
                 {
                     System.Diagnostics.Debug.WriteLine("⚠️ La respuesta del WS es NULL");
-                    gvProveedores.DataSource = new List<object>();
+                    _datasourceCompleto = new List<dynamic>();
+                    gvProveedores.DataSource = _datasourceCompleto;
                     gvProveedores.DataBind();
+                    ActualizarInformacionPaginacion();
                     return;
                 }
 
                 System.Diagnostics.Debug.WriteLine($"📊 Total empresas recibidas del WS: {empresas.Length}");
 
-                if (empresas.Length > 0)
+                var listaEmpresas = new List<dynamic>();
+
+                for (int i = 0; i < empresas.Length; i++)
                 {
-                    System.Diagnostics.Debug.WriteLine("📋 Detalle de empresas recibidas:");
+                    var e = empresas[i];
 
-                    var listaEmpresas = new List<object>();
+                    System.Diagnostics.Debug.WriteLine($"   [{i + 1}] ID: {e.idEmpresa}, Razón: '{e.razonSocial ?? "NULL"}'");
 
-                    for (int i = 0; i < empresas.Length; i++)
+                    string tipoDoc = "N/A";
+                    if (e.tipoDocumentoSpecified)
                     {
-                        var e = empresas[i];
-
-                        System.Diagnostics.Debug.WriteLine($"   [{i + 1}] ID: {e.idEmpresa}, Razón: '{e.razonSocial ?? "NULL"}', TipoDoc: {(e.tipoDocumentoSpecified ? e.tipoDocumento.ToString() : "NULL")}");
-
-                        string tipoDoc = "N/A";
-                        if (e.tipoDocumentoSpecified)
-                        {
-                            tipoDoc = e.tipoDocumento.ToString();
-                        }
-
-                        string tipoEmp = "N/A";
-                        if (e.tipoEmpresaSpecified)
-                        {
-                            tipoEmp = e.tipoEmpresa.ToString();
-                        }
-
-                        listaEmpresas.Add(new
-                        {
-                            IdEmpresa = e.idEmpresa,
-                            Nombre = string.IsNullOrEmpty(e.razonSocial) ? "Sin nombre" : e.razonSocial,
-                            Telefono = string.IsNullOrEmpty(e.telefono) ? "Sin teléfono" : e.telefono,
-                            Email = string.IsNullOrEmpty(e.email) ? "Sin email" : e.email,
-                            TipoEmpresa = tipoEmp,
-                            TipoDocumento = tipoDoc,
-                            Activo = e.activo ? "Si" : "No"
-                        });
+                        tipoDoc = e.tipoDocumento.ToString();
                     }
 
-                    System.Diagnostics.Debug.WriteLine($"✅ Lista mapeada con {listaEmpresas.Count} elementos");
+                    string tipoEmp = "N/A";
+                    if (e.tipoEmpresaSpecified)
+                    {
+                        tipoEmp = e.tipoEmpresa.ToString();
+                    }
 
-                    gvProveedores.DataSource = listaEmpresas;
-                    gvProveedores.DataBind();
+                    listaEmpresas.Add(new
+                    {
+                        IdEmpresa = e.idEmpresa,
+                        Nombre = string.IsNullOrEmpty(e.razonSocial) ? "Sin nombre" : e.razonSocial,
+                        Telefono = string.IsNullOrEmpty(e.telefono) ? "Sin teléfono" : e.telefono,
+                        Email = string.IsNullOrEmpty(e.email) ? "Sin email" : e.email,
+                        TipoEmpresa = tipoEmp,
+                        TipoDocumento = tipoDoc,
+                        Activo = e.activo ? "Si" : "No"
+                    });
+                }
 
-                    System.Diagnostics.Debug.WriteLine($"✅ GridView enlazado correctamente");
-                    System.Diagnostics.Debug.WriteLine($"   Filas en GridView después de DataBind: {gvProveedores.Rows.Count}");
-                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("⚠️ No hay empresas en la base de datos");
-                    gvProveedores.DataSource = new List<object>();
-                    gvProveedores.DataBind();
-                    System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                }
+                System.Diagnostics.Debug.WriteLine($"✅ Lista mapeada con {listaEmpresas.Count} elementos");
+
+                _datasourceCompleto = listaEmpresas;
+                gvProveedores.DataSource = _datasourceCompleto;
+                gvProveedores.DataBind();
+
+                System.Diagnostics.Debug.WriteLine($"✅ GridView enlazado correctamente");
+                System.Diagnostics.Debug.WriteLine($"   Filas en GridView después de DataBind: {gvProveedores.Rows.Count}");
+
+                ActualizarInformacionPaginacion();
+
+                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
             }
             catch (System.ServiceModel.EndpointNotFoundException ex)
             {
@@ -179,63 +186,46 @@ namespace StockifyWeb
                 string tipoEmpresaStr = ddlTipoEmpresa.SelectedValue;
                 bool activo = ddlActivo.SelectedValue.ToLower() == "si";
 
-                System.Diagnostics.Debug.WriteLine($"📝 Datos ingresados:");
-                System.Diagnostics.Debug.WriteLine($"   Razón Social: '{razonSocial}'");
-                System.Diagnostics.Debug.WriteLine($"   Teléfono: '{telefono}'");
-                System.Diagnostics.Debug.WriteLine($"   Email: '{email}'");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Documento: '{tipoDocumentoStr}'");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Empresa: '{tipoEmpresaStr}'");
-                System.Diagnostics.Debug.WriteLine($"   Activo: {activo}");
-
                 // Validaciones
                 if (string.IsNullOrEmpty(razonSocial))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Razón social vacía");
                     MostrarMensaje("Por favor ingrese la razón social");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(tipoDocumentoStr))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Tipo documento no seleccionado");
                     MostrarMensaje("Por favor seleccione el tipo de documento");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(telefono))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Teléfono vacío");
                     MostrarMensaje("Por favor ingrese el teléfono");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(email))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Email vacío");
                     MostrarMensaje("Por favor ingrese el email");
                     return;
                 }
 
                 if (!EsEmailValido(email))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Email inválido");
                     MostrarMensaje("Por favor ingrese un email válido");
                     return;
                 }
 
                 if (string.IsNullOrEmpty(tipoEmpresaStr))
                 {
-                    System.Diagnostics.Debug.WriteLine("❌ Validación fallida: Tipo empresa no seleccionado");
                     MostrarMensaje("Por favor seleccione el tipo de empresa");
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine("✅ Validaciones pasadas");
-
                 tipoDocumento tipoDoc;
                 if (!Enum.TryParse(tipoDocumentoStr, true, out tipoDoc))
                 {
-                    System.Diagnostics.Debug.WriteLine($"❌ Error: No se pudo convertir '{tipoDocumentoStr}' a tipoDocumento");
                     MostrarMensaje("Tipo de documento inválido");
                     return;
                 }
@@ -243,39 +233,24 @@ namespace StockifyWeb
                 tipoEmpresa tipoEmp;
                 if (!Enum.TryParse(tipoEmpresaStr, true, out tipoEmp))
                 {
-                    System.Diagnostics.Debug.WriteLine($"❌ Error: No se pudo convertir '{tipoEmpresaStr}' a tipoEmpresa");
                     MostrarMensaje("Tipo de empresa inválido");
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine("💾 Guardando empresa en el WS...");
                 await GuardarEmpresaAsync(razonSocial, telefono, email, tipoDoc, tipoEmp, activo);
-
-                System.Diagnostics.Debug.WriteLine("✅ Empresa guardada exitosamente");
-                System.Diagnostics.Debug.WriteLine("🔄 Recargando lista de empresas...");
                 await CargarProveedoresAsync();
 
-                System.Diagnostics.Debug.WriteLine($"✅ Lista recargada - Total filas en GridView: {gvProveedores.Rows.Count}");
-                System.Diagnostics.Debug.WriteLine("🧹 Limpiando formulario...");
                 LimpiarFormulario();
-
-                System.Diagnostics.Debug.WriteLine("🎉 Proceso completado exitosamente");
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModalYRecargar",
                     "if(typeof cerrarModal === 'function') { cerrarModal(); }", true);
 
                 MostrarMensaje("Empresa agregada correctamente", true);
+                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL AGREGAR EMPRESA");
-                System.Diagnostics.Debug.WriteLine($"   Tipo: {ex.GetType().Name}");
-                System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"   Stack: {ex.StackTrace}");
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-
+                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL AGREGAR EMPRESA: {ex.Message}");
                 MostrarMensaje($"Error al agregar empresa: {ex.Message}");
             }
         }
@@ -296,15 +271,6 @@ namespace StockifyWeb
                 string tipoEmpresaStr = ddlTipoEmpresa.SelectedValue;
                 bool activo = ddlActivo.SelectedValue.ToLower() == "si";
 
-                System.Diagnostics.Debug.WriteLine($"📝 Datos a actualizar:");
-                System.Diagnostics.Debug.WriteLine($"   ID Empresa: {idEmpresa}");
-                System.Diagnostics.Debug.WriteLine($"   Razón Social: '{razonSocial}'");
-                System.Diagnostics.Debug.WriteLine($"   Teléfono: '{telefono}'");
-                System.Diagnostics.Debug.WriteLine($"   Email: '{email}'");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Documento: '{tipoDocumentoStr}'");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Empresa: '{tipoEmpresaStr}'");
-                System.Diagnostics.Debug.WriteLine($"   Activo: {activo}");
-
                 // Validaciones
                 if (string.IsNullOrEmpty(razonSocial))
                 {
@@ -356,8 +322,6 @@ namespace StockifyWeb
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine("💾 Actualizando empresa en el WS...");
-
                 EmpresaWSClient cliente = null;
                 try
                 {
@@ -376,10 +340,8 @@ namespace StockifyWeb
                         tipoEmpresaSpecified = true
                     };
 
-                    System.Diagnostics.Debug.WriteLine("📤 Enviando datos actualizados al WS...");
                     await cliente.guardarEmpresaAsync(empresaActualizada, estado.MODIFICADO);
-
-                    System.Diagnostics.Debug.WriteLine($"✅ Empresa actualizada en BD: {razonSocial}");
+                    System.Diagnostics.Debug.WriteLine($"✅ Empresa actualizada: {razonSocial}");
                 }
                 finally
                 {
@@ -397,30 +359,21 @@ namespace StockifyWeb
                     }
                 }
 
-                System.Diagnostics.Debug.WriteLine("🔄 Recargando lista de empresas...");
                 await CargarProveedoresAsync();
 
                 LimpiarFormulario();
                 hfModoEdicion.Value = "false";
                 hfIdEmpresa.Value = "0";
 
-                System.Diagnostics.Debug.WriteLine("🎉 Actualización completada exitosamente");
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-
                 ScriptManager.RegisterStartupScript(this, GetType(), "cerrarModalActualizar",
                     "if(typeof cerrarModal === 'function') { cerrarModal(); }", true);
 
                 MostrarMensaje("Empresa actualizada correctamente", true);
+                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL ACTUALIZAR EMPRESA");
-                System.Diagnostics.Debug.WriteLine($"   Tipo: {ex.GetType().Name}");
-                System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"   Stack: {ex.StackTrace}");
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-
+                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL ACTUALIZAR EMPRESA: {ex.Message}");
                 MostrarMensaje($"Error al actualizar empresa: {ex.Message}");
             }
         }
@@ -431,34 +384,20 @@ namespace StockifyWeb
             try
             {
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine("🗑️ ELIMINANDO EMPRESA");
-                System.Diagnostics.Debug.WriteLine($"   ID Empresa: {idEmpresa}");
+                System.Diagnostics.Debug.WriteLine($"🗑️ ELIMINANDO EMPRESA ID: {idEmpresa}");
 
                 cliente = new EmpresaWSClient();
-
-                System.Diagnostics.Debug.WriteLine("📤 Llamando al WS para eliminar...");
                 await cliente.eliminarEmpresaAsync(idEmpresa);
 
-                System.Diagnostics.Debug.WriteLine("✅ Empresa eliminada del backend");
-                System.Diagnostics.Debug.WriteLine("🔄 Recargando lista de empresas...");
-
+                System.Diagnostics.Debug.WriteLine("✅ Empresa eliminada");
                 await CargarProveedoresAsync();
 
-                System.Diagnostics.Debug.WriteLine($"✅ Lista recargada - Total filas: {gvProveedores.Rows.Count}");
                 System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-
                 MostrarMensaje("Empresa eliminada correctamente", true);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL ELIMINAR EMPRESA");
-                System.Diagnostics.Debug.WriteLine($"   ID: {idEmpresa}");
-                System.Diagnostics.Debug.WriteLine($"   Tipo: {ex.GetType().Name}");
-                System.Diagnostics.Debug.WriteLine($"   Mensaje: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"   Stack: {ex.StackTrace}");
-                System.Diagnostics.Debug.WriteLine("═══════════════════════════════════════");
-
+                System.Diagnostics.Debug.WriteLine($"❌ ERROR AL ELIMINAR: {ex.Message}");
                 MostrarMensaje($"Error al eliminar empresa: {ex.Message}");
             }
             finally
@@ -484,7 +423,6 @@ namespace StockifyWeb
             EmpresaWSClient cliente = null;
             try
             {
-                System.Diagnostics.Debug.WriteLine("📡 Creando cliente WS para guardar...");
                 cliente = new EmpresaWSClient();
 
                 var nuevaEmpresa = new empresa
@@ -499,25 +437,12 @@ namespace StockifyWeb
                     tipoEmpresaSpecified = true
                 };
 
-                System.Diagnostics.Debug.WriteLine("📤 Datos a enviar al WS:");
-                System.Diagnostics.Debug.WriteLine($"   Razón Social: {nuevaEmpresa.razonSocial}");
-                System.Diagnostics.Debug.WriteLine($"   Teléfono: {nuevaEmpresa.telefono}");
-                System.Diagnostics.Debug.WriteLine($"   Email: {nuevaEmpresa.email}");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Documento: {nuevaEmpresa.tipoDocumento} (Specified: {nuevaEmpresa.tipoDocumentoSpecified})");
-                System.Diagnostics.Debug.WriteLine($"   Tipo Empresa: {nuevaEmpresa.tipoEmpresa} (Specified: {nuevaEmpresa.tipoEmpresaSpecified})");
-                System.Diagnostics.Debug.WriteLine($"   Activo: {nuevaEmpresa.activo}");
-
                 await cliente.guardarEmpresaAsync(nuevaEmpresa, estado.NUEVO);
-
-                System.Diagnostics.Debug.WriteLine($"✅ Empresa guardada en BD: {razonSocial}");
+                System.Diagnostics.Debug.WriteLine($"✅ Empresa guardada: {razonSocial}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"❌ Error en GuardarEmpresaAsync: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"   Inner Exception: {ex.InnerException.Message}");
-                }
                 throw new Exception($"No se pudo guardar la empresa: {ex.Message}", ex);
             }
             finally
@@ -552,38 +477,170 @@ namespace StockifyWeb
                 },
                 new {
                     IdEmpresa = 2,
-                    Nombre = "Proveedor Test OrdenIngreso",
+                    Nombre = "Proveedor Test",
                     Telefono = "987654321",
-                    Email = "proveedoringreso@test.com",
+                    Email = "proveedor@test.com",
                     TipoEmpresa = "PROVEEDOR",
                     TipoDocumento = "RUC",
                     Activo = "Si"
                 },
                 new {
                     IdEmpresa = 3,
-                    Nombre = "Cliente Test OrdenSalida",
+                    Nombre = "Cliente Test",
                     Telefono = "987654321",
-                    Email = "clientesalida@test.com",
+                    Email = "cliente@test.com",
                     TipoEmpresa = "CLIENTE",
                     TipoDocumento = "RUC",
-                    Activo = "Si"
-                },
-                new {
-                    IdEmpresa = 4,
-                    Nombre = "RazonSocialSACTest",
-                    Telefono = "999999999",
-                    Email = "test@pucp.edu.pe",
-                    TipoEmpresa = "CLIENTE",
-                    TipoDocumento = "DNI",
                     Activo = "Si"
                 }
             };
 
-            gvProveedores.DataSource = empresas;
+            _datasourceCompleto = empresas;
+            gvProveedores.DataSource = _datasourceCompleto;
             gvProveedores.DataBind();
+            ActualizarInformacionPaginacion();
 
             System.Diagnostics.Debug.WriteLine("⚠️ Cargando datos de ejemplo (sin conexión al WS)");
         }
+
+        // ==================== MÉTODOS DE PAGINACIÓN ====================
+
+        protected void gvProveedores_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvProveedores.PageIndex = e.NewPageIndex;
+            RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+        }
+
+        protected void btnPrimeraPagina_Click(object sender, EventArgs e)
+        {
+            gvProveedores.PageIndex = 0;
+            RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+        }
+
+        protected void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (gvProveedores.PageIndex > 0)
+            {
+                gvProveedores.PageIndex--;
+                RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+            }
+        }
+
+        protected void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            if (gvProveedores.PageIndex < gvProveedores.PageCount - 1)
+            {
+                gvProveedores.PageIndex++;
+                RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+            }
+        }
+
+        protected void btnUltimaPagina_Click(object sender, EventArgs e)
+        {
+            gvProveedores.PageIndex = gvProveedores.PageCount - 1;
+            RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+        }
+
+        protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            gvProveedores.PageSize = int.Parse(ddlPageSize.SelectedValue);
+            gvProveedores.PageIndex = 0;
+            RegisterAsyncTask(new PageAsyncTask(CargarProveedoresAsync));
+        }
+
+        private void ActualizarInformacionPaginacion()
+        {
+            if (gvProveedores.Rows.Count == 0)
+            {
+                litPaginaActual.Text = "0";
+                litPaginaTotal.Text = "0";
+                litTotalEmpresas.Text = "0";
+                litNumeroPaginas.Text = "";
+
+                btnPrimeraPagina.Enabled = false;
+                btnPaginaAnterior.Enabled = false;
+                btnPaginaSiguiente.Enabled = false;
+                btnUltimaPagina.Enabled = false;
+                return;
+            }
+
+            int totalEmpresas = ObtenerTotalRegistros();
+            int paginaActual = gvProveedores.PageIndex + 1;
+            int totalPaginas = gvProveedores.PageCount;
+            int pageSize = gvProveedores.PageSize;
+
+            int registroInicio = (gvProveedores.PageIndex * pageSize) + 1;
+            int registroFin = Math.Min((gvProveedores.PageIndex + 1) * pageSize, totalEmpresas);
+
+            litPaginaActual.Text = registroInicio.ToString();
+            litPaginaTotal.Text = registroFin.ToString();
+            litTotalEmpresas.Text = totalEmpresas.ToString();
+
+            GenerarBotonesNumeroPagina(paginaActual, totalPaginas);
+
+            btnPrimeraPagina.Enabled = paginaActual > 1;
+            btnPaginaAnterior.Enabled = paginaActual > 1;
+            btnPaginaSiguiente.Enabled = paginaActual < totalPaginas;
+            btnUltimaPagina.Enabled = paginaActual < totalPaginas;
+
+            System.Diagnostics.Debug.WriteLine($"📄 Paginación - Página {paginaActual}/{totalPaginas}, Mostrando {registroInicio}-{registroFin} de {totalEmpresas}");
+        }
+
+        private void GenerarBotonesNumeroPagina(int paginaActual, int totalPaginas)
+        {
+            if (totalPaginas <= 1)
+            {
+                litNumeroPaginas.Text = "";
+                return;
+            }
+
+            var html = new System.Text.StringBuilder();
+            int rangoInicio = Math.Max(1, paginaActual - 2);
+            int rangoFin = Math.Min(totalPaginas, paginaActual + 2);
+
+            if (rangoInicio > 1)
+            {
+                html.Append($"<button type='button' class='pagination-button' onclick='irAPagina(1)'>1</button>");
+                if (rangoInicio > 2)
+                {
+                    html.Append("<span style='color: var(--muted); padding: 0 8px;'>...</span>");
+                }
+            }
+
+            for (int i = rangoInicio; i <= rangoFin; i++)
+            {
+                string activeClass = i == paginaActual ? "active" : "";
+                html.Append($"<button type='button' class='pagination-button {activeClass}' onclick='irAPagina({i})'>{i}</button>");
+            }
+
+            if (rangoFin < totalPaginas)
+            {
+                if (rangoFin < totalPaginas - 1)
+                {
+                    html.Append("<span style='color: var(--muted); padding: 0 8px;'>...</span>");
+                }
+                html.Append($"<button type='button' class='pagination-button' onclick='irAPagina({totalPaginas})'>{totalPaginas}</button>");
+            }
+
+            litNumeroPaginas.Text = html.ToString();
+        }
+
+        private int ObtenerTotalRegistros()
+        {
+            if (_datasourceCompleto != null)
+            {
+                return _datasourceCompleto.Count;
+            }
+
+            var dataSource = gvProveedores.DataSource;
+            if (dataSource is System.Collections.IEnumerable enumerable)
+            {
+                return enumerable.Cast<object>().Count();
+            }
+            return gvProveedores.Rows.Count;
+        }
+
+        // ==================== MÉTODOS AUXILIARES ====================
 
         private void LimpiarFormulario()
         {
@@ -604,7 +661,7 @@ namespace StockifyWeb
 
             ScriptManager.RegisterStartupScript(this, GetType(), "mostrarMensaje", script, true);
 
-            System.Diagnostics.Debug.WriteLine($"{(esExitoso ? "✅" : "⚠️")} Mensaje mostrado: {mensaje}");
+            System.Diagnostics.Debug.WriteLine($"{(esExitoso ? "✅" : "⚠️")} Mensaje: {mensaje}");
         }
 
         private bool EsEmailValido(string email)
