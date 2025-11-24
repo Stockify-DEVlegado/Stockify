@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using StockifyWeb.StockifyWS;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,60 +9,196 @@ namespace StockifyWeb
 {
     public partial class Reportes : System.Web.UI.Page
     {
+        private const string URL_BASE_REPORTES = "http://localhost:8080/StockifyReportes/reportes";
+
+        private ProductoWSClient productoWS;
+        private EmpresaWSClient empresaWS;
+        private CategoriaWSClient categoriaWS;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                InicializarDatos();
+                InicializarServicios();
+                CargarDatos();
+                txtFechaDesdeKardex.Text = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+                txtFechaHastaKardex.Text = DateTime.Now.ToString("yyyy-MM-dd");
             }
         }
 
-        private void InicializarDatos()
+        private void InicializarServicios()
         {
-            CargarCategorias();
-            CargarArticulos();
-            CargarMovimientosKardex(1);
-
-            txtFechaDesde.Text = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
-            txtFechaHasta.Text = DateTime.Now.ToString("yyyy-MM-dd");
-
-            CargarDatosSelect2();
+            try
+            {
+                productoWS = new ProductoWSClient();
+                empresaWS = new EmpresaWSClient();
+                categoriaWS = new CategoriaWSClient();
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al inicializar servicios: " + ex.Message);
+            }
         }
 
-        private void CargarDatosSelect2()
+        private void CargarDatos()
         {
+            try
+            {
+                CargarProductos();
+                CargarProveedores();
+                CargarCategorias();
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar datos: " + ex.Message);
+            }
         }
 
-        #region Gestión de Inventario - Reportes
+        #region Carga de DropDownLists
+
+        private void CargarProductos()
+        {
+            try
+            {
+                var productos = productoWS.listarProductos();
+
+                ddlKardexProducto.Items.Clear();
+                ddlKardexProducto.Items.Add(new ListItem("Selecciona un producto", ""));
+
+                if (productos != null && productos.Length > 0)
+                {
+                    foreach (var producto in productos)
+                    {
+                        string textoProducto = $"{producto.nombre}";
+                        ddlKardexProducto.Items.Add(new ListItem(textoProducto, producto.idProducto.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar productos: " + ex.Message);
+            }
+        }
+
+        private void CargarProveedores()
+        {
+            try
+            {
+                var empresas = empresaWS.listarEmpresas();
+
+                ddlFiltroProveedor.Items.Clear();
+                ddlFiltroProveedor.Items.Add(new ListItem("Todos los proveedores", ""));
+
+                if (empresas != null && empresas.Length > 0)
+                {
+                    var proveedores = empresas.Where(e => e.tipoEmpresa.Equals("PROVEEDOR"));
+
+                    foreach (var proveedor in proveedores)
+                    {
+                        string textoProveedor = proveedor.razonSocial;
+                        ddlFiltroProveedor.Items.Add(new ListItem(textoProveedor, proveedor.idEmpresa.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar proveedores: " + ex.Message);
+            }
+        }
 
         private void CargarCategorias()
         {
-            ddlCategoria.Items.Clear();
-            ddlCategoria.Items.Add(new ListItem("Seleccionar categoría", ""));
-            ddlCategoria.Items.Add(new ListItem("Electrónica", "1"));
-            ddlCategoria.Items.Add(new ListItem("Ropa", "2"));
-            ddlCategoria.Items.Add(new ListItem("Hogar", "3"));
-            ddlCategoria.Items.Add(new ListItem("Juguetes", "4"));
+            try
+            {
+                var categorias = categoriaWS.listarCategorias();
+
+                ddlCategoria.Items.Clear();
+                ddlCategoria.Items.Add(new ListItem("Todas las categorías", ""));
+
+                if (categorias != null && categorias.Length > 0)
+                {
+                    foreach (var categoria in categorias)
+                    {
+                        ddlCategoria.Items.Add(new ListItem(categoria.nombre, categoria.idCategoria.ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarError("Error al cargar categorías: " + ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Generación de Reportes
+
+        protected void btnGenerarKardex_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(ddlKardexProducto.SelectedValue))
+                {
+                    MostrarMensaje("Por favor selecciona un producto para generar el Kardex.", false);
+                    return;
+                }
+
+                string productoId = ddlKardexProducto.SelectedValue;
+                string metodo = ddlMetodoValoracionReporte.SelectedValue;
+                string fechaDesde = txtFechaDesdeKardex.Text;
+                string fechaHasta = txtFechaHastaKardex.Text;
+                string productoNombre = ddlKardexProducto.SelectedItem.Text;
+
+                if (string.IsNullOrEmpty(fechaDesde) || string.IsNullOrEmpty(fechaHasta))
+                {
+                    MostrarMensaje("Por favor ingresa las fechas desde y hasta para generar el Kardex.", false);
+                    return;
+                }
+
+                string metodoReporte = (metodo == "PP") ? "PROMEDIO" : "PEPS";
+                string url = $"{URL_BASE_REPORTES}/kardexs?idProducto={productoId}&fechaDesde={fechaDesde}&fechaHasta={fechaHasta}&metodo={metodoReporte}";
+
+                // Abrir en nueva ventana
+                string script = $@"
+                    var ventana = window.open('{url}', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+                    if (!ventana || ventana.closed || typeof ventana.closed == 'undefined') {{
+                        alert('Por favor permite ventanas emergentes para ver el reporte.');
+                    }}
+                ";
+                ScriptManager.RegisterStartupScript(this, GetType(), "AbrirKardex", script, true);
+
+                string mensaje = $"Generando Kardex para: {productoNombre} con método {(metodo == "PP" ? "Promedio Ponderado" : "PEPS")} del {fechaDesde} al {fechaHasta}";
+                MostrarMensaje(mensaje, true);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje($"Error al generar el Kardex: {ex.Message}", false);
+            }
         }
 
         protected void btnGenerarReporteProductos_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(ddlFiltroProducto.SelectedValue))
-                {
-                    MostrarMensaje("Por favor selecciona un producto");
-                    return;
-                }
+                // Obtener el autor de la sesión (SOLO PARA ESTE REPORTE)
+                string autor = ObtenerNombreUsuarioSesion();
 
-                string productoId = ddlFiltroProducto.SelectedValue;
-                string productoNombre = ddlFiltroProducto.SelectedItem.Text;
+                string url = $"{URL_BASE_REPORTES}/productos?autor={HttpUtility.UrlEncode(autor)}";
 
-                MostrarMensaje($"Generando reporte de existencias para: {productoNombre}");
+                // Abrir en nueva ventana
+                string script = $@"
+                    var ventana = window.open('{url}', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+                    if (!ventana || ventana.closed || typeof ventana.closed == 'undefined') {{
+                        alert('Por favor permite ventanas emergentes para ver el reporte.');
+                    }}
+                ";
+                ScriptManager.RegisterStartupScript(this, GetType(), "AbrirProductos", script, true);
+
+                MostrarMensaje("Generando reporte de existencias de todos los productos", true);
             }
             catch (Exception ex)
             {
-                MostrarError("Error al generar reporte: " + ex.Message);
+                MostrarMensaje($"Error al generar el reporte: {ex.Message}", false);
             }
         }
 
@@ -71,20 +206,36 @@ namespace StockifyWeb
         {
             try
             {
-                if (string.IsNullOrEmpty(ddlFiltroProveedor.SelectedValue))
+                string proveedorId = ddlFiltroProveedor.SelectedValue;
+                string url;
+
+                if (string.IsNullOrEmpty(proveedorId))
                 {
-                    MostrarMensaje("Por favor selecciona un proveedor");
-                    return;
+                    url = $"{URL_BASE_REPORTES}/proveedoresProducto";
+                }
+                else
+                {
+                    url = $"{URL_BASE_REPORTES}/proveedoresProducto?idProveedor={proveedorId}";
                 }
 
-                string proveedorId = ddlFiltroProveedor.SelectedValue;
-                string proveedorNombre = ddlFiltroProveedor.SelectedItem.Text;
+                // Abrir en nueva ventana
+                string script = $@"
+                    var ventana = window.open('{url}', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+                    if (!ventana || ventana.closed || typeof ventana.closed == 'undefined') {{
+                        alert('Por favor permite ventanas emergentes para ver el reporte.');
+                    }}
+                ";
+                ScriptManager.RegisterStartupScript(this, GetType(), "AbrirProveedores", script, true);
 
-                MostrarMensaje($"Generando reporte de proveedores para: {proveedorNombre}");
+                string mensaje = string.IsNullOrEmpty(proveedorId)
+                    ? "Generando reporte de todos los proveedores"
+                    : $"Generando reporte para: {ddlFiltroProveedor.SelectedItem.Text}";
+
+                MostrarMensaje(mensaje, true);
             }
             catch (Exception ex)
             {
-                MostrarError("Error al generar reporte: " + ex.Message);
+                MostrarMensaje($"Error al generar el reporte: {ex.Message}", false);
             }
         }
 
@@ -92,211 +243,40 @@ namespace StockifyWeb
         {
             try
             {
-                if (string.IsNullOrEmpty(ddlCategoria.SelectedValue))
+                string categoriaId = ddlCategoria.SelectedValue;
+
+                // Obtener el autor de la sesión (SOLO PARA ESTE REPORTE)
+                string autor = ObtenerNombreUsuarioSesion();
+
+                string url;
+
+                if (string.IsNullOrEmpty(categoriaId))
                 {
-                    MostrarError("Por favor seleccione una categoría");
-                    return;
+                    url = $"{URL_BASE_REPORTES}/productosCategoria?autor={HttpUtility.UrlEncode(autor)}";
+                }
+                else
+                {
+                    url = $"{URL_BASE_REPORTES}/productosCategoria?idCategoria={categoriaId}&autor={HttpUtility.UrlEncode(autor)}";
                 }
 
-                string categoriaId = ddlCategoria.SelectedValue;
-                string categoriaNombre = ddlCategoria.SelectedItem.Text;
+                // Abrir en nueva ventana
+                string script = $@"
+                    var ventana = window.open('{url}', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+                    if (!ventana || ventana.closed || typeof ventana.closed == 'undefined') {{
+                        alert('Por favor permite ventanas emergentes para ver el reporte.');
+                    }}
+                ";
+                ScriptManager.RegisterStartupScript(this, GetType(), "AbrirCategorias", script, true);
 
-                MostrarMensaje($"Generando reporte de productos para la categoría: {categoriaNombre}");
+                string mensaje = string.IsNullOrEmpty(categoriaId)
+                    ? "Generando reporte de todas las categorías"
+                    : $"Generando reporte para la categoría: {ddlCategoria.SelectedItem.Text}";
+
+                MostrarMensaje(mensaje, true);
             }
             catch (Exception ex)
             {
-                MostrarError("Error al generar reporte: " + ex.Message);
-            }
-        }
-
-        #endregion
-
-        #region Kardex - Gestión de Artículos
-
-        private void CargarArticulos(string filtro = "")
-        {
-            try
-            {
-                DataTable dt = ObtenerArticulosMock(filtro);
-
-                rptArticulos.DataSource = dt;
-                rptArticulos.DataBind();
-
-                ActualizarEstadisticasTotales();
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al cargar artículos: " + ex.Message);
-            }
-        }
-
-        private DataTable ObtenerArticulosMock(string filtro = "")
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ProductoId", typeof(int));
-            dt.Columns.Add("Nombre", typeof(string));
-            dt.Columns.Add("Codigo", typeof(string));
-
-            dt.Rows.Add(1, "Desktop Computer", "PROD-001");
-            dt.Rows.Add(2, "Network Switch", "PROD-002");
-            dt.Rows.Add(3, "Printer Cartridge", "PROD-003");
-
-            if (!string.IsNullOrEmpty(filtro))
-            {
-                DataView dv = dt.DefaultView;
-                dv.RowFilter = $"Nombre LIKE '%{filtro}%' OR Codigo LIKE '%{filtro}%'";
-                return dv.ToTable();
-            }
-
-            return dt;
-        }
-
-        protected void txtBuscarArticulo_TextChanged(object sender, EventArgs e)
-        {
-            string filtro = txtBuscarArticulo.Text.Trim();
-            CargarArticulos(filtro);
-        }
-
-        protected void rptArticulos_ItemCommand(object source, RepeaterCommandEventArgs e)
-        {
-            if (e.CommandName == "SeleccionarArticulo")
-            {
-                int productoId = Convert.ToInt32(e.CommandArgument);
-                CargarDetalleProducto(productoId);
-                CargarMovimientosKardex(productoId);
-            }
-        }
-
-        private void CargarDetalleProducto(int productoId)
-        {
-            try
-            {
-                litNombreProducto.Text = "Desktop Computer";
-                litCodigoProducto.Text = "PROD-001";
-                litSaldoActual.Text = "8";
-                litCostoUnitario.Text = "800.00";
-                litValorTotal.Text = "6400.00";
-                litEntradas.Text = "10";
-                litSalidas.Text = "12";
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al cargar detalle del producto: " + ex.Message);
-            }
-        }
-
-        #endregion
-
-        #region Kardex - Movimientos y Filtros
-
-        private void CargarMovimientosKardex(int productoId)
-        {
-            try
-            {
-                string metodo = ddlMetodoValoracion.SelectedValue;
-                DateTime? fechaDesde = !string.IsNullOrEmpty(txtFechaDesde.Text) ?
-                    DateTime.Parse(txtFechaDesde.Text) : (DateTime?)null;
-                DateTime? fechaHasta = !string.IsNullOrEmpty(txtFechaHasta.Text) ?
-                    DateTime.Parse(txtFechaHasta.Text) : (DateTime?)null;
-
-                DataTable dt = ObtenerMovimientosMock(productoId, metodo, fechaDesde, fechaHasta);
-
-                rptMovimientos.DataSource = dt;
-                rptMovimientos.DataBind();
-
-                litCantidadMovimientos.Text = $"{dt.Rows.Count} de {dt.Rows.Count}";
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al cargar movimientos: " + ex.Message);
-            }
-        }
-
-        private DataTable ObtenerMovimientosMock(int productoId, string metodo, DateTime? desde, DateTime? hasta)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Fecha", typeof(DateTime));
-            dt.Columns.Add("Detalle", typeof(string));
-            dt.Columns.Add("Documento", typeof(string));
-            dt.Columns.Add("EntradaCantidad", typeof(int));
-            dt.Columns.Add("EntradaPrecio", typeof(decimal));
-            dt.Columns.Add("EntradaTotal", typeof(decimal));
-            dt.Columns.Add("SalidaCantidad", typeof(int));
-            dt.Columns.Add("SalidaPrecio", typeof(decimal));
-            dt.Columns.Add("SalidaTotal", typeof(decimal));
-            dt.Columns.Add("SaldoCantidad", typeof(int));
-            dt.Columns.Add("SaldoPrecio", typeof(decimal));
-            dt.Columns.Add("SaldoTotal", typeof(decimal));
-
-            dt.Rows.Add(
-                DateTime.Now.AddDays(-30),
-                "SALDO INICIAL",
-                "-",
-                0, 0m, 0m,
-                0, 0m, 0m,
-                10, 850m, 8500m
-            );
-
-            dt.Rows.Add(
-                DateTime.Parse("2025-10-08"),
-                "Compra a proveedor",
-                "5100",
-                10, 750m, 7500m,
-                0, 0m, 0m,
-                20, 800m, 16000m
-            );
-
-            dt.Rows.Add(
-                DateTime.Parse("2025-10-10"),
-                "Venta",
-                "5101",
-                0, 0m, 0m,
-                12, 800m, 9600m,
-                8, 800m, 6400m
-            );
-
-            return dt;
-        }
-
-        protected void ddlMetodoValoracion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CargarMovimientosKardex(1);
-        }
-
-        protected void btnLimpiarFiltro_Click(object sender, EventArgs e)
-        {
-            txtFechaDesde.Text = "";
-            txtFechaHasta.Text = "";
-            CargarMovimientosKardex(1);
-        }
-
-        protected void btnExportarCSV_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                MostrarMensaje("Exportando a CSV...");
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al exportar: " + ex.Message);
-            }
-        }
-
-        #endregion
-
-        #region Estadísticas Totales
-
-        private void ActualizarEstadisticasTotales()
-        {
-            try
-            {
-                litTotalArticulos.Text = "3";
-                litValorTotalInventario.Text = "8900.00";
-                litUnidadesTotales.Text = "33";
-            }
-            catch (Exception ex)
-            {
-                MostrarError("Error al actualizar estadísticas: " + ex.Message);
+                MostrarMensaje($"Error al generar el reporte: {ex.Message}", false);
             }
         }
 
@@ -304,14 +284,37 @@ namespace StockifyWeb
 
         #region Utilidades
 
-        private void MostrarMensaje(string mensaje)
+        /// <summary>
+        /// Obtiene el nombre completo del usuario desde la sesión
+        /// </summary>
+        private string ObtenerNombreUsuarioSesion()
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('{mensaje}');", true);
+            // Intenta obtener el nombre del usuario de la sesión
+            string nombreUsuario = Session["Usuario"]?.ToString();
+
+            if (string.IsNullOrEmpty(nombreUsuario))
+            {
+                // Si no hay nombre, usar un valor por defecto
+                nombreUsuario = "Usuario Desconocido";
+            }
+
+            return nombreUsuario;
+        }
+
+        private void MostrarMensaje(string mensaje, bool esExitoso)
+        {
+            lblMensaje.Text = mensaje;
+            pnlMensaje.CssClass = esExitoso ? "status-message status-success" : "status-message status-error";
+            pnlMensaje.Visible = true;
+
+            // Ocultar el mensaje después de 5 segundos usando ScriptManager
+            string script = $"setTimeout(function() {{ var panel = document.getElementById('{pnlMensaje.ClientID}'); if(panel) panel.style.display = 'none'; }}, 5000);";
+            ScriptManager.RegisterStartupScript(this, GetType(), "OcultarMensaje", script, true);
         }
 
         private void MostrarError(string mensaje)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "alert", $"alert('Error: {mensaje}');", true);
+            MostrarMensaje(mensaje, false);
         }
 
         #endregion
